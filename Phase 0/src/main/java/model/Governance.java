@@ -13,6 +13,7 @@ public class Governance {
     private int popularity;
     private HashMap<Factor, Integer> popularityFactors;
     private int population;
+    private int maxPopulation;
     private int coinCount;
     private int woodCount;
     private int goldCount;
@@ -27,6 +28,13 @@ public class Governance {
     public Governance() {
     }
 
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void changePopularityByFactor(Factor factor) {
+    }
+
     public int getPopulation() {
         return population;
     }
@@ -35,11 +43,12 @@ public class Governance {
         this.population = population;
     }
 
-    public int getPopularity() {
-        return popularity;
+    public int getMaxPopulation() {
+        return maxPopulation;
     }
 
-    public void changePopularityByFactor(Factor factor) {
+    public void setMaxPopulation(int maxPopulation) {
+        this.maxPopulation = maxPopulation;
     }
 
     public int getCoinCount() {

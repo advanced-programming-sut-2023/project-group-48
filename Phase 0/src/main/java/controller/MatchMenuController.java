@@ -3,7 +3,7 @@ package controller;
 public class MatchMenuController {
     public void enterMapMenu() {
     }
-    
+
     private boolean isEntryNotValid() {
     }
 
@@ -75,6 +75,7 @@ public class MatchMenuController {
     }
 
     public String selectUnit(int column, int row) {}
+
     public String moveUnit(int column, int row) {
     }
 

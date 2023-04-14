@@ -1,5 +1,9 @@
 package model.People;
 
+import model.Direction;
+
+import java.util.ArrayList;
+
 public class People {
     private String job;
 
@@ -11,6 +15,8 @@ public class People {
         this.column = column;
         this.row = row;
     }
+
+    public ArrayList<Direction> generatePath(int column, int row) {}
 
     public String getJob() {
         return job;

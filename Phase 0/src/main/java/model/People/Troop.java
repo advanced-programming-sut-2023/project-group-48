@@ -1,9 +1,10 @@
 package model.People;
 
+import model.Direction;
+
 import java.util.ArrayList;
 
 public class Troop extends People {
-    enum Direction {}
     enum Quality {
         LOW ,
         MEDIUM ,
