@@ -1,12 +1,19 @@
 package model;
 
 public class TurnManager {
-    private int turnCount;
+    private int roundCount;
     private Match match;
 
-    public void doFights() {
+    public void nextTurn() {
     }
 
-    public void removeDeadPeople() {}
+    private void doFights() {
+    }
+
+    private void removeDeadPeople() {
+    }
+
+    public void nextRound() {
+    }
 
 }

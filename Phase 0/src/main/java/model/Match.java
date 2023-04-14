@@ -4,24 +4,31 @@ import model.People.Equipment;
 import model.People.Troop;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Match {
+    private final int rounds;
     private final ArrayList<User> Players;
     private User currentPlayer;
     private final Unit[][] Map;
     private final int MAX_COLUMN;
     private final int MAX_ROW;
     private final Market Market;
+    private Shop shop;
     private final TurnManager Turn_Manager;
+    private ArrayList<Trade> trades;
 
-    public Match(ArrayList<User> players, int MAX_COLUMN, int MAX_ROW, model.Market market, TurnManager turn_Manager) {
+    public Match(int rounds, ArrayList<User> players, int MAX_COLUMN, int MAX_ROW, Market market, TurnManager turn_Manager) {
+        this.rounds = rounds;
         Players = players;
         this.MAX_COLUMN = MAX_COLUMN;
         this.MAX_ROW = MAX_ROW;
         Map = new Unit[this.MAX_COLUMN][this.MAX_ROW];
         Market = market;
         Turn_Manager = turn_Manager;
+    }
+
+    public int getRounds() {
+        return rounds;
     }
 
     public User getCurrentPlayer() {
@@ -47,7 +54,7 @@ public class Match {
     public void fight(Troop troop1, Troop troops2) {
     }
 
-    public void pourOil(Direccion direccion) {
+    public void pourOil(Direction direccion) {
     }
 
     public void digTunnels(int column, int row) {
@@ -59,4 +66,7 @@ public class Match {
     public void disbandUnit() {
     }
 
+    public ArrayList<Trade> getTrades() {
+        return trades;
+    }
 }

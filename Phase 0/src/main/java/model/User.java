@@ -3,8 +3,8 @@ package model;
 import java.util.ArrayList;
 
 public class User {
-    private static final ArrayList<String> questions;
-    private static final ArrayList<String> slogans;
+    private static final ArrayList<String> questions = new ArrayList<>();
+    private static final ArrayList<String> slogans = new ArrayList<>();
     private String username;
     private String password;
     private String email;
@@ -18,13 +18,18 @@ public class User {
     static {
     }
 
-    public User(String username, String password, String email, String nickname, String passwordQuestion, String passwordAnswer, String... slogan) {
+    public User(String username, String password, String email, String nickname, String... slogan) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.nickname = nickname;
+        if (slogan[0] != null) this.slogan = slogan[0;]
     }
 
     public static ArrayList<String> getQuestions() {
     }
 
-    public static String getRnadomPassword() {
+    public static String getRandomPassword() {
     }
 
     public static String getRandomSlogan() {

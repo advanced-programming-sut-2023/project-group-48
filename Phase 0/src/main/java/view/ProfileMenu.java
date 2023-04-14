@@ -1,7 +1,9 @@
 package view;
 
-public class ProfileMenu implements Menu {
-    enum Commands {}
+public class ProfileMenu extends Menu {
+    private enum Commands {}
+
     @Override
-    public void run() {}
+    public void run() {
+    }
 }

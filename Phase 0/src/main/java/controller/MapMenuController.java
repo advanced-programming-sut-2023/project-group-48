@@ -1,18 +1,30 @@
 package controller;
 
 public class MapMenuController {
+    private final Controller controller;
+
     enum Direction {
     }
+
     int currentColumn;
     int currentRow;
 
-    private static boolean isCoordinatesNotValid(int column, int row) {}
+    public MapMenuController(Controller controller) {
+        this.controller = controller;
+    }
 
-    public String showMap(int column, int row) {}
+    private static boolean isCoordinatesNotValid(int column, int row) {
+    }
 
-    public String changeCurrentUnit(String[] directions, int[] counts) {}
+    public String showMap(int column, int row) {
+    }
 
-    public String showDetails(int column, int row) {}
+    public String changeCurrentUnit(String[] directions, int[] counts) {
+    }
 
-    public String exit() {}
+    public String showDetails(int column, int row) {
+    }
+
+    public String exit() {
+    }
 }

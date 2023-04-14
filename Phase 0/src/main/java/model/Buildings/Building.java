@@ -26,9 +26,11 @@ public class Building {
     public static Building createABuilding(int column, int row, String type) {
     }
 
-    public static boolean isLandTypeValidForBuilding(Building building, LandType landType) {}
+    public static boolean isLandTypeValidForBuilding(Building building, LandType landType) {
+    }
 
-    public static boolean isBuildingPlaceValid(int column, int row, String type) {}
+    public static boolean isBuildingPlaceValid(int column, int row, String type) {
+    }
 
     public int getColumn() {
         return column;
@@ -54,11 +56,14 @@ public class Building {
         this.hp = hp;
     }
 
-    public boolean areResourcesEnoughToRepair() {}
+    public boolean areResourcesEnoughToRepair() {
+    }
 
-    public boolean isEnemyNearby() {}
+    public boolean isEnemyNearby() {
+    }
 
-    public void repair() {}
+    public void repair() {
+    }
 
     public Direction getDirection() {
         return direction;

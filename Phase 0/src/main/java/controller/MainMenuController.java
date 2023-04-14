@@ -1,6 +1,15 @@
 package controller;
 
 public class MainMenuController {
-    public String startMatch(String... playersUsenames) {}
-    public String logout(){}
+    private final Controller controller;
+
+    public MainMenuController(Controller controller) {
+        this.controller = controller;
+    }
+
+    public String startMatch(String... playersUsenames) {
+    }
+
+    public String logout() {
+    }
 }

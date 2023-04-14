@@ -1,9 +1,10 @@
 package view;
 
-public class MainMenu extends Menu {
+public class ShopMenu extends Menu {
     private enum Commands {}
 
     @Override
     public void run() {
+
     }
 }

@@ -1,7 +1,7 @@
 package view;
 
-public class MapMenu implements Menu {
-    enum Commands {}
+public class MapMenu extends Menu {
+    private enum Commands {}
 
     @Override
     public void run() {

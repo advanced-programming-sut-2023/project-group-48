@@ -3,9 +3,9 @@ package model.Buildings;
 import model.User;
 
 public class Inn extends Building {
-    private int popularityChange;
-    private int wineUsage;
-    private int rate;
+    private final int popularityChange;
+    private final int wineUsage;
+    private final int rate;
 
     public Inn(User owner, int column, int row, String type, int popularityChange, int wineUsage, int rate) {
         super(owner, column, row, type);

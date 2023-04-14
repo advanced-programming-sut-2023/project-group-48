@@ -1,17 +1,30 @@
 package controller;
 
 public class ProfileMenuController {
-    public String changeUserInfo(String infoType, String Info) {}
+    private final Controller controller;
 
-    public String changeSlogan(String newSlogan) {}
+    public ProfileMenuController(Controller controller) {
+        this.controller = controller;
+    }
 
-    public String removeSlogan() {}
+    public String changeUserInfo(String infoType, String Info) {
+    }
 
-    public String displayHighScore() {}
+    public String changeSlogan(String newSlogan) {
+    }
 
-    public String displayRank() {}
+    public String removeSlogan() {
+    }
 
-    public String displaySlogan() {}
+    public String displayHighScore() {
+    }
 
-    public String profileDisplay() {}
+    public String displayRank() {
+    }
+
+    public String displaySlogan() {
+    }
+
+    public String profileDisplay() {
+    }
 }

@@ -1,7 +1,7 @@
 package view;
 
-public class MatchMenu implements Menu {
-    static enum Commands {}
+public class MatchMenu extends Menu {
+    private enum Commands {}
 
     @Override
     public void run() {

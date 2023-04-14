@@ -1,6 +1,7 @@
 package model;
 
 import model.People.Troop;
+import view.Menu;
 
 import java.util.ArrayList;
 
@@ -12,13 +13,18 @@ public class Game {
     private Troop selectedTroop;
     private Unit selectedUnit;
 
-    public Game() {}
+    public Game(ArrayList<User> users) {
+        this.users = users;
+    }
 
-    public static String getRandomCaptcha(){}
+    public static String getRandomCaptcha() {
+    }
 
-    public User getCurrentUser() {}
+    public User getCurrentUser() {
+    }
 
-    public void setCurrentUser(User currentUser) {}
+    public void setCurrentUser(User currentUser) {
+    }
 
     public Menu getCurrentMenu() {
     }
@@ -32,11 +38,14 @@ public class Game {
     public void setCurrentMatch(Match currentMatch) {
     }
 
-    public void addUser(User user) {}
+    public void addUser(User user) {
+    }
 
-    public User getUserByUsername(String username) {}
+    public User getUserByUsername(String username) {
+    }
 
-    public User getUserByEmail(String email) {}
+    public User getUserByEmail(String email) {
+    }
 
     public Troop getSelectedTroop() {
         return selectedTroop;
@@ -54,5 +63,6 @@ public class Game {
         this.selectedUnit = selectedUnit;
     }
 
-    public Unit getUnit(int column, int row) {}
+    public Unit getUnit(int column, int row) {
+    }
 }

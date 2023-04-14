@@ -14,11 +14,15 @@ public class RecruitmentCenter extends Building {
         super(owner, column, row, type);
     }
 
-    public boolean areResourcesEnoughToAdd() {}
+    public boolean areResourcesEnoughToAdd() {
+    }
 
-    public boolean isPopularityEnough() {}
+    public boolean isPopularityEnough() {
+    }
 
-    public boolean isRecruitTypeValid() {}
+    public boolean isRecruitTypeValid() {
+    }
 
-    public void AddRecruits(String type, int count) {}
+    public void AddRecruits(String type, int count) {
+    }
 }

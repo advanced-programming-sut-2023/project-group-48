@@ -5,17 +5,6 @@ import model.Direction;
 import java.util.ArrayList;
 
 public class Troop extends People {
-    enum Quality {
-        LOW ,
-        MEDIUM ,
-        HIGH;
-    }
-    enum Nation {
-        EUROPE ,
-        ARAB;
-    }
-    enum State {}
-
     private final Quality attackPower;
     private final Quality defensePower;
     private final Quality speed;

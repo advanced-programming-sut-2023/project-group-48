@@ -1,8 +1,9 @@
 package view;
 
-public class LoginMenu implements Menu {
-    enum Commands {}
+public class LoginMenu extends Menu {
+    private enum Commands {}
 
     @Override
-    public void run() {}
+    public void run() {
+    }
 }

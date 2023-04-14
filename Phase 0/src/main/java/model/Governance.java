@@ -25,6 +25,8 @@ public class Governance {
 
     private ArrayList<Building> buildings;
 
+    private HashMap<Resource, Integer> resources;
+
     public Governance() {
     }
 
@@ -112,4 +114,8 @@ public class Governance {
 
     public void removeBuilding(Building building) {
     }
+
+    public void addResource(Resource resource, int count) {}
+
+    public void removeResource(Resource resource, int count) {}
 }

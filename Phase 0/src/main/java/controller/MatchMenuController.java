@@ -1,10 +1,25 @@
 package controller;
 
 public class MatchMenuController {
+    private final Controller controller;
+
+    public MatchMenuController(Controller controller) {
+        this.controller = controller;
+    }
+
     public void enterMapMenu() {
     }
 
     private boolean isEntryNotValid() {
+    }
+
+    public String showMyInfo() {
+    }
+
+    public String showCurrentPlayer() {
+    }
+
+    public String showRoundsPlayed() {
     }
 
     public String showPopularityFactors() {
@@ -46,35 +61,39 @@ public class MatchMenuController {
     public String repair() {
     }
 
-    public String setTexture(int column, int row, String type){
+    public String setTexture(int column, int row, String type) {
 
     }
 
-    public String setTexture(int column1, int row1, int column2, int row2, String type){
+    public String setTexture(int column1, int row1, int column2, int row2, String type) {
 
     }
 
-    public String clear(int column, int row){
+    public String clear(int column, int row) {
 
     }
 
-    public String dropRock(int column, int row, Direction direction){
+    public String dropRock(int column, int row, Direction direction) {
 
     }
 
-    public String dropTree(int column, int row, String type){
+    public String dropTree(int column, int row, String type) {
 
     }
 
-    public String dropBuilding(int column, int row, String type){
+    public String dropBuilding(int column, int row, String type) {
 
     }
 
-    public String dropUnit(int column, int row, String type, int count){
+    public String dropUnit(int column, int row, String type, int count) {
 
     }
 
-    public String selectUnit(int column, int row) {}
+    public void enterTradeMenu() {
+    }
+
+    public String selectUnit(int column, int row) {
+    }
 
     public String moveUnit(int column, int row) {
     }
@@ -106,5 +125,6 @@ public class MatchMenuController {
     public String disbandUnit() {
     }
 
-
+    public String nextTurn() {
+    }
 }

@@ -3,7 +3,6 @@ package model;
 import java.util.ArrayList;
 
 public class Unit {
-    static enum LandType {}
     private final int Column;
     private final int row;
     private LandType landType;
