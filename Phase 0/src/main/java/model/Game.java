@@ -1,5 +1,7 @@
 package model;
 
+import model.People.Troop;
+
 import java.util.ArrayList;
 
 public class Game {
@@ -7,7 +9,8 @@ public class Game {
     private User currentUser;
     private Menu currentMenu;
     private Match currentMatch;
-    private
+    private Troop selectedTroop;
+    private Unit selectedUnit;
 
     public Game() {}
 
@@ -34,4 +37,22 @@ public class Game {
     public User getUserByUsername(String username) {}
 
     public User getUserByEmail(String email) {}
+
+    public Troop getSelectedTroop() {
+        return selectedTroop;
+    }
+
+    public void setSelectedTroop(Troop selectedTroop) {
+        this.selectedTroop = selectedTroop;
+    }
+
+    public Unit getSelectedUnit() {
+        return selectedUnit;
+    }
+
+    public void setSelectedUnit(Unit selectedUnit) {
+        this.selectedUnit = selectedUnit;
+    }
+
+    public Unit getUnit(int column, int row) {}
 }

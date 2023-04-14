@@ -1,5 +1,8 @@
 package controller;
 
 public class Controller {
-    public void run() {}
+    public void run() {
+
+    }
+
 }

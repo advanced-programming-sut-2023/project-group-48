@@ -6,15 +6,17 @@ import model.User;
 import java.util.HashMap;
 
 public class Building {
-    private User owner;
+    private final User owner;
     private final int column;
     private final int row;
     private HashMap<Resource, Integer> resourcesToBuild;
     private final String type;
     private final BuildingType buildingType;
     private int hp;
+    private Direction direction;
 
     public Building(User owner, int column, int row, String type) {
+        this.owner = owner;
         this.column = column;
         this.row = row;
         this.type = type;
@@ -25,6 +27,8 @@ public class Building {
     }
 
     public static boolean isLandTypeValidForBuilding(Building building, LandType landType) {}
+
+    public static boolean isBuildingPlaceValid(int column, int row, String type) {}
 
     public int getColumn() {
         return column;
@@ -55,4 +59,16 @@ public class Building {
     public boolean isEnemyNearby() {}
 
     public void repair() {}
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
 }

@@ -1,5 +1,8 @@
 package model;
 
+import model.People.Equipment;
+import model.People.Troop;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -40,4 +43,20 @@ public class Match {
     public TurnManager getTurn_Manager() {
         return Turn_Manager;
     }
+
+    public void fight(Troop troop1, Troop troops2) {
+    }
+
+    public void pourOil(Direccion direccion) {
+    }
+
+    public void digTunnels(int column, int row) {
+    }
+
+    public void buildEquipment(Equipment equipment) {
+    }
+
+    public void disbandUnit() {
+    }
+
 }

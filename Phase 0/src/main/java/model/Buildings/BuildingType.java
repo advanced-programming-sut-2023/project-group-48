@@ -24,5 +24,4 @@ public enum BuildingType {
 
     public static BuildingType getBuildingType(String type) {
     }
-
 }

@@ -1,4 +1,4 @@
 package model.People;
 
-public class Character {
+public enum Equipment {
 }

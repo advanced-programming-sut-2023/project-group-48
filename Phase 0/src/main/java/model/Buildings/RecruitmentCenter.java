@@ -1,6 +1,6 @@
 package model.Buildings;
 
-import model.People.Character;
+import model.People.People;
 import model.User;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class RecruitmentCenter extends Building {
     private static HashMap<String, Integer> costsByCharacterType;
-    private ArrayList<Character> people;
+    private ArrayList<People> people;
 
     public RecruitmentCenter(User owner, int column, int row, String type) {
         super(owner, column, row, type);
