@@ -13,5 +13,9 @@ public class Unit {
         return landType;
     }
 
+    public void setLandType(LandType landType) {
+        this.landType = landType;
+    }
+
     public boolean isUnitEmpty() {}
 }
