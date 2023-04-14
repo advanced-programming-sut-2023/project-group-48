@@ -8,4 +8,10 @@ public class Unit {
     private ArrayList<Component> components;
 
     public Unit() {}
+
+    public LandType getLandType() {
+        return landType;
+    }
+
+    public boolean isUnitEmpty() {}
 }

@@ -1,6 +1,6 @@
 package view;
 
 public interface Menu {
-    static enum Commands{};
+    static enum Commands {};
     public void run();
 }

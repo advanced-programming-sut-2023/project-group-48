@@ -1,4 +1,4 @@
-package model;
+package model.People;
 
 public class Character {
 }

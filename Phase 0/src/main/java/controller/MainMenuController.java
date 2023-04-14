@@ -1,7 +1,6 @@
 package controller;
 
 public class MainMenuController {
-    public void enterMapMenu(){}
-
+    public String startMatch(String... playersUsenames) {}
     public String logout(){}
 }

@@ -1,7 +1,7 @@
 package controller;
 
 public class LoginMenuController {
-    private int wronogPassword;
+    private int wrongPasswordCount;
 
     public String login(String username, String password, boolean stayLoggedIn){}
 

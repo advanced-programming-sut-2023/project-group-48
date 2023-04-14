@@ -30,19 +30,19 @@ public class User {
     public static String getRandomSlogan() {
     }
 
-    public static String getSuggesteedUsername(String username) {
+    public static String getSuggestedUsername(String username) {
     }
 
     private static boolean isPasswordNotValid(String password) {
     }
 
-    private static boolean isPasswrodWeak(String password) {
+    private static boolean isPasswordWeak(String password) {
     }
 
     private static boolean isEmailNotValid(String email) {
     }
 
-    public boolean isPasswordNotCorrect(String password {
+    public boolean isPasswordNotCorrect(String password) {
     }
 
     public boolean isPasswordNotRepeated(String password) {
