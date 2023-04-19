@@ -1,6 +1,6 @@
 package model.Buildings;
 
-import model.Resource;
+import model.Match.Resource;
 import model.User;
 
 import java.util.HashMap;

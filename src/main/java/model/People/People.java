@@ -1,6 +1,6 @@
 package model.People;
 
-import model.Direction;
+import model.Match.Direction;
 
 import java.util.ArrayList;
 
@@ -9,6 +9,7 @@ public class People {
     private int row;
     private String type;
     private PeopleType peopleType;
+    private Job job;
 
     public People(int column, int row, String type) {
         this.column = column;
@@ -19,11 +20,15 @@ public class People {
     public ArrayList<Direction> generatePath(int column, int row) {
     }
 
-    public String getJob() {
+    public PeopleType getPeopleType() {
+        return peopleType;
+    }
+
+    public Job getJob() {
         return job;
     }
 
-    public void setJob(String job) {
+    public void setJob(Job job) {
         this.job = job;
     }
 

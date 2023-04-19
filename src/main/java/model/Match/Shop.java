@@ -1,6 +1,5 @@
-package model;
+package model.Match;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Shop {

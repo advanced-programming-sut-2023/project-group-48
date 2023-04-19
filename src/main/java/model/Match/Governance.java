@@ -1,6 +1,7 @@
-package model;
+package model.Match;
 
 import model.Buildings.Building;
+import model.Match.Resource;
 
 import java.util.ArrayList;
 import java.util.HashMap;

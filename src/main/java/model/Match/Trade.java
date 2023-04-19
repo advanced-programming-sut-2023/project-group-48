@@ -1,4 +1,4 @@
-package model;
+package model.Match;
 
 public class Trade {
     private final Resource resource;

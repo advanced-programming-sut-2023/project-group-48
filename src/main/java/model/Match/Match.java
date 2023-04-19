@@ -1,5 +1,6 @@
-package model;
+package model.Match;
 
+import model.*;
 import model.People.Equipment;
 import model.People.Troop;
 
@@ -12,7 +13,7 @@ public class Match {
     private final Unit[][] Map;
     private final int MAX_COLUMN;
     private final int MAX_ROW;
-    private final Market Market;
+    private final model.Match.Market Market;
     private Shop shop;
     private final TurnManager Turn_Manager;
     private ArrayList<Trade> trades;

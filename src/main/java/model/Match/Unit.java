@@ -1,4 +1,4 @@
-package model;
+package model.Match;
 
 import java.util.ArrayList;
 

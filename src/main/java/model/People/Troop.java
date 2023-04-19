@@ -1,6 +1,6 @@
 package model.People;
 
-import model.Direction;
+import model.Match.Direction;
 
 import java.util.ArrayList;
 
@@ -8,19 +8,25 @@ public class Troop extends People {
     private final Quality attackPower;
     private final Quality defensePower;
     private final Quality speed;
+    private final int fireRange;
     private final Nation nation;
     private State state;
+    private final boolean ladderMan;
+    private final boolean hasHorse;
     private int finalColumn;
     private int finalRow;
 
     private ArrayList<Direction> path;
 
-    public Troop(String job, int column, int row, Quality attackPower, Quality defesePower, Quality speed, Nation nation) {
+    public Troop(String job, int column, int row, Quality attackPower, Quality defensePower, Quality speed, int fireRange, Nation nation, boolean ladderMan, boolean hasHorse, int finalColumn, int finalRow) {
         super(job, column, row);
         this.attackPower = attackPower;
-        this.defensePower = defesePower;
+        this.defensePower = defensePower;
         this.speed = speed;
+        this.fireRange = fireRange;
         this.nation = nation;
+        this.ladderMan = ladderMan;
+        this.hasHorse = hasHorse;
     }
 
     public Quality getAttackPower() {
@@ -35,9 +41,18 @@ public class Troop extends People {
         return speed;
     }
 
+    public int getFireRange() {
+        return fireRange;
+    }
+
     public Nation getNation() {
         return nation;
     }
+
+    public boolean isLadderMan() {
+        return ladderMan;
+    }
+    public boolean hasHorse() {return hasHorse;}
 
     public State getState() {
         return state;

@@ -1,5 +1,7 @@
 package model;
 
+import model.Match.Match;
+import model.Match.Unit;
 import model.People.Troop;
 import view.Menu;
 
