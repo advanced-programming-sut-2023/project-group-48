@@ -10,7 +10,7 @@ public class Match {
     private final int rounds;
     private final ArrayList<User> Players;
     private User currentPlayer;
-    private final Unit[][] Map;
+    private final Unit[][] map;
     private final int MAX_COLUMN;
     private final int MAX_ROW;
     private final model.Match.Market Market;
@@ -23,7 +23,7 @@ public class Match {
         Players = players;
         this.MAX_COLUMN = MAX_COLUMN;
         this.MAX_ROW = MAX_ROW;
-        Map = new Unit[this.MAX_COLUMN][this.MAX_ROW];
+        map = new Unit[this.MAX_COLUMN][this.MAX_ROW];
         Market = market;
         Turn_Manager = turn_Manager;
     }
@@ -69,5 +69,9 @@ public class Match {
 
     public ArrayList<Trade> getTrades() {
         return trades;
+    }
+
+    public Unit getUnit(int column, int row) {
+        return map[column - 1][row - 1];
     }
 }

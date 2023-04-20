@@ -1,14 +1,17 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
 
+// Parsa
 public class User {
     private static final ArrayList<String> questions = new ArrayList<>();
     private static final ArrayList<String> slogans = new ArrayList<>();
-    private String username;
-    private String password;
-    private String email;
-    private String nickname;
+    private final String username;
+    private final String password;
+    private final String email;
+    private final String nickname;
     private String passwordQuestion;
     private String passwordAnswer;
     private String slogan;
@@ -16,6 +19,9 @@ public class User {
     private int rank;
 
     static {
+        questions.add("What is your favorite food?");
+        questions.add("What is your best friend's name?");
+        questions.add("What is your pet's name?");
     }
 
     public User(String username, String password, String email, String nickname, String... slogan) {
@@ -23,34 +29,51 @@ public class User {
         this.password = password;
         this.email = email;
         this.nickname = nickname;
-        if (slogan[0] != null) this.slogan = slogan[0;]
+        this.slogan = slogan[0] != null ? slogan[0] : null;
     }
 
-    public static ArrayList<String> getQuestions() {
+    public static String getQuestionByIndex(int index) {
+        return questions.get(index);
     }
 
-    public static String getRandomPassword() {
+    public static int questionsCount() {
+        return questions.size();
     }
 
     public static String getRandomSlogan() {
-    }
-
-    public static String getSuggestedUsername(String username) {
-    }
-
-    private static boolean isPasswordNotValid(String password) {
-    }
-
-    private static boolean isPasswordWeak(String password) {
-    }
-
-    private static boolean isEmailNotValid(String email) {
+        return slogans.get(new Random().nextInt(slogans.size()));
     }
 
     public boolean isPasswordNotCorrect(String password) {
+        return !password.equals(this.password);
     }
 
-    public boolean isPasswordNotRepeated(String password) {
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getPasswordQuestion() {
+        return passwordQuestion;
+    }
+
+    public void setPasswordQuestion(String passwordQuestion) {
+        this.passwordQuestion = passwordQuestion;
+    }
+
+    public String getPasswordAnswer() {
+        return passwordAnswer;
+    }
+
+    public void setPasswordAnswer(String passwordAnswer) {
+        this.passwordAnswer = passwordAnswer;
     }
 
     public String getSlogan() {

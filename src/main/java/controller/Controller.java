@@ -30,4 +30,7 @@ public class Controller {
 
     }
 
+    public Game getGame() {
+        return game;
+    }
 }

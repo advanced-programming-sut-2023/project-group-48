@@ -2,12 +2,8 @@ package controller;
 
 public class MapMenuController {
     private final Controller controller;
-
-    enum Direction {
-    }
-
-    int currentColumn;
-    int currentRow;
+    private int currentColumn;
+    private int currentRow;
 
     public MapMenuController(Controller controller) {
         this.controller = controller;
