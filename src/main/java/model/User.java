@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Random;
 
 // Parsa
@@ -12,9 +11,9 @@ public class User {
     private final String password;
     private final String email;
     private final String nickname;
-    private String passwordQuestion;
-    private String passwordAnswer;
-    private String slogan;
+    private final String securityQuestion;
+    private final String securityAnswer;
+    private final String slogan;
     private int highScore;
     private int rank;
 
@@ -24,11 +23,13 @@ public class User {
         questions.add("What is your pet's name?");
     }
 
-    public User(String username, String password, String email, String nickname, String... slogan) {
+    public User(String username, String password, String email, String nickname, String securityQuestion, String securityAnswer, String... slogan) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.nickname = nickname;
+        this.securityQuestion = securityQuestion;
+        this.securityAnswer = securityAnswer;
         this.slogan = slogan[0] != null ? slogan[0] : null;
     }
 
@@ -60,43 +61,23 @@ public class User {
         return nickname;
     }
 
-    public String getPasswordQuestion() {
-        return passwordQuestion;
+    public String getSecurityQuestion() {
+        return securityQuestion;
     }
 
-    public void setPasswordQuestion(String passwordQuestion) {
-        this.passwordQuestion = passwordQuestion;
-    }
-
-    public String getPasswordAnswer() {
-        return passwordAnswer;
-    }
-
-    public void setPasswordAnswer(String passwordAnswer) {
-        this.passwordAnswer = passwordAnswer;
+    public boolean isSecurityAnswerNotCorrect(String securityAnswer) {
+        return !securityAnswer.equals(this.securityAnswer);
     }
 
     public String getSlogan() {
+        return this.slogan;
     }
 
     public int getHighScore() {
+        return this.highScore;
     }
 
     public int getRank() {
-    }
-
-    public void setUsername(String username) {
-    }
-
-    public void setPassword(String password) {
-    }
-
-    public void setEmail(String email) {
-    }
-
-    public void setNickname(String nickname) {
-    }
-
-    public void setSlogan(String slogan) {
+        return this.rank;
     }
 }

@@ -7,9 +7,10 @@ public class MainMenuController {
         this.controller = controller;
     }
 
-    public String startMatch(String... playersUsenames) {
+    public String startMatch(String... playersUsernames) {
     }
 
     public String logout() {
+        return controller.logout();
     }
 }

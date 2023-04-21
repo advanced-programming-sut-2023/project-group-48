@@ -11,7 +11,8 @@ public class SignUpMenuController {
     private final Controller controller;
     private static final int MIN_PASSWORD_LENGTH = 6;
     private static final int MAX_PASSWORD_LENGTH = 12;
-    private HashMap<String, String> temporaryUserDetails = new HashMap<>();
+    private HashMap<String, String> userDetails = new HashMap<>();
+    private String captchaAnswer;
     private int step = 0;
 
     public SignUpMenuController(Controller controller) {
@@ -65,7 +66,7 @@ public class SignUpMenuController {
         return !email.matches("[\\w.]+\\@[\\w\\.]+\\.[\\w\\.]+");
     }
 
-    public String createUser(String username, String password, String passwordConfirmation, String email, String nickname, String... slogan) {
+    public String createUserStep(String username, String password, String passwordConfirmation, String email, String nickname, String... slogan) {
         String result = "";
         if (username.isEmpty() || password.isEmpty() || email.isEmpty() || nickname.isEmpty() || (slogan.length != 0 && slogan[0].isEmpty()))
             return "a filed is empty!";
@@ -82,34 +83,57 @@ public class SignUpMenuController {
             result += "Your slogan is: \" " + User.getRandomSlogan() + " \"";
         if (passwordConfirmation == null && password.equals("random"))
             result += (result.isEmpty() ? "" : "\n") + "Your random password is: " + getRandomPassword() + "\n Please re-enter your password here:\n";
-        temporaryUserDetails.put("username", username);
-        temporaryUserDetails.put("password", password);
-        temporaryUserDetails.put("email", email);
-        temporaryUserDetails.put("nickname", nickname);
-        if (slogan.length != 0) temporaryUserDetails.put("slogan", slogan[0]);
-        step++;
+        userDetails.put("username", username);
+        userDetails.put("password", password);
+        userDetails.put("email", email);
+        userDetails.put("nickname", nickname);
+        if (slogan.length != 0) userDetails.put("slogan", slogan[0]);
+        if (result.isEmpty()) {
+            step = 1;
+            return chooseQuestionStep();
+        }
+        step = 1;
         return result;
     }
 
-    public String postCreateUser(String... passwordConfirmation) {
-        String result = "Pick your security question :";
-        if (passwordConfirmation.length != 0 && !passwordConfirmation[0].equals(temporaryUserDetails.get(1)))
+    public String chooseQuestionStep(String... passwordConfirmation) {
+        StringBuilder result = new StringBuilder("Pick your security question :");
+        if (passwordConfirmation.length != 0 && !passwordConfirmation[0].equals(userDetails.get("password")))
             return "password confirmation is not correct!";
         for (int index = 0; index < 3; index++) {
-            result += "\n" + (index + 1) + "\\. " + User.getQuestionByIndex(index);
+            result.append("\n").append(index + 1).append("\\. ").append(User.getQuestionByIndex(index));
         }
-        step++;
-        return result;
+        step = 2;
+        return result.toString();
     }
 
-    public String finalCreateUser(String question, String answer) {
-        User user;
-        controller.getGame().addUser(user = new User(temporaryUserDetails.get("username"), temporaryUserDetails.get("password"), temporaryUserDetails.get("email"), temporaryUserDetails.get("nickname"), temporaryUserDetails.get("slogan")));
-        user.setPasswordQuestion(question);
-        user.setPasswordAnswer(answer);
-        step = 0;
-        temporaryUserDetails = new HashMap<>();
+    public String captchaStep(String question, String answer) {
+        userDetails.put("securityQuestion", question);
+        userDetails.put("securityAnswer", answer);
+        step = 3;
+        return generateCaptcha();
+    }
+
+    public String generateCaptcha() {
+        String[] captcha = Game.getRandomCaptcha();
+        captchaAnswer = captcha[1];
+        return captcha[0] + "\nenter the number: ";
+    }
+
+    public String finalStep(String userCaptchaAnswer) {
+        if (userCaptchaAnswer.equals("refresh captcha")) {return generateCaptcha();}
+        if (!userCaptchaAnswer.equals(captchaAnswer)) return "captcha answer is incorrect!";
+
+        controller.getGame().addUser(new User(userDetails.get("username"), userDetails.get("password"),
+                                              userDetails.get("email"), userDetails.get("nickname"),
+                                              userDetails.get("securityQuestion"), userDetails.get("securityAnswer"),
+                                              userDetails.get("slogan")));
+        userDetails = new HashMap<>();
         return "user created successfully!";
+    }
+
+    public String enterLoginMenu() {
+        return controller.enterLoginMenu();
     }
 
     public int getStep() {

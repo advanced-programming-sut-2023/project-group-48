@@ -33,4 +33,18 @@ public class Controller {
     public Game getGame() {
         return game;
     }
+
+    public String enterLoginMenu() {
+        game.setCurrentMenu(loginMenu);
+        return "entered login Menu!";
+    }
+    public String enterMainMenu() {
+        game.setCurrentMenu(mainMenu);
+        return "entered main Menu!";
+    }
+
+    public String logout() {
+        game.setCurrentMenu(signUpMenu);
+        return "logged out!";
+    }
 }

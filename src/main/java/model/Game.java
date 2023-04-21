@@ -6,22 +6,34 @@ import model.People.Troop;
 import view.Menu;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 // Parsa
 public class Game {
-    private ArrayList<User> users;
+    private final ArrayList<User> users;
     private User currentUser;
     private Menu currentMenu;
     private Match currentMatch;
     private Troop selectedTroop;
     private Unit selectedUnit;
 
-    public Game(ArrayList<User> users) {
-        this.users = users;
+    public Game() {
+        this.users = new ArrayList<>();
     }
 
-    public static String getRandomCaptcha() {
-        // TODO
+    public static String[] getRandomCaptcha() {
+        Random random = new Random();
+        int digitCount = random.nextInt(5) + 4;
+        ArrayList<Integer> numbersToUserInCaptcha = new ArrayList<>();
+        String captchaAnswer = "";
+        for (int i = 0; i < digitCount; i++) {
+            int number = random.nextInt(10);
+            numbersToUserInCaptcha.add(number);
+            captchaAnswer += (i == 0 ? "" : " ") + Integer.toString(number);
+        }
+        String[] result = {Captcha.getFullArt(numbersToUserInCaptcha), captchaAnswer};
+        return result;
     }
 
     public User getCurrentUser() {
