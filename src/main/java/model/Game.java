@@ -5,6 +5,7 @@ import model.Match.Unit;
 import model.People.Troop;
 import view.Menu;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -26,14 +27,13 @@ public class Game {
         Random random = new Random();
         int digitCount = random.nextInt(5) + 4;
         ArrayList<Integer> numbersToUserInCaptcha = new ArrayList<>();
-        String captchaAnswer = "";
+        StringBuilder captchaAnswer = new StringBuilder();
         for (int i = 0; i < digitCount; i++) {
             int number = random.nextInt(10);
             numbersToUserInCaptcha.add(number);
-            captchaAnswer += (i == 0 ? "" : " ") + Integer.toString(number);
+            captchaAnswer.append(i == 0 ? "" : " ").append(Integer.toString(number));
         }
-        String[] result = {Captcha.getFullArt(numbersToUserInCaptcha), captchaAnswer};
-        return result;
+        return new String[]{Captcha.getFullArt(numbersToUserInCaptcha), captchaAnswer.toString()};
     }
 
     public User getCurrentUser() {
