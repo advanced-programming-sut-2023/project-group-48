@@ -3,6 +3,8 @@ package controller;
 import model.Game;
 import view.*;
 
+import java.io.IOException;
+
 public class Controller {
     private final SignUpMenu signUpMenu;
     private final LoginMenu loginMenu;
@@ -14,7 +16,7 @@ public class Controller {
     private final ShopMenu shopMenu;
     private final Game game;
 
-    public Controller() {
+    public Controller() throws IOException {
         this.signUpMenu = new SignUpMenu(this);
         this.loginMenu = new LoginMenu(this);
         this.mainMenu = new MainMenu(this);

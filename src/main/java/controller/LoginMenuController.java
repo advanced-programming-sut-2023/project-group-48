@@ -3,6 +3,8 @@ package controller;
 import model.Game;
 import model.User;
 
+import java.io.IOException;
+
 // Parsa
 public class LoginMenuController {
     private final Controller controller;
@@ -46,7 +48,7 @@ public class LoginMenuController {
         return captcha[0] + "\nenter the number: ";
     }
 
-    public String finalStep(String userCaptchaAnswer) {
+    public String finalStep(String userCaptchaAnswer) throws IOException {
         if (userCaptchaAnswer.equals("refresh captcha")) {return generateCaptcha();}
         if (!userCaptchaAnswer.equals(captchaAnswer)) return "captcha answer is incorrect!";
 
@@ -63,7 +65,7 @@ public class LoginMenuController {
         return "please enter your answer:\n" + forgotUser.getSecurityQuestion();
     }
 
-    public String AnswerToSecurityQuestion(String answer) {
+    public String AnswerToSecurityQuestion(String answer) throws IOException {
         if (forgotUser.isSecurityAnswerNotCorrect(answer)) return "answer is not correct!";
 
         step = 0;

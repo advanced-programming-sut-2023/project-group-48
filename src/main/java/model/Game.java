@@ -1,26 +1,55 @@
 package model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import model.Match.Match;
 import model.Match.Unit;
 import model.People.Troop;
 import view.Menu;
 
+import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 // Parsa
 public class Game {
     private final ArrayList<User> users;
+    private DataBase db;
     private User currentUser;
     private Menu currentMenu;
     private Match currentMatch;
     private Troop selectedTroop;
     private Unit selectedUnit;
 
-    public Game() {
-        this.users = new ArrayList<>();
+    public Game() throws IOException {
+        File usersFile = new File("Users.jason");
+        if (usersFile.exists()) {
+            Gson gson = new Gson();
+            BufferedReader fileReader = new BufferedReader(new FileReader(usersFile));
+            users = gson.fromJson(fileReader, new TypeToken<ArrayList<User>>(){}.getType());
+            fileReader.close();
+        } else {
+            users = new ArrayList<User>();
+            FileWriter fileWriter = new FileWriter(usersFile);
+            fileWriter.close();
+        }
+
+        File dataBaseFile = new File("DataBase.jason");
+        if (dataBaseFile.exists()) {
+            Gson gson = new Gson();
+            BufferedReader fileReader = new BufferedReader(new FileReader(dataBaseFile));
+            db = gson.fromJson(fileReader, DataBase.class);
+            fileReader.close();
+        } else {
+            db = new DataBase();
+            FileWriter fileWriter = new FileWriter(dataBaseFile);
+            fileWriter.close();
+        }
     }
 
     public static String[] getRandomCaptcha() {
@@ -40,8 +69,13 @@ public class Game {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
+    public void setCurrentUser(User currentUser) throws IOException {
         this.currentUser = currentUser;
+        db.setCurrentUser(currentUser);
+        Gson gson = new Gson();
+        FileWriter fileWriter = new FileWriter("DataBase.jason");
+        fileWriter.write(gson.toJson(db));
+        fileWriter.close();
     }
 
     public Menu getCurrentMenu() {
@@ -60,8 +94,12 @@ public class Game {
         this.currentMatch = currentMatch;
     }
 
-    public void addUser(User user) {
+    public void addUser(User user) throws IOException {
         users.add(user);
+        Gson gson = new Gson();
+        FileWriter fileWriter = new FileWriter("Users.jason");
+        fileWriter.write(gson.toJson(users));
+        fileWriter.close();
     }
 
     public User getUserByUsername(String username) {

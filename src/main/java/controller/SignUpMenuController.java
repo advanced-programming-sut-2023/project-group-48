@@ -121,13 +121,15 @@ public class SignUpMenuController {
     }
 
     public String finalStep(String userCaptchaAnswer) {
-        if (userCaptchaAnswer.equals("refresh captcha")) {return generateCaptcha();}
+        if (userCaptchaAnswer.equals("refresh captcha")) {
+            return generateCaptcha();
+        }
         if (!userCaptchaAnswer.equals(captchaAnswer)) return "captcha answer is incorrect!";
 
         controller.getGame().addUser(new User(userDetails.get("username"), userDetails.get("password"),
-                                              userDetails.get("email"), userDetails.get("nickname"),
-                                              userDetails.get("securityQuestion"), userDetails.get("securityAnswer"),
-                                              userDetails.get("slogan")));
+                userDetails.get("email"), userDetails.get("nickname"),
+                userDetails.get("securityQuestion"), userDetails.get("securityAnswer"),
+                userDetails.get("slogan")));
         userDetails = new HashMap<>();
         return "user created successfully!";
     }
