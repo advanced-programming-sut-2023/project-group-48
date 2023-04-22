@@ -1,5 +1,7 @@
 package model;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -25,7 +27,7 @@ public class User {
 
     public User(String username, String password, String email, String nickname, String securityQuestion, String securityAnswer, String... slogan) {
         this.username = username;
-        this.password = password;
+        this.password = getEncryptedString(password);
         this.email = email;
         this.nickname = nickname;
         this.securityQuestion = securityQuestion;
@@ -45,8 +47,12 @@ public class User {
         return slogans.get(new Random().nextInt(slogans.size()));
     }
 
+    private static String getEncryptedString(String originalString) {
+        return DigestUtils.sha256Hex(originalString);
+    }
+
     public boolean isPasswordNotCorrect(String password) {
-        return !password.equals(this.password);
+        return !getEncryptedString(password).equals(this.password);
     }
 
     public String getUsername() {

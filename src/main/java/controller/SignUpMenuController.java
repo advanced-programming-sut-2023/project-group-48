@@ -9,9 +9,9 @@ import java.util.*;
 // Parsa
 public class SignUpMenuController {
     private static final String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`~!@#$%^&*()-_=+[]{}\\|'\";:,<.>/?";
-    private final Controller controller;
     private static final int MIN_PASSWORD_LENGTH = 6;
     private static final int MAX_PASSWORD_LENGTH = 12;
+    private final Controller controller;
     private HashMap<String, String> userDetails = new HashMap<>();
     private String captchaAnswer;
     private int step = 0;

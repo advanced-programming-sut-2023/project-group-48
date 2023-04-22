@@ -31,7 +31,7 @@ public class LoginMenuController {
                 wrongPasswordCount++;
             }
             if (wrongPasswordCount >= 3) {
-                // TODO
+                return "you have to wait for " + wrongPasswordCount * 2 + " seconds!";
             }
             return "Username and password didn’t match!";
         }
@@ -52,8 +52,8 @@ public class LoginMenuController {
         if (userCaptchaAnswer.equals("refresh captcha")) {return generateCaptcha();}
         if (!userCaptchaAnswer.equals(captchaAnswer)) return "captcha answer is incorrect!";
 
-        // TODO
         controller.getGame().setCurrentUser(attendedUser);
+        if (mustStayLoggedIn) controller.getGame().setDataBaseCurrentUser(attendedUser);
         return "logged in successfully!\n" + controller.enterMainMenu();
     }
 
