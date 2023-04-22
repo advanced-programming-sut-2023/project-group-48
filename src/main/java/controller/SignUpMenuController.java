@@ -3,6 +3,7 @@ package controller;
 import model.Game;
 import model.User;
 
+import java.io.IOException;
 import java.util.*;
 
 // Parsa
@@ -120,7 +121,7 @@ public class SignUpMenuController {
         return captcha[0] + "\nenter the number: ";
     }
 
-    public String finalStep(String userCaptchaAnswer) {
+    public String finalStep(String userCaptchaAnswer) throws IOException {
         if (userCaptchaAnswer.equals("refresh captcha")) {
             return generateCaptcha();
         }
