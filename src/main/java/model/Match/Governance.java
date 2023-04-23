@@ -7,12 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Governance {
-    public static enum Factor {}
-
-    public static enum Food {}
-
     private int popularity;
-    private HashMap<Factor, Integer> popularityFactors;
+    private HashMap<PopularityFactor, Integer> popularityFactors;
     private int population;
     private int maxPopulation;
     private int coinCount;
@@ -116,7 +112,12 @@ public class Governance {
     public void removeBuilding(Building building) {
     }
 
-    public void addResource(Resource resource, int count) {}
+    public void addResource(Resource resource, int count) {
+    }
 
-    public void removeResource(Resource resource, int count) {}
+    public void removeResource(Resource resource, int count) {
+    }
+
+    public boolean areResourcesEnoughToRepair(Building building) {
+    }
 }

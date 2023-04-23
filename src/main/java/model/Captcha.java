@@ -245,7 +245,7 @@ public enum Captcha {
         for (int i = 0; i < noiseCount; i++) {
             String[] noise = {"*", "%", "$", "?", "#", "@"};
             int start = rand.nextInt(numbersToUse.size());
-            result.replace(start, start + 1, noise[rand.nextInt(noise.length)]);
+            if (result.charAt(start) != '\n') result.replace(start, start + 1, noise[rand.nextInt(noise.length)]);
         }
         return result.toString();
     }

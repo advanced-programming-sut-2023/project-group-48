@@ -13,8 +13,8 @@ public class Match {
     private final Unit[][] map;
     private final int MAX_COLUMN;
     private final int MAX_ROW;
-    private final model.Match.Market Market;
-    private Shop shop;
+    private final Market market;
+    private final Shop shop;
     private final TurnManager Turn_Manager;
     private ArrayList<Trade> trades;
 
@@ -23,8 +23,9 @@ public class Match {
         Players = players;
         this.MAX_COLUMN = MAX_COLUMN;
         this.MAX_ROW = MAX_ROW;
-        map = new Unit[this.MAX_COLUMN][this.MAX_ROW];
-        Market = market;
+        this.map = new Unit[this.MAX_COLUMN][this.MAX_ROW];
+        this.market = market;
+        this.shop = new Shop();
         Turn_Manager = turn_Manager;
     }
 
@@ -55,7 +56,7 @@ public class Match {
     public void fight(Troop troop1, Troop troops2) {
     }
 
-    public void pourOil(Direction direccion) {
+    public void pourOil(Direction direction) {
     }
 
     public void digTunnels(int column, int row) {

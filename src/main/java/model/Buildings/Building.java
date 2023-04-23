@@ -1,35 +1,39 @@
 package model.Buildings;
 
+import model.Match.Direction;
+import model.Match.LandType;
 import model.Match.Resource;
 import model.User;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Building {
     private final User owner;
     private final int column;
     private final int row;
-    private HashMap<Resource, Integer> resourcesToBuild;
     private final String type;
     private final BuildingType buildingType;
     private int hp;
-    private Direction direction;
+    private final Direction direction;
 
-    public Building(User owner, int column, int row, String type) {
+    public Building(User owner, int column, int row, String type, BuildingType buildingType, int hp, Direction direction) {
         this.owner = owner;
         this.column = column;
         this.row = row;
         this.type = type;
-        this.buildingType = BuildingType.getBuildingType(type);
-    }
-
-    public static Building createABuilding(int column, int row, String type) {
+        this.buildingType = buildingType;
+        this.hp = hp;
+        this.direction = direction;
     }
 
     public static boolean isLandTypeValidForBuilding(Building building, LandType landType) {
+        return building.buildingType.getValidLandTypes().contains(landType);
     }
 
     public static boolean isBuildingPlaceValid(int column, int row, String type) {
+        // TODO
     }
 
     public int getColumn() {
@@ -56,21 +60,16 @@ public class Building {
         this.hp = hp;
     }
 
-    public boolean areResourcesEnoughToRepair() {
-    }
-
     public boolean isEnemyNearby() {
+        // TODO
     }
 
     public void repair() {
+        // TODO
     }
 
     public Direction getDirection() {
         return direction;
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
     }
 
     public User getOwner() {

@@ -19,7 +19,7 @@ import java.util.Random;
 // Parsa
 public class Game {
     private final ArrayList<User> users;
-    private DataBase db;
+    private final DataBase db;
     private User currentUser;
     private Menu currentMenu;
     private Match currentMatch;
