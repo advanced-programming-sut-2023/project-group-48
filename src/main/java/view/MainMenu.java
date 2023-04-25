@@ -10,7 +10,7 @@ public class MainMenu extends Menu {
         this.mainMenuController = new MainMenuController(controller);
     }
 
-    private enum Commands {}
+    //private enum Commands {}
 
     @Override
     public void run() {

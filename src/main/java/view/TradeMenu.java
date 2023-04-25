@@ -10,7 +10,7 @@ public class TradeMenu extends Menu {
         this.tradeMenuController = new TradeMenuController(controller);
     }
 
-    private enum Commands {}
+    //private enum Commands {}
 
     @Override
     public void run() {

@@ -10,7 +10,7 @@ public class SignUpMenu extends Menu {
         this.signUpMenuController = new SignUpMenuController(controller);
     }
 
-    private enum Commands {}
+    //private enum Commands {}
 
     @Override
     public void run() {

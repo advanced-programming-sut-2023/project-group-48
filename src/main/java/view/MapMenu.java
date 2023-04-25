@@ -12,7 +12,7 @@ public class MapMenu extends Menu {
         this.mapMenuController = new MapMenuController(controller);
     }
 
-    private enum Commands {
+    /*private enum Commands {
         LOGIN(new ArrayList<>("command", "-i asd", "-jasd"));
 
         private final ArrayList<String> regex;
@@ -24,10 +24,11 @@ public class MapMenu extends Menu {
         public static getMatcher(String input, Command command) {
 
         }
-    }
+    }*/
 
     @Override
     public void run() {
 
     }
 }
+
