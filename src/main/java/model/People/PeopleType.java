@@ -1,18 +1,16 @@
 package model.People;
 
+import model.Buildings.Building;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public enum PeopleType {
-    ARCHER(new ArrayList<>(List.of())),
-    FIGHTER(new ArrayList<>(List.of())),
-    SLAVE(new ArrayList<>(List.of())),
-    SWORDS_MAN(new ArrayList<>(List.of())),
-    THROWERS(new ArrayList<>(List.of())),
-    WALL_CRAWLER(new ArrayList<>(List.of())),
-    WORKER(new ArrayList<>(List.of()))
+    TROOP(new ArrayList<>(List.of("Archer", "Crossbowmen", "Spearmen", "Pikemen", "Macemen", "Swordsmen", "Knight", "Tunneler", "Laddermen", "Engineer", "Black Monk", "Archer Bow", "Slaves", "Slingers", "Assassins", "Horse Archers", "Arabian Swordsmen", "Fire Throwers"))),
+    WORKER(new ArrayList<>(List.of("Engineer")))
     ;
 
+    private static final PeopleType[] peopleTypes = {TROOP, WORKER};
     private final ArrayList<String> People;
 
     PeopleType(ArrayList<String> people) {
@@ -20,5 +18,9 @@ public enum PeopleType {
     }
 
     public static PeopleType getPersonType(String type) {
+        for (PeopleType peopleType : peopleTypes) {
+            if (peopleType.People.contains(type)) return peopleType;
+        }
+        return null;
     }
 }

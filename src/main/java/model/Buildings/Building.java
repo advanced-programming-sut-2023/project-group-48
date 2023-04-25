@@ -1,16 +1,12 @@
 package model.Buildings;
 
 import model.Match.Direction;
+import model.Match.Governance;
 import model.Match.LandType;
-import model.Match.Resource;
 import model.User;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class Building {
-    private final User owner;
+    private final Governance governance;
     private final int column;
     private final int row;
     private final String type;
@@ -18,14 +14,42 @@ public class Building {
     private int hp;
     private final Direction direction;
 
-    public Building(User owner, int column, int row, String type, BuildingType buildingType, int hp, Direction direction) {
-        this.owner = owner;
+
+    public Building(Governance governance, int column, int row, String type, BuildingType buildingType, int hp, Direction direction) {
+        this.governance = governance;
         this.column = column;
         this.row = row;
         this.type = type;
         this.buildingType = buildingType;
         this.hp = hp;
         this.direction = direction;
+    }
+
+    public String createBuildingByType(String type) {
+        if (BuildingType.getBuildingType(type) == null) return null;
+        switch (BuildingType.getBuildingType(type)) {
+            case NORMAL:
+                return new Building();
+            break;
+            case TOWER:
+                return new Tower();
+                break;
+            case INDUSTRIAL_CENTER:
+                return new IndustrialCenter();
+                break;
+            case INN:
+                return new Inn();
+                break;
+            case TRAP:
+                return new Trap();
+                break;
+            case RECRUITMENT_CENTER:
+                return new RecruitmentCenter();
+                break;
+            case STORAGE:
+                return new String();
+                break;
+        }
     }
 
     public static boolean isLandTypeValidForBuilding(Building building, LandType landType) {
@@ -72,7 +96,7 @@ public class Building {
         return direction;
     }
 
-    public User getOwner() {
-        return owner;
+    public Governance getGovernance() {
+        return governance;
     }
 }

@@ -1,5 +1,5 @@
 package model.People;
 
-public class State {
+public enum State {
     STANDING, DEFENSIVE, AGGRESSIVE;
 }

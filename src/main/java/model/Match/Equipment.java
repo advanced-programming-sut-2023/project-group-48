@@ -1,4 +1,4 @@
-package model.People;
+package model.Match;
 
 public enum Equipment {
 

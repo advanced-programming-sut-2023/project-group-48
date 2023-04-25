@@ -5,7 +5,8 @@ import model.Match.Property;
 import model.User;
 
 public class IndustrialCenter extends Building {
-    private final Property property;
+    private final Property usedProperty;
+    private final Property producedProperty;
     private final int rate;
 
     public IndustrialCenter(User owner, int column, int row, String type, BuildingType buildingType, int hp, Direction direction) {
@@ -14,10 +15,11 @@ public class IndustrialCenter extends Building {
     }
 
     public boolean canProduce() {
-        // TODO
     }
+
     public void produce() {
-        // TODO
+        this.getGovernance().reduceProperty(usedProperty, rate);
+        this.getGovernance().addProperty(producedProperty, rate);
     }
 
     public int getRate() {

@@ -22,7 +22,7 @@ public class Governance {
 
     private ArrayList<Building> buildings;
 
-    private HashMap<Resource, Integer> resources;
+    private HashMap<Property, Integer> properties;
 
     public Governance() {
     }
@@ -31,7 +31,7 @@ public class Governance {
         return popularity;
     }
 
-    public void changePopularityByFactor(Factor factor) {
+    public void changePopularityByFactor(PopularityFactor factor) {
     }
 
     public int getPopulation() {
@@ -112,10 +112,10 @@ public class Governance {
     public void removeBuilding(Building building) {
     }
 
-    public void addResource(Resource resource, int count) {
+    public void addProperty(Property property, int count) {
     }
 
-    public void removeResource(Resource resource, int count) {
+    public void reduceProperty(Property property, int count) {
     }
 
     public boolean areResourcesEnoughToRepair(Building building) {

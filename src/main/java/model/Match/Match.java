@@ -1,7 +1,6 @@
 package model.Match;
 
 import model.*;
-import model.People.Equipment;
 import model.People.Troop;
 
 import java.util.ArrayList;
