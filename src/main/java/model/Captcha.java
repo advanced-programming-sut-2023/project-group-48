@@ -238,7 +238,7 @@ public enum Captcha {
 
         StringBuilder result = new StringBuilder();
         for (int index = 0; index < 15; index++) {
-            result.append(index != 0 ? "\n" : "").append(finalCaptcha[index]);
+            result.append(finalCaptcha[index]).append("\n");
         }
         Random rand = new Random();
         int noiseCount = rand.nextInt(15 * numbersToUse.size());
