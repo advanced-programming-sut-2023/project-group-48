@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Phase 0" />
         <module name="Project Repo" />
+        <module name="project-group-48" />
       </profile>
     </annotationProcessing>
   </component>

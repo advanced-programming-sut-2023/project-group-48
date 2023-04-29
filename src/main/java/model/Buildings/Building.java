@@ -3,6 +3,7 @@ package model.Buildings;
 import model.Match.Direction;
 import model.Match.Governance;
 import model.Match.LandType;
+import model.People.PeopleType;
 import model.User;
 
 public class Building {
@@ -15,17 +16,17 @@ public class Building {
     private final Direction direction;
 
 
-    public Building(Governance governance, int column, int row, String type, BuildingType buildingType, int hp, Direction direction) {
+    public Building(Governance governance, int column, int row, String type, BuildingType buildingType, Direction direction) {
         this.governance = governance;
         this.column = column;
         this.row = row;
         this.type = type;
         this.buildingType = buildingType;
-        this.hp = hp;
+        this.hp = BuildingType.getHP(type);
         this.direction = direction;
     }
 
-    public String createBuildingByType(String type) {
+    public Building dropBuildingByType(int column, int row, String type) {
         if (BuildingType.getBuildingType(type) == null) return null;
         switch (BuildingType.getBuildingType(type)) {
             case NORMAL:
@@ -47,7 +48,7 @@ public class Building {
                 return new RecruitmentCenter();
                 break;
             case STORAGE:
-                return new String();
+                return new Storage();
                 break;
         }
     }
@@ -89,7 +90,7 @@ public class Building {
     }
 
     public void repair() {
-        // TODO
+        hp = BuildingType.getHP(type);
     }
 
     public Direction getDirection() {
@@ -98,5 +99,8 @@ public class Building {
 
     public Governance getGovernance() {
         return governance;
+    }
+    public void takeDamage(int damage) {
+        hp -= damage;
     }
 }
