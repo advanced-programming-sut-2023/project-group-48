@@ -1,5 +1,7 @@
 package model.Buildings;
 
+import model.Match.Direction;
+import model.Match.Governance;
 import model.Match.Property;
 import model.User;
 
@@ -9,9 +11,9 @@ public class Storage extends Building {
     private final HashMap<Property, Integer> properties;
     private final int capacity;
 
-    public Storage(User owner, int column, int row, String type, int capacity) {
-        super(owner, column, row, type);
-        properties = new HashMap<Property, Integer>();
+    public Storage(Governance governance, int column, int row, String type, BuildingType buildingType, Direction direction, HashMap<Property, Integer> properties, int capacity) {
+        super(governance, column, row, type, buildingType, direction);
+        this.properties = new HashMap<Property, Integer>;
         this.capacity = capacity;
     }
 
