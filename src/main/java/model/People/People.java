@@ -7,19 +7,17 @@ import java.util.ArrayList;
 public class People {
     private int column;
     private int row;
-    private final String type;
-    private final PeopleType peopleType;
+    private String type;
+    private PeopleType peopleType;
     private Job job;
 
-    public People(int column, int row, String type, PeopleType peopleType) {
+    public People(int column, int row, String type) {
         this.column = column;
         this.row = row;
         this.type = type;
-        this.peopleType = peopleType;
     }
 
-    public static People generatePeople(PeopleType peopleType) {}
-    public static ArrayList<Direction> generatePath(int destinationColumn, int destinationRow, People people) {
+    public ArrayList<Direction> generatePath(int column, int row) {
     }
 
     public PeopleType getPeopleType() {
