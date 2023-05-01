@@ -26,11 +26,11 @@ public class Building {
         this.direction = direction;
     }
 
-    public Building dropBuildingByType(int column, int row, String type) {
+    public Building dropBuildingByType(Governance governance, int column, int row, String type, Direction direction) {
         if (BuildingType.getBuildingType(type) == null) return null;
         switch (BuildingType.getBuildingType(type)) {
             case NORMAL:
-                return new Building();
+                return new Building(governance, column, row, type, BuildingType.NORMAL, direction);
             break;
             case TOWER:
                 return new Tower();
@@ -53,8 +53,8 @@ public class Building {
         }
     }
 
-    public static boolean isLandTypeValidForBuilding(Building building, LandType landType) {
-        return building.buildingType.getValidLandTypes().contains(landType);
+    public static boolean isLandTypeValidForBuilding(String buildingType, LandType landType) {
+        return BuildingType.getValidLandTypes(buildingType).contains(landType);
     }
 
     public static boolean isBuildingPlaceValid(int column, int row, String type) {
@@ -85,13 +85,13 @@ public class Building {
         this.hp = hp;
     }
 
-    public boolean isEnemyNearby() {
-        // TODO
+    public boolean isEnemyNearby(int column, int row) {
+        // if enemy building is near the location
     }
 
     public void repair() {
         hp = BuildingType.getHP(type);
-    }
+    } // why not static ?
 
     public Direction getDirection() {
         return direction;

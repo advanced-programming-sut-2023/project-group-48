@@ -48,37 +48,18 @@ public class SignUpMenuController {
         return username + additionalUsername;
     }
 
-    public static boolean isUsernameNotValid(String username) {
-        return !username.matches("\\w+");
-    }
-
-    private static String isPasswordWeak(String password) {
-        String result = "";
-        if (password.length() < 6) result += "short password, ";
-        if (!password.matches(".*[A-Z].*")) result += "no upper case letter, ";
-        if (!password.matches(".*[a-z].*")) result += "no lower case letter, ";
-        if (!password.matches(".*\\d.*")) result += "not digits, ";
-        if (!password.matches(".*[^a-zA-Z0-9].*")) result += "no non letter character, ";
-        if (result.endsWith(", ")) result = result.substring(0, result.lastIndexOf(','));
-        return result;
-    }
-
-    private static boolean isEmailNotValid(String email) {
-        return !email.matches("[\\w.]+\\@[\\w\\.]+\\.[\\w\\.]+");
-    }
-
     public String createUserStep(String username, String password, String passwordConfirmation, String email, String nickname, String... slogan) {
         String result = "";
         if (username.isEmpty() || password.isEmpty() || email.isEmpty() || nickname.isEmpty() || (slogan.length != 0 && slogan[0].isEmpty()))
             return "a filed is empty!";
-        if (isUsernameNotValid(username)) return "not a valid username!";
+        if (User.isUsernameNotValid(username)) return "not a valid username!";
         if (controller.getGame().getUserByUsername(username) != null)
             return "username already exists!";
-        if (!(result = isPasswordWeak(password)).isEmpty()) return "password is weak: " + result;
+        if (!(result = User.isPasswordWeak(password)).isEmpty()) return "password is weak: " + result;
         if (passwordConfirmation != null && !password.equals(passwordConfirmation))
             return "password confirmation is not correct!";
         if (controller.getGame().getUserByEmail(email) != null) return "email already exists!";
-        if (isEmailNotValid(email)) return "email is not valid!";
+        if (User.isEmailNotValid(email)) return "email is not valid!";
 
         if (slogan.length != 0 && slogan[0].equals("random"))
             result += "Your slogan is: \" " + User.getRandomSlogan() + " \"";
@@ -115,7 +96,7 @@ public class SignUpMenuController {
         return generateCaptcha();
     }
 
-    public String generateCaptcha() {
+    private String generateCaptcha() {
         String[] captcha = Game.getRandomCaptcha();
         captchaAnswer = captcha[1];
         return captcha[0] + "\nenter the number: ";
