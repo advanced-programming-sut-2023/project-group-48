@@ -5,14 +5,14 @@ import model.Match.Governance;
 import model.User;
 
 public class Trap extends Building {
-    private final int damage;
+    private boolean isActive;
 
-    public Trap(Governance governance, int column, int row, String type, BuildingType buildingType, Direction direction, int damage) {
+    public Trap(Governance governance, int column, int row, String type, BuildingType buildingType, Direction direction) {
         super(governance, column, row, type, buildingType, direction);
-        this.damage = damage;
+        isActive = type.equals("Killing Pit");
     }
 
-    public int getDamage() {
-        return damage;
+    public void activate() {
+        isActive = true;
     }
 }

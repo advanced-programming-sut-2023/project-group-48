@@ -9,13 +9,13 @@ import java.util.Random;
 public class User {
     private static final ArrayList<String> questions = new ArrayList<>();
     private static final ArrayList<String> slogans = new ArrayList<>();
-    private final String username;
-    private final String password;
-    private final String email;
-    private final String nickname;
+    private String username;
+    private String password;
+    private String email;
+    private String nickname;
     private final String securityQuestion;
     private final String securityAnswer;
-    private final String slogan;
+    private String slogan;
     private int highScore;
     private int rank;
 
@@ -33,6 +33,25 @@ public class User {
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
         this.slogan = slogan[0] != null ? slogan[0] : null;
+    }
+
+    public static boolean isUsernameNotValid(String username) {
+        return !username.matches("\\w+");
+    }
+
+    public static String isPasswordWeak(String password) {
+        String result = "";
+        if (password.length() < 6) result += "short password, ";
+        if (!password.matches(".*[A-Z].*")) result += "no upper case letter, ";
+        if (!password.matches(".*[a-z].*")) result += "no lower case letter, ";
+        if (!password.matches(".*\\d.*")) result += "not digits, ";
+        if (!password.matches(".*[^a-zA-Z0-9].*")) result += "no non letter character, ";
+        if (result.endsWith(", ")) result = result.substring(0, result.lastIndexOf(','));
+        return result;
+    }
+
+    public static boolean isEmailNotValid(String email) {
+        return !email.matches("[\\w.]+\\@[\\w\\.]+\\.[\\w\\.]+");
     }
 
     public static String getQuestionByIndex(int index) {
@@ -85,5 +104,37 @@ public class User {
 
     public int getRank() {
         return this.rank;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = getEncryptedString(password);
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setSlogan(String slogan) {
+        this.slogan = slogan;
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public void removeSlogan() {
+        slogan = null;
     }
 }
