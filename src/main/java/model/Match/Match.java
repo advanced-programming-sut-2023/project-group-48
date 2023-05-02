@@ -71,7 +71,7 @@ public class Match {
         return trades;
     }
 
-    public Cell getUnit(int column, int row) {
+    public Cell getCell(int column, int row) {
         return map[column - 1][row - 1];
     }
 }

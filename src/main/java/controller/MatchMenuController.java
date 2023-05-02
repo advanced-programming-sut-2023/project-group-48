@@ -55,7 +55,7 @@ public class MatchMenuController {
     public String selectBuilding(int column, int row) {
     }
 
-    public String createUnit(String type, int count) {
+    public String createCell(String type, int count) {
     }
 
     public String repair() {

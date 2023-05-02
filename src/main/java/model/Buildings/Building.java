@@ -15,7 +15,7 @@ public class Building {
     private int hp;
     private final Direction direction;
 
-    
+
     public Building(Governance governance, int column, int row, String type, BuildingType buildingType, Direction direction) {
         this.governance = governance;
         this.column = column;

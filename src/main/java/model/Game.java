@@ -18,7 +18,7 @@ public class Game {
     private Menu currentMenu;
     private Match currentMatch;
     private Troop selectedTroop;
-    private Cell selectedUnit;
+    private Cell selectedCell;
 
     public Game() throws IOException {
         File usersFile = new File("Users.json");
@@ -124,11 +124,11 @@ public class Game {
         this.selectedTroop = selectedTroop;
     }
 
-    public Cell getSelectedUnit() {
-        return selectedUnit;
+    public Cell getSelectedCell() {
+        return selectedCell;
     }
 
-    public void setSelectedUnit(Cell selectedUnit) {
-        this.selectedUnit = selectedUnit;
+    public void setSelectedCell(Cell selectedCell) {
+        this.selectedCell= selectedCell;
     }
 }
