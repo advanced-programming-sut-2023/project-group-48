@@ -6,7 +6,6 @@ import model.User;
 import java.io.IOException;
 import java.util.*;
 
-// Parsa
 public class SignUpMenuController {
     private static final String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`~!@#$%^&*()-_=+[]{}\\|'\";:,<.>/?";
     private static final int MIN_PASSWORD_LENGTH = 6;

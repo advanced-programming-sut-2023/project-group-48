@@ -29,7 +29,9 @@ public class Controller {
     }
 
     public void run() {
-
+        while (game.getCurrentMenu() != null) {
+            game.getCurrentMenu().run();
+        }
     }
 
     public Game getGame() {
@@ -45,8 +47,13 @@ public class Controller {
         return "entered main Menu!";
     }
 
-    public String logout() {
+    public String logout() throws IOException {
         game.setCurrentMenu(signUpMenu);
+        game.setCurrentUser(null);
         return "logged out!";
+    }
+
+    public void exit() {
+        game.setCurrentMenu(null);
     }
 }

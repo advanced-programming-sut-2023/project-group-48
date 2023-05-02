@@ -3,20 +3,14 @@ package model;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.Match.Match;
-import model.Match.Unit;
+import model.Match.Cell;
 import model.People.Troop;
 import view.Menu;
 
 import java.io.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
-import java.security.MessageDigest;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
-// Parsa
 public class Game {
     private final ArrayList<User> users;
     private final DataBase db;
@@ -24,10 +18,10 @@ public class Game {
     private Menu currentMenu;
     private Match currentMatch;
     private Troop selectedTroop;
-    private Unit selectedUnit;
+    private Cell selectedUnit;
 
     public Game() throws IOException {
-        File usersFile = new File("Users.jason");
+        File usersFile = new File("Users.json");
         if (usersFile.exists()) {
             BufferedReader fileReader = new BufferedReader(new FileReader(usersFile));
             users = new Gson().fromJson(fileReader, new TypeToken<ArrayList<User>>(){}.getType());
@@ -103,7 +97,7 @@ public class Game {
     public void addUser(User user) throws IOException {
         users.add(user);
         Gson gson = new Gson();
-        FileWriter fileWriter = new FileWriter("Users.jason");
+        FileWriter fileWriter = new FileWriter("Users.json");
         fileWriter.write(gson.toJson(users));
         fileWriter.close();
     }
@@ -130,11 +124,11 @@ public class Game {
         this.selectedTroop = selectedTroop;
     }
 
-    public Unit getSelectedUnit() {
+    public Cell getSelectedUnit() {
         return selectedUnit;
     }
 
-    public void setSelectedUnit(Unit selectedUnit) {
+    public void setSelectedUnit(Cell selectedUnit) {
         this.selectedUnit = selectedUnit;
     }
 }

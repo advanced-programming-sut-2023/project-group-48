@@ -2,13 +2,13 @@ package model.Match;
 
 import java.util.ArrayList;
 
-public class Unit {
+public class Cell {
     private final int column;
     private final int row;
     private LandType landType;
     private ArrayList<Component> components;
 
-    public Unit(int column, int row) {
+    public Cell(int column, int row) {
         this.column = column;
         this.row = row;
     }
@@ -21,7 +21,7 @@ public class Unit {
         this.landType = landType;
     }
 
-    public boolean isUnitEmpty() {}
+    public boolean isCellEmpty() {}
 
     public int getColumn() {
         return column;

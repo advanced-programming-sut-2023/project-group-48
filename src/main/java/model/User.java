@@ -5,7 +5,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import java.util.ArrayList;
 import java.util.Random;
 
-// Parsa
 public class User {
     private static final ArrayList<String> questions = new ArrayList<>();
     private static final ArrayList<String> slogans = new ArrayList<>();

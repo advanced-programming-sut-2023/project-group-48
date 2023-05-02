@@ -1,5 +1,9 @@
 package controller;
 
+import model.Match.Match;
+
+import java.io.IOException;
+
 public class MainMenuController {
     private final Controller controller;
 
@@ -7,10 +11,14 @@ public class MainMenuController {
         this.controller = controller;
     }
 
-    public String startMatch(String... playersUsernames) {
+    public String startMatch(int rounds, String... playersUsernames) {
+        if (playersUsernames.length <= 1) return "not enough players!";
+
+        controller.getGame().setCurrentMatch(new Match());
+        return "match started!";
     }
 
-    public String logout() {
+    public String logout() throws IOException {
         return controller.logout();
     }
 }

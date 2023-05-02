@@ -9,7 +9,7 @@ public class Match {
     private final int rounds;
     private final ArrayList<User> Players;
     private User currentPlayer;
-    private final Unit[][] map;
+    private final Cell[][] map;
     private final int MAX_COLUMN;
     private final int MAX_ROW;
     private final Market market;
@@ -17,15 +17,15 @@ public class Match {
     private final TurnManager Turn_Manager;
     private ArrayList<Trade> trades;
 
-    public Match(int rounds, ArrayList<User> players, int MAX_COLUMN, int MAX_ROW, Market market, TurnManager turn_Manager) {
+    public Match(int rounds, ArrayList<User> players, int MAX_COLUMN, int MAX_ROW) {
         this.rounds = rounds;
         Players = players;
         this.MAX_COLUMN = MAX_COLUMN;
         this.MAX_ROW = MAX_ROW;
-        this.map = new Unit[this.MAX_COLUMN][this.MAX_ROW];
-        this.market = market;
+        this.map = new Cell[this.MAX_COLUMN][this.MAX_ROW];
+        this.market = new Market();
         this.shop = new Shop();
-        Turn_Manager = turn_Manager;
+        this.Turn_Manager = new TurnManager();
     }
 
     public int getRounds() {
@@ -71,7 +71,7 @@ public class Match {
         return trades;
     }
 
-    public Unit getUnit(int column, int row) {
+    public Cell getUnit(int column, int row) {
         return map[column - 1][row - 1];
     }
 }
