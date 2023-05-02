@@ -10,6 +10,7 @@ public class People {
     private final String type;
     private final PeopleType peopleType;
     private Job job;
+    private int hp;
 
     public People(int column, int row, String type, PeopleType peopleType) {
         this.column = column;
@@ -18,7 +19,9 @@ public class People {
         this.peopleType = peopleType;
     }
 
-    public static People generatePeople(PeopleType peopleType) {}
+    public static People generatePeople(PeopleType peopleType) {
+    }
+
     public static ArrayList<Direction> generatePath(int destinationColumn, int destinationRow, People people) {
     }
 
@@ -48,5 +51,9 @@ public class People {
 
     public void setRow(int row) {
         this.row = row;
+    }
+
+    public void takeDamage(int damage) {
+        this.hp -= damage;
     }
 }
