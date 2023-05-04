@@ -32,7 +32,7 @@ public class Game {
             fileWriter.close();
         }
 
-        File dataBaseFile = new File("DataBase.jason");
+        File dataBaseFile = new File("DataBase.json");
         if (dataBaseFile.exists()) {
             BufferedReader fileReader = new BufferedReader(new FileReader(dataBaseFile));
             db = new Gson().fromJson(fileReader, DataBase.class);
@@ -65,7 +65,7 @@ public class Game {
         this.currentUser = currentUser;
         if (currentUser == null) {
             db.setCurrentUser(null);
-            FileWriter fileWriter = new FileWriter("DataBase.jason");
+            FileWriter fileWriter = new FileWriter("DataBase.json");
             fileWriter.write(new Gson().toJson(db));
             fileWriter.close();
         }
@@ -73,7 +73,7 @@ public class Game {
 
     public void setDataBaseCurrentUser(User user) throws IOException {
         db.setCurrentUser(currentUser);
-        FileWriter fileWriter = new FileWriter("DataBase.jason");
+        FileWriter fileWriter = new FileWriter("DataBase.json");
         fileWriter.write(new Gson().toJson(db));
         fileWriter.close();
     }

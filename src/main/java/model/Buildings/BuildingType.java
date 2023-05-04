@@ -155,6 +155,7 @@ public enum BuildingType {
         put("Stockpile", new HashMap<>() {{put(Property.WOOD, 10);}});
         put("Granary", new HashMap<>() {{put(Property.WOOD, 10);}});
     }};
+    private static final ArrayList<String> validBuildingsTOGoThrough = new ArrayList<>(Arrays.asList("Short Wall"));
 
     private final ArrayList<String> buildings;
 
@@ -187,5 +188,9 @@ public enum BuildingType {
 
     public static boolean isGateHouse(String type) {
         return GATEHOUSE.buildings.contains(type);
+    }
+
+    public static boolean isBuildingValidToGoThrough(Building building) {
+        return validBuildingsTOGoThrough.contains(building.getType());
     }
 }

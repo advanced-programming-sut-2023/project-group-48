@@ -52,7 +52,10 @@ public class Troop extends People {
     public boolean isLadderMan() {
         return ladderMan;
     }
-    public boolean hasHorse() {return hasHorse;}
+
+    public boolean hasHorse() {
+        return hasHorse;
+    }
 
     public State getState() {
         return state;
@@ -70,9 +73,17 @@ public class Troop extends People {
         return finalRow;
     }
 
-    public static boolean isMoveValid(int column, int row, Troop troop) {}
+    public static boolean isMoveValid(int column, int row, Troop troop) {
+    }
 
-    public void setFinalDestination(int column, int row){}
+    public void setFinalDestination(int column, int row) {
+    }
 
-    public void patrol(int column1, int row1, int column2, int row2) {}
+    public void patrol(int column1, int row1, int column2, int row2) {
+    }
+
+    public void attack(People targetPeople) {
+        if (targetPeople instanceof Worker) targetPeople.takeDamage(attackPower.getValue());
+        else targetPeople.takeDamage(attackPower.getValue() - ((Troop) targetPeople).getDefensePower().getValue());
+    }
 }
