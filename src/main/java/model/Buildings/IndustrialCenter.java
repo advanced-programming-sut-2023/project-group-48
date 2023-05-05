@@ -10,8 +10,8 @@ public class IndustrialCenter extends Building {
     private final Property producedProperty;
     private final int rate;
 
-    public IndustrialCenter(Governance governance, int column, int row, String type, BuildingType buildingType, Direction direction) {
-        super(governance, column, row, type, buildingType, direction);
+    public IndustrialCenter(Governance governance, int row, int column, String type, BuildingType buildingType, Direction direction) {
+        super(governance, row, column, type, buildingType, direction);
     }
 
     public boolean canProduce() {

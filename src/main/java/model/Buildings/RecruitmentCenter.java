@@ -13,8 +13,8 @@ public class RecruitmentCenter extends Building {
     private static HashMap<String, Integer> costsByCharacterType = new HashMap<>();
     private final ArrayList<People> recruits;
 
-    public RecruitmentCenter(Governance governance, int column, int row, String type, BuildingType buildingType, Direction direction, ArrayList<People> recruits) {
-        super(governance, column, row, type, buildingType, direction);
+    public RecruitmentCenter(Governance governance, int row, int column, String type, BuildingType buildingType, Direction direction, ArrayList<People> recruits) {
+        super(governance, row, column, type, buildingType, direction);
         this.recruits = new ArrayList<>();
     }
 

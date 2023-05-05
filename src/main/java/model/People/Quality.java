@@ -4,7 +4,7 @@ public enum Quality {
     LOW(20),
     MEDIUM(40),
     HIGH(60);
-    private int value;
+    private final int value;
 
     private Quality(int value) {
         this.value = value;

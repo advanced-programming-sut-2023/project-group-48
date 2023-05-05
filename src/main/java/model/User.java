@@ -1,5 +1,6 @@
 package model;
 
+import model.Match.Governance;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class User {
     private String slogan;
     private int highScore;
     private int rank;
+    private Governance governance;
 
     static {
         questions.add("What is your favorite food?");
@@ -135,5 +137,9 @@ public class User {
 
     public void removeSlogan() {
         slogan = null;
+    }
+
+    public Governance getGovernance() {
+        return governance;
     }
 }

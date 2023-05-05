@@ -20,7 +20,7 @@ public enum BuildingType {
     TRAP(new ArrayList<>(Arrays.asList("Killing Pit", "Pitch Ditch"))),
     RECRUITMENT_CENTER(new ArrayList<>(Arrays.asList("Barrack", "Mercenary Post", "Engineer Guild"))),
     STORAGE(new ArrayList<>(Arrays.asList("Armoury", "Stockpile", "Granary"))),
-    ENVIRONMENT(new ArrayList<>(Arrays.asList("Tree", "Rock")));
+    ENVIRONMENT(new ArrayList<>(Arrays.asList("Desert Shrub", "Cherry Palm", "olive Tree", "Coconut Palm", "Date", "Tree", "Rock")));
 
     private static final BuildingType[] buildingTypes = {NORMAL, GATEHOUSE, TOWER, INDUSTRIAL_CENTER, INN, TRAP, RECRUITMENT_CENTER, STORAGE, ENVIRONMENT};
     private static final ArrayList<String> castleTypes = new ArrayList<>(Arrays.asList("Small Stone Gatehouse", "Large Stone Gatehouse",
@@ -113,49 +113,132 @@ public enum BuildingType {
         put("Granary", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
     }};
     private static final HashMap<String, HashMap<Property, Integer>> buildingsMaterialsNeedToBuild = new HashMap<String, HashMap<Property, Integer>>() {{
-        put("Small Stone Gatehouse", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Large Stone Gatehouse", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Drawbridge", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Hovel", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Caged War Dogs", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Siege Tent", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Church", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Cathedral", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Tall Wall", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Short Wall", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Lookout Tower", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Perimeter Tower", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Defence Turret", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Square Tower", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Round Tower", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Stable", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Mill", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Iron Mine", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Pitch Rig", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Quarry", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Woodcutter", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Oil Smelter", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Apple Orchard", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Diary Farmer", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Hops Farmer", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Hunter Post", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Wheat Farmer", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Bakery", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Brewer", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Armourer", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Blacksmith", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Fletcher", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Pole Turner", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Inn", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Killing Pit", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Pitch Ditch", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Mercenary Post", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Engineer Guild", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Armoury", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Stockpile", new HashMap<>() {{put(Property.WOOD, 10);}});
-        put("Granary", new HashMap<>() {{put(Property.WOOD, 10);}});
+        put("Small Stone Gatehouse", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Large Stone Gatehouse", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Drawbridge", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Hovel", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Caged War Dogs", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Siege Tent", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Church", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Cathedral", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Tall Wall", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Short Wall", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Lookout Tower", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Perimeter Tower", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Defence Turret", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Square Tower", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Round Tower", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Stable", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Mill", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Iron Mine", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Pitch Rig", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Quarry", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Woodcutter", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Oil Smelter", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Apple Orchard", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Diary Farmer", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Hops Farmer", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Hunter Post", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Wheat Farmer", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Bakery", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Brewer", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Armourer", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Blacksmith", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Fletcher", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Pole Turner", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Inn", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Killing Pit", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Pitch Ditch", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Mercenary Post", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Engineer Guild", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Armoury", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Stockpile", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Granary", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
     }};
-    private static final ArrayList<String> validBuildingsTOGoThrough = new ArrayList<>(Arrays.asList("Short Wall"));
+    private static final ArrayList<String> validBuildingsToPass = new ArrayList<>(Arrays.asList("Short Wall"));
+    private static final ArrayList<String> towerRelated = new ArrayList<>(Arrays.asList("Tall Wall", "Short Wall", "Stair", "Lookout Tower", "Perimeter Tower", "Defence Turret", "Square Tower", "Round Tower"));
 
     private final ArrayList<String> buildings;
 
@@ -186,11 +269,15 @@ public enum BuildingType {
         return castleTypes.contains(type);
     }
 
+    public static boolean isTowerRelated(String type) {
+        return towerRelated.contains(type);
+    }
+
     public static boolean isGateHouse(String type) {
         return GATEHOUSE.buildings.contains(type);
     }
 
-    public static boolean isBuildingValidToGoThrough(Building building) {
-        return validBuildingsTOGoThrough.contains(building.getType());
+    public static boolean isBuildingValidToPass(Building building) {
+        return validBuildingsToPass.contains(building.getType());
     }
 }

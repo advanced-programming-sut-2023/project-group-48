@@ -1,12 +1,13 @@
 package model.Match;
 
 import model.Buildings.Building;
-import model.Match.Resource;
+import model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Governance {
+    private User owner;
     private int popularity;
     private HashMap<PopularityFactor, Integer> popularityFactors;
     private int population;
@@ -23,8 +24,16 @@ public class Governance {
     private ArrayList<Building> buildings;
 
     private HashMap<Property, Integer> properties;
+    private ArrayList<Request> sentRequests;
+    private ArrayList<Request> receivedRequests;
+    private ArrayList<Request> requestsHistory;
 
-    public Governance() {
+    public Governance(User owner) {
+        this.owner = owner;
+    }
+
+    public User getOwner() {
+        return owner;
     }
 
     public int getPopularity() {
@@ -120,4 +129,31 @@ public class Governance {
 
     public boolean areResourcesEnoughToRepair(Building building) {
     }
+
+    public void addRequest(Request request) {
+        if (request.getReceiver().equals(owner)) receivedRequests.add(request);
+        else sentRequests.add(request);
+    }
+
+    public ArrayList<Request> getSentRequests() {
+        return sentRequests;
+    }
+
+    public ArrayList<Request> getReceivedRequests() {
+        return receivedRequests;
+    }
+
+    public void answerRequest(Request request, boolean accepted) {
+        request.setAccepted(accepted);
+        requestsHistory.add(request);
+    }
+
+    public ArrayList<Request> getRequestsHistory() {
+        return requestsHistory;
+    }
+
+    public void trade(Governance receiver, Resource resource, int count) {
+
+    }
+
 }
