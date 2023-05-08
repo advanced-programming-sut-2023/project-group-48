@@ -5,7 +5,6 @@ import model.User;
 
 import java.io.IOException;
 
-// Parsa
 public class LoginMenuController {
     private final Controller controller;
     private int wrongPasswordCount = 0;

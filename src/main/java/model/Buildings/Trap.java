@@ -7,8 +7,8 @@ import model.User;
 public class Trap extends Building {
     private boolean isActive;
 
-    public Trap(Governance governance, int column, int row, String type, BuildingType buildingType, Direction direction) {
-        super(governance, column, row, type, buildingType, direction);
+    public Trap(Governance governance, int row, int column, String type, BuildingType buildingType, Direction direction) {
+        super(governance, row, column, type, buildingType, direction);
         isActive = type.equals("Killing Pit");
     }
 

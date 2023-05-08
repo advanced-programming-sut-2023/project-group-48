@@ -58,14 +58,15 @@ public class ProfileMenuController {
 
     public String finalStep(String newPassword) {
         String result = "";
-        if (controller.getGame().getCurrentUser().isPasswordNotCorrect(currentPassword)) return "Current password is incorrect!";
-        if (!controller.getGame().getCurrentUser().isPasswordNotCorrect(newPassword)) return "Please enter a new password!";
+        if (controller.getGame().getCurrentUser().isPasswordNotCorrect(currentPassword))
+            return "Current password is incorrect!";
+        if (!controller.getGame().getCurrentUser().isPasswordNotCorrect(newPassword))
+            return "Please enter a new password!";
         if (!(result = User.isPasswordWeak(newPassword)).isEmpty()) return "new password is weak: " + result;
         controller.getGame().getCurrentUser().setPassword(newPassword);
         step = 0;
         return "password changed successfully!";
     }
-
 
     public String removeSlogan() {
         controller.getGame().getCurrentUser().removeSlogan();
@@ -73,14 +74,24 @@ public class ProfileMenuController {
     }
 
     public String displayHighScore() {
+        return "Your highscore is: " + controller.getGame().getCurrentUser().getHighScore();
     }
 
     public String displayRank() {
+        return "Your rank is: " + controller.getGame().getCurrentUser().getRank();
     }
 
     public String displaySlogan() {
+        if (controller.getGame().getCurrentUser().getSlogan() == null) return "You don't have a slogan!";
+        return "Your slogan is: " + controller.getGame().getCurrentUser().getSlogan();
     }
 
     public String profileDisplay() {
+        return "username: " + controller.getGame().getCurrentUser().getUsername() + "\n" +
+               "email: " + controller.getGame().getCurrentUser().getEmail() + "\n" +
+               "nickname: " + controller.getGame().getCurrentUser().getNickname() + "\n" +
+                "slogan: " + controller.getGame().getCurrentUser().getSlogan() + "\n" +
+               "highscore: " + controller.getGame().getCurrentUser().getHighScore() + "\n" +
+               "rank: " + controller.getGame().getCurrentUser().getRank();
     }
 }

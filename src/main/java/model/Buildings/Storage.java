@@ -11,8 +11,8 @@ public class Storage extends Building {
     private final HashMap<Property, Integer> properties;
     private final int capacity;
 
-    public Storage(Governance governance, int column, int row, String type, BuildingType buildingType, Direction direction, HashMap<Property, Integer> properties, int capacity) {
-        super(governance, column, row, type, buildingType, direction);
+    public Storage(Governance governance, int row, int column, String type, BuildingType buildingType, Direction direction, HashMap<Property, Integer> properties, int capacity) {
+        super(governance, row, column, type, buildingType, direction);
         this.properties = new HashMap<Property, Integer>;
         this.capacity = capacity;
     }

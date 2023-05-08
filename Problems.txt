@@ -3,4 +3,5 @@ handling which cells in map units can go through?
 por kardan khandaq???
 attacking methods : tunnel, fireball shooter, manjaniq, borj mohasere, dejkoob, hefaz qabel haml
 defending methods : stair, oil, khandaq, wall
+how does dropunit command work??
 -------------------------------------------------------------------------------------

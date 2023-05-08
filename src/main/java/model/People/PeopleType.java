@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum PeopleType {
-    TROOP(new ArrayList<>(List.of("Archer", "Crossbowmen", "Spearmen", "Pikemen", "Macemen", "Swordsmen", "Knight", "Tunneler", "Laddermen", "Engineer", "Black Monk", "Archer Bow", "Slaves", "Slingers", "Assassins", "Horse Archers", "Arabian Swordsmen", "Fire Throwers"))),
+    TROOP(new ArrayList<>(List.of("Sultan", "Archer", "Crossbowmen", "Spearmen", "Pikemen", "Macemen", "Swordsmen", "Knight", "Tunneler", "Laddermen", "Engineer", "Black Monk", "Archer Bow", "Slaves", "Slingers", "Assassins", "Horse Archers", "Arabian Swordsmen", "Fire Throwers"))),
     WORKER(new ArrayList<>(List.of("Engineer")))
     ;
 

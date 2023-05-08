@@ -18,8 +18,8 @@ public class Troop extends People {
 
     private ArrayList<Direction> path;
 
-    public Troop(String job, int column, int row, Quality attackPower, Quality defensePower, Quality speed, int fireRange, Nation nation, boolean ladderMan, boolean hasHorse, int finalColumn, int finalRow) {
-        super(job, column, row);
+    public Troop(int row, int column, String type, PeopleType peopleType, Quality attackPower, Quality defensePower, Quality speed, int fireRange, Nation nation, boolean ladderMan, boolean hasHorse) {
+        super(row, column, type, peopleType);
         this.attackPower = attackPower;
         this.defensePower = defensePower;
         this.speed = speed;
@@ -27,7 +27,9 @@ public class Troop extends People {
         this.nation = nation;
         this.ladderMan = ladderMan;
         this.hasHorse = hasHorse;
+        this.state = State.STANDING;
     }
+
 
     public Quality getAttackPower() {
         return attackPower;
@@ -52,7 +54,10 @@ public class Troop extends People {
     public boolean isLadderMan() {
         return ladderMan;
     }
-    public boolean hasHorse() {return hasHorse;}
+
+    public boolean hasHorse() {
+        return hasHorse;
+    }
 
     public State getState() {
         return state;
@@ -70,9 +75,19 @@ public class Troop extends People {
         return finalRow;
     }
 
-    public static boolean isMoveValid(int column, int row, Troop troop) {}
+    public static boolean isMoveValid(int row, int column, Troop troop) {
+    }
 
-    public void setFinalDestination(int column, int row){}
+    public void setFinalDestination(int row, int column) {
+        finalRow = row;
+        finalColumn = column;
+    }
 
-    public void patrol(int column1, int row1, int column2, int row2) {}
+    public void patrol(int row1, int column1, int row2, int column2) {
+    }
+
+    public void attack(People targetPeople) {
+        if (targetPeople instanceof Worker) targetPeople.takeDamage(attackPower.getValue());
+        else targetPeople.takeDamage(attackPower.getValue() - ((Troop) targetPeople).getDefensePower().getValue());
+    }
 }

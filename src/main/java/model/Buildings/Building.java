@@ -8,56 +8,62 @@ import model.User;
 
 public class Building {
     private final Governance governance;
-    private final int column;
     private final int row;
+    private final int column;
     private final String type;
     private final BuildingType buildingType;
     private int hp;
     private final Direction direction;
 
 
-    public Building(Governance governance, int column, int row, String type, BuildingType buildingType, Direction direction) {
+    public Building(Governance governance, int row, int column,  String type, BuildingType buildingType, Direction direction) {
         this.governance = governance;
-        this.column = column;
         this.row = row;
+        this.column = column;
         this.type = type;
         this.buildingType = buildingType;
         this.hp = BuildingType.getHP(type);
         this.direction = direction;
     }
 
-    public Building dropBuildingByType(Governance governance, int column, int row, String type, Direction direction) {
-        if (BuildingType.getBuildingType(type) == null) return null;
+    // TODO
+    public Building createBuildingByType(Governance governance, int row, int column,  String type, Direction direction, BuildingType buildingType) {
         switch (BuildingType.getBuildingType(type)) {
             case NORMAL:
                 return new Building(governance, column, row, type, BuildingType.NORMAL, direction);
             break;
             case TOWER:
                 return new Tower();
-                break;
+            break;
             case INDUSTRIAL_CENTER:
                 return new IndustrialCenter();
-                break;
+            break;
             case INN:
                 return new Inn();
-                break;
+            break;
             case TRAP:
                 return new Trap();
-                break;
+            break;
             case RECRUITMENT_CENTER:
                 return new RecruitmentCenter();
-                break;
+            break;
             case STORAGE:
                 return new Storage();
-                break;
+            break;
+            case null:
+                return null;
+            break;
+            default:
+                return null;
         }
+
     }
 
     public static boolean isLandTypeValidForBuilding(String buildingType, LandType landType) {
         return BuildingType.getValidLandTypes(buildingType).contains(landType);
     }
 
-    public static boolean isBuildingPlaceValid(int column, int row, String type) {
+    public static boolean isBuildingPlaceValid(int row, int column, String type) {
         // TODO
     }
 
@@ -85,7 +91,7 @@ public class Building {
         this.hp = hp;
     }
 
-    public boolean isEnemyNearby(int column, int row) {
+    public boolean isEnemyNearby(int row, int column) {
         // if enemy building is near the location
     }
 
@@ -100,6 +106,7 @@ public class Building {
     public Governance getGovernance() {
         return governance;
     }
+
     public void takeDamage(int damage) {
         hp -= damage;
     }

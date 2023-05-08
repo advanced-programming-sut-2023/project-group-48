@@ -9,8 +9,8 @@ public class Inn extends Building {
     private final int wineUsage;
     private final int rate;
 
-    public Inn(Governance governance, int column, int row, String type, BuildingType buildingType, Direction direction, int popularityChange, int wineUsage, int rate) {
-        super(governance, column, row, type, buildingType, direction);
+    public Inn(Governance governance, int row, int column, String type, BuildingType buildingType, Direction direction, int popularityChange, int wineUsage, int rate) {
+        super(governance, row, column, type, buildingType, direction);
         this.popularityChange = popularityChange;
         this.wineUsage = wineUsage;
         this.rate = rate;
