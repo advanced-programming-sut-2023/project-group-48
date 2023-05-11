@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Governance {
-    private User owner;
+    private final User owner;
     private int popularity;
     private HashMap<PopularityFactor, Integer> popularityFactors;
     private int population;
@@ -131,7 +131,7 @@ public class Governance {
     }
 
     public void addRequest(Request request) {
-        if (request.getReceiver().equals(owner)) receivedRequests.add(request);
+        if (request.getReceiver().equals(owner.getGovernance())) receivedRequests.add(request);
         else sentRequests.add(request);
     }
 

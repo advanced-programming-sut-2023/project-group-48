@@ -2,28 +2,38 @@ package model.People;
 
 import model.Buildings.BuildingType;
 import model.Match.Direction;
+import model.Match.Governance;
 
 import java.util.ArrayList;
 
 public class People {
+    private final Governance governance;
     private int row;
     private int column;
     private final String type;
     private final PeopleType peopleType;
-    private Job job;
     private int hp;
     private ArrayList<Direction> path;
 
-    public People(int row, int column, String type, PeopleType peopleType) {
+    public People(Governance governance, int row, int column, String type, PeopleType peopleType) {
+        this.governance = governance;
         this.row = row;
         this.column = column;
         this.type = type;
-        this.peopleType = peopleType;
+        this.peopleType = PeopleType.getPersonType(type);
+        this.hp = PeopleType.getPeopleHp(type);
         this.path = null;
     }
 
-    // TODO
-    public static People generatePeople(PeopleType peopleType) {
+    public static People createPeopleByType(Governance governance, int row, int column, String type) {
+        switch (PeopleType.getPersonType(type)) {
+            case WORKER:
+                return new Worker(governance, row, column, type, PeopleType.WORKER, Job.getJob(type));
+            case TROOP:
+                return new Troop(governance, row, column, type, PeopleType.TROOP);
+            default:
+                return null;
+        }
     }
 
     public static boolean canAttack(People people, People targetPeople) {
@@ -37,14 +47,6 @@ public class People {
 
     public PeopleType getPeopleType() {
         return peopleType;
-    }
-
-    public Job getJob() {
-        return job;
-    }
-
-    public void setJob(Job job) {
-        this.job = job;
     }
 
     public int getHp() {

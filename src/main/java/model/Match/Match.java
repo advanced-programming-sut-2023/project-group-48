@@ -2,6 +2,7 @@ package model.Match;
 
 import model.*;
 import model.People.People;
+import model.People.PeopleType;
 import model.People.Troop;
 
 import java.util.ArrayList;
@@ -136,5 +137,11 @@ public class Match {
         Request request = new Request(sender.getGovernance(), receiver.getGovernance(), property, amount, price, message);
         sender.getGovernance().addRequest(request);
         receiver.getGovernance().addRequest(request);
+    }
+
+    public void placePeople(PeopleType peopleType, int count, int row, int column) {
+        for (int i = 0; i < count; i++) {
+            getCell(row, column).addPeople(People.generatePeople(peopleType));
+        }
     }
 }

@@ -105,4 +105,8 @@ public class Cell {
         building = null;
         people.clear();
     }
+
+    public void addPeople(People people) {
+        this.people.add(people);
+    }
 }
