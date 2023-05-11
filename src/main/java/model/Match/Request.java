@@ -1,8 +1,8 @@
 package model.Match;
 
 public class Request {
-    private Governance sender;
-    private Governance receiver;
+    private final Governance sender;
+    private final Governance receiver;
     private final Property property;
     private final int amount;
     private final int price;

@@ -1,7 +1,10 @@
 package model.Match;
 
 import model.*;
+import model.Buildings.Building;
+import model.Buildings.BuildingType;
 import model.People.People;
+import model.People.PeopleType;
 import model.People.Troop;
 
 import java.util.ArrayList;
@@ -19,6 +22,8 @@ public class Match {
     private final Shop shop;
     private final TurnManager turnManager;
     private ArrayList<Trade> trades;
+    private Building selectedBuilding;
+    private ArrayList<People> selectedUnit;
 
     public Match(int rounds, ArrayList<User> players, int mapNumber) {
         this.rounds = rounds;
@@ -34,6 +39,9 @@ public class Match {
         this.market = new Market();
         this.shop = new Shop();
         this.turnManager = new TurnManager();
+        this.trades = new ArrayList<>();
+        this.selectedBuilding = null;
+        this.selectedUnit = null;
     }
 
     public int getRounds() {
@@ -136,5 +144,38 @@ public class Match {
         Request request = new Request(sender.getGovernance(), receiver.getGovernance(), property, amount, price, message);
         sender.getGovernance().addRequest(request);
         receiver.getGovernance().addRequest(request);
+    }
+
+    public void placePeople(int row, int column, String type, PeopleType peopleType, int count) {
+        for (int i = 0; i < count; i++) {
+            getCell(row, column).addPeople(People.createPeopleByType(currentPlayer.getGovernance(), row, column, type, peopleType));
+        }
+    }
+
+    public int getRoundsPlayed() {
+        return rounds;
+    }
+
+    public Building getSelectedBuilding() {
+        return selectedBuilding;
+    }
+
+    public void setSelectedBuilding(Building selectedBuilding) {
+        this.selectedBuilding = selectedBuilding;
+    }
+
+    public boolean areCoordinatesNotValid(int row, int column) {
+        return row < 1 || row > MAX_ROW || column < 1 || column > MAX_COLUMN;
+    }
+
+    public boolean isEnemyNearby(int row, int column) {
+    }
+
+    public ArrayList<People> getSelectedUnit() {
+        return selectedUnit;
+    }
+
+    public void setSelectedUnit(ArrayList<People> selectedUnit) {
+        this.selectedUnit = selectedUnit;
     }
 }

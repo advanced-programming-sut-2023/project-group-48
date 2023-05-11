@@ -4,4 +4,6 @@ por kardan khandaq???
 attacking methods : tunnel, fireball shooter, manjaniq, borj mohasere, dejkoob, hefaz qabel haml
 defending methods : stair, oil, khandaq, wall
 how does dropunit command work??
+controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance() better way?
+x -> row && y -> column
 -------------------------------------------------------------------------------------

@@ -4,6 +4,7 @@ import model.BackGroundColor;
 
 public enum LandType {
     LAND(BackGroundColor.BLACK), LAND_WITH_GRAVEL(BackGroundColor.RED), BOULDER(BackGroundColor.YELLOW), ROCK(BackGroundColor.BLUE), IRON(BackGroundColor.PURPLE), GRASS(BackGroundColor.GREEN), MEADOW(BackGroundColor.CYAN), DENSE_MEADOW(BackGroundColor.WHITE);
+    private static LandType[] landTypes = {LAND, LAND_WITH_GRAVEL, BOULDER, ROCK, IRON, GRASS, MEADOW, DENSE_MEADOW};
     private final BackGroundColor backGroundColor;
 
     LandType(BackGroundColor backGroundColor) {
@@ -12,6 +13,13 @@ public enum LandType {
 
     public BackGroundColor getBackGroundColor() {
         return backGroundColor;
+    }
+
+    public static LandType getLandType(String name) {
+        for (LandType landType : landTypes) {
+            if (landType.toString().equals(name)) return landType;
+        }
+        return null;
     }
 
     @Override

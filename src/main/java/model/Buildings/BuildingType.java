@@ -17,7 +17,7 @@ public enum BuildingType {
             "Oil Smelter", "Apple Orchard", "Diary Farmer", "Hops Farmer", "Hunter Post", "Wheat Farmer", "Bakery", "Brewer",
             "Armourer", "Blacksmith", "Fletcher", "Pole Turner"))),
     INN(new ArrayList<>(List.of("Inn"))),
-    TRAP(new ArrayList<>(Arrays.asList("Killing Pit", "Pitch Ditch"))),
+    TRAP(new ArrayList<>(Arrays.asList("Killing Pit", "Pitch Ditch", "Tunnel"))),
     RECRUITMENT_CENTER(new ArrayList<>(Arrays.asList("Barrack", "Mercenary Post", "Engineer Guild"))),
     STORAGE(new ArrayList<>(Arrays.asList("Armoury", "Stockpile", "Granary"))),
     ENVIRONMENT(new ArrayList<>(Arrays.asList("Desert Shrub", "Cherry Palm", "olive Tree", "Coconut Palm", "Date", "Tree", "Rock")));
