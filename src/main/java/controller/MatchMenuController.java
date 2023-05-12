@@ -28,10 +28,10 @@ public class MatchMenuController {
     }
 
     private boolean isEntryNotValid() {
-    }
+    } // TODO: implement
 
     public String showMyInfo() {
-    }
+    } // TODO: implement
 
     public String showCurrentPlayer() {
         return "current player : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getUsername();
@@ -42,36 +42,36 @@ public class MatchMenuController {
     }
 
     public String showPopularityFactors() {
-    }
+    } // TODO: implement
 
     public String showPopularity() {
-    }
+    } // TODO: implement
 
     public String showFoodList() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Map.Entry<Food, Integer> entry : controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getFoods().entrySet()) {
-            if (entry.getValue() != 0) result += entry.getKey().getName() + ": " + entry.getValue() + "\n";
+            if (entry.getValue() != 0) result.append(entry.getKey().getName()).append(": ").append(entry.getValue()).append("\n");
         }
-        if (result.equals("")) return "no food!";
-        return result;
+        if (result.toString().equals("")) return "no food!";
+        return result.toString();
     }
 
     public String setFoodRate(int foodRate) {
-    }
+    } // TODO: implement
 
     public String showFoodRate() {
         return "food rate : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getFoodRate();
     }
 
     public String setTaxRate(int taxRate) {
-    }
+    } // TODO: implement
 
     public String showTaxRate() {
         return "tax rate : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getTaxRate();
     }
 
     public String setFearRate(int fearRate) {
-    }
+    } // TODO: implement
 
     public String showFearRate() {
         return "fear rate : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getFearRate();
@@ -210,11 +210,20 @@ public class MatchMenuController {
     }
 
     public String moveUnit(int row, int column) {
-        // TODO: 5/29/2018
+        for (People people : controller.getGame().getCurrentMatch().getSelectedUnit()) {
+            controller.getGame().getCurrentMatch().givePath(people, row, column);
+        }
+        return "unit path set successfully!";
     }
 
     public String patrolUnit(int row1, int column1, int row2, int column2) {
-        // TODO: 5/29/2018
+        for (People people : controller.getGame().getCurrentMatch().getSelectedUnit()) {
+            Troop troop = (Troop) people;
+            controller.getGame().getCurrentMatch().givePath(people, row2, column2);
+            troop.setPatrolMode(true);
+            troop.setPatrolPoints(new int[][]{{row1, column1}, {row2, column2}});
+        }
+        return "unit patrol path set successfully!"
     }
 
     public String stopPatrolUnit(int row, int column) {
@@ -243,7 +252,7 @@ public class MatchMenuController {
     }
 
     public String pourOil(String direction) {
-    }
+    } // TODO: 5/29/2018
 
     public String digTunnel(int row, int column) {
         if (controller.getGame().getCurrentMatch().areCoordinatesNotValid(row, column))
@@ -255,7 +264,7 @@ public class MatchMenuController {
 
     public String buildEquipment(String equipmentName) {
         // TODO: 5/29/2018
-    }
+    } // TODO: 5/29/2018
 
     public String disbandUnit() {
         controller.getGame().getCurrentMatch().setSelectedUnit(null);

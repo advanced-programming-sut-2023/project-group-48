@@ -16,8 +16,8 @@ public class Troop extends People {
     private final boolean hasHorse;
     private int finalColumn;
     private int finalRow;
-
-    private ArrayList<Direction> path;
+    private boolean patrolMode;
+    private int[][] patrolPoints;
 
     public Troop(Governance governance, int row, int column, String type, PeopleType peopleType) {
         super(governance, row, column, type, peopleType);
@@ -88,5 +88,21 @@ public class Troop extends People {
     public void attack(People targetPeople) {
         if (targetPeople instanceof Worker) targetPeople.takeDamage(attackPower.getValue());
         else targetPeople.takeDamage(attackPower.getValue() - ((Troop) targetPeople).getDefensePower().getValue());
+    }
+
+    public boolean isInPatrolMode() {
+        return patrolMode;
+    }
+
+    public void setPatrolMode(boolean patrolMode) {
+        this.patrolMode = patrolMode;
+    }
+
+    public int[][] getPatrolPoints() {
+        return patrolPoints;
+    }
+
+    public void setPatrolPoints(int[][] patrolPoints) {
+        this.patrolPoints = patrolPoints;
     }
 }

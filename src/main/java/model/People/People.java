@@ -73,6 +73,10 @@ public class People {
         this.row = row;
     }
 
+    public ArrayList<Direction> getPath() {
+        return path;
+    }
+
     public void setPath(ArrayList<Direction> path) {
         this.path = path;
     }
