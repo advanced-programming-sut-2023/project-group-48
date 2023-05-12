@@ -1,6 +1,7 @@
 package controller;
 
 import model.Match.Property;
+import model.Match.Request;
 import model.Match.Resource;
 import model.User;
 
@@ -25,14 +26,40 @@ public class TradeMenuController {
     }
 
     public String tradeList() {
-        String result = "your trades:\n";
+        StringBuilder result = new StringBuilder("your trades:\n");
+        for (Request receivedRequest : controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getReceivedRequests()) {
+            result.append(receivedRequest.getId()).append(". Sender: ").append(receivedRequest.getSender().getOwner().getUsername()).append(", Property: ").append(receivedRequest.getProperty().getPropertyInString()).append(", Amount: ").append(receivedRequest.getAmount()).append(", Price: ").append(receivedRequest.getPrice()).append(", Sender's Message: ").append(receivedRequest.getSenderMessage()).append("\n");
+        }
+        return result.toString();
     }
 
-    public String tradeAccept(String id, String message) {
+    public String answerRequest(int id, String message, boolean accepted) {
+        Request request = controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getRequestById(controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getReceivedRequests(), id);
+        if (request == null) return "Invalid request id";
+        if (request.getReceiver() != controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance()) return "You are not the receiver of this request";
+        if (request.getReceiver().getPropertyCount(request.getProperty()) < request.getAmount()) return "You don't have enough resources";
+        if (request.getSender().getPropertyCount(Property.GOLD) < request.getPrice() * request.getAmount()) return "The sender doesn't have enough gold";
 
+        request.setAccepted(accepted);
+        request.setReceiverMessage(message);
+        if (accepted) {
+            request.getReceiver().addProperty(request.getProperty(), -1 * request.getAmount());
+            request.getSender().addProperty(request.getProperty(), request.getAmount());
+            request.getReceiver().addProperty(Property.GOLD, request.getPrice() * request.getAmount());
+            request.getSender().addProperty(Property.GOLD, -1 * request.getPrice() * request.getAmount());
+        }
+        request.getReceiver().getReceivedRequests().remove(request);
+        request.getReceiver().getRequestsHistory().add(request);
+        request.getSender().getSentRequests().remove(request);
+        request.getSender().getRequestsHistory().add(request);
+        return "Request answered successfully!";
     }
 
     public String tradeHistory() {
-
+        StringBuilder result = new StringBuilder("your trade history:\n");
+        for (Request request : controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getRequestsHistory()) {
+            result.append(request.getId()).append(". Sender: ").append(request.getSender().getOwner().getUsername()).append(", Property: ").append(request.getProperty().getPropertyInString()).append(", Amount: ").append(request.getAmount()).append(", Price: ").append(request.getPrice()).append(", Sender's Message: ").append(request.getSenderMessage()).append(", Receiver's Message: ").append(request.getReceiverMessage()).append(", Answer: ").append(request.isAccepted() ? "Yes" : "No").append("\n");
+        }
+        return result.toString();
     }
 }

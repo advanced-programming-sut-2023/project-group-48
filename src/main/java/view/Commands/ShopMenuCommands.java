@@ -1,12 +1,13 @@
 package view.Commands;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ShopMenuCommands {
-    BUY { "buy" , "\\s+-i\\s+(?<itemname>\\S+)" , "\\s+-a\\s+(?<itemamount>\\d+)" } ,
-    SELL { "sell" , "\\s+-i\\s+(?<itemname>\\S+)" , "\\s+-a\\s+(?<itemamount>\\d+)" } ;
+    BUY (new ArrayList<>(List.of("buy" , "\\s+-i\\s+(?<itemname>\\S+)" , "\\s+-a\\s+(?<itemamount>\\d+)"))) ,
+    SELL (new ArrayList<>(List.of("sell" , "\\s+-i\\s+(?<itemname>\\S+)" , "\\s+-a\\s+(?<itemamount>\\d+)"))) ;
 
     private ArrayList<String> regexs;
 

@@ -1,6 +1,8 @@
 package model.Match;
 
 public class Request {
+    private static int idCounter = 0;
+    private final int id;
     private final Governance sender;
     private final Governance receiver;
     private final Property property;
@@ -11,6 +13,7 @@ public class Request {
     private boolean isAccepted;
 
     public Request(Governance sender, Governance receiver, Property property, int amount, int price, String senderMessage) {
+        this.id = ++idCounter;
         this.sender = sender;
         this.receiver = receiver;
         this.property = property;
@@ -18,6 +21,10 @@ public class Request {
         this.price = price;
         this.senderMessage = senderMessage;
         this.isAccepted = false;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Governance getSender() {

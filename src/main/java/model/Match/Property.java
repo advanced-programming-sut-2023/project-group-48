@@ -2,7 +2,7 @@ package model.Match;
 
 public enum Property {
     COIN("coin"), WOOD, GOLD, STONE, IRON, HORSE, OX, WHEAT, FLOUR, BITUMEN, OIL, APPLE, BARLEY, MEAT, CHEESE, BREAD, BEER, ARMOUR, MACE, SWORD, BOW, SPEAR, PIKE;
-    public static Property[] properties = {COIN, WOOD, GOLD, STONE, IRON, HORSE, OX, WHEAT, FLOUR, BITUMEN, OIL, APPLE, BARLEY, MEAT, CHEESE, BREAD, BEER, ARMOUR, MACE, SWORD, BOW, SPEAR, PIKE};
+    public static final Property[] properties = {COIN, WOOD, GOLD, STONE, IRON, HORSE, OX, WHEAT, FLOUR, BITUMEN, OIL, APPLE, BARLEY, MEAT, CHEESE, BREAD, BEER, ARMOUR, MACE, SWORD, BOW, SPEAR, PIKE};
     private final String propertyInString;
 
     private Property(String propertyInString) {
@@ -15,5 +15,9 @@ public enum Property {
             }
         }
         return null;
+    }
+
+    public String getPropertyInString() {
+        return propertyInString;
     }
 }

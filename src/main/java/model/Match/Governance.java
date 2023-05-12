@@ -5,6 +5,7 @@ import model.Buildings.BuildingType;
 import model.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Governance {
@@ -136,6 +137,13 @@ public class Governance {
         return requestsHistory;
     }
 
+    public Request getRequestById(ArrayList<Request> requests, int id) {
+        for (Request request : requests) {
+            if (request.getId() == id) return request;
+        }
+        return null;
+    }
+
     public void trade(Governance receiver, Resource resource, int count) {
 
     }
@@ -144,5 +152,9 @@ public class Governance {
     }
 
     public void payForCreatingUnit(String type, int count) {
+    }
+
+    public int getPropertyCount(Property property) {
+        return properties.get(property);
     }
 }

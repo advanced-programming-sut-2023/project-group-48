@@ -1,15 +1,16 @@
 package view.Commands;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ProfileMenuCommands {
-    USERNAMECHANGE { "profile\\s+change" , "\\s+-u\\s+(?<username>\\S+)" } ,
-    NICKNAMECHANGE { "profile\\s+change" , "\\s+-n\\s+(?<nickname>\\S+)" } ,
-    PASSWORDCHANGE { "profile\\s+change\\s+password" , "\\s+-o\\s+(?<oldpassword>\\S+)" , "\\s+-n\\s+(?<newpassword>\\S+)" } ,
-    EMAILCHANGE { "profile\\s+change" , "\\s+-e\\s(?<email>\\S+)" } ,
-    SLOGANCHANGE { "profile\\s+change\\s+slogan" , "\\s+-s\\s+(?<slogan>\".*\")" } ;
+    USERNAMECHANGE (new ArrayList<>(List.of("profile\\s+change" , "\\s+-u\\s+(?<username>\\S+)"))) ,
+    NICKNAMECHANGE (new ArrayList<>(List.of("profile\\s+change" , "\\s+-n\\s+(?<nickname>\\S+)"))) ,
+    PASSWORDCHANGE (new ArrayList<>(List.of("profile\\s+change\\s+password" , "\\s+-o\\s+(?<oldpassword>\\S+)" , "\\s+-n\\s+(?<newpassword>\\S+)"))) ,
+    EMAILCHANGE (new ArrayList<>(List.of("profile\\s+change" , "\\s+-e\\s(?<email>\\S+)"))) ,
+    SLOGANCHANGE (new ArrayList<>(List.of("profile\\s+change\\s+slogan" , "\\s+-s\\s+(?<slogan>\".*\")"))) ;
 
     private ArrayList<String> regexs;
 
