@@ -1,13 +1,14 @@
 package view.Commands;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum MapMenuCommands {
-    SHOWMAP { "show\\s+map" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)"} ,
-    MOVEMAP { "map" , "(\\s+(left)?(right)?\\s+(?<x_number>\\d+)?)?" , "(\\s+(up)?(down)?\\s+(?<y_number>\\d+)?)?"} ,
-    MAPDETAILS { "show\\s+details" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)" } ;
+    SHOWMAP (new ArrayList<>(List.of("show\\s+map" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)"))) ,
+    MOVEMAP (new ArrayList<>(List.of("map" , "(\\s+(left)?(right)?\\s+(?<x_number>\\d+)?)?" , "(\\s+(up)?(down)?\\s+(?<y_number>\\d+)?)?"))) ,
+    MAPDETAILS (new ArrayList<>(List.of("show\\s+details" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)"))) ;
 
 
 
