@@ -75,6 +75,7 @@ public class Troop extends People {
     }
 
     public static boolean isMoveValid(int row, int column, Troop troop) {
+
     }
 
     public void setFinalDestination(int row, int column) {
@@ -82,8 +83,9 @@ public class Troop extends People {
         finalColumn = column;
     }
 
-    public void patrol(int row1, int column1, int row2, int column2) {
-    }
+//    public void patrol(int row1, int column1, int row2, int column2) {
+//
+//    }
 
     public void attack(People targetPeople) {
         if (targetPeople instanceof Worker) targetPeople.takeDamage(attackPower.getValue());

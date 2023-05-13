@@ -88,13 +88,9 @@ public class Building {
         this.hp = hp;
     }
 
-    public boolean isEnemyNearby(int row, int column) {
-        // if enemy building is near the location
-    }
-
     public void repair() {
         hp = BuildingType.getHP(type);
-    } // why not static ?
+    }
 
     public Direction getDirection() {
         return direction;

@@ -211,7 +211,7 @@ public class MatchMenuController {
 
     public String moveUnit(int row, int column) {
         for (People people : controller.getGame().getCurrentMatch().getSelectedUnit()) {
-            controller.getGame().getCurrentMatch().givePath(people, row, column);
+            people.setPath(controller.getGame().getCurrentMatch().givePath(people.getRow(), people.getColumn(), row, column));
         }
         return "unit path set successfully!";
     }
@@ -219,7 +219,7 @@ public class MatchMenuController {
     public String patrolUnit(int row1, int column1, int row2, int column2) {
         for (People people : controller.getGame().getCurrentMatch().getSelectedUnit()) {
             Troop troop = (Troop) people;
-            controller.getGame().getCurrentMatch().givePath(people, row2, column2);
+            troop.setPath(controller.getGame().getCurrentMatch().givePath(row1 , column1, row2, column2));
             troop.setPatrolMode(true);
             troop.setPatrolPoints(new int[][]{{row1, column1}, {row2, column2}});
         }

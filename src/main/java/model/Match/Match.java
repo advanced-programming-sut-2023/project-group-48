@@ -75,17 +75,17 @@ public class Match {
             ((Troop) people2).attack(people1);
     }
 
-    public void pourOil(Direction direction) {
-    }
-
-    public void digTunnels(int row, int column) {
-    }
-
-    public void buildEquipment(Equipment equipment) {
-    }
-
-    public void disbandUnit() {
-    }
+//    public void pourOil(Direction direction) {
+//    }
+//
+//    public void digTunnels(int row, int column) {
+//    }
+//
+//    public void buildEquipment(Equipment equipment) {
+//    }
+//
+//    public void disbandUnit() {
+//    }
 
     public ArrayList<Trade> getTrades() {
         return trades;
@@ -103,7 +103,7 @@ public class Match {
         this.selectedCell = selectedCell;
     }
 
-    private boolean pathGenerator(int currentColumn, int currentRow, int destinationColumn, int destinationRow, final ArrayList<Direction> validDirections, ArrayList<Direction> path) {
+    private boolean pathGenerator(int currentRow, int currentColumn, int destinationRow, int destinationColumn, final ArrayList<Direction> validDirections, ArrayList<Direction> path) {
         for (Direction direction : Direction.getDirections()) {
             path.add(direction);
             switch (direction) {
@@ -128,14 +128,14 @@ public class Match {
         return false;
     }
 
-    public ArrayList<Direction> givePath(People people, int destinationColumn, int destinationRow) {
+    public ArrayList<Direction> givePath(int startRow, int startColumn, int destinationRow, int destinationColumn) {
         ArrayList<Direction> path = new ArrayList<>();
         final ArrayList<Direction> validDirections = new ArrayList<>();
-        if (people.getRow() < destinationRow) validDirections.add(Direction.DOWN);
-        else if (people.getRow() > destinationRow) validDirections.add(Direction.UP);
-        if (people.getColumn() < destinationColumn) validDirections.add(Direction.RIGHT);
-        else if (people.getColumn() > destinationColumn) validDirections.add(Direction.LEFT);
-        if (pathGenerator(people.getColumn(), people.getRow(), destinationColumn, destinationRow, validDirections, path))
+        if (startRow < destinationRow) validDirections.add(Direction.DOWN);
+        else if (startRow > destinationRow) validDirections.add(Direction.UP);
+        if (startColumn < destinationColumn) validDirections.add(Direction.RIGHT);
+        else if (startRow > destinationColumn) validDirections.add(Direction.LEFT);
+        if (pathGenerator(startRow, startColumn, destinationRow, destinationColumn, validDirections, path))
             return path;
         return null;
     }
