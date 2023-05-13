@@ -24,6 +24,10 @@ public class Governance {
     private ArrayList<Request> receivedRequests;
     private ArrayList<Request> requestsHistory;
 
+    {
+
+    }
+
     public Governance(User owner) {
         this.owner = owner;
     }
