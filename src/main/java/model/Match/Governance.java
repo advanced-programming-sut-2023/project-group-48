@@ -14,7 +14,6 @@ public class Governance {
     private HashMap<PopularityFactor, Integer> popularityFactors;
     private int population;
     private int maxPopulation;
-    private HashMap<Food, Integer> foods; // TODO: set all foods 0
     private int foodRate;
     private int taxRate;
     private int fearRate;
@@ -25,7 +24,10 @@ public class Governance {
     private ArrayList<Request> requestsHistory;
 
     {
-
+        properties = new HashMap<>();
+        for (Property allProperty : Property.getAllProperties()) {
+            properties.put(allProperty, 0);
+        }
     }
 
     public Governance(User owner) {
@@ -41,6 +43,7 @@ public class Governance {
     }
 
     public void changePopularityByFactor(PopularityFactor factor) {
+
     }
 
     public int getPopulation() {
