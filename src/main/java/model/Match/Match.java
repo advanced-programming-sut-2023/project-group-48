@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class Match {
     private final int rounds;
+    private int currentRound;
     private final ArrayList<User> players;
     private final ArrayList<Governance> governances;
     private User currentPlayer;
@@ -24,9 +25,11 @@ public class Match {
     private ArrayList<Trade> trades;
     private Building selectedBuilding;
     private ArrayList<People> selectedUnit;
+    private ArrayList<People> allPeople;
 
     public Match(int rounds, ArrayList<User> players, int mapNumber) {
         this.rounds = rounds;
+        this.currentRound = 1;
         this.players = players;
         governances = new ArrayList<>();// TODO: generate governances
         for (User player : players) {
@@ -42,6 +45,7 @@ public class Match {
         this.trades = new ArrayList<>();
         this.selectedBuilding = null;
         this.selectedUnit = null;
+        this.allPeople = new ArrayList<>();
     }
 
     public int getRounds() {
@@ -148,12 +152,14 @@ public class Match {
 
     public void placePeople(int row, int column, String type, PeopleType peopleType, int count) {
         for (int i = 0; i < count; i++) {
-            getCell(row, column).addPeople(People.createPeopleByType(currentPlayer.getGovernance(), row, column, type, peopleType));
+            People people = People.createPeopleByType(currentPlayer.getGovernance(), row, column, type, peopleType);
+            getCell(row, column).addPeople(people);
+            allPeople.add(people);
         }
     }
 
     public int getRoundsPlayed() {
-        return rounds;
+        return currentRound - 1;
     }
 
     public Building getSelectedBuilding() {
@@ -169,6 +175,17 @@ public class Match {
     }
 
     public boolean isEnemyNearby(int row, int column) {
+        int startRow = row - 1;
+        int startColumn = column - 1;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (areCoordinatesNotValid(startRow + i, startColumn + j)) continue;
+                for (People person : getCell(startRow + i, startColumn + j).getPeople()) {
+                    if (!person.getGovernance().equals(currentPlayer.getGovernance()) && person instanceof Troop) return true;
+                }
+            }
+        }
+        return false;
     }
 
     public ArrayList<People> getSelectedUnit() {
@@ -177,5 +194,14 @@ public class Match {
 
     public void setSelectedUnit(ArrayList<People> selectedUnit) {
         this.selectedUnit = selectedUnit;
+    }
+
+    public void nextTurn() {
+        turnManager.nextTurn();
+        currentPlayer = currentPlayer.equals(players.get(players.size() - 1)) ? players.get(0) : players.get(players.indexOf(currentPlayer) + 1);
+    }
+
+    public void nextRound() {
+        currentRound++;
     }
 }

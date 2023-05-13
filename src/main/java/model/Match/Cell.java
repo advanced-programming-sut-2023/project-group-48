@@ -20,9 +20,16 @@ public class Cell {
 
     static {
         // TODO: add default maps
+        defaultMaps = new ArrayList<>();
+        defaultMaps.add(new Cell[200][200]);
+        for (int i = 0; i < 200; i++) {
+            for (int j = 0; j < 200; j++) {
+                defaultMaps.get(0)[i][j] = new Cell(i, j, LandType.LAND);
+            }
+        }
     }
 
-    private Cell(int row, int column) {
+    private Cell(int row, int column, LandType landType) {
         this.row = row;
         this.column = column;
         isAGovernmentBase = false;
@@ -112,5 +119,9 @@ public class Cell {
 
     public void addPeople(People people) {
         this.people.add(people);
+    }
+
+    public void removePeople(People people) {
+        this.people.remove(people);
     }
 }

@@ -3,6 +3,7 @@ package model.People;
 import model.Buildings.BuildingType;
 import model.Match.Direction;
 import model.Match.Governance;
+import model.Match.LandType;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,14 @@ public class People {
     public static boolean canAttack(People people, People targetPeople) {
         if (people instanceof Worker) return false;
         return !(Math.pow(((Troop) people).getFireRange(), 2) < Math.pow(people.getColumn() - targetPeople.getColumn(), 2) + Math.pow(people.getRow() - targetPeople.getRow(), 2));
+    }
+
+    public static boolean isLandTypeValidForCreatingUnit(String peopleType, LandType landType) {
+        return PeopleType.getValidLandTypes(peopleType).contains(landType);
+    }
+
+    public Governance getGovernance() {
+        return governance;
     }
 
     public String getType() {

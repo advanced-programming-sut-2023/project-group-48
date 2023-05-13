@@ -1,6 +1,7 @@
 package model.People;
 
 import model.Buildings.Building;
+import model.Match.LandType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,6 +79,26 @@ public enum PeopleType {
     private static final ArrayList<String> arabTroops = new ArrayList<>(Arrays.asList());
     private static final ArrayList<String> ladderMen = new ArrayList<>(Arrays.asList());
     private static final ArrayList<String> horseMan = new ArrayList<>(Arrays.asList());
+    private static final HashMap<String , ArrayList<LandType>> validLandTypesToCreate = new HashMap<>(){{
+        put("Sultan", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Archer", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Crossbowmen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Spearmen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Pikemen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Macemen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Swordsmen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Knight", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Tunneler", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Laddermen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Black Monk", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Archer Bow", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Slaves", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Slingers", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Horse Archers", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Arabian Swordsmen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Fire Throwers", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Engineer", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+    }};
     private final ArrayList<String> People;
 
     PeopleType(ArrayList<String> people) {
@@ -121,5 +142,9 @@ public enum PeopleType {
 
     public static boolean isTroopHasHorse(String type) {
         return horseMan.contains(type);
+    }
+
+    public static ArrayList<LandType> getValidLandTypes(String peopleType) {
+
     }
 }
