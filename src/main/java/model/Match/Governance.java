@@ -7,6 +7,7 @@ import model.User;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Properties;
 
 public class Governance {
     private final User owner;
@@ -15,6 +16,7 @@ public class Governance {
     private int population;
     private int maxPopulation;
     private int foodRate;
+    private int foodVariety;
     private int taxRate;
     private int fearRate;
     private ArrayList<Building> buildings;
@@ -27,6 +29,10 @@ public class Governance {
         properties = new HashMap<>();
         for (Property allProperty : Property.getAllProperties()) {
             properties.put(allProperty, 0);
+        }
+        popularityFactors = new HashMap<>();
+        for (PopularityFactor allPopularityFactor : PopularityFactor.getPopularityFactors()) {
+            popularityFactors.put(allPopularityFactor, 0);
         }
     }
 
@@ -42,8 +48,60 @@ public class Governance {
         return popularity;
     }
 
-    public void changePopularityByFactor(PopularityFactor factor) {
+    public void updatePopularity() {
+        for (PopularityFactor allPopularityFactor : PopularityFactor.getPopularityFactors()) {
+            this.popularity += popularityFactors.get(allPopularityFactor);
+        }
+    }
+    public void changePopularityByFactor() {
+        int finalFoodFactor=0;
 
+        foodVariety=0;
+        for (Property allProperty : Property.getAllFoods()) {
+            if(properties.get(allProperty) > 0){
+                foodVariety+=1;
+            }
+        }
+
+        switch (foodRate){
+            case -2:
+                finalFoodFactor+=-8;
+                break;
+            case -1:
+                finalFoodFactor+=-4;
+                break;
+            case 0:
+                finalFoodFactor+=0;
+                break;
+            case 1:
+                finalFoodFactor+=+4;
+                break;
+            case 2:
+                finalFoodFactor+=+8;
+                break;
+            default:
+                break;
+        }
+        switch (foodVariety){
+            case 1:
+                finalFoodFactor+=0;
+                break;
+            case 2:
+                finalFoodFactor+=1;
+                break;
+            case 3:
+                finalFoodFactor+=2;
+                break;
+            case 4:
+                finalFoodFactor+=3;
+                break;
+            default:
+                break;
+        }
+        if(foodVariety==0) {
+            finalFoodFactor = 0;
+        }
+        popularityFactors.put(PopularityFactor.FOOD,finalFoodFactor);
     }
 
     public int getPopulation() {
@@ -62,15 +120,19 @@ public class Governance {
         this.maxPopulation = maxPopulation;
     }
 
-    public void addFood(Food food, int count) {
-        foods.put(food, foods.get(food) + count);
+    public void addFood(Property food, int count) {
+        properties.put(food, properties.get(food) + count);
     }
 
-    public void reduceFood(Food food, int count) {
-        foods.put(food, foods.get(food) - count);
+    public void reduceFood(Property food, int count) {
+        properties.put(food, properties.get(food) - count);
     }
 
-    public HashMap<Food, Integer> getFoods() {
+    public HashMap<Property, Integer> getFoods() {
+        HashMap<Property, Integer> foods = new HashMap<>();
+        for (Property allFood : Property.getAllFoods()) {
+            foods.put(allFood, properties.get(allFood));
+        }
         return foods;
     }
 
