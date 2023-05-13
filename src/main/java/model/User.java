@@ -24,6 +24,14 @@ public class User {
         questions.add("What is your favorite food?");
         questions.add("What is your best friend's name?");
         questions.add("What is your pet's name?");
+        slogans.add("I shall have my revenge, in this life or the next.");
+        slogans.add("If you want rainbow, you have to deal with the rain.");
+        slogans.add("The best revenge is to be unlike him who performed the injury.");
+        slogans.add("It's not the size of the dog in the fight, it's the size of the fight in the dog.");
+        slogans.add("A soldier will fight long and hard for a bit of colored ribbon.");
+        slogans.add("We are going to have peace even if we have to fight for it.");
+        slogans.add("A true champion is a true champion. They go fight and win or lose, give it their all.");
+        slogans.add("Fight for the things that you care about, but do it in a way that will lead others to join you.");
     }
 
     public User(String username, String password, String email, String nickname, String securityQuestion, String securityAnswer, String... slogan) {

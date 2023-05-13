@@ -6,8 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum SignUpMenuCommands {
-    CREATEUSER (new ArrayList<>(List.of("user\\s+create" , "\\s+-u\\s+(?<username>\".+\"|\\S+)" , "\\s+-p\\s+(?<password>\\S+)\\s+(?<passconfirm>\\S+)", "\\s+-email\\s+(?<email>\\S+)" , "\\s+-n\\s+(?<nickname>\".+\"|\\S+)" , "(\\s+-s\\s+(?<slogan>\".+\"|\\S+))?"))) ,
-    ANSWERSECURITYWQUESTION (new ArrayList<>(List.of("question\\s+pick" , "\\s+-q\\s+(?<questionnumber>\\d)" , "\\s+-a\\s+(?<answer>\".+\"|\\S+)" , "\\s+-c\\s+(?<confirm>\".+\"|\\S+)")))
+    CREATEUSER (new ArrayList<>(List.of("user\\s+create" , "\\s+-u\\s+(?<username>\".*\"|\\S*)" , "\\s+-p\\s+(?<password>\\S*)(\\s+(?<passconfirm>\\S*))?", "\\s+-email\\s+(?<email>\\S*)" , "\\s+-n\\s+(?<nickname>\".*\"|\\S*)" , "(\\s+-s\\s+(?<slogan>\".*\"|\\S*))?"))) ,
+    ANSWERSECURITYQUESTION (new ArrayList<>(List.of("question\\s+pick" , "\\s+-q\\s+(?<questionnumber>\\d)" , "\\s+-a\\s+(?<answer>\".+\"|\\S+)" , "\\s+-c\\s+(?<answerconfirm>\".+\"|\\S+)")))
     ;
 
     private ArrayList<String> regexs;

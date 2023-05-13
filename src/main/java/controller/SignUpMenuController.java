@@ -53,22 +53,28 @@ public class SignUpMenuController {
             return "a filed is empty!";
         if (User.isUsernameNotValid(username)) return "not a valid username!";
         if (controller.getGame().getUserByUsername(username) != null)
-            return "username already exists!";
+            return "username already exists!\n" + "Our suggestion for username is \"" + getSuggestedUsername(username) + "\"";
         if (!(result = User.isPasswordWeak(password)).isEmpty()) return "password is weak: " + result;
         if (passwordConfirmation != null && !password.equals(passwordConfirmation))
             return "password confirmation is not correct!";
         if (controller.getGame().getUserByEmail(email) != null) return "email already exists!";
         if (User.isEmailNotValid(email)) return "email is not valid!";
 
-        if (slogan.length != 0 && slogan[0].equals("random"))
-            result += "Your slogan is: \" " + User.getRandomSlogan() + " \"";
-        if (passwordConfirmation == null && password.equals("random"))
-            result += (result.isEmpty() ? "" : "\n") + "Your random password is: " + getRandomPassword() + "\n Please re-enter your password here:\n";
+        if (slogan.length != 0 && slogan[0].equals("random")) {
+            String randSlogan = User.getRandomSlogan();
+            result += "Your slogan is: \" " + randSlogan + " \"";
+            userDetails.put("slogan", randSlogan);
+        }
+        if (passwordConfirmation == null && password.equals("random")) {
+            String randPassword = getRandomPassword();
+            result += (result.isEmpty() ? "" : "\n") + "Your random password is: " + randPassword + "\n Please re-enter your password here:\n";
+            userDetails.put("password", randPassword);
+        }
         userDetails.put("username", username);
-        userDetails.put("password", password);
+        if (!password.equals("random")) userDetails.put("password", password);
         userDetails.put("email", email);
         userDetails.put("nickname", nickname);
-        if (slogan.length != 0) userDetails.put("slogan", slogan[0]);
+        if (slogan.length != 0 && !(slogan[0]).equals("random")) userDetails.put("slogan", slogan[0]);
         if (result.isEmpty()) {
             step = 1;
             return chooseQuestionStep();

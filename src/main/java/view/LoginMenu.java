@@ -25,6 +25,9 @@ public class LoginMenu extends Menu {
             else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.FORGOTPASSWORD)) != null){
 
             }
+            else if (command.matches("^enter\\s+signup\\s+menu$")){
+
+            }
             else
                 System.out.println("Invalid Command!");
         }
