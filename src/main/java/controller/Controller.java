@@ -42,9 +42,25 @@ public class Controller {
         game.setCurrentMenu(loginMenu);
         return "entered login Menu!";
     }
+
     public String enterMainMenu() {
         game.setCurrentMenu(mainMenu);
         return "entered main Menu!";
+    }
+
+    public String enterMatchMenu() {
+        game.setCurrentMenu(matchMenu);
+        return "entered match Menu!";
+    }
+
+    public String enterTradeMenu() {
+        game.setCurrentMenu(tradeMenu);
+        return "entered trade Menu!";
+    }
+
+    public String enterMapMenu() {
+        game.setCurrentMenu(mapMenu);
+        return "entered map Menu!";
     }
 
     public String logout() throws IOException {
@@ -56,4 +72,5 @@ public class Controller {
     public void exit() {
         game.setCurrentMenu(null);
     }
+
 }

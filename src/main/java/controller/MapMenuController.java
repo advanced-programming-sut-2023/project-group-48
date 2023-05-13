@@ -14,9 +14,6 @@ public class MapMenuController {
         this.controller = controller;
     }
 
-    private static boolean isCoordinatesNotValid(int row, int column) {
-    }
-
     public String showMap(int row, int column) {
         StringBuilder map = new StringBuilder();
         int startingColumn = Math.min(column - 10, 0);
@@ -34,6 +31,26 @@ public class MapMenuController {
     }
 
     public String changeCurrentCell(String[] directions, int[] counts) {
+        for (int i = 0; i < directions.length; i++) {
+            switch (directions[i]) {
+                case "up":
+                    currentRow -= counts[i];
+                    break;
+                case "down":
+                    currentRow += counts[i];
+                    break;
+                case "left":
+                    currentColumn -= counts[i];
+                    break;
+                case "right":
+                    currentColumn += counts[i];
+                    break;
+            }
+        }
+        if (controller.getGame().getCurrentMatch().areCoordinatesNotValid(currentRow, currentColumn)) {
+            return "coordinates are not valid!";
+        }
+        return "current cell changed!";
     }
 
     public String showCellDetails(int row, int column) {
@@ -47,6 +64,7 @@ public class MapMenuController {
         return details.toString();
     }
 
-    public String exit() {
+    public String exitMapMenu() {
+        return controller.enterMatchMenu();
     }
 }

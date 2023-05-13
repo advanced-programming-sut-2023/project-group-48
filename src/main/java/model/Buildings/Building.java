@@ -27,8 +27,8 @@ public class Building {
     }
 
     // TODO
-    public Building createBuildingByType(Governance governance, int row, int column,  String type, Direction direction, BuildingType buildingType) {
-        switch (BuildingType.getBuildingType(type)) {
+    public static Building createBuildingByType(Governance governance, int row, int column, String type, BuildingType buildingType, Direction direction) {
+        switch (buildingType) {
             case NORMAL:
                 return new Building(governance, column, row, type, BuildingType.NORMAL, direction);
             break;
@@ -49,9 +49,6 @@ public class Building {
             break;
             case STORAGE:
                 return new Storage();
-            break;
-            case null:
-                return null;
             break;
             default:
                 return null;
@@ -109,5 +106,8 @@ public class Building {
 
     public void takeDamage(int damage) {
         hp -= damage;
+    }
+
+    public boolean canCreateUnit(String type) {
     }
 }

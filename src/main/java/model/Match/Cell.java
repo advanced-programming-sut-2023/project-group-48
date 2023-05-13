@@ -64,6 +64,10 @@ public class Cell {
         return building;
     }
 
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
     public ArrayList<People> getPeople() {
         return people;
     }
@@ -104,5 +108,9 @@ public class Cell {
     public void clearCell() {
         building = null;
         people.clear();
+    }
+
+    public void addPeople(People people) {
+        this.people.add(people);
     }
 }
