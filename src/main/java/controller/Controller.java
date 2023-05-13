@@ -42,6 +42,10 @@ public class Controller {
         game.setCurrentMenu(loginMenu);
         return "entered login Menu!";
     }
+    public String enterSignupMenu() {
+        game.setCurrentMenu(signUpMenu);
+        return "entered signup Menu!";
+    }
 
     public String enterMainMenu() {
         game.setCurrentMenu(mainMenu);
@@ -58,6 +62,10 @@ public class Controller {
         return "entered trade Menu!";
     }
 
+    public String enterShopMenu() {
+        game.setCurrentMenu(shopMenu);
+        return "entered shop Menu!";
+    }
     public String enterMapMenu() {
         game.setCurrentMenu(mapMenu);
         return "entered map Menu!";

@@ -89,7 +89,7 @@ public class MatchMenuController {
             return "there is already a building here!";
         if (!Building.isLandTypeValidForBuilding(type, controller.getGame().getCurrentMatch().getCell(row, column).getLandType()))
             return "this building cannot be built on this land type!";
-        if (Building.isBuildingPlaceValid(row, column, type)) return "this building cannot be built here!";
+        if (Building.isBuildingPlaceNotValid(row, column, type)) return "this building cannot be built here!";
         if (controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().areResourcesEnoughToBuild(type))
             return "you don't have enough resources to build this building!";
 
@@ -120,15 +120,15 @@ public class MatchMenuController {
         if (peopleType == null) return "invalid People type!";
         if (count <= 0) return "invalid count!";
         if (!building.canCreateUnit(type)) return "this building cannot create this unit!";
+        int row = building.getRow();
+        int column = building.getColumn();
+        if (!People.isLandTypeValidForCreatingUnit(type, controller.getGame().getCurrentMatch().getCell(row, column).getLandType())) return ""; // TODO
         if (!controller.getGame().getCurrentMatch().getSelectedBuilding().getGovernance().areResourcesEnoughToCreateUnit(type, count))
             return "you don't have enough resources to create this unit!";
         if (!controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().isPopularityEnoughToCreateUnit(type))
             return "your popularity is not enough to create this unit!";
 
-        for (int i = 0; i < count; i++) {
-            People people = People.createPeopleByType(controller.getGame().getCurrentMatch().getSelectedBuilding().getGovernance(), building.getRow(), building.getColumn(), type, peopleType);
-            match.getCell(building.getRow(), building.getColumn()).addPeople(people);
-        }
+        controller.getGame().getCurrentMatch().placePeople(building.getRow(), building.getColumn(), type, peopleType, count);
         controller.getGame().getCurrentMatch().getSelectedBuilding().getGovernance().payForCreatingUnit(type, count);
         return "unit created successfully!";
     }
@@ -223,7 +223,7 @@ public class MatchMenuController {
             troop.setPatrolMode(true);
             troop.setPatrolPoints(new int[][]{{row1, column1}, {row2, column2}});
         }
-        return "unit patrol path set successfully!"
+        return "unit patrol path set successfully!";
     }
 
     public String stopPatrolUnit(int row, int column) {

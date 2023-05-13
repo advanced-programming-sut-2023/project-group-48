@@ -3,8 +3,6 @@ package model.Buildings;
 import model.Match.Direction;
 import model.Match.Governance;
 import model.Match.LandType;
-import model.People.PeopleType;
-import model.User;
 
 public class Building {
     private final Governance governance;
@@ -60,7 +58,7 @@ public class Building {
         return BuildingType.getValidLandTypes(buildingType).contains(landType);
     }
 
-    public static boolean isBuildingPlaceValid(int row, int column, String type) {
+    public static boolean isBuildingPlaceNotValid(int row, int column, String type) {
         // TODO
     }
 
