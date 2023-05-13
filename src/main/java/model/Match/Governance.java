@@ -38,6 +38,7 @@ public class Governance {
 
     public Governance(User owner) {
         this.owner = owner;
+        this.buildings = new ArrayList<>();
     }
 
     public User getOwner() {
@@ -53,7 +54,7 @@ public class Governance {
             this.popularity += popularityFactors.get(allPopularityFactor);
         }
     }
-    public void changePopularityByFactor() {
+    public void changeFoodPopularityByFactor() {
         int finalFoodFactor=0;
 
         foodVariety=0;
@@ -103,7 +104,116 @@ public class Governance {
         }
         popularityFactors.put(PopularityFactor.FOOD,finalFoodFactor);
     }
+    public void changeTaxPopularityByFactor() {
+        int finalTaxFactor = 0;
+        switch (taxRate){
+            case -3:
+                finalTaxFactor+=7;
+                break;
+            case -2:
+                finalTaxFactor+=5;
+                break;
+            case -1:
+                finalTaxFactor+=3;
+                break;
+            case 0:
+                finalTaxFactor+=0;
+                break;
+            case 1:
+                finalTaxFactor+=-2;
+                break;
+            case 2:
+                finalTaxFactor+=-4;
+                break;
+            case 3:
+                finalTaxFactor+=-6;
+                break;
+            case 4:
+                finalTaxFactor+=-8;
+                break;
+            case 5:
+                finalTaxFactor+=-12;
+                break;
+            case 6:
+                finalTaxFactor+=-16;
+                break;
+            case 7:
+                finalTaxFactor+=-20;
+                break;
+            case 8:
+                finalTaxFactor+=-24;
+                break;
+        }
+        popularityFactors.put(PopularityFactor.TAX,finalTaxFactor);
+    }
+    public void changeReligionPopularityByFactor() {
+        int finalReligionFactor = 0;
+        double doubleReligionFactor = 0;
+        int percentReligionFactor = 0;
+        for (Building building : buildings) {
+            if (building.getType().equals("Church")) {
+                doubleReligionFactor += 1;
+            } else if (building.getType().equals("Cathedral")) {
+                doubleReligionFactor += 2;
+            }
+        }
+        percentReligionFactor = (int) Math.floor((doubleReligionFactor / ((double)population)) * 2500);
+        if(0<=percentReligionFactor && percentReligionFactor<25){
+            finalReligionFactor+=2;
+        }
+        if(25<=percentReligionFactor && percentReligionFactor<50){
+            finalReligionFactor+=4;
+        }
+        if(50<=percentReligionFactor && percentReligionFactor<75){
+            finalReligionFactor+=6;
+        }
+        if(75<=percentReligionFactor){
+            finalReligionFactor+=8;
+        }
+        popularityFactors.put(PopularityFactor.RELIGION,finalReligionFactor);
+    }
+    public void changeFearPopularityByFactor() {
+        int finalFearFactor = 0;
+        double doubleFearFactor = 0;
+        int percentFearFactor = 0;
 
+        for (Building building : buildings) {
+            if (building.getType().equals("Good Things")) {
+                doubleFearFactor += 1;
+            } else if (building.getType().equals("Bad Things")) {
+                doubleFearFactor -= 1;
+            }
+        }
+        percentFearFactor = (int) Math.floor((doubleFearFactor / ((double)population)) * 1250);
+
+        if(-75>=percentFearFactor){
+            finalFearFactor+=-4;
+        }
+        if(-50>=percentFearFactor && percentFearFactor>-75){
+            finalFearFactor+=-3;
+        }
+        if(-25>=percentFearFactor && percentFearFactor>-50){
+            finalFearFactor+=-2;
+        }
+        if(-0>=percentFearFactor && percentFearFactor>-25){
+            finalFearFactor+=-1;
+        }
+        if(0<=percentFearFactor && percentFearFactor<25){
+            finalFearFactor+=1;
+        }
+        if(25<=percentFearFactor && percentFearFactor<50){
+            finalFearFactor+=2;
+        }
+        if(50<=percentFearFactor && percentFearFactor<75){
+            finalFearFactor+=3;
+        }
+        if(75<=percentFearFactor){
+            finalFearFactor+=4;
+        }
+        popularityFactors.put(PopularityFactor.FEAR,finalFearFactor);
+
+
+    }
     public int getPopulation() {
         return population;
     }
@@ -161,9 +271,15 @@ public class Governance {
     }
 
     public void addBuilding(Building building) {
+        buildings.add(building);
     }
 
     public void removeBuilding(Building building) {
+        buildings.remove(building);
+    }
+
+    public ArrayList<Building> getBuildings() {
+        return buildings;
     }
 
     public void addProperty(Property property, int count) {
@@ -226,4 +342,6 @@ public class Governance {
     public int getPropertyCount(Property property) {
         return properties.get(property);
     }
+
+
 }
