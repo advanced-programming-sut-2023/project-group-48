@@ -4,16 +4,14 @@ import model.Buildings.Building;
 import model.Buildings.BuildingType;
 import model.User;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Properties;
+import java.util.*;
 
 public class Governance {
     private final User owner;
     private int popularity;
     private HashMap<PopularityFactor, Integer> popularityFactors;
     private int population;
+    private int unemployedPopulation; //TODO : Unemployed population
     private int maxPopulation;
     private int foodRate;
     private int foodVariety;
@@ -54,6 +52,13 @@ public class Governance {
             this.popularity += popularityFactors.get(allPopularityFactor);
         }
     }
+    public void changePopularityByFactor() {
+        changeFoodPopularityByFactor();
+        changeTaxPopularityByFactor();
+        changeReligionPopularityByFactor();
+        changeFearPopularityByFactor();
+    }
+
     public void changeFoodPopularityByFactor() {
         int finalFoodFactor=0;
 
@@ -211,9 +216,8 @@ public class Governance {
             finalFearFactor+=4;
         }
         popularityFactors.put(PopularityFactor.FEAR,finalFearFactor);
-
-
     }
+
     public int getPopulation() {
         return population;
     }
@@ -283,22 +287,14 @@ public class Governance {
     }
 
     public void addProperty(Property property, int count) {
+        properties.put(property, properties.get(property) + count);
     }
 
     public void reduceProperty(Property property, int count) {
+        properties.put(property, properties.get(property) - count);
     }
 
-    public boolean areResourcesEnoughToBuild(String type) {
-    }
 
-    public boolean areResourcesEnoughToRepair(Building building) {
-    }
-
-    public boolean areResourcesEnoughToCreateUnit(String type, int count) {
-    }
-
-    public boolean isPopularityEnoughToCreateUnit(String type) {
-    }
 
     public void addRequest(Request request) {
         if (request.getReceiver().equals(owner.getGovernance())) receivedRequests.add(request);
@@ -329,15 +325,44 @@ public class Governance {
         return null;
     }
 
-    public void trade(Governance receiver, Resource resource, int count) {
+    public boolean areResourcesEnoughToBuild(String type) {
+        for(Map.Entry<Property,Integer> entry : BuildingType.getMaterialsNeedToBuild(type).entrySet()){
+            if(properties.get(entry.getKey())<entry.getValue()) return false;
+        }
+        return true;
+    }
 
+    public boolean areResourcesEnoughToRepair(String type) {
+        for(Map.Entry<Property,Integer> entry : BuildingType.getMaterialsNeedToBuild(type).entrySet()){
+            if(properties.get(entry.getKey())<entry.getValue()/2) return false;
+        }
+        return true;
     }
 
     public void payForBuilding(String type) {
+        for(Map.Entry<Property,Integer> entry : BuildingType.getMaterialsNeedToBuild(type).entrySet()){
+            properties.put(entry.getKey(),properties.get(entry.getKey())-entry.getValue());
+        }
+    }
+    public void payForRepair(String type) {
+        for(Map.Entry<Property,Integer> entry : BuildingType.getMaterialsNeedToBuild(type).entrySet()){
+            properties.put(entry.getKey(),properties.get(entry.getKey())-entry.getValue()/2);
+        }
+    }
+
+    public boolean areResourcesEnoughToCreateUnit(String type, int count) {
+        //TODO : Equipment
+    }
+
+    public boolean isPopularityEnoughToCreateUnit(String type) {
+        if(unemployedPopulation > 0) return true;
+        return false;
     }
 
     public void payForCreatingUnit(String type, int count) {
+        //TODO : Equipment
     }
+
 
     public int getPropertyCount(Property property) {
         return properties.get(property);

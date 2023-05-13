@@ -139,7 +139,7 @@ public class MatchMenuController {
             return "selected building is not a castle!";
         if (controller.getGame().getCurrentMatch().getSelectedBuilding().getHp() == BuildingType.getHP(controller.getGame().getCurrentMatch().getSelectedBuilding().getType()))
             return "building is already at full health!";
-        if (!building.getGovernance().areResourcesEnoughToRepair(building))
+        if (!building.getGovernance().areResourcesEnoughToRepair(building.getType()))
             return "you don't have enough resources to repair this building!";
         if (match.getNearByEnemy(building.getRow(), building.getColumn(), 1).size() != 0)
             return "there is an enemy nearby!";
