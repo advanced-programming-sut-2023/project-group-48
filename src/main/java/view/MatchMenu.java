@@ -14,8 +14,6 @@ public class MatchMenu extends Menu {
         this.matchMenuController = new MatchMenuController(controller);
     }
 
-    //private enum Commands {}
-
     @Override
     public void run() {
         while (true) {

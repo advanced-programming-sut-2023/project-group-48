@@ -14,8 +14,6 @@ public class ShopMenu extends Menu {
         this.shopMenuController = new ShopMenuController(controller);
     }
 
-    //private enum Commands {}
-
     @Override
     public void run() {
         while (true){

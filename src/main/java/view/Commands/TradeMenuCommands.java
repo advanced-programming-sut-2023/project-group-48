@@ -6,8 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum TradeMenuCommands {
-    TRADE (new ArrayList<>(List.of("trade" , "\\s+-t\\s+(?<resourcetype>\\S+)" , "\\s+-a\\s+(?<resourceamount>\\d+)" , "\\s+-p\\s+(?<price>\\d+)" , "\\s+-m\\s+(?<message>\".+\")" ))) ,
-    TRADEACCEPT (new ArrayList<>(List.of("trade\\s+accept" , "\\s+-i\\s+(?<id>\\S+)" , "\\s+-m\\s+(?<message>\".+\")"))) ;
+    TRADE (new ArrayList<>(List.of("trade" , "\\s+-t\\s+(?<resourcetype>\".+\"|\\S+)" , "\\s+-a\\s+(?<resourceamount>\\d+)" , "\\s+-p\\s+(?<price>\\d+)" , "\\s+-m\\s+(?<message>\".+\"|\\S+)" ))) ,
+    TRADEACCEPT (new ArrayList<>(List.of("trade\\s+accept" , "\\s+-i\\s+(?<id>\\S+)" , "\\s+-m\\s+(?<message>\".+\"|\\S+)"))) ;
 
     private ArrayList<String> regexs;
 

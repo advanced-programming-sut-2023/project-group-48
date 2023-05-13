@@ -14,8 +14,6 @@ public class ProfileMenu extends Menu {
         this.profileMenuController = new ProfileMenuController(controller);
     }
 
-    //private enum Commands {}
-
     @Override
     public void run() {
         while (true){

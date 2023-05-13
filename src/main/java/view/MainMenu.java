@@ -14,8 +14,6 @@ public class MainMenu extends Menu {
         this.mainMenuController = new MainMenuController(controller);
     }
 
-    //private enum Commands {}
-
     @Override
     public void run() {
         while (true){
@@ -24,9 +22,10 @@ public class MainMenu extends Menu {
             if (command.matches("^user\\s+logout$")){
 
             }
-            else if (//TODO){ // match start command
+            //TODO
+            /*else if (){ // match start command
 
-            }
+            }*/
             else
                 System.out.println("Invalid Command!");
         }

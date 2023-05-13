@@ -6,12 +6,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum MatchMenuCommands {
-    FOODRATE(new ArrayList<>(List.of("food\\s+rate" , "\\s+-r\\s+(?<ratenumber>\\d+)"))) ,
-    TAXRATE(new ArrayList<>(List.of("tax\\s+rate" , "\\s+-r\\s+(?<ratenumber>\\d+)"))) ,
-    FEARRATE(new ArrayList<>(List.of("fear\\s+rate" , "\\s+-r\\s+(?<ratenumber>\\d+)"))) ,
-    DROPBUILDING(new ArrayList<>(List.of("dropbuilding" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)" , "\\s+-type\\s+(?<type>\\S+)"))) ,
+    FOODRATE(new ArrayList<>(List.of("food\\s+rate" , "\\s+-r\\s+(?<ratenumber>-?\\d+)"))) ,
+    TAXRATE(new ArrayList<>(List.of("tax\\s+rate" , "\\s+-r\\s+(?<ratenumber>-?\\d+)"))) ,
+    FEARRATE(new ArrayList<>(List.of("fear\\s+rate" , "\\s+-r\\s+(?<ratenumber>-?\\d+)"))) ,
+    DROPBUILDING(new ArrayList<>(List.of("dropbuilding" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)" , "\\s+-type\\s+(?<type>\".+\"|\\S+)"))) ,
     SELECTBUILDING(new ArrayList<>(List.of("select\\s+building" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)"))) ,
-    CREATEUNIT (new ArrayList<>(List.of("createunit" , "\\s+-type\\s+(?<type>\\S+)" , "\\s+-count\\s+(?<count>\\d+)"))) ,
+    CREATEUNIT (new ArrayList<>(List.of("createunit" , "\\s+-type\\s+(?<type>\".+\"|\\S+)" , "\\s+-count\\s+(?<count>\\d+)"))) ,
     SELECTUNIT (new ArrayList<>(List.of("select\\s+unit" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)"))) ,
     MOVEUNIT (new ArrayList<>(List.of("move\\s+unit\\s+to" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)"))) ,
     PATROLUNIT (new ArrayList<>(List.of("patrol\\s+unit" , "\\s+-x1\\s+(?<x1>\\d+)" , "\\s+-x2\\s+(?<x2>\\d+)" , "\\s+-y1\\s+(?<y1>\\d+)" , "\\s+-y2\\s+(?<y2>\\d+)"))) ,
@@ -20,12 +20,12 @@ public enum MatchMenuCommands {
     AIRATTACK (new ArrayList<>(List.of("attack" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)"))) ,
     POUROIL (new ArrayList<>(List.of("pour\\s+oil" , "\\s+-d\\s+(?<direction>\\S+)"))) ,
     DIGTUNNEL (new ArrayList<>(List.of("dig\\s+tunnel" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)"))) ,
-    BUILDEQUIPMENT (new ArrayList<>(List.of("build" , "\\s+-q\\s+(?<equipmentname>\\S+)"))) ,
-    SETTEXTUREONEBLOCK (new ArrayList<>(List.of("settexture" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)" , "\\s+-t\\s+(?<type>\\S+)"))) ,
-    SETTEXTUREBLOCKS (new ArrayList<>(List.of("settexture" , "\\s+-x1\\s+(?<x1>\\d+)" , "\\s+-y1\\s+(?<y1>\\d+)" , "\\s+-x2\\s+(?<x2>\\d+)" , "\\s+-y2\\s+(?<y2>\\d+)" , "\\s+-t\\s+(?<type>\\S+)"))) ,
+    BUILDEQUIPMENT (new ArrayList<>(List.of("build" , "\\s+-q\\s+(?<equipmentname>\".+\"|\\S+)"))) ,
+    SETTEXTUREONEBLOCK (new ArrayList<>(List.of("settexture" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)" , "\\s+-t\\s+(?<type>\".+\"|\\S+)"))) ,
+    SETTEXTUREBLOCKS (new ArrayList<>(List.of("settexture" , "\\s+-x1\\s+(?<x1>\\d+)" , "\\s+-y1\\s+(?<y1>\\d+)" , "\\s+-x2\\s+(?<x2>\\d+)" , "\\s+-y2\\s+(?<y2>\\d+)" , "\\s+-t\\s+(?<type>\".+\"|\\S+)"))) ,
     CLEAR (new ArrayList<>(List.of("clear" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)"))) ,
     DROPROCK (new ArrayList<>(List.of("droprock" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)" , "\\s+-d\\s+(?<direction>\\S)"))) ,
-    DROPTREE (new ArrayList<>(List.of("droptree" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)" , "\\s+-t\\s+(?<type>\\S+)"))) ,
+    DROPTREE (new ArrayList<>(List.of("droptree" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)" , "\\s+-t\\s+(?<type>\".+\"|\\S+)"))) ,
     DROPUNIT (new ArrayList<>(List.of("dropunit" , "\\s+-x\\s+(?<x>\\d+)" , "\\s+-y\\s+(?<y>\\d+)" , "\\s+-t\\s+(?<type>\\S+)" , "\\s+-c\\s+(?<count>\\d+)"))) ;
 
     private ArrayList<String> regexs;
