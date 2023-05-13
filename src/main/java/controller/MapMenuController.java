@@ -2,6 +2,8 @@ package controller;
 
 import model.BackGroundColor;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,27 +32,19 @@ public class MapMenuController {
         return map.toString();
     }
 
-    public String changeCurrentCell(String[] directions, int[] counts) {
-        for (int i = 0; i < directions.length; i++) {
-            switch (directions[i]) {
-                case "up":
-                    currentRow -= counts[i];
-                    break;
-                case "down":
-                    currentRow += counts[i];
-                    break;
-                case "left":
-                    currentColumn -= counts[i];
-                    break;
-                case "right":
-                    currentColumn += counts[i];
-                    break;
-            }
-        }
-        if (controller.getGame().getCurrentMatch().areCoordinatesNotValid(currentRow, currentColumn)) {
-            return "coordinates are not valid!";
-        }
-        return "current cell changed!";
+    public String changeCurrentCell(String[] hDirection, String[] vDirection) {
+        int hCount = hDirection.length == 0 ? 1 : Integer.parseInt(hDirection[1]);
+        int vCount = vDirection.length == 0 ? 1 : Integer.parseInt(vDirection[1]);
+        ArrayList<String> horizontalMoves = new ArrayList<>(Arrays.asList("right", "left"));
+        ArrayList<String> verticalMoves = new ArrayList<>(Arrays.asList("up", "down"));
+        if (!horizontalMoves.contains(hDirection[0]) || !verticalMoves.contains(vDirection[0])) return "invalid direction";
+        int finalRow = currentRow + vCount * (vDirection[0].equals("up") ? 1 : -1);
+        int finalColumn = currentColumn + hCount * (vDirection[0].equals("right") ? 1 : -1);
+        if (controller.getGame().getCurrentMatch().areCoordinatesNotValid(finalRow, finalColumn)) return ""; // TODO
+
+        currentRow = finalRow;
+        currentColumn = finalColumn;
+        return showMap(currentRow, currentColumn);
     }
 
     public String showCellDetails(int row, int column) {
