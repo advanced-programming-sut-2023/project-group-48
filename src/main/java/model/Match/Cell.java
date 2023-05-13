@@ -2,6 +2,7 @@ package model.Match;
 
 import model.Buildings.Building;
 import model.Buildings.BuildingType;
+import model.Buildings.Tower;
 import model.People.People;
 import model.People.Troop;
 
@@ -105,7 +106,7 @@ public class Cell {
     public char getSymbol() {
         if (isTroopGoingThrough()) return 'S';
         if (building != null) {
-            if (BuildingType.isTowerRelated(building.getType())) return 'W';
+            if (Tower.isTowerRelated(building.getType())) return 'W';
             if (building.getType().equals("Tree")) return 'T';
             return 'B';
         }

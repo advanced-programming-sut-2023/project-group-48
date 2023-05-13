@@ -42,8 +42,8 @@ public class People {
         return !(Math.pow(((Troop) people).getFireRange(), 2) < Math.pow(people.getColumn() - targetPeople.getColumn(), 2) + Math.pow(people.getRow() - targetPeople.getRow(), 2));
     }
 
-    public static boolean isLandTypeValidForCreatingUnit(String peopleType, LandType landType) {
-        return PeopleType.getValidLandTypes(peopleType).contains(landType);
+    public static boolean isLandTypeNotValidForCreatingUnit(String peopleType, LandType landType) {
+        return PeopleType.getNotValidLandTypes(peopleType).contains(landType);
     }
 
     public Governance getGovernance() {

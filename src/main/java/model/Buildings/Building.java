@@ -28,25 +28,25 @@ public class Building {
     public static Building createBuildingByType(Governance governance, int row, int column, String type, BuildingType buildingType, Direction direction) {
         switch (buildingType) {
             case NORMAL:
-                return new Building(governance, column, row, type, BuildingType.NORMAL, direction);
+                return new Building(governance, row, column, type, BuildingType.NORMAL, direction);
             break;
             case TOWER:
-                return new Tower();
+                return new Tower(governance, row, column, type, BuildingType.TOWER, direction);
             break;
             case INDUSTRIAL_CENTER:
-                return new IndustrialCenter();
+                return new IndustrialCenter(governance, row, column, type, BuildingType.INDUSTRIAL_CENTER, direction);
             break;
             case INN:
-                return new Inn();
+                return new Inn(governance, row, column, type, BuildingType.INN, direction);
             break;
             case TRAP:
-                return new Trap();
+                return new Trap(governance, row, column, type, BuildingType.TRAP, direction);
             break;
             case RECRUITMENT_CENTER:
-                return new RecruitmentCenter();
+                return new RecruitmentCenter(governance, row, column, type, BuildingType.RECRUITMENT_CENTER, direction);
             break;
             case STORAGE:
-                return new Storage();
+                return new Storage(governance, row, column, type, BuildingType.STORAGE, direction);
             break;
             default:
                 return null;
@@ -56,10 +56,6 @@ public class Building {
 
     public static boolean isLandTypeValidForBuilding(String buildingType, LandType landType) {
         return BuildingType.getValidLandTypes(buildingType).contains(landType);
-    }
-
-    public static boolean isBuildingPlaceNotValid(int row, int column, String type) {
-        // TODO
     }
 
     public int getColumn() {
@@ -103,5 +99,6 @@ public class Building {
     }
 
     public boolean canCreateUnit(String type) {
+        // TODO if there is enough resources
     }
 }

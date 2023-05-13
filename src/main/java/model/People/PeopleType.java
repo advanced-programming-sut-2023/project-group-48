@@ -79,25 +79,25 @@ public enum PeopleType {
     private static final ArrayList<String> arabTroops = new ArrayList<>(Arrays.asList());
     private static final ArrayList<String> ladderMen = new ArrayList<>(Arrays.asList());
     private static final ArrayList<String> horseMan = new ArrayList<>(Arrays.asList());
-    private static final HashMap<String , ArrayList<LandType>> validLandTypesToCreate = new HashMap<>(){{
-        put("Sultan", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Archer", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Crossbowmen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Spearmen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Pikemen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Macemen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Swordsmen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Knight", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Tunneler", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Laddermen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Black Monk", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Archer Bow", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Slaves", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Slingers", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Horse Archers", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Arabian Swordsmen", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Fire Throwers", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Engineer", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+    private static final HashMap<String , ArrayList<LandType>> notValidLandTypesToCreate = new HashMap<>(){{
+        put("Sultan", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Archer", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Crossbowmen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Spearmen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Pikemen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Macemen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Swordsmen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Knight", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Tunneler", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Laddermen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Black Monk", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Archer Bow", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Slaves", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Slingers", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Horse Archers", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Arabian Swordsmen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Fire Throwers", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
+        put("Engineer", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
     }};
     private final ArrayList<String> People;
 
@@ -144,7 +144,7 @@ public enum PeopleType {
         return horseMan.contains(type);
     }
 
-    public static ArrayList<LandType> getValidLandTypes(String peopleType) {
-
+    public static ArrayList<LandType> getNotValidLandTypes(String peopleType) {
+        return notValidLandTypesToCreate.get(peopleType);
     }
 }

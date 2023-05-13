@@ -10,7 +10,7 @@ import java.util.List;
 
 public enum BuildingType {
     NORMAL(new ArrayList<>(Arrays.asList("Drawbridge", "Hovel", "Caged War Dogs", "Siege Tent", "Church", "Cathedral",
-            "Tall Wall", "Short Wall", "Stair","Good Things","Bad Things"))),
+            "Tall Wall", "Short Wall", "Stair", "Good Things", "Bad Things"))),
     GATEHOUSE(new ArrayList<>(Arrays.asList("Small Stone Gatehouse", "Large Stone Gatehouse"))),
     TOWER(new ArrayList<>(Arrays.asList("Lookout Tower", "Perimeter Tower", "Defence Turret", "Square Tower", "Round Tower"))),
     INDUSTRIAL_CENTER(new ArrayList<>(Arrays.asList("Stable", "Mill", "Iron Mine", "Pitch Rig", "ًQuarry", "Woodcutter",
@@ -69,7 +69,7 @@ public enum BuildingType {
         put("Stockpile", 100);
         put("Granary", 100);
     }};
-    private static final HashMap<String, ArrayList<LandType>> buildingsValidLandTypes = new HashMap<String, ArrayList<LandType>>() {{
+    private static final HashMap<String, ArrayList<LandType>> buildings ValidLandTypes = new HashMap<String, ArrayList<LandType>>() {{
         put("Small Stone Gatehouse", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
         put("Large Stone Gatehouse", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
         put("Drawbridge", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
@@ -238,7 +238,6 @@ public enum BuildingType {
         }});
     }};
     private static final ArrayList<String> validBuildingsToPass = new ArrayList<>(Arrays.asList("Short Wall"));
-    private static final ArrayList<String> towerRelated = new ArrayList<>(Arrays.asList("Tall Wall", "Short Wall", "Stair", "Lookout Tower", "Perimeter Tower", "Defence Turret", "Square Tower", "Round Tower"));
 
     private final ArrayList<String> buildings;
 
@@ -267,10 +266,6 @@ public enum BuildingType {
 
     public static boolean isCastle(String type) {
         return castleTypes.contains(type);
-    }
-
-    public static boolean isTowerRelated(String type) {
-        return towerRelated.contains(type);
     }
 
     public static boolean isGateHouse(String type) {

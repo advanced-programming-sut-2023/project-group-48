@@ -2,7 +2,6 @@ package model.Match;
 
 import model.*;
 import model.Buildings.Building;
-import model.Buildings.BuildingType;
 import model.People.People;
 import model.People.PeopleType;
 import model.People.Troop;
@@ -41,7 +40,7 @@ public class Match {
         this.MAX_ROW = map.length;
         this.market = new Market();
         this.shop = new Shop();
-        this.turnManager = new TurnManager();
+        this.turnManager = new TurnManager(this);
         this.trades = new ArrayList<>();
         this.selectedBuilding = null;
         this.selectedUnit = null;
@@ -72,7 +71,7 @@ public class Match {
         return turnManager;
     }
 
-    public void fight(People people1, People people2) {
+    public void attack(People people1, People people2) {
         if (People.canAttack(people1, people2))
             ((Troop) people1).attack(people2);
         if (People.canAttack(people2, people1))
@@ -150,12 +149,20 @@ public class Match {
         receiver.getGovernance().addRequest(request);
     }
 
+    public ArrayList<People> getAllPeople() {
+        return allPeople;
+    }
+
     public void placePeople(int row, int column, String type, PeopleType peopleType, int count) {
         for (int i = 0; i < count; i++) {
             People people = People.createPeopleByType(currentPlayer.getGovernance(), row, column, type, peopleType);
             getCell(row, column).addPeople(people);
             allPeople.add(people);
         }
+    }
+    public void removePeople(People people) {
+        getCell(people.getRow(), people.getColumn()).removePeople(people);
+        allPeople.remove(people);
     }
 
     public int getRoundsPlayed() {
@@ -174,18 +181,21 @@ public class Match {
         return row < 1 || row > MAX_ROW || column < 1 || column > MAX_COLUMN;
     }
 
-    public boolean isEnemyNearby(int row, int column) {
-        int startRow = row - 1;
-        int startColumn = column - 1;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+    public ArrayList<People> getNearByEnemy(int row, int column, int range) {
+        ArrayList<People> enemies = new ArrayList<>();
+        int startRow = row - range;
+        int startColumn = column - range;
+        for (int i = 0; i < 2 * range + 1; i++) {
+            for (int j = 0; j < 2 * range + 1; j++) {
                 if (areCoordinatesNotValid(startRow + i, startColumn + j)) continue;
                 for (People person : getCell(startRow + i, startColumn + j).getPeople()) {
-                    if (!person.getGovernance().equals(currentPlayer.getGovernance()) && person instanceof Troop) return true;
+                    if (!person.getGovernance().equals(currentPlayer.getGovernance()) && person instanceof Troop) {
+                        enemies.add(person);
+                    }
                 }
             }
         }
-        return false;
+        return enemies;
     }
 
     public ArrayList<People> getSelectedUnit() {

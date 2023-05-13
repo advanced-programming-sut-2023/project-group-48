@@ -3,8 +3,9 @@ package model.Match;
 import model.BackGroundColor;
 
 public enum LandType {
+    // TODO water lands
     LAND(BackGroundColor.BLACK), LAND_WITH_GRAVEL(BackGroundColor.RED), BOULDER(BackGroundColor.YELLOW), ROCK(BackGroundColor.BLUE), IRON(BackGroundColor.PURPLE), GRASS(BackGroundColor.GREEN), MEADOW(BackGroundColor.CYAN), DENSE_MEADOW(BackGroundColor.WHITE);
-    private static LandType[] landTypes = {LAND, LAND_WITH_GRAVEL, BOULDER, ROCK, IRON, GRASS, MEADOW, DENSE_MEADOW};
+    private static final LandType[] landTypes = {LAND, LAND_WITH_GRAVEL, BOULDER, ROCK, IRON, GRASS, MEADOW, DENSE_MEADOW};
     private final BackGroundColor backGroundColor;
 
     LandType(BackGroundColor backGroundColor) {

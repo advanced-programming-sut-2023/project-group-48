@@ -89,7 +89,6 @@ public class MatchMenuController {
             return "there is already a building here!";
         if (!Building.isLandTypeValidForBuilding(type, controller.getGame().getCurrentMatch().getCell(row, column).getLandType()))
             return "this building cannot be built on this land type!";
-        if (Building.isBuildingPlaceNotValid(row, column, type)) return "this building cannot be built here!";
         if (controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().areResourcesEnoughToBuild(type))
             return "you don't have enough resources to build this building!";
 
@@ -122,7 +121,8 @@ public class MatchMenuController {
         if (!building.canCreateUnit(type)) return "this building cannot create this unit!";
         int row = building.getRow();
         int column = building.getColumn();
-        if (!People.isLandTypeValidForCreatingUnit(type, controller.getGame().getCurrentMatch().getCell(row, column).getLandType())) return ""; // TODO
+        if (People.isLandTypeNotValidForCreatingUnit(type, controller.getGame().getCurrentMatch().getCell(row, column).getLandType()))
+            return "this unit cannot be created on this land type!";
         if (!controller.getGame().getCurrentMatch().getSelectedBuilding().getGovernance().areResourcesEnoughToCreateUnit(type, count))
             return "you don't have enough resources to create this unit!";
         if (!controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().isPopularityEnoughToCreateUnit(type))
@@ -142,10 +142,11 @@ public class MatchMenuController {
             return "building is already at full health!";
         if (!building.getGovernance().areResourcesEnoughToRepair(building))
             return "you don't have enough resources to repair this building!";
-        if (match.isEnemyNearby(building.getRow(), building.getColumn()))
+        if (match.getNearByEnemy(building.getRow(), building.getColumn(), 1).size() != 0)
             return "there is an enemy nearby!";
 
         controller.getGame().getCurrentMatch().getSelectedBuilding().repair();
+        controller.getGame().getCurrentMatch().getSelectedBuilding().getGovernance().payForRepair(building.getType());
         return "building repaired successfully!";
     }
 
