@@ -57,7 +57,7 @@ public class ProfileMenuController {
     }
 
     public String finalStep(String newPassword) {
-        String result = "";
+        String result;
         if (controller.getGame().getCurrentUser().isPasswordNotCorrect(currentPassword))
             return "Current password is incorrect!";
         if (!controller.getGame().getCurrentUser().isPasswordNotCorrect(newPassword))
