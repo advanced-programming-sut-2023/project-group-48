@@ -60,5 +60,5 @@ public class MapMenuController {
 
     public String exitMapMenu() {
         return controller.enterMatchMenu();
-    }
+    } // to remove
 }

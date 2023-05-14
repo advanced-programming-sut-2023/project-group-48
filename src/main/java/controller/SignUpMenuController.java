@@ -123,7 +123,7 @@ public class SignUpMenuController {
 
     public String enterLoginMenu() {
         return controller.enterLoginMenu();
-    }
+    } // to remove
 
     public int getStep() {
         return step;

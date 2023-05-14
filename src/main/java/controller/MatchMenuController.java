@@ -31,9 +31,6 @@ public class MatchMenuController {
         return controller.enterShopMenu();
     }
 
-//    private boolean isEntryNotValid() {
-//    } // TODO: implement
-
     public String showMyInfo() {
         String result = "username : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getUsername() + "\n";
         result += "coins : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getPropertyCount(Property.COIN) + "\n";
@@ -282,15 +279,6 @@ public class MatchMenuController {
         return "troops state set successfully!";
     }
 
-    public String attackEnemy(int enemyRow, int enemyColumn) {
-    } // TODO: 5/29/2018
-
-    public String attack(int row, int column) {
-    } // TODO: 5/29/2018
-
-    public String pourOil(String direction) {
-    } // TODO: 5/29/2018
-
     public String digTunnel(int row, int column) {
         if (controller.getGame().getCurrentMatch().areCoordinatesNotValid(row, column))
             return "invalid coordinates!";
@@ -298,10 +286,6 @@ public class MatchMenuController {
         controller.getGame().getCurrentMatch().getCell(row, column).setBuilding(building);
         return "tunnel dug successfully!";
     }
-
-    public String buildEquipment(String equipmentName) {
-        // TODO: 5/29/2018
-    } // TODO: 5/29/2018
 
     public String disbandUnit() {
         controller.getGame().getCurrentMatch().setSelectedUnit(null);
@@ -315,4 +299,20 @@ public class MatchMenuController {
         return controller.getGame().getCurrentMatch().isRoundFinished() ? "round finished\n" : "" +
                controller.getGame().getCurrentMatch().getCurrentPlayer().getUsername() + " is now playing!";
     }
+
+    /*
+    private boolean isEntryNotValid() {
+    } // TODO: implement
+    public String attackEnemy(int enemyRow, int enemyColumn) {
+    } // TODO: 5/29/2018
+
+    public String attack(int row, int column) {
+    } // TODO: 5/29/2018
+
+    public String pourOil(String direction) {
+    } // TODO: 5/29/2018
+    public String buildEquipment(String equipmentName) {
+        // TODO: 5/29/2018
+    } // TODO: 5/29/2018
+     */
 }
