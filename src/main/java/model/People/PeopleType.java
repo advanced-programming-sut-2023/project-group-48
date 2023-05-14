@@ -38,7 +38,7 @@ public enum PeopleType {
     }};
 
 
-    // TODO: 4/30/2021
+
 
     private static final HashMap<String, ArrayList<LandType>> notValidLandTypesToCreate = new HashMap<>() {{
         put("Sultan", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));

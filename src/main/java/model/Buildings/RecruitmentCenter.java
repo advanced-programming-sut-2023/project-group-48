@@ -13,7 +13,6 @@ import java.util.HashMap;
 
 public class RecruitmentCenter extends Building {
     private static final HashMap<String, String> validRecruitTypes = new HashMap<>() {{
-        //TODO: handling recruit types
         put("Barrack","European");
         put("Mercenary Post","Arabian");
         put("Engineer Guild", "Engineer");

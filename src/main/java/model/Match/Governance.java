@@ -1,8 +1,6 @@
 package model.Match;
 
-import model.Buildings.Building;
-import model.Buildings.BuildingType;
-import model.Buildings.Storage;
+import model.Buildings.*;
 import model.People.Troop;
 import model.User;
 
@@ -13,7 +11,7 @@ public class Governance {
     private int popularity;
     private final HashMap<PopularityFactor, Integer> popularityFactors;
     private int population;
-    private int unemployedPopulation; //TODO : Unemployed population
+    private int unemployedPopulation;
     private int maxPopulation;
     private int foodRate;
     private int taxRate;
@@ -285,11 +283,17 @@ public class Governance {
 
     public void addBuilding(Building building) {
         buildings.add(building);
+        if(building instanceof IndustrialCenter){
+            unemployedPopulation--;
+        }else if(building.getType().equals("Hovel")){
+            maxPopulation += 8;
+        }
     }
 
     public void removeBuilding(Building building) {
         buildings.remove(building);
     }
+
 
     public ArrayList<Building> getBuildings() {
         return buildings;

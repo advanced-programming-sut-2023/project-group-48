@@ -158,8 +158,10 @@ public class Match {
     }
 
     public void removePeople(People people) {
+        people.getGovernance().setPopulation(people.getGovernance().getPopulation() - 1);
         getCell(people.getRow(), people.getColumn()).removePeople(people);
         if (people instanceof Troop) allTroops.remove(people);
+
     }
 
     public int getRoundsPlayed() {

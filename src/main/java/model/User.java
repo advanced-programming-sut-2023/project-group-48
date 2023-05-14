@@ -42,6 +42,7 @@ public class User {
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
         this.slogan = slogan[0] != null ? slogan[0] : null;
+
     }
 
     public static boolean isUsernameNotValid(String username) {

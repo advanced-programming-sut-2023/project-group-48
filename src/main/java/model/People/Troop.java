@@ -131,7 +131,6 @@ public class Troop extends People {
     public Quality getSpeed() {
         return speed;
     }
-
     public int getFireRange() {
         return fireRange;
     }

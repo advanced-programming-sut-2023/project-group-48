@@ -20,7 +20,7 @@ public class Cell {
     private boolean isAGovernmentBase;
 
     static {
-        // TODO: add default maps
+        // TODO: 2. add default maps
         defaultMaps = new ArrayList<>();
         defaultMaps.add(new Cell[200][200]);
         for (int i = 0; i < 200; i++) {

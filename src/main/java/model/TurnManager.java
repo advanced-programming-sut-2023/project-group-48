@@ -1,6 +1,8 @@
 package model;
 
 import model.Buildings.Building;
+import model.Buildings.BuildingType;
+import model.Buildings.IndustrialCenter;
 import model.Match.Direction;
 import model.Match.Governance;
 import model.Match.Match;
@@ -22,8 +24,6 @@ public class TurnManager {
         this.destroyedBuildings = new ArrayList<>();
     }
 
-    public void nextTurn() {
-    }
 
     private void doFights() {
         for (People people : match.getAllTroops()) {
@@ -84,11 +84,22 @@ public class TurnManager {
                     int toUse = Math.min(usedFoodCount, entry.getValue());
                     usedFoodCount -= toUse;
                     entry.setValue(entry.getValue() - toUse);
+                    governance.unloadStorages(entry.getKey(), toUse);
                 }
             }
         }
     }
-
+    private void updateAllIndustries() {
+        for (Governance governance : match.getGovernances()) {
+            for (Building building : governance.getBuildings()) {
+                if(building.getBuildingType().equals(BuildingType.INDUSTRIAL_CENTER)){
+                    if(((IndustrialCenter)building).canProduce()){
+                        ((IndustrialCenter)building).produce();
+                    }
+                }
+            }
+        }
+    }
     private void attackBuildings() {
         for (People people : match.getAllTroops()) {
             int row = people.getRow();
@@ -125,7 +136,8 @@ public class TurnManager {
     }
 
     public void run() {
-        while (!areMovesFinished()) {
+        //while (!areMovesFinished()) {     OLD METHOD FOR TURNS
+        for(int i=0;i<50;i++){
             doFights();
             removeDeadPeople();
             attackBuildings();
@@ -134,10 +146,7 @@ public class TurnManager {
         }
         updateAllPopularities();
         useFoods();
-        // change population
-        // Store industries provided properties
+
     }
 
-    public void nextRound() {
-    }
 }

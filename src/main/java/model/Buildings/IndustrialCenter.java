@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class IndustrialCenter extends Building {
     private static final HashMap<String, Property[]> industrialCentersProperties = new HashMap<>() {{
         // used property-provided property
-        // TODO: add properties
+
         put("Stable", new Property[]{null, Property.OX});
         put("Mill", new Property[]{Property.WHEAT, Property.FLOUR});
         put("Iron Mine", new Property[]{null, Property.IRON});
@@ -19,12 +19,12 @@ public class IndustrialCenter extends Building {
         put("Woodcutter", new Property[]{null, Property.WOOD});//TODO: 2.cutting trees
         put("Oil Smelter", new Property[]{null, Property.OIL});
         put("Apple Orchard", new Property[]{null, Property.APPLE});
-        put("Diary Farmer", new Property[]{Property.HOPS, Property.CHEESE});
+        put("Diary Farmer", new Property[]{null, Property.CHEESE});
         put("Hops Farmer", new Property[]{null, Property.HOPS});
         put("Hunter Post", new Property[]{null, Property.MEAT});
         put("Wheat Farmer", new Property[]{null, Property.WHEAT});
         put("Bakery", new Property[]{Property.FLOUR, Property.BREAD});
-        put("Brewer", new Property[]{null, Property.BEER});
+        put("Brewer", new Property[]{Property.HOPS, Property.BEER});
         put("Armourer", new Property[]{Property.IRON , Property.ARMOUR});
         put("Blacksmith", new Property[]{Property.IRON, Property.SWORD});
         put("Fletcher", new Property[]{Property.WOOD, Property.BOW});
@@ -88,6 +88,8 @@ public class IndustrialCenter extends Building {
     public void produce() {
         this.getGovernance().reduceProperty(usedProperty, rate);
         this.getGovernance().addProperty(producedProperty, rate);
+        this.getGovernance().unloadStorages(usedProperty, rate);
+        this.getGovernance().loadStorages(producedProperty, rate);
     }
 
     public int getRate() {
