@@ -20,8 +20,7 @@ public enum MapMenuCommands {
 
     public static Matcher getMatcher(String input, MapMenuCommands commands){
         String firstRegex = commands.regexs.get(0);
-        ArrayList<String> regexes = new ArrayList<>();
-        regexes = commands.regexs;
+        ArrayList<String> regexes = new ArrayList<>(commands.regexs);
         regexes.remove(0);
         ArrayList<ArrayList<String>> permutations = permutate(regexes);
         for (ArrayList<String> arrayList : permutations){
