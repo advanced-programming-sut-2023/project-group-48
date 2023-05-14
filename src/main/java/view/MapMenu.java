@@ -23,14 +23,14 @@ public class MapMenu extends Menu {
                 System.out.println(controller.enterMatchMenu());
                 break;
             }
-            else if ((matcher = MapMenuCommands.getMatcher(command , MapMenuCommands.SHOWMAP)) != null ){
+            else if ((matcher = MapMenuCommands.getMatcher(command , MapMenuCommands.SHOW_MAP)) != null ){
                 System.out.println(mapMenuController.showMap(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
             }
-            else if ((matcher = MapMenuCommands.getMatcher(command , MapMenuCommands.MOVEMAP)) != null ){
-                System.out.println(mapMenuController.changeCurrentCell(new String[]{matcher.group("firstdirection"), matcher.group("firstnumber")},
-                                                                       new String[]{matcher.group("seconddirection"), matcher.group("secondnumber")}));
+            else if ((matcher = MapMenuCommands.getMatcher(command , MapMenuCommands.MOVE_MAP)) != null ){
+                System.out.println(mapMenuController.changeCurrentCell(new String[]{matcher.group("firstDirection"), matcher.group("firstNumber")},
+                                                                       new String[]{matcher.group("secondDirection"), matcher.group("secondNumber")}));
             }
-            else if ((matcher = MapMenuCommands.getMatcher(command , MapMenuCommands.MAPDETAILS)) != null ){
+            else if ((matcher = MapMenuCommands.getMatcher(command , MapMenuCommands.MAP_DETAILS)) != null ){
                 System.out.println(mapMenuController.showCellDetails(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
             }
             else

@@ -25,14 +25,14 @@ public class TradeMenu extends Menu {
             }
             else if ((matcher = TradeMenuCommands.getMatcher(command, TradeMenuCommands.TRADE)) != null){
                 System.out.println(tradeMenuController.addTrade(Controller.getRemovedQuotationMarks(matcher.group("username")),
-                        Controller.getRemovedQuotationMarks(matcher.group("resourcetype")),
-                        Integer.parseInt(matcher.group("resourceamount")), Integer.parseInt(matcher.group("price")),
+                        Controller.getRemovedQuotationMarks(matcher.group("resourceType")),
+                        Integer.parseInt(matcher.group("resourceAmount")), Integer.parseInt(matcher.group("price")),
                         Controller.getRemovedQuotationMarks(matcher.group("message"))));
             }
             else if (command.matches("^trade\\s+list$")){
                 System.out.println(tradeMenuController.tradeList());
             }
-            else if ((matcher = TradeMenuCommands.getMatcher(command, TradeMenuCommands.ANSWERTRADE)) != null){
+            else if ((matcher = TradeMenuCommands.getMatcher(command, TradeMenuCommands.ANSWER_TRADE)) != null){
                 System.out.println(tradeMenuController.answerRequest(Integer.parseInt(matcher.group("id")),
                         Controller.getRemovedQuotationMarks(matcher.group("message")), matcher.group("answer")));
             }

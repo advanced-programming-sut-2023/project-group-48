@@ -6,11 +6,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum LoginMenuCommands {
-    USERLOGIN (new ArrayList<>(List.of("user\\s+login" , "\\s+-u\\s+(?<username>\".+\"|\\S+)" , "\\s+-p\\s+(?<password>\\S+)" , "(\\s+(?<stay>--stay-logged-in))?"))) ,
-    FORGOTPASSWORD (new ArrayList<>(List.of("forgot\\s+my\\s+password" , "\\s+-u\\s+(?<username>\".+\"|\\S+)")))
+    USER_LOGIN (new ArrayList<>(List.of("user\\s+login" , "\\s+-u\\s+(?<username>\".+\"|\\S+)" , "\\s+-p\\s+(?<password>\\S+)" , "(\\s+(?<stay>--stay-logged-in))?"))) ,
+    FORGOT_PASSWORD (new ArrayList<>(List.of("forgot\\s+my\\s+password" , "\\s+-u\\s+(?<username>\".+\"|\\S+)")))
     ;
 
-    private ArrayList<String> regexs;
+    private final ArrayList<String> regexs;
 
     LoginMenuCommands (ArrayList<String> regexs){
         this.regexs = regexs;
@@ -35,19 +35,19 @@ public enum LoginMenuCommands {
     }
 
     private static ArrayList<ArrayList<String>> permutate(ArrayList<String> list) {
-        ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
-        result.add(new ArrayList<String>());
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        result.add(new ArrayList<>());
         for (int i = 0; i < list.size(); i++) {
-            ArrayList<ArrayList<String>> currentArr = new ArrayList<ArrayList<String>>();
+            ArrayList<ArrayList<String>> currentArr = new ArrayList<>();
             for (ArrayList<String> l : result) {
                 for (int j = 0; j < l.size()+1; j++) {
                     l.add(j, list.get(i));
-                    ArrayList<String> temp = new ArrayList<String>(l);
+                    ArrayList<String> temp = new ArrayList<>(l);
                     currentArr.add(temp);
                     l.remove(j);
                 }
             }
-            result = new ArrayList<ArrayList<String>>(currentArr);
+            result = new ArrayList<>(currentArr);
         }
         return result;
     }

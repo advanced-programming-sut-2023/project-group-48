@@ -19,19 +19,19 @@ public class ProfileMenu extends Menu {
         while (true){
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.USERNAMECHANGE)) != null){
+            if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.USERNAME_CHANGE)) != null){
                 System.out.println(profileMenuController.changeUserInfo('u', Controller.getRemovedQuotationMarks(matcher.group("username"))));
             }
-            else if((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.NICKNAMECHANGE)) != null){
+            else if((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.NICKNAME_CHANGE)) != null){
                 System.out.println(profileMenuController.changeUserInfo('n', Controller.getRemovedQuotationMarks(matcher.group("nickname"))));
             }
-            else if((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.PASSWORDCHANGE)) != null){
+            else if((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.PASSWORD_CHANGE)) != null){
                 changePassword(matcher);
             }
-            else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.EMAILCHANGE)) != null){
+            else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.EMAIL_CHANGE)) != null){
                 System.out.println(profileMenuController.changeUserInfo('e', matcher.group("email")));
             }
-            else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.SLOGANCHANGE)) != null){
+            else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.SLOGAN_CHANGE)) != null){
                 System.out.println(profileMenuController.changeUserInfo('s', Controller.getRemovedQuotationMarks(matcher.group("slogan"))));
             }
             else if(command.matches("^Profile\\s+remove\\s+slogan$")){
@@ -59,8 +59,8 @@ public class ProfileMenu extends Menu {
     }
 
     private void changePassword(Matcher matcher){
-        String oldPassword = matcher.group("oldpassword");
-        String newPassword = matcher.group("newpassword");
+        String oldPassword = matcher.group("oldPassword");
+        String newPassword = matcher.group("newPassword");
         System.out.println(profileMenuController.changeUserInfo('p', oldPassword));
         while (true){
             String answer = profileMenuController.captchaStep(scanner.nextLine().trim());

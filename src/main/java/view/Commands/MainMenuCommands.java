@@ -6,10 +6,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum MainMenuCommands {
-    MATCHSTART (new ArrayList<>(List.of("match\\s+start" , "\\s+-r\\s+(?<rounds>\\d+)" , "\\s+-m\\s+(?<mapNumber>\\d+)" , "\\s+-u(?<usernames>(?<usernameTemplate>\\s+(?<username>\".+\"|\\S+))+)")));
+    MATCH_START (new ArrayList<>(List.of("match\\s+start" , "\\s+-r\\s+(?<rounds>\\d+)" , "\\s+-m\\s+(?<mapNumber>\\d+)" , "\\s+-u(?<userNames>(?<usernameTemplate>\\s+(?<username>\".+\"|\\S+))+)")));
 
 
-    private ArrayList<String> regexs;
+    private final ArrayList<String> regexs;
 
     MainMenuCommands (ArrayList<String> regexs){
         this.regexs = regexs;
@@ -34,19 +34,19 @@ public enum MainMenuCommands {
     }
 
     private static ArrayList<ArrayList<String>> permutate(ArrayList<String> list) {
-        ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
-        result.add(new ArrayList<String>());
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        result.add(new ArrayList<>());
         for (int i = 0; i < list.size(); i++) {
-            ArrayList<ArrayList<String>> currentArr = new ArrayList<ArrayList<String>>();
+            ArrayList<ArrayList<String>> currentArr = new ArrayList<>();
             for (ArrayList<String> l : result) {
                 for (int j = 0; j < l.size()+1; j++) {
                     l.add(j, list.get(i));
-                    ArrayList<String> temp = new ArrayList<String>(l);
+                    ArrayList<String> temp = new ArrayList<>(l);
                     currentArr.add(temp);
                     l.remove(j);
                 }
             }
-            result = new ArrayList<ArrayList<String>>(currentArr);
+            result = new ArrayList<>(currentArr);
         }
         return result;
     }

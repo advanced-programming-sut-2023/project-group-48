@@ -23,10 +23,10 @@ public class LoginMenu extends Menu {
             if (command.matches("^enter\\s+sign\\s+up\\s+menu$")) {
                 System.out.println(controller.enterSignUpMenu());
             }
-            else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.USERLOGIN)) != null){
+            else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.USER_LOGIN)) != null){
                 if (userLogin(matcher)) return;
             }
-            else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.FORGOTPASSWORD)) != null){
+            else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.FORGOT_PASSWORD)) != null){
                 if (forgotPassword(matcher)) return;
             }
             else if (command.matches("^enter\\s+signup\\s+menu$")){
