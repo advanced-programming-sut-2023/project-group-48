@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public abstract class Menu {
@@ -12,5 +13,5 @@ public abstract class Menu {
         this.controller = controller;
     }
 
-    public abstract void run();
+    public abstract void run() throws IOException;
 }

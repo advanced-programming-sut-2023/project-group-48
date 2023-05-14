@@ -5,6 +5,7 @@ import controller.SignUpMenuController;
 import view.Commands.SignUpMenuCommands;
 import view.Messages.SignUpMenuMessages;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 
 public class SignUpMenu extends Menu {
@@ -17,7 +18,7 @@ public class SignUpMenu extends Menu {
     }
 
     @Override
-    public void run() {
+    public void run() throws IOException {
         while (true) {
             String command = scanner.nextLine().trim();
             Matcher matcher;
@@ -25,20 +26,18 @@ public class SignUpMenu extends Menu {
                 createUser(matcher);
             }
             else if (command.matches("^enter\\s+login\\s+menu$")){
-
+                System.out.println(signUpMenuController.enterLoginMenu());
+                // TODO: switch to login menu
             }
             else if (command.matches("^exit$")){
-
+                // TODO: for terminate the program
             }
-            /*else if ((matcher = SignUpMenuCommands.getMatcher(command, SignUpMenuCommands.ANSWERSECURITYWQUESTION)) != null){
-
-            }*/
             else
                 System.out.println("Invalid Command!");
         }
     }
 
-    private void createUser(Matcher matcher){
+    private void createUser(Matcher matcher) throws IOException {
         String username = matcher.group("username");
         String password = matcher.group("password");
         String passConfirmation = matcher.group("passconfirm");
@@ -62,7 +61,7 @@ public class SignUpMenu extends Menu {
         chooseSecurityQuestion();
     }
 
-    private void chooseSecurityQuestion(){
+    private void chooseSecurityQuestion() throws IOException {
         while(true){
             Matcher matcher = SignUpMenuCommands.getMatcher(scanner.nextLine().trim(), SignUpMenuCommands.ANSWERSECURITYQUESTION);
             if (!matcher.matches()) {
@@ -74,12 +73,17 @@ public class SignUpMenu extends Menu {
             else {
                 System.out.println(signUpMenuController.captchaStep(matcher.group("questionnumber"), matcher.group("answer")));
                 answerCaptcha();
+                break;
             }
         }
     }
 
-    private void answerCaptcha(){
-        //TODO
+    private void answerCaptcha() throws IOException {
+        while(true){
+            String answer = signUpMenuController.finalStep(scanner.nextLine().trim());
+            System.out.println(answer);
+            if (answer.equals("user created successfully!")) break;
+        }
     }
 
 }

@@ -28,7 +28,7 @@ public class Controller {
         this.game = new Game();
     }
 
-    public void run() {
+    public void run() throws IOException {
         while (game.getCurrentMenu() != null) {
             game.getCurrentMenu().run();
         }
