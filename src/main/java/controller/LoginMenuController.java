@@ -51,6 +51,7 @@ public class LoginMenuController {
         if (userCaptchaAnswer.equals("refresh captcha")) {return generateCaptcha();}
         if (!userCaptchaAnswer.equals(captchaAnswer)) return "captcha answer is incorrect!";
 
+        step = 0;
         controller.getGame().setCurrentUser(attendedUser);
         if (mustStayLoggedIn) controller.getGame().setDataBaseCurrentUser(attendedUser);
         return "logged in successfully!\n" + controller.enterMainMenu();
@@ -70,5 +71,9 @@ public class LoginMenuController {
         step = 0;
         controller.getGame().setCurrentUser(forgotUser);
         return "logged in successfully\n" + controller.enterMainMenu();
+    }
+
+    public int getStep() {
+        return step;
     }
 }

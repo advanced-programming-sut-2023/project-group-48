@@ -5,6 +5,7 @@ import controller.LoginMenuController;
 import view.Commands.LoginMenuCommands;
 import view.Messages.LoginMenuMessages;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 
 public class LoginMenu extends Menu {
@@ -15,7 +16,7 @@ public class LoginMenu extends Menu {
     }
 
     @Override
-    public void run() {
+    public void run() throws IOException {
         while (true) {
             String command = scanner.nextLine().trim();
             Matcher matcher;
@@ -23,10 +24,10 @@ public class LoginMenu extends Menu {
                 userLogin(matcher);
             }
             else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.FORGOTPASSWORD)) != null){
-
+                forgotPassword(matcher);
             }
             else if (command.matches("^enter\\s+signup\\s+menu$")){
-                System.out.println(controller.enterSignupMenu());
+                System.out.println(controller.enterSignUpMenu());
                 break;
             }
             else
@@ -34,7 +35,7 @@ public class LoginMenu extends Menu {
         }
     }
 
-    private void userLogin(Matcher matcher){
+    private void userLogin(Matcher matcher) throws IOException {
         String username = matcher.group("username");
         String password = matcher.group("password");
         boolean stayLoggedIn = false;
@@ -43,7 +44,24 @@ public class LoginMenu extends Menu {
         }
         String result = loginMenuController.login(username, password, stayLoggedIn);
         System.out.println(result);
+        if (loginMenuController.getStep() == 0) return;
+        while(true){
+            String answer = loginMenuController.finalStep(scanner.nextLine().trim());
+            System.out.println(answer);
+            if (answer.startsWith("logged in successfully!")) break;
+        }
+    }
 
+    private void forgotPassword(Matcher matcher) throws IOException {
+        String username = matcher.group("username");
+        String result = loginMenuController.forgotPassword(username);
+        System.out.println(result);
+        if (loginMenuController.getStep() != 2) return;
+        while (true){
+            String answer = loginMenuController.AnswerToSecurityQuestion(scanner.nextLine().trim());
+            System.out.println(answer);
+            if (answer.startsWith("logged in successfully!")) break;
+        }
     }
 
 }
