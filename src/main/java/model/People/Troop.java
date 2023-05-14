@@ -73,7 +73,7 @@ public class Troop extends People {
     }
 
     public static boolean isMoveValid(int row, int column, Troop troop) {
-
+        return Math.pow(troop.getSpeed().getValue(), 2) >= Math.pow(troop.getColumn() - column, 2) + Math.pow(troop.getRow() - row, 2);
     }
 
     public void setFinalDestination(int row, int column) {

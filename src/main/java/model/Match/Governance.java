@@ -1,6 +1,7 @@
 package model.Match;
 
 import model.Buildings.Building;
+import model.Buildings.BuildingType;
 import model.User;
 
 import java.util.*;
@@ -219,7 +220,6 @@ public class Governance {
         popularityFactors.put(PopularityFactor.FEAR, finalFearFactor);
     }
 
-    }
     public int getPopulation() {
         return population;
     }

@@ -10,13 +10,12 @@ import java.util.List;
 
 public enum PeopleType {
     TROOP(new ArrayList<>(List.of("Sultan", "Archer", "Crossbowmen", "Spearmen", "Pikemen", "Macemen", "Swordsmen",
-                                           "Knight", "Tunneler", "Laddermen", "Black Monk", "Archer Bow", "Slaves",
-                                           "Slingers", "Assassins", "Horse Archers", "Arabian Swordsmen", "Fire Throwers"))),
-    WORKER(new ArrayList<>(List.of("Engineer")))
-    ;
+            "Knight", "Tunneler", "Laddermen", "Black Monk", "Archer Bow", "Slaves",
+            "Slingers", "Assassins", "Horse Archers", "Arabian Swordsmen", "Fire Throwers"))),
+    WORKER(new ArrayList<>(List.of("Engineer")));
 
     private static final PeopleType[] peopleTypes = {TROOP, WORKER};
-    private static final HashMap<String, Integer> peopleHp = new HashMap<>(){{
+    private static final HashMap<String, Integer> peopleHp = new HashMap<>() {{
         put("Sultan", 100);
         put("Archer", 100);
         put("Crossbowmen", 100);
@@ -36,7 +35,7 @@ public enum PeopleType {
         put("Slingers", 100);
         put("Engineer", 100);
     }};
-    private static final HashMap<String, Quality[]> troopPowers = new HashMap<>(){{
+    private static final HashMap<String, Quality[]> troopPowers = new HashMap<>() {{
         put("Sultan", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
         put("Archer", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
         put("Crossbowmen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
@@ -55,7 +54,7 @@ public enum PeopleType {
         put("Fire Throwers", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
         put("Slingers", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
     }};
-    private static final HashMap<String, Integer> troopFireRange = new HashMap<>(){{
+    private static final HashMap<String, Integer> troopFireRange = new HashMap<>() {{
         put("Sultan", 100);
         put("Archer", 100);
         put("Crossbowmen", 100);
@@ -79,7 +78,7 @@ public enum PeopleType {
     private static final ArrayList<String> arabTroops = new ArrayList<>(Arrays.asList());
     private static final ArrayList<String> ladderMen = new ArrayList<>(Arrays.asList());
     private static final ArrayList<String> horseMan = new ArrayList<>(Arrays.asList());
-    private static final HashMap<String , ArrayList<LandType>> notValidLandTypesToCreate = new HashMap<>(){{
+    private static final HashMap<String, ArrayList<LandType>> notValidLandTypesToCreate = new HashMap<>() {{
         put("Sultan", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
         put("Archer", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
         put("Crossbowmen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
@@ -99,6 +98,26 @@ public enum PeopleType {
         put("Fire Throwers", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
         put("Engineer", new ArrayList<LandType>(Arrays.asList(LandType.ROCK)));
     }};
+    private static final HashMap<String, Integer> troopCost = new HashMap<>() {{
+        put("Sultan", 100);
+        put("Archer", 100);
+        put("Crossbowmen", 100);
+        put("Spearmen", 100);
+        put("Macemen", 100);
+        put("Swordsmen", 100);
+        put("Knight", 100);
+        put("Tunneler", 100);
+        put("Laddermen", 100);
+        put("Black Monk", 100);
+        put("Archer Bow", 100);
+        put("Slaves", 100);
+        put("Assassins", 100);
+        put("Horse Archers", 100);
+        put("Arabian Swordsmen", 100);
+        put("Fire Throwers", 100);
+        put("Slingers", 100);
+        put("Engineer", 100);
+    }};
     private final ArrayList<String> People;
 
     PeopleType(ArrayList<String> people) {
@@ -111,6 +130,7 @@ public enum PeopleType {
         }
         return null;
     }
+
     public static int getPeopleHp(String type) {
         return peopleHp.get(type);
     }
@@ -146,5 +166,9 @@ public enum PeopleType {
 
     public static ArrayList<LandType> getNotValidLandTypes(String peopleType) {
         return notValidLandTypesToCreate.get(peopleType);
+    }
+
+    public static int getTroopCost(String type) {
+        return troopCost.get(type);
     }
 }
