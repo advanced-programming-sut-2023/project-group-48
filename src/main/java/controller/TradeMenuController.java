@@ -44,8 +44,8 @@ public class TradeMenuController {
         if (accepted) {
             request.getReceiver().addProperty(request.getProperty(), -1 * request.getAmount());
             request.getSender().addProperty(request.getProperty(), request.getAmount());
-            request.getReceiver().addProperty(Property.GOLD, request.getPrice() * request.getAmount());
-            request.getSender().addProperty(Property.GOLD, -1 * request.getPrice() * request.getAmount());
+            request.getReceiver().addProperty(Property.COIN, request.getPrice() * request.getAmount());
+            request.getSender().addProperty(Property.COIN, -1 * request.getPrice() * request.getAmount());
         }
         request.getReceiver().getReceivedRequests().remove(request);
         request.getReceiver().getRequestsHistory().add(request);

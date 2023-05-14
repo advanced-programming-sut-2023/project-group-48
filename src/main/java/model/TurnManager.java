@@ -26,7 +26,7 @@ public class TurnManager {
     }
 
     private void doFights() {
-        for (People people : match.getAllPeople()) {
+        for (People people : match.getAllTroops()) {
             int row = people.getRow();
             int column = people.getColumn();
             if (people instanceof Troop) {
@@ -90,7 +90,7 @@ public class TurnManager {
     }
 
     private void attackBuildings() {
-        for (People people : match.getAllPeople()) {
+        for (People people : match.getAllTroops()) {
             int row = people.getRow();
             int column = people.getColumn();
             if (people instanceof Troop) {
@@ -105,6 +105,7 @@ public class TurnManager {
 
     private void removeDestroyedBuildings() {
         for (Building destroyedBuilding : destroyedBuildings) {;
+            destroyedBuilding.getGovernance().getBuildings().remove(destroyedBuilding);
             match.getCell(destroyedBuilding.getRow(), destroyedBuilding.getColumn()).setBuilding(null);
         }
         destroyedBuildings.clear();

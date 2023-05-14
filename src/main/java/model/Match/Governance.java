@@ -10,7 +10,7 @@ import java.util.*;
 public class Governance {
     private final User owner;
     private int popularity;
-    private HashMap<PopularityFactor, Integer> popularityFactors;
+    private final HashMap<PopularityFactor, Integer> popularityFactors;
     private int population;
     private int unemployedPopulation; //TODO : Unemployed population
     private int maxPopulation;
@@ -18,8 +18,8 @@ public class Governance {
     private int foodVariety;
     private int taxRate;
     private int fearRate;
-    private ArrayList<Building> buildings;
-    private HashMap<Property, Integer> properties;
+    private final ArrayList<Building> buildings;
+    private final HashMap<Property, Integer> properties;
     private ArrayList<Request> sentRequests;
     private ArrayList<Request> receivedRequests;
     private ArrayList<Request> requestsHistory;
@@ -46,6 +46,10 @@ public class Governance {
 
     public int getPopularity() {
         return popularity;
+    }
+
+    public int getPopularityFactor(PopularityFactor popularityFactor) {
+        return popularityFactors.get(popularityFactor);
     }
 
     public void updatePopularity() {
@@ -298,7 +302,6 @@ public class Governance {
     }
 
 
-
     public void addRequest(Request request) {
         if (request.getReceiver().equals(owner.getGovernance())) receivedRequests.add(request);
         else sentRequests.add(request);
@@ -329,27 +332,28 @@ public class Governance {
     }
 
     public boolean areResourcesEnoughToBuild(String type) {
-        for(Map.Entry<Property,Integer> entry : BuildingType.getMaterialsNeedToBuild(type).entrySet()){
-            if(properties.get(entry.getKey())<entry.getValue()) return false;
+        for (Map.Entry<Property, Integer> entry : BuildingType.getMaterialsNeedToBuild(type).entrySet()) {
+            if (properties.get(entry.getKey()) < entry.getValue()) return false;
         }
         return true;
     }
 
     public boolean areResourcesEnoughToRepair(String type) {
-        for(Map.Entry<Property,Integer> entry : BuildingType.getMaterialsNeedToBuild(type).entrySet()){
-            if(properties.get(entry.getKey())<entry.getValue()/2) return false;
+        for (Map.Entry<Property, Integer> entry : BuildingType.getMaterialsNeedToBuild(type).entrySet()) {
+            if (properties.get(entry.getKey()) < entry.getValue() / 2) return false;
         }
         return true;
     }
 
     public void payForBuilding(String type) {
-        for(Map.Entry<Property,Integer> entry : BuildingType.getMaterialsNeedToBuild(type).entrySet()){
-            properties.put(entry.getKey(),properties.get(entry.getKey())-entry.getValue());
+        for (Map.Entry<Property, Integer> entry : BuildingType.getMaterialsNeedToBuild(type).entrySet()) {
+            properties.put(entry.getKey(), properties.get(entry.getKey()) - entry.getValue());
         }
     }
+
     public void payForRepair(String type) {
-        for(Map.Entry<Property,Integer> entry : BuildingType.getMaterialsNeedToBuild(type).entrySet()){
-            properties.put(entry.getKey(),properties.get(entry.getKey())-entry.getValue()/2);
+        for (Map.Entry<Property, Integer> entry : BuildingType.getMaterialsNeedToBuild(type).entrySet()) {
+            properties.put(entry.getKey(), properties.get(entry.getKey()) - entry.getValue() / 2);
         }
     }
 
@@ -364,7 +368,7 @@ public class Governance {
     }
 
     public boolean isPopularityEnoughToCreateUnit(String type) {
-        if(unemployedPopulation > 0) return true;
+        if (unemployedPopulation > 0) return true;
         return false;
     }
 

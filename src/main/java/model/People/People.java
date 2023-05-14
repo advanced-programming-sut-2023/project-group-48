@@ -7,7 +7,7 @@ import model.Match.LandType;
 
 import java.util.ArrayList;
 
-public class People {
+public abstract class People {
     private final Governance governance;
     private int row;
     private int column;

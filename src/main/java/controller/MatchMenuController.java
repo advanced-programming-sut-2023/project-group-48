@@ -27,11 +27,16 @@ public class MatchMenuController {
         return controller.enterMapMenu();
     }
 
-    private boolean isEntryNotValid() {
-    } // TODO: implement
+//    private boolean isEntryNotValid() {
+//    } // TODO: implement
 
     public String showMyInfo() {
-    } // TODO: implement
+        String result = "username : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getUsername() + "\n";
+        result += "coins : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getPropertyCount(Property.COIN) + "\n";
+        result += "popularity : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getPopularity() + "\n";
+
+        return result;
+    }
 
     public String showCurrentPlayer() {
         return "current player : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getUsername();
@@ -42,10 +47,18 @@ public class MatchMenuController {
     }
 
     public String showPopularityFactors() {
-    } // TODO: implement
+        String result = "your popularity factors are :\n";
+        for (PopularityFactor popularityFactor : PopularityFactor.getPopularityFactors()) {
+            result += popularityFactor.getPopularityFactorInString() + " : "
+                    + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getPopularityFactor(popularityFactor) + "\n";
+        }
+        result += showPopularity();
+        return result;
+    }
 
     public String showPopularity() {
-    } // TODO: implement
+        return "your total popularity is : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getPopularity();
+    }
 
     public String showFoodList() {
         StringBuilder result = new StringBuilder();
@@ -57,21 +70,30 @@ public class MatchMenuController {
     }
 
     public String setFoodRate(int foodRate) {
-    } // TODO: implement
+        if (foodRate < -2 || foodRate > 2) return "invalid food rate! (must be between -2 and 2)";
+        controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().setFoodRate(foodRate);
+        return "food rate set successfully!";
+    }
 
     public String showFoodRate() {
         return "food rate : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getFoodRate();
     }
 
     public String setTaxRate(int taxRate) {
-    } // TODO: implement
+        if (taxRate < -3 || taxRate > 8) return "invalid tax rate! (must be between -3 and 8)";
+        controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().setTaxRate(taxRate);
+        return "tax rate set successfully!";
+    }
 
     public String showTaxRate() {
         return "tax rate : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getTaxRate();
     }
 
     public String setFearRate(int fearRate) {
-    } // TODO: implement
+        if (fearRate < -5 || fearRate > 5) return "invalid fear rate! (must be between -5 and 5)";
+        controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().setFearRate(fearRate);
+        return "fear rate set successfully!";
+    }
 
     public String showFearRate() {
         return "fear rate : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getFearRate();
@@ -255,10 +277,10 @@ public class MatchMenuController {
     }
 
     public String attackEnemy(int enemyRow, int enemyColumn) {
-    }
+    } // TODO: 5/29/2018
 
     public String attack(int row, int column) {
-    }
+    } // TODO: 5/29/2018
 
     public String pourOil(String direction) {
     } // TODO: 5/29/2018

@@ -24,5 +24,7 @@ public enum PopularityFactor {
         return null;
     }
 
-
+    public String getPopularityFactorInString() {
+        return popularityFactorInString;
+    }
 }
