@@ -22,12 +22,15 @@ public class MatchMenu extends Menu {
             Matcher matcher;
             if (command.matches("^enter\\s+shop\\s+menu$")) {
                 System.out.println(controller.enterShopMenu());
+                break;
             }
             else if (command.matches("^enter\\s+trade\\s+menu$")) {
                 System.out.println(controller.enterTradeMenu());
+                break;
             }
             else if (command.matches("^enter\\s+map\\s+menu$")) {
                 System.out.println(controller.enterShopMenu());
+                break;
             }
             else if (command.matches("^show\\s+popularity\\s+factors$")){
                 System.out.println(matchMenuController.showPopularityFactors());

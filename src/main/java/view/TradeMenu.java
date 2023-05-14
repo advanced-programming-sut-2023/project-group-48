@@ -19,8 +19,9 @@ public class TradeMenu extends Menu {
         while(true){
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if (command.matches("back")) {
+            if (command.matches("^back$")) {
                 System.out.println(controller.enterMatchMenu());
+                break;
             }
             else if ((matcher = TradeMenuCommands.getMatcher(command, TradeMenuCommands.TRADE)) != null){
                 System.out.println(tradeMenuController.addTrade(matcher.group("username"), matcher.group("resourcetype"),

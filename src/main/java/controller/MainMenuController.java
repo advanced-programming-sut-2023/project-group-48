@@ -5,6 +5,8 @@ import model.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainMenuController {
     private final Controller controller;
@@ -13,8 +15,14 @@ public class MainMenuController {
         this.controller = controller;
     }
 
-    public String startMatch(int rounds, int mapNumber, String... playersUsernames) {
-
+    public String startMatch(int rounds, int mapNumber, String usernames) {
+        ArrayList<String> playersUsernames = new ArrayList<String>();
+        String usernameRegex = "(?<username>\".+\"|\\S+)";
+        Pattern pattern = Pattern.compile(usernameRegex);
+        Matcher matcher = pattern.matcher(usernames);
+        while (matcher.find()) {
+            playersUsernames.add(matcher.group("username"));
+        }
         ArrayList<User> players = new ArrayList<>();
         for (String username : playersUsernames) {
             User user = controller.getGame().getUserByUsername(username);

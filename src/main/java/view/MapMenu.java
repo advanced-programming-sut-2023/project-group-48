@@ -19,8 +19,9 @@ public class MapMenu extends Menu {
         while (true){
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if (command.matches("back")) {
+            if (command.matches("^back$")) {
                 System.out.println(controller.enterMatchMenu());
+                break;
             }
             else if ((matcher = MapMenuCommands.getMatcher(command , MapMenuCommands.SHOWMAP)) != null ){
                 System.out.println(mapMenuController.showMap(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));

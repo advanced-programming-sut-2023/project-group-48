@@ -19,8 +19,9 @@ public class ShopMenu extends Menu {
         while (true){
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if (command.matches("back")) {
+            if (command.matches("^back$")) {
                 System.out.println(controller.enterMatchMenu());
+                break;
             }
             else if (command.matches("^show\\s+price\\s+list$")){
                 System.out.println(shopMenuController.showPriceList());

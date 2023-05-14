@@ -25,7 +25,7 @@ public class MainMenu extends Menu {
                 break;
             }
             else if ((matcher = MainMenuCommands.getMatcher(command, MainMenuCommands.MATCHSTART)) != null){
-
+                System.out.println(mainMenuController.startMatch(Integer.parseInt(matcher.group("rouds")), Integer.parseInt(matcher.group("mapNumber")), matcher.group("usernames")));
             }
             else if (command.matches("^enter\\s+profile\\s+menu$")){
                 System.out.println(controller.enterProfileMenu());
