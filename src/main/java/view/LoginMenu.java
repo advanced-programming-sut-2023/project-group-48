@@ -20,17 +20,30 @@ public class LoginMenu extends Menu {
             String command = scanner.nextLine().trim();
             Matcher matcher;
             if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.USERLOGIN)) != null){
-
+                userLogin(matcher);
             }
             else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.FORGOTPASSWORD)) != null){
 
             }
             else if (command.matches("^enter\\s+signup\\s+menu$")){
-
+                System.out.println(controller.enterSignupMenu());
+                break;
             }
             else
                 System.out.println("Invalid Command!");
         }
+    }
+
+    private void userLogin(Matcher matcher){
+        String username = matcher.group("username");
+        String password = matcher.group("password");
+        boolean stayLoggedIn = false;
+        if (matcher.groupCount() == 3) {
+            stayLoggedIn = true;
+        }
+        String result = loginMenuController.login(username, password, stayLoggedIn);
+        System.out.println(result);
+
     }
 
 }

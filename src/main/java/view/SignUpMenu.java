@@ -27,10 +27,11 @@ public class SignUpMenu extends Menu {
             }
             else if (command.matches("^enter\\s+login\\s+menu$")){
                 System.out.println(signUpMenuController.enterLoginMenu());
-                // TODO: switch to login menu
+                break;
             }
             else if (command.matches("^exit$")){
-                // TODO: for terminate the program
+                controller.exit();
+                break;
             }
             else
                 System.out.println("Invalid Command!");
@@ -43,8 +44,14 @@ public class SignUpMenu extends Menu {
         String passConfirmation = matcher.group("passconfirm");
         String email = matcher.group("email");
         String nickname = matcher.group("nickname");
-        String slogan = matcher.group("slogan");
-        String result = signUpMenuController.createUserStep(username, password, passConfirmation, email, nickname, slogan);
+        String slogan;
+        String result;
+        if (matcher.groupCount() == 6) {
+            slogan = matcher.group("slogan");
+            result = signUpMenuController.createUserStep(username, password, passConfirmation, email, nickname, slogan);
+        }
+        else
+            result = signUpMenuController.createUserStep(username, password, passConfirmation, email, nickname);
         System.out.println(result);
         if (signUpMenuController.getStep() == 0) return;
         if (result.endsWith("Please re-enter your password here:\\n")){
