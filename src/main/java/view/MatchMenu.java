@@ -20,7 +20,10 @@ public class MatchMenu extends Menu {
         while (true) {
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if (command.matches("^enter\\s+shop\\s+menu$")) {
+            if (command.matches("next turn")) {
+                System.out.println(matchMenuController.nextTurn());
+            }
+            else if (command.matches("^enter\\s+shop\\s+menu$")) {
                 System.out.println(controller.enterShopMenu());
                 break;
             }
@@ -29,7 +32,7 @@ public class MatchMenu extends Menu {
                 break;
             }
             else if (command.matches("^enter\\s+map\\s+menu$")) {
-                System.out.println(controller.enterShopMenu());
+                System.out.println(controller.enterMapMenu());
                 break;
             }
             else if (command.matches("^show\\s+popularity\\s+factors$")){

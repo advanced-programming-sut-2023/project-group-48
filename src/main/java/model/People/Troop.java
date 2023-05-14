@@ -11,9 +11,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 
-
 public class Troop extends People {
-    private static final HashMap<String, ArrayList<Property>> requiredResource = new HashMap<>(){{requiredResource.put("Archer", new ArrayList<Property>(Arrays.asList(Property.BOW)));
+    private static final HashMap<String, ArrayList<Property>> requiredResource = new HashMap<>() {{
+        requiredResource.put("Archer", new ArrayList<Property>(Arrays.asList(Property.BOW)));
         requiredResource.put("Crossbowmen", new ArrayList<Property>(Arrays.asList(Property.CROSSBOW)));
         requiredResource.put("Spearmen", new ArrayList<Property>(Arrays.asList(Property.SPEAR)));
         requiredResource.put("Pikemen", new ArrayList<Property>(Arrays.asList(Property.PIKE)));
@@ -91,7 +91,7 @@ public class Troop extends People {
         put("Engineer", 100);
     }};
     private static final ArrayList<String> arabTroops = new ArrayList<>(Arrays.asList("ArcherBow", "Slaves", "Slingers", "Assassins", "HorseArchers", "ArabianSwordsmen", "FireThrowers"));
-    private static final ArrayList<String> wallCrawler = new ArrayList<>(Arrays.asList("Laddermen","Assassins"));
+    private static final ArrayList<String> wallCrawler = new ArrayList<>(Arrays.asList("Laddermen", "Assassins"));
     private static final ArrayList<String> horseMan = new ArrayList<>(Arrays.asList("Knight", "HorseArchers", "ArabianSwordsmen"));
 
     private final Quality attackPower;
@@ -117,9 +117,11 @@ public class Troop extends People {
         this.ladderMan = Troop.isTroopWallCrawler(type);
         this.hasHorse = Troop.isTroopHasHorse(type);
     }
-    public static HashMap<String, ArrayList<Property>> getRequiredResource() {
-        return requiredResource;
+
+    public static ArrayList<Property> getRequiredResource(String type) {
+        return requiredResource.get(type);
     }
+
     public Quality getAttackPower() {
         return attackPower;
     }
@@ -131,9 +133,11 @@ public class Troop extends People {
     public Quality getSpeed() {
         return speed;
     }
+
     public int getFireRange() {
         return fireRange;
     }
+
     public static Quality getTroopAttackPower(String type) {
         return troopPowers.get(type)[0];
     }
@@ -149,6 +153,7 @@ public class Troop extends People {
     public static int getTroopFireRange(String type) {
         return troopFireRange.get(type);
     }
+
     public static Nation getTroopNation(String type) {
         if (arabTroops.contains(type)) return Nation.ARAB;
         return Nation.EUROPE;

@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Cell {
-    private static ArrayList<Cell[][]> defaultMaps;
+    private static final ArrayList<Cell[][]> defaultMaps;
     private final int row;
     private final int column;
     private LandType landType;
     private Building building;
-    private ArrayList<People> people;
+    private final ArrayList<People> people;
 
     private boolean isAGovernmentBase;
 
@@ -33,6 +33,9 @@ public class Cell {
     private Cell(int row, int column, LandType landType) {
         this.row = row;
         this.column = column;
+        this.landType = landType;
+        this.building = null;
+        this.people = new ArrayList<>();
         isAGovernmentBase = false;
     }
 

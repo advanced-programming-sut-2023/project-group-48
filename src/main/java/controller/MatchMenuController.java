@@ -111,7 +111,7 @@ public class MatchMenuController {
             return "there is already a building here!";
         if (!Building.isLandTypeValidForBuilding(type, controller.getGame().getCurrentMatch().getCell(row, column).getLandType()))
             return "this building cannot be built on this land type!";
-        if (controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().areResourcesEnoughToBuild(type))
+        if (!controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().areResourcesEnoughToBuild(type))
             return "you don't have enough resources to build this building!";
 
         Direction dir = direction.length == 0 ? null : Direction.getDirection(direction[0]);
@@ -146,7 +146,7 @@ public class MatchMenuController {
         int column = building.getColumn();
         if (People.isLandTypeNotValidForCreatingUnit(type, controller.getGame().getCurrentMatch().getCell(row, column).getLandType()))
             return "this unit cannot be created on this land type!";
-        if (!controller.getGame().getCurrentMatch().getSelectedBuilding().getGovernance().areResourcesEnoughToCreateUnit(type, count))
+        if (PeopleType.isTroop(type) && !controller.getGame().getCurrentMatch().getSelectedBuilding().getGovernance().areResourcesEnoughToCreateUnit(type, count))
             return "you don't have enough resources to create this unit!";
         if (!controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().isPopularityEnoughToCreateUnit(type))
             return "your popularity is not enough to create this unit!";

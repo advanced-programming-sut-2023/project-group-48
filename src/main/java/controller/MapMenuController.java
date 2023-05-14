@@ -1,6 +1,7 @@
 package controller;
 
 import model.BackGroundColor;
+import model.Buildings.Building;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,8 +19,8 @@ public class MapMenuController {
 
     public String showMap(int row, int column) {
         StringBuilder map = new StringBuilder();
-        int startingColumn = Math.min(column - 10, 0);
-        int startingRow = Math.min(row - 10, 0);
+        int startingColumn = Math.max(column - 10, 1);
+        int startingRow = Math.max(row - 10, 1);
         int endingColumn = Math.min(column + 10, controller.getGame().getCurrentMatch().getMAX_COLUMN());
         int endingRow = Math.min(row + 10, controller.getGame().getCurrentMatch().getMAX_ROW());
         for (int i = startingRow; i <= endingRow; i++) {
@@ -49,9 +50,10 @@ public class MapMenuController {
 
     public String showCellDetails(int row, int column) {
         StringBuilder details = new StringBuilder();
-        details.append("Land Type: ").append(controller.getGame().getCurrentMatch().getCell(column, row).getLandType().toString()).append("\n");
-        details.append("Building: ").append(controller.getGame().getCurrentMatch().getCell(column, row).getBuilding().getType()).append("\n");
-        HashMap<String, Integer> troopsPassing = controller.getGame().getCurrentMatch().getCell(column, row).getTroopsPassing();
+        Building building = controller.getGame().getCurrentMatch().getCell(row, column).getBuilding();
+        details.append("Land Type: ").append(controller.getGame().getCurrentMatch().getCell(row, column).getLandType().toString()).append("\n");
+        if (building != null) details.append("Building: ").append(building.getType()).append("\n");
+        HashMap<String, Integer> troopsPassing = controller.getGame().getCurrentMatch().getCell(row, column).getTroopsPassing();
         for (Map.Entry<String, Integer> entry : troopsPassing.entrySet()) {
             details.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
         }

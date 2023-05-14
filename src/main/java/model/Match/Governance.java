@@ -367,25 +367,19 @@ public class Governance {
     }
 
     public boolean areResourcesEnoughToCreateUnit(String type, int count) {
-        for (Map.Entry<String, ArrayList<Property>> entry : Troop.getRequiredResource().entrySet()) {
-            for (Property property : entry.getValue()) {
-                if (properties.get(property) == 0) return false;
-            }
-
+        for (Property property : Troop.getRequiredResource(type)) {
+            if (properties.get(property) == 0) return false;
         }
         return true;
     }
 
     public boolean isPopularityEnoughToCreateUnit(String type) {
-        if (unemployedPopulation > 0) return true;
-        return false;
+        return unemployedPopulation > 0;
     }
 
     public void payForCreatingUnit(String type, int count) {
-        for (Map.Entry<String, ArrayList<Property>> entry : Troop.getRequiredResource().entrySet()) {
-            for (Property property : entry.getValue()) {
-                properties.put(property, properties.get(property) - 1);
-            }
+        for (Property property : Troop.getRequiredResource(type)) {
+            properties.put(property, properties.get(property) - 1);
         }
     }
 

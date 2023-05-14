@@ -12,11 +12,11 @@ public enum PeopleType {
     TROOP(new ArrayList<>(List.of("Sultan", "Archer", "Crossbowmen", "Spearmen", "Pikemen", "Macemen", "Swordsmen",
             "Knight", "Tunneler", "Laddermen", "Black Monk", "Archer Bow", "Slaves",
             "Slingers", "Assassins", "Horse Archers", "Arabian Swordsmen", "Fire Throwers"))),
-    WORKER(new ArrayList<>(List.of("Engineer", "Baker", "Brewer", "Farmer", "Hunter", "Innkeeper", "Miller","Iron Miner", "Quarry Worker", "Woodcutter", "Stone Miner", "Trader", "Armourer", "Blacksmith", "Fletcher", "Tanner" )));
+    WORKER(new ArrayList<>(List.of("Engineer", "Baker", "Brewer", "Farmer", "Hunter", "Innkeeper", "Miller", "Iron Miner", "Quarry Worker", "Woodcutter", "Stone Miner", "Trader", "Armourer", "Blacksmith", "Fletcher", "Tanner")));
 
     private static final PeopleType[] peopleTypes = {TROOP, WORKER};
 
-    private static final HashMap<String, Integer> peopleHp = new HashMap<>(){{
+    private static final HashMap<String, Integer> peopleHp = new HashMap<>() {{
         put("Sultan", 100);
         put("Archer", 100);
         put("Crossbowmen", 100);
@@ -36,8 +36,6 @@ public enum PeopleType {
         put("Slingers", 100);
         put("Engineer", 100);
     }};
-
-
 
 
     private static final HashMap<String, ArrayList<LandType>> notValidLandTypesToCreate = new HashMap<>() {{
@@ -77,10 +75,12 @@ public enum PeopleType {
     public static int getPeopleHp(String type) {
         return peopleHp.get(type);
     }
+
     public static ArrayList<LandType> getNotValidLandTypes(String peopleType) {
         return notValidLandTypesToCreate.get(peopleType);
     }
 
-
-
+    public static boolean isTroop(String type) {
+        return TROOP.People.contains(type);
+    }
 }
