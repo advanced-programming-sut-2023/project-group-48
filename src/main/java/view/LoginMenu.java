@@ -45,7 +45,7 @@ public class LoginMenu extends Menu {
         if (matcher.groupCount() == 3) {
             stayLoggedIn = true;
         }
-        String result = loginMenuController.login(username, password, stayLoggedIn);
+        String result = loginMenuController.login(Controller.getRemovedQuotationMarks(username), password, stayLoggedIn);
         System.out.println(result);
         if (loginMenuController.getStep() == 0) return false;
         while(true){

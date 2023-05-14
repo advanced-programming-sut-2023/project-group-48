@@ -42,7 +42,9 @@ public class User {
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
         this.slogan = slogan[0] != null ? slogan[0] : null;
-
+        this.highScore = 0;
+        this.rank = 0;
+        this.governance = null;
     }
 
     public static boolean isUsernameNotValid(String username) {
@@ -150,5 +152,9 @@ public class User {
 
     public Governance getGovernance() {
         return governance;
+    }
+
+    public void setGovernance(Governance governance) {
+        this.governance = governance;
     }
 }

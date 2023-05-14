@@ -20,10 +20,10 @@ public class ProfileMenu extends Menu {
             String command = scanner.nextLine().trim();
             Matcher matcher;
             if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.USERNAMECHANGE)) != null){
-                System.out.println(profileMenuController.changeUserInfo('u', matcher.group("username")));
+                System.out.println(profileMenuController.changeUserInfo('u', Controller.getRemovedQuotationMarks(matcher.group("username"))));
             }
             else if((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.NICKNAMECHANGE)) != null){
-                System.out.println(profileMenuController.changeUserInfo('n', matcher.group("nickname")));
+                System.out.println(profileMenuController.changeUserInfo('n', Controller.getRemovedQuotationMarks(matcher.group("nickname"))));
             }
             else if((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.PASSWORDCHANGE)) != null){
                 changePassword(matcher);
@@ -32,7 +32,7 @@ public class ProfileMenu extends Menu {
                 System.out.println(profileMenuController.changeUserInfo('e', matcher.group("email")));
             }
             else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.SLOGANCHANGE)) != null){
-                System.out.println(profileMenuController.changeUserInfo('s', matcher.group("email")));
+                System.out.println(profileMenuController.changeUserInfo('s', Controller.getRemovedQuotationMarks(matcher.group("slogan"))));
             }
             else if(command.matches("^Profile\\s+remove\\s+slogan$")){
                 System.out.println(profileMenuController.removeSlogan());

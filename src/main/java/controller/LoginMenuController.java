@@ -20,7 +20,6 @@ public class LoginMenuController {
     }
 
     public String login(String username, String password, boolean stayLoggedIn) {
-        System.out.println(username + " " + password + " " + stayLoggedIn);
         attendedUser = controller.getGame().getUserByUsername(username);
         if (attendedUser == null) return "Username and password didn’t match!";
         if (attendedUser.isPasswordNotCorrect(password)) {

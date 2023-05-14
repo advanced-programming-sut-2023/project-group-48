@@ -27,10 +27,10 @@ public class ShopMenu extends Menu {
                 System.out.println(shopMenuController.showPriceList());
             }
             else if ((matcher = ShopMenuCommands.getMatcher(command, ShopMenuCommands.BUY)) != null){
-                System.out.println(shopMenuController.buy(matcher.group("itemname"), Integer.parseInt(matcher.group("itemamount"))));
+                System.out.println(shopMenuController.buy(Controller.getRemovedQuotationMarks(matcher.group("itemname")), Integer.parseInt(matcher.group("itemamount"))));
             }
             else if ((matcher = ShopMenuCommands.getMatcher(command, ShopMenuCommands.SELL)) != null){
-                System.out.println(shopMenuController.sell(matcher.group("itemname"), Integer.parseInt(matcher.group("itemamount"))));
+                System.out.println(shopMenuController.sell(Controller.getRemovedQuotationMarks(matcher.group("itemname")), Integer.parseInt(matcher.group("itemamount"))));
             }
             else
                 System.out.println("Invalid Command!");

@@ -27,6 +27,9 @@ public class Governance {
         for (Property allProperty : Property.getAllProperties()) {
             properties.put(allProperty, 0);
         }
+        properties.put(Property.WOOD, 1000);
+        properties.put(Property.COIN, 1000);
+        properties.put(Property.STONE, 1000);
         popularityFactors = new HashMap<>();
         for (PopularityFactor allPopularityFactor : PopularityFactor.getPopularityFactors()) {
             popularityFactors.put(allPopularityFactor, 0);

@@ -31,8 +31,11 @@ public class Match {
         this.players = players;
         governances = new ArrayList<>();// TODO: generate governances
         for (User player : players) {
-            governances.add(new Governance(player));
+            Governance governance = new Governance(player);
+            governances.add(governance);
+            player.setGovernance(governance);
         }
+        this.currentPlayer = players.get(0);
         this.map = Cell.generateMap(mapNumber);
         this.selectedCell = null;
         this.MAX_COLUMN = map[0].length;

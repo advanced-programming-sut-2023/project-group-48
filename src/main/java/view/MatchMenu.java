@@ -57,13 +57,13 @@ public class MatchMenu extends Menu {
                 System.out.println(matchMenuController.setFearRate(Integer.parseInt(matcher.group("ratenumber"))));
             }
             else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DROPBUILDING)) != null){
-                System.out.println(matchMenuController.dropBuilding(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("y")), matcher.group("type"))); // TODO direction
+                System.out.println(matchMenuController.dropBuilding(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("y")), Controller.getRemovedQuotationMarks(matcher.group("type")))); // TODO direction
             }
             else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.SELECTBUILDING)) != null){
                 System.out.println(matchMenuController.selectBuilding(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
             }
             else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.CREATEUNIT)) != null){
-                System.out.println(matchMenuController.createUnit(matcher.group("type"), Integer.parseInt(matcher.group("count"))));
+                System.out.println(matchMenuController.createUnit(Controller.getRemovedQuotationMarks(matcher.group("type")), Integer.parseInt(matcher.group("count"))));
             }
             else if (command.matches("^repair$")){
                 System.out.println(matchMenuController.repair());
@@ -100,20 +100,24 @@ public class MatchMenu extends Menu {
                 System.out.println(matchMenuController.disbandUnit());
             }
             else if((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.SETTEXTUREONEBLOCK)) != null){
-                System.out.println(matchMenuController.setTexture(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x")), matcher.group("type")));
+                System.out.println(matchMenuController.setTexture(Integer.parseInt(matcher.group("y")),
+                        Integer.parseInt(matcher.group("x")), Controller.getRemovedQuotationMarks(matcher.group("type"))));
             }
             else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.SETTEXTUREBLOCKS)) != null){
                 System.out.println(matchMenuController.setTexture(Integer.parseInt(matcher.group("y1")), Integer.parseInt(matcher.group("x1")),
-                        Integer.parseInt(matcher.group("y2")), Integer.parseInt(matcher.group("x2")), matcher.group("type")));
+                        Integer.parseInt(matcher.group("y2")), Integer.parseInt(matcher.group("x2")),
+                        Controller.getRemovedQuotationMarks(matcher.group("type"))));
             }
             else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.CLEAR)) != null){
                 System.out.println(matchMenuController.clear(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
             }
             else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DROPROCK)) != null){
-                System.out.println(matchMenuController.dropRockOrTree(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x")), "rock", Direction.getDirection(matcher.group("direction"))));
+                System.out.println(matchMenuController.dropRockOrTree(Integer.parseInt(matcher.group("y")),
+                        Integer.parseInt(matcher.group("x")), "rock", Direction.getDirection(matcher.group("direction"))));
             }
-            else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DROPTREE)) != null) {
-                System.out.println(matchMenuController.dropRockOrTree(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x")), "tree", Direction.getDirection(matcher.group("direction"))));
+            else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DROPTREE)) != null) { // TODO Controller.getRemovedQuotationMarks(matcher.group("treetype"))
+                System.out.println(matchMenuController.dropRockOrTree(Integer.parseInt(matcher.group("y")),
+                        Integer.parseInt(matcher.group("x")), "tree", Direction.getDirection(matcher.group("direction"))));
             }
             else if((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DROPUNIT)) != null){
                 // TODO

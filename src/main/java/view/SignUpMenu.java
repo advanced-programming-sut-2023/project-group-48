@@ -48,10 +48,12 @@ public class SignUpMenu extends Menu {
         String result;
         if (matcher.groupCount() == 6) {
             slogan = matcher.group("slogan");
-            result = signUpMenuController.createUserStep(username, password, passConfirmation, email, nickname, slogan);
+            result = signUpMenuController.createUserStep(Controller.getRemovedQuotationMarks(username), password,
+                    passConfirmation, email, Controller.getRemovedQuotationMarks(nickname), Controller.getRemovedQuotationMarks(slogan));
         }
         else
-            result = signUpMenuController.createUserStep(username, password, passConfirmation, email, nickname);
+            result = signUpMenuController.createUserStep(Controller.getRemovedQuotationMarks(username), password,
+                    passConfirmation, email, Controller.getRemovedQuotationMarks(nickname));
         System.out.println(result);
         if (signUpMenuController.getStep() == 0) return;
         if (result.endsWith("Please re-enter your password here:\\n")){
@@ -78,7 +80,8 @@ public class SignUpMenu extends Menu {
                 System.out.println("answer confirmation is not correct!");
             }
             else {
-                System.out.println(signUpMenuController.captchaStep(matcher.group("questionnumber"), matcher.group("answer")));
+                System.out.println(signUpMenuController.captchaStep(Controller.getRemovedQuotationMarks(matcher.group("questionnumber")),
+                        Controller.getRemovedQuotationMarks(matcher.group("answer"))));
                 answerCaptcha();
                 break;
             }
@@ -92,5 +95,4 @@ public class SignUpMenu extends Menu {
             if (answer.equals("user created successfully!")) break;
         }
     }
-
 }

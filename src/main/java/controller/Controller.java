@@ -27,6 +27,7 @@ public class Controller {
         this.shopMenu = new ShopMenu(this);
         this.game = new Game(mainMenu, signUpMenu);
     }
+
     public static String getRemovedQuotationMarks(String input) {
         if (input.startsWith("\"") && input.endsWith("\"")) return input.substring(1, input.length() - 1);
         return input;

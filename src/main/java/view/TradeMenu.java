@@ -24,15 +24,17 @@ public class TradeMenu extends Menu {
                 break;
             }
             else if ((matcher = TradeMenuCommands.getMatcher(command, TradeMenuCommands.TRADE)) != null){
-                System.out.println(tradeMenuController.addTrade(matcher.group("username"), matcher.group("resourcetype"),
-                                   Integer.parseInt(matcher.group("resourceamount")), Integer.parseInt(matcher.group("price")),
-                                   matcher.group("message")));
+                System.out.println(tradeMenuController.addTrade(Controller.getRemovedQuotationMarks(matcher.group("username")),
+                        Controller.getRemovedQuotationMarks(matcher.group("resourcetype")),
+                        Integer.parseInt(matcher.group("resourceamount")), Integer.parseInt(matcher.group("price")),
+                        Controller.getRemovedQuotationMarks(matcher.group("message"))));
             }
             else if (command.matches("^trade\\s+list$")){
                 System.out.println(tradeMenuController.tradeList());
             }
             else if ((matcher = TradeMenuCommands.getMatcher(command, TradeMenuCommands.ANSWERTRADE)) != null){
-                System.out.println(tradeMenuController.answerRequest(Integer.parseInt(matcher.group("id")), matcher.group("message"), matcher.group("answer")));
+                System.out.println(tradeMenuController.answerRequest(Integer.parseInt(matcher.group("id")),
+                        Controller.getRemovedQuotationMarks(matcher.group("message")), matcher.group("answer")));
             }
             else if (command.matches("^trade\\s+history$")){
                 System.out.println(tradeMenuController.tradeHistory());
