@@ -2,6 +2,7 @@ package model.People;
 
 import model.Buildings.Building;
 import model.Match.Governance;
+import model.Match.LandType;
 import model.Match.Property;
 
 import java.lang.reflect.Array;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 
 public class Troop extends People {
     private static final HashMap<String, ArrayList<Property>> requiredResource = new HashMap<>(){{requiredResource.put("Archer", new ArrayList<Property>(Arrays.asList(Property.BOW)));
-        requiredResource.put("Crossbowmen", new ArrayList<Property>(Arrays.asList(Property.BOW)));
+        requiredResource.put("Crossbowmen", new ArrayList<Property>(Arrays.asList(Property.CROSSBOW)));
         requiredResource.put("Spearmen", new ArrayList<Property>(Arrays.asList(Property.SPEAR)));
         requiredResource.put("Pikemen", new ArrayList<Property>(Arrays.asList(Property.PIKE)));
         requiredResource.put("Macemen", new ArrayList<Property>(Arrays.asList(Property.MACE)));
@@ -30,6 +31,68 @@ public class Troop extends People {
         requiredResource.put("Arabian Swordsmen", new ArrayList<Property>(Arrays.asList(Property.SWORD, Property.HORSE)));
         requiredResource.put("Fire Throwers", new ArrayList<Property>(Arrays.asList()));
     }};
+    private static final HashMap<String, Quality[]> troopPowers = new HashMap<>() {{
+        put("Sultan", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Archer", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Crossbowmen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Spearmen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Macemen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Swordsmen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Knight", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Tunneler", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Laddermen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Black Monk", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Archer Bow", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Slaves", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Assassins", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Horse Archers", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Arabian Swordsmen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Fire Throwers", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Slingers", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+    }};
+    private static final HashMap<String, Integer> troopFireRange = new HashMap<>() {{
+        put("Sultan", 100);
+        put("Archer", 100);
+        put("Crossbowmen", 100);
+        put("Spearmen", 100);
+        put("Macemen", 100);
+        put("Swordsmen", 100);
+        put("Knight", 100);
+        put("Tunneler", 100);
+        put("Laddermen", 100);
+        put("Black Monk", 100);
+        put("Archer Bow", 100);
+        put("Slaves", 100);
+        put("Assassins", 100);
+        put("Horse Archers", 100);
+        put("Arabian Swordsmen", 100);
+        put("Fire Throwers", 100);
+        put("Slingers", 100);
+        put("Engineer", 100);
+    }};
+    private static final HashMap<String, Integer> troopCost = new HashMap<>() {{
+        put("Sultan", 100);
+        put("Archer", 100);
+        put("Crossbowmen", 100);
+        put("Spearmen", 100);
+        put("Macemen", 100);
+        put("Swordsmen", 100);
+        put("Knight", 100);
+        put("Tunneler", 100);
+        put("Laddermen", 100);
+        put("Black Monk", 100);
+        put("Archer Bow", 100);
+        put("Slaves", 100);
+        put("Assassins", 100);
+        put("Horse Archers", 100);
+        put("Arabian Swordsmen", 100);
+        put("Fire Throwers", 100);
+        put("Slingers", 100);
+        put("Engineer", 100);
+    }};
+    private static final ArrayList<String> arabTroops = new ArrayList<>(Arrays.asList("ArcherBow", "Slaves", "Slingers", "Assassins", "HorseArchers", "ArabianSwordsmen", "FireThrowers"));
+    private static final ArrayList<String> wallCrawler = new ArrayList<>(Arrays.asList("Laddermen","Assassins"));
+    private static final ArrayList<String> horseMan = new ArrayList<>(Arrays.asList("Knight", "HorseArchers", "ArabianSwordsmen"));
 
     private final Quality attackPower;
     private final Quality defensePower;
@@ -46,13 +109,13 @@ public class Troop extends People {
 
     public Troop(Governance governance, int row, int column, String type, PeopleType peopleType) {
         super(governance, row, column, type, peopleType);
-        this.attackPower = PeopleType.getTroopAttackPower(type);
-        this.defensePower = PeopleType.getTroopDefensePower(type);
-        this.speed = PeopleType.getTroopSpeed(type);
-        this.fireRange = PeopleType.getTroopFireRange(type);
-        this.nation = PeopleType.getTroopNation(type);
-        this.ladderMan = PeopleType.isTroopLadderMan(type);
-        this.hasHorse = PeopleType.isTroopHasHorse(type);
+        this.attackPower = Troop.getTroopAttackPower(type);
+        this.defensePower = Troop.getTroopDefensePower(type);
+        this.speed = Troop.getTroopSpeed(type);
+        this.fireRange = Troop.getTroopFireRange(type);
+        this.nation = Troop.getTroopNation(type);
+        this.ladderMan = Troop.isTroopWallCrawler(type);
+        this.hasHorse = Troop.isTroopHasHorse(type);
     }
     public static HashMap<String, ArrayList<Property>> getRequiredResource() {
         return requiredResource;
@@ -71,6 +134,38 @@ public class Troop extends People {
 
     public int getFireRange() {
         return fireRange;
+    }
+    public static Quality getTroopAttackPower(String type) {
+        return troopPowers.get(type)[0];
+    }
+
+    public static Quality getTroopDefensePower(String type) {
+        return troopPowers.get(type)[1];
+    }
+
+    public static Quality getTroopSpeed(String type) {
+        return troopPowers.get(type)[2];
+    }
+
+    public static int getTroopFireRange(String type) {
+        return troopFireRange.get(type);
+    }
+    public static Nation getTroopNation(String type) {
+        if (arabTroops.contains(type)) return Nation.ARAB;
+        return Nation.EUROPE;
+    }
+
+    public static boolean isTroopWallCrawler(String type) {
+        return wallCrawler.contains(type);
+    }
+
+    public static boolean isTroopHasHorse(String type) {
+        return horseMan.contains(type);
+    }
+
+
+    public static int getTroopCost(String type) {
+        return troopCost.get(type);
     }
 
     public Nation getNation() {
