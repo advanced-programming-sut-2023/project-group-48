@@ -67,7 +67,11 @@ public class ProfileMenu extends Menu {
             System.out.println(answer);
             if (answer.equals("Please enter your new password again")) break;
         }
-        System.out.println(profileMenuController.finalStep(newPassword));
+        while(true){
+            String result = (profileMenuController.finalStep(newPassword, scanner.nextLine().trim()));
+            System.out.println(result);
+            if (!result.equals("Password confirmation is not correct!")) return;
+        }
     }
 
 }

@@ -56,12 +56,14 @@ public class ProfileMenuController {
         return "Please enter your new password again";
     }
 
-    public String finalStep(String newPassword) {
+    public String finalStep(String newPassword, String newPasswordAgain) {
         String result;
         if (controller.getGame().getCurrentUser().isPasswordNotCorrect(currentPassword))
             return "Current password is incorrect!";
         if (!controller.getGame().getCurrentUser().isPasswordNotCorrect(newPassword))
             return "Please enter a new password!";
+        if (!newPasswordAgain.equals(newPassword))
+            return "Password confirmation is not correct!";
         if (!(result = User.isPasswordWeak(newPassword)).isEmpty()) return "new password is weak: " + result;
         controller.getGame().getCurrentUser().setPassword(newPassword);
         step = 0;
