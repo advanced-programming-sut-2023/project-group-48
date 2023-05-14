@@ -75,9 +75,9 @@ public class Match {
 
     public void attack(People people1, People people2) {
         if (People.canAttack(people1, people2))
-            ((Troop) people1).attack(people2);
+            ((Troop) people1).attackPeople(people2);
         if (People.canAttack(people2, people1))
-            ((Troop) people2).attack(people1);
+            ((Troop) people2).attackPeople(people1);
     }
 
 //    public void pourOil(Direction direction) {
@@ -203,6 +203,21 @@ public class Match {
             }
         }
         return enemies;
+    }
+
+    public ArrayList<Building> getNearByEnemyBuildings(int row, int column, int range) {
+        ArrayList<Building> buildings = new ArrayList<>();
+        int startRow = row - range;
+        int startColumn = column - range;
+        for (int i = 0; i < 2 * range + 1; i++) {
+            for (int j = 0; j < 2 * range + 1; j++) {
+                if (areCoordinatesNotValid(startRow + i, startColumn + j)) continue;
+                Building building = getCell(startRow + i, startColumn + j).getBuilding();
+                if (building != null && !building.getGovernance().equals(currentPlayer.getGovernance()))
+                    buildings.add(getCell(startRow + i, startColumn + j).getBuilding());
+            }
+        }
+        return buildings;
     }
 
     public ArrayList<People> getSelectedUnit() {

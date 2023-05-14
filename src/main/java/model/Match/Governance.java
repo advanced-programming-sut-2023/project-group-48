@@ -1,7 +1,6 @@
 package model.Match;
 
 import model.Buildings.Building;
-import model.Buildings.BuildingType;
 import model.User;
 
 import java.util.*;
@@ -48,110 +47,111 @@ public class Governance {
     }
 
     public void updatePopularity() {
-        for (PopularityFactor allPopularityFactor : PopularityFactor.getPopularityFactors()) {
-            this.popularity += popularityFactors.get(allPopularityFactor);
+        this.popularity = 0;
+        changeFoodPopularityFactor();
+        changeTaxPopularityFactor();
+        changeReligionPopularityFactor();
+        changeFearPopularityFactor();
+        for (PopularityFactor factor : PopularityFactor.getPopularityFactors()) {
+            this.popularity += popularityFactors.get(factor);
         }
     }
-    public void changePopularityByFactor() {
-        changeFoodPopularityByFactor();
-        changeTaxPopularityByFactor();
-        changeReligionPopularityByFactor();
-        changeFearPopularityByFactor();
-    }
 
-    public void changeFoodPopularityByFactor() {
-        int finalFoodFactor=0;
+    public void changeFoodPopularityFactor() {
+        int finalFoodFactor = 0;
 
-        foodVariety=0;
+        foodVariety = 0;
         for (Property allProperty : Property.getAllFoods()) {
-            if(properties.get(allProperty) > 0){
-                foodVariety+=1;
+            if (properties.get(allProperty) > 0) {
+                foodVariety += 1;
             }
         }
 
-        switch (foodRate){
+        switch (foodRate) {
             case -2:
-                finalFoodFactor+=-8;
+                finalFoodFactor += -8;
                 break;
             case -1:
-                finalFoodFactor+=-4;
+                finalFoodFactor += -4;
                 break;
             case 0:
-                finalFoodFactor+=0;
+                finalFoodFactor += 0;
                 break;
             case 1:
-                finalFoodFactor+=+4;
+                finalFoodFactor += +4;
                 break;
             case 2:
-                finalFoodFactor+=+8;
+                finalFoodFactor += +8;
                 break;
             default:
                 break;
         }
-        switch (foodVariety){
+        switch (foodVariety) {
             case 1:
-                finalFoodFactor+=0;
+                finalFoodFactor += 0;
                 break;
             case 2:
-                finalFoodFactor+=1;
+                finalFoodFactor += 1;
                 break;
             case 3:
-                finalFoodFactor+=2;
+                finalFoodFactor += 2;
                 break;
             case 4:
-                finalFoodFactor+=3;
+                finalFoodFactor += 3;
                 break;
             default:
                 break;
         }
-        if(foodVariety==0) {
+        if (foodVariety == 0) {
             finalFoodFactor = 0;
         }
-        popularityFactors.put(PopularityFactor.FOOD,finalFoodFactor);
+        popularityFactors.put(PopularityFactor.FOOD, finalFoodFactor);
     }
-    public void changeTaxPopularityByFactor() {
+
+    public void changeTaxPopularityFactor() {
         int finalTaxFactor = 0;
-        switch (taxRate){
+        switch (taxRate) {
             case -3:
-                finalTaxFactor+=7;
+                finalTaxFactor += 7;
                 break;
             case -2:
-                finalTaxFactor+=5;
+                finalTaxFactor += 5;
                 break;
             case -1:
-                finalTaxFactor+=3;
+                finalTaxFactor += 3;
                 break;
             case 0:
-                finalTaxFactor+=0;
+                finalTaxFactor += 0;
                 break;
             case 1:
-                finalTaxFactor+=-2;
+                finalTaxFactor += -2;
                 break;
             case 2:
-                finalTaxFactor+=-4;
+                finalTaxFactor += -4;
                 break;
             case 3:
-                finalTaxFactor+=-6;
+                finalTaxFactor += -6;
                 break;
             case 4:
-                finalTaxFactor+=-8;
+                finalTaxFactor += -8;
                 break;
             case 5:
-                finalTaxFactor+=-12;
+                finalTaxFactor += -12;
                 break;
             case 6:
-                finalTaxFactor+=-16;
+                finalTaxFactor += -16;
                 break;
             case 7:
-                finalTaxFactor+=-20;
+                finalTaxFactor += -20;
                 break;
             case 8:
-                finalTaxFactor+=-24;
+                finalTaxFactor += -24;
                 break;
         }
-        popularityFactors.put(PopularityFactor.TAX,finalTaxFactor);
+        popularityFactors.put(PopularityFactor.TAX, finalTaxFactor);
     }
-    public void changeReligionPopularityByFactor() {
+
+    public void changeReligionPopularityFactor() {
         int finalReligionFactor = 0;
         double doubleReligionFactor = 0;
         int percentReligionFactor = 0;
@@ -162,22 +162,23 @@ public class Governance {
                 doubleReligionFactor += 2;
             }
         }
-        percentReligionFactor = (int) Math.floor((doubleReligionFactor / ((double)population)) * 2500);
-        if(0<=percentReligionFactor && percentReligionFactor<25){
-            finalReligionFactor+=2;
+        percentReligionFactor = (int) Math.floor((doubleReligionFactor / ((double) population)) * 2500);
+        if (0 <= percentReligionFactor && percentReligionFactor < 25) {
+            finalReligionFactor += 2;
         }
-        if(25<=percentReligionFactor && percentReligionFactor<50){
-            finalReligionFactor+=4;
+        if (25 <= percentReligionFactor && percentReligionFactor < 50) {
+            finalReligionFactor += 4;
         }
-        if(50<=percentReligionFactor && percentReligionFactor<75){
-            finalReligionFactor+=6;
+        if (50 <= percentReligionFactor && percentReligionFactor < 75) {
+            finalReligionFactor += 6;
         }
-        if(75<=percentReligionFactor){
-            finalReligionFactor+=8;
+        if (75 <= percentReligionFactor) {
+            finalReligionFactor += 8;
         }
-        popularityFactors.put(PopularityFactor.RELIGION,finalReligionFactor);
+        popularityFactors.put(PopularityFactor.RELIGION, finalReligionFactor);
     }
-    public void changeFearPopularityByFactor() {
+
+    public void changeFearPopularityFactor() {
         int finalFearFactor = 0;
         double doubleFearFactor = 0;
         int percentFearFactor = 0;
@@ -189,35 +190,36 @@ public class Governance {
                 doubleFearFactor -= 1;
             }
         }
-        percentFearFactor = (int) Math.floor((doubleFearFactor / ((double)population)) * 1250);
+        percentFearFactor = (int) Math.floor((doubleFearFactor / ((double) population)) * 1250);
 
-        if(-75>=percentFearFactor){
-            finalFearFactor+=-4;
+        if (-75 >= percentFearFactor) {
+            finalFearFactor += -4;
         }
-        if(-50>=percentFearFactor && percentFearFactor>-75){
-            finalFearFactor+=-3;
+        if (-50 >= percentFearFactor && percentFearFactor > -75) {
+            finalFearFactor += -3;
         }
-        if(-25>=percentFearFactor && percentFearFactor>-50){
-            finalFearFactor+=-2;
+        if (-25 >= percentFearFactor && percentFearFactor > -50) {
+            finalFearFactor += -2;
         }
-        if(-0>=percentFearFactor && percentFearFactor>-25){
-            finalFearFactor+=-1;
+        if (-0 >= percentFearFactor && percentFearFactor > -25) {
+            finalFearFactor += -1;
         }
-        if(0<=percentFearFactor && percentFearFactor<25){
-            finalFearFactor+=1;
+        if (0 <= percentFearFactor && percentFearFactor < 25) {
+            finalFearFactor += 1;
         }
-        if(25<=percentFearFactor && percentFearFactor<50){
-            finalFearFactor+=2;
+        if (25 <= percentFearFactor && percentFearFactor < 50) {
+            finalFearFactor += 2;
         }
-        if(50<=percentFearFactor && percentFearFactor<75){
-            finalFearFactor+=3;
+        if (50 <= percentFearFactor && percentFearFactor < 75) {
+            finalFearFactor += 3;
         }
-        if(75<=percentFearFactor){
-            finalFearFactor+=4;
+        if (75 <= percentFearFactor) {
+            finalFearFactor += 4;
         }
-        popularityFactors.put(PopularityFactor.FEAR,finalFearFactor);
+        popularityFactors.put(PopularityFactor.FEAR, finalFearFactor);
     }
 
+    }
     public int getPopulation() {
         return population;
     }

@@ -1,5 +1,6 @@
 package model;
 
+import model.Buildings.Building;
 import model.Match.Direction;
 import model.Match.Governance;
 import model.Match.Match;
@@ -13,10 +14,12 @@ import java.util.Map;
 public class TurnManager {
     private final Match match;
     private final ArrayList<People> deadPeople;
+    private final ArrayList<Building> destroyedBuildings;
 
     public TurnManager(Match match) {
         this.match = match;
-        deadPeople = new ArrayList<>();
+        this.deadPeople = new ArrayList<>();
+        this.destroyedBuildings = new ArrayList<>();
     }
 
     public void nextTurn() {
@@ -29,7 +32,7 @@ public class TurnManager {
             if (people instanceof Troop) {
                 Troop attacker = (Troop) people;
                 for (People target : match.getNearByEnemy(row, column, attacker.getFireRange())) {
-                    attacker.attack(target);
+                    attacker.attackPeople(target);
                     if (target.getHp() <= 0) deadPeople.add(target);
                 }
             }
@@ -86,6 +89,33 @@ public class TurnManager {
         }
     }
 
+    private void attackBuildings() {
+        for (People people : match.getAllPeople()) {
+            int row = people.getRow();
+            int column = people.getColumn();
+            if (people instanceof Troop) {
+                Troop attacker = (Troop) people;
+                for (Building target : match.getNearByEnemyBuildings(row, column, attacker.getFireRange())) {
+                    attacker.attackBuilding(target);
+                    if (target.getHp() <= 0) destroyedBuildings.add(target);
+                }
+            }
+        }
+    }
+
+    private void removeDestroyedBuildings() {
+        for (Building destroyedBuilding : destroyedBuildings) {;
+            match.getCell(destroyedBuilding.getRow(), destroyedBuilding.getColumn()).setBuilding(null);
+        }
+        destroyedBuildings.clear();
+    }
+
+    private void updateAllPopularities() {
+        for (Governance governance : match.getGovernances()) {
+            governance.updatePopularity();
+        }
+    }
+
     private boolean areMovesFinished() {
         for (People movingPerson : match.getMovingPeople()) {
             if (movingPerson.getPath().size() > 0) return false;
@@ -97,9 +127,11 @@ public class TurnManager {
         while (!areMovesFinished()) {
             doFights();
             removeDeadPeople();
+            attackBuildings();
+            removeDestroyedBuildings();
             moveAllPeople();
-            // TODO update popularity
         }
+        updateAllPopularities();
         useFoods();
     }
 

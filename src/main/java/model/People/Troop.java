@@ -1,9 +1,7 @@
 package model.People;
 
-import model.Match.Direction;
+import model.Buildings.Building;
 import model.Match.Governance;
-
-import java.util.ArrayList;
 
 public class Troop extends People {
     private final Quality attackPower;
@@ -87,9 +85,13 @@ public class Troop extends People {
 //
 //    }
 
-    public void attack(People targetPeople) {
+    public void attackPeople(People targetPeople) {
         if (targetPeople instanceof Worker) targetPeople.takeDamage(attackPower.getValue());
         else targetPeople.takeDamage(attackPower.getValue() - ((Troop) targetPeople).getDefensePower().getValue());
+    }
+
+    public void attackBuilding(Building targetBuilding) {
+        targetBuilding.takeDamage(attackPower.getValue());
     }
 
     public boolean isInPatrolMode() {
