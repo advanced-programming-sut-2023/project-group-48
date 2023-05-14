@@ -31,10 +31,6 @@ public class MainMenu extends Menu {
                 System.out.println(controller.enterProfileMenu());
                 break;
             }
-            else if (command.matches("^enter\\s+match\\s+menu$")){
-                System.out.println(controller.enterMatchMenu());
-                break;
-            }
             else
                 System.out.println("Invalid Command!");
         }
