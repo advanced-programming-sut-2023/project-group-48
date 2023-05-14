@@ -2,6 +2,7 @@ package model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import controller.Controller;
 import model.Match.Match;
 import model.Match.Cell;
 import model.People.Troop;
@@ -20,11 +21,12 @@ public class Game {
     private Troop selectedTroop;
     private Cell selectedCell;
 
-    public Game() throws IOException {
+    public Game(Controller controller) throws IOException {
         File usersFile = new File("Users.json");
         if (usersFile.exists()) {
             BufferedReader fileReader = new BufferedReader(new FileReader(usersFile));
-            users = new Gson().fromJson(fileReader, new TypeToken<ArrayList<User>>(){}.getType());
+            users = new Gson().fromJson(fileReader, new TypeToken<ArrayList<User>>() {
+            }.getType());
             fileReader.close();
         } else {
             users = new ArrayList<User>();
@@ -41,6 +43,14 @@ public class Game {
             db = new DataBase();
             FileWriter fileWriter = new FileWriter(dataBaseFile);
             fileWriter.close();
+        }
+
+        if (db.getCurrentUser() != null) {
+            currentUser = db.getCurrentUser();
+            controller.enterMainMenu();
+        } else {
+            currentUser = null;
+            controller.enterSignUpMenu();
         }
     }
 
@@ -129,6 +139,6 @@ public class Game {
     }
 
     public void setSelectedCell(Cell selectedCell) {
-        this.selectedCell= selectedCell;
+        this.selectedCell = selectedCell;
     }
 }

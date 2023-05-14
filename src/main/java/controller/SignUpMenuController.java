@@ -121,10 +121,6 @@ public class SignUpMenuController {
         return "user created successfully!";
     }
 
-    public String enterLoginMenu() {
-        return controller.enterLoginMenu();
-    } // to remove
-
     public int getStep() {
         return step;
     }

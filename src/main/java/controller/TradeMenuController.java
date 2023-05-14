@@ -65,8 +65,4 @@ public class TradeMenuController {
         }
         return result.toString();
     }
-
-    public String exitToMatchMenu() {
-        return controller.enterMatchMenu();
-    } // to remove
 }

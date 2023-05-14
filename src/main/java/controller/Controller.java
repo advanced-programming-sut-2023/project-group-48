@@ -25,7 +25,7 @@ public class Controller {
         this.matchMenu = new MatchMenu(this);
         this.tradeMenu = new TradeMenu(this);
         this.shopMenu = new ShopMenu(this);
-        this.game = new Game();
+        this.game = new Game(this);
     }
 
     public void run() throws IOException {

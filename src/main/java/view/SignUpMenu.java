@@ -26,7 +26,7 @@ public class SignUpMenu extends Menu {
                 createUser(matcher);
             }
             else if (command.matches("^enter\\s+login\\s+menu$")){
-                System.out.println(signUpMenuController.enterLoginMenu());
+                System.out.println(controller.enterLoginMenu());
                 break;
             }
             else if (command.matches("^exit$")){
