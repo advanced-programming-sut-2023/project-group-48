@@ -1,15 +1,18 @@
 package model;
 
 import model.Match.Direction;
+import model.Match.Governance;
 import model.Match.Match;
+import model.Match.Property;
 import model.People.People;
 import model.People.Troop;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class TurnManager {
     private final Match match;
-    private ArrayList<People> deadPeople;
+    private final ArrayList<People> deadPeople;
 
     public TurnManager(Match match) {
         this.match = match;
@@ -37,6 +40,7 @@ public class TurnManager {
         for (People deadPerson : deadPeople) {
             match.removePeople(deadPerson);
         }
+        deadPeople.clear();
     }
 
     private void movePeople(People people) {
@@ -57,18 +61,46 @@ public class TurnManager {
                 break;
         }
         match.getCell(people.getRow(), people.getColumn()).addPeople(people);
+        people.getPath().remove(0);
     }
 
     private void moveAllPeople() {
-        for (People people : match.getAllPeople()) {
+        for (People people : match.getMovingPeople()) {
             if (people.getPath().size() > 0) {
                 movePeople(people);
             }
         }
     }
 
-    public void run() {
+    private void useFoods() {
+        for (Governance governance : match.getGovernances()) {
+            int usedFoodCount = governance.getPopulation() * ((governance.getFoodRate() + 2) / 2);
+            for (Map.Entry<Property, Integer> entry : governance.getFoods().entrySet()) {
+                if (usedFoodCount == 0) break;
+                if (entry.getValue() > 0) {
+                    int toUse = Math.min(usedFoodCount, entry.getValue());
+                    usedFoodCount -= toUse;
+                    entry.setValue(entry.getValue() - toUse);
+                }
+            }
+        }
+    }
 
+    private boolean areMovesFinished() {
+        for (People movingPerson : match.getMovingPeople()) {
+            if (movingPerson.getPath().size() > 0) return false;
+        }
+        return true;
+    }
+
+    public void run() {
+        while (!areMovesFinished()) {
+            doFights();
+            removeDeadPeople();
+            moveAllPeople();
+            // TODO update popularity
+        }
+        useFoods();
     }
 
     public void nextRound() {

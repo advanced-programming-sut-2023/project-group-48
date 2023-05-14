@@ -49,8 +49,8 @@ public class MatchMenuController {
 
     public String showFoodList() {
         StringBuilder result = new StringBuilder();
-        for (Map.Entry<Food, Integer> entry : controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getFoods().entrySet()) {
-            if (entry.getValue() != 0) result.append(entry.getKey().getName()).append(": ").append(entry.getValue()).append("\n");
+        for (Map.Entry<Property, Integer> entry : controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getFoods().entrySet()) {
+            if (entry.getValue() != 0) result.append(entry.getKey().getPropertyInString()).append(": ").append(entry.getValue()).append("\n");
         }
         if (result.toString().equals("")) return "no food!";
         return result.toString();
@@ -213,6 +213,8 @@ public class MatchMenuController {
     public String moveUnit(int row, int column) {
         for (People people : controller.getGame().getCurrentMatch().getSelectedUnit()) {
             people.setPath(controller.getGame().getCurrentMatch().givePath(people.getRow(), people.getColumn(), row, column));
+            if (!controller.getGame().getCurrentMatch().getMovingPeople().contains(people))
+            controller.getGame().getCurrentMatch().getMovingPeople().add(people);
         }
         return "unit path set successfully!";
     }
@@ -221,14 +223,21 @@ public class MatchMenuController {
         for (People people : controller.getGame().getCurrentMatch().getSelectedUnit()) {
             Troop troop = (Troop) people;
             troop.setPath(controller.getGame().getCurrentMatch().givePath(row1 , column1, row2, column2));
+            if (!controller.getGame().getCurrentMatch().getMovingPeople().contains(troop))
+                controller.getGame().getCurrentMatch().getMovingPeople().add(troop);
             troop.setPatrolMode(true);
             troop.setPatrolPoints(new int[][]{{row1, column1}, {row2, column2}});
         }
         return "unit patrol path set successfully!";
     }
 
-    public String stopPatrolUnit(int row, int column) {
-        // TODO: 5/29/2018
+    public String stopPatrolUnit() {
+        for (People people : controller.getGame().getCurrentMatch().getSelectedUnit()) {
+            Troop troop = (Troop) people;
+            troop.setPatrolMode(false);
+            troop.setPatrolPoints(null);
+        }
+        return "unit patrol stopped successfully!";
     }
 
     public String setTroopsState(int row, int column, String state) {

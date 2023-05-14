@@ -24,7 +24,8 @@ public class Match {
     private ArrayList<Trade> trades;
     private Building selectedBuilding;
     private ArrayList<People> selectedUnit;
-    private ArrayList<People> allPeople;
+    private final ArrayList<People> allPeople;
+    private final ArrayList<People> movingPeople;
 
     public Match(int rounds, ArrayList<User> players, int mapNumber) {
         this.rounds = rounds;
@@ -45,6 +46,7 @@ public class Match {
         this.selectedBuilding = null;
         this.selectedUnit = null;
         this.allPeople = new ArrayList<>();
+        this.movingPeople = new ArrayList<>();
     }
 
     public int getRounds() {
@@ -153,6 +155,10 @@ public class Match {
         return allPeople;
     }
 
+    public ArrayList<People> getMovingPeople() {
+        return movingPeople;
+    }
+
     public void placePeople(int row, int column, String type, PeopleType peopleType, int count) {
         for (int i = 0; i < count; i++) {
             People people = People.createPeopleByType(currentPlayer.getGovernance(), row, column, type, peopleType);
@@ -160,6 +166,7 @@ public class Match {
             allPeople.add(people);
         }
     }
+
     public void removePeople(People people) {
         getCell(people.getRow(), people.getColumn()).removePeople(people);
         allPeople.remove(people);
@@ -214,4 +221,9 @@ public class Match {
     public void nextRound() {
         currentRound++;
     }
+
+    public ArrayList<Governance> getGovernances() {
+        return governances;
+    }
+
 }
