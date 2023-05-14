@@ -26,7 +26,4 @@ public class MainMenuController {
         return "match started!";
     }
 
-    public String logout() throws IOException {
-        return controller.logout();
-    }
 }
