@@ -19,14 +19,17 @@ public class ShopMenu extends Menu {
         while (true){
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if (command.matches("^show\\s+price\\s+list$")){
-
+            if (command.matches("back")) {
+                System.out.println(controller.enterMatchMenu());
+            }
+            else if (command.matches("^show\\s+price\\s+list$")){
+                System.out.println(shopMenuController.showPriceList());
             }
             else if ((matcher = ShopMenuCommands.getMatcher(command, ShopMenuCommands.BUY)) != null){
-
+                System.out.println(shopMenuController.buy(matcher.group("itemname"), Integer.parseInt(matcher.group("itemamount"))));
             }
             else if ((matcher = ShopMenuCommands.getMatcher(command, ShopMenuCommands.SELL)) != null){
-
+                System.out.println(shopMenuController.sell(matcher.group("itemname"), Integer.parseInt(matcher.group("itemamount"))));
             }
             else
                 System.out.println("Invalid Command!");

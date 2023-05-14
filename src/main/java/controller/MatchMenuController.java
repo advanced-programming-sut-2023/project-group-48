@@ -139,7 +139,6 @@ public class MatchMenuController {
         PeopleType peopleType = PeopleType.getPersonType(type);
         Building building = controller.getGame().getCurrentMatch().getSelectedBuilding();
         if (building == null) return "no building selected!";
-        if()
         if (peopleType == null) return "invalid People type!";
         if (count <= 0) return "invalid count!";
         if (!building.canCreateUnit(type)) return "this building cannot create this unit!";
@@ -217,7 +216,7 @@ public class MatchMenuController {
         if (controller.getGame().getCurrentMatch().getCell(row, column).getBuilding() != null)
             return "there is a building here!";
 
-        Building building = Building.createBuildingByType(controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance(), row, column, type, BuildingType.ENVIRONMENT, direction);
+        Building building = Building.createBuildingByType(null, row, column, type, BuildingType.ENVIRONMENT, direction);
         controller.getGame().getCurrentMatch().getCell(row, column).setBuilding(building);
         return "rock dropped successfully!";
     }

@@ -19,17 +19,18 @@ public class MapMenu extends Menu {
         while (true){
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if ((matcher = MapMenuCommands.getMatcher(command , MapMenuCommands.SHOWMAP)) != null ){
-
+            if (command.matches("back")) {
+                System.out.println(controller.enterMatchMenu());
+            }
+            else if ((matcher = MapMenuCommands.getMatcher(command , MapMenuCommands.SHOWMAP)) != null ){
+                System.out.println(mapMenuController.showMap(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
             }
             else if ((matcher = MapMenuCommands.getMatcher(command , MapMenuCommands.MOVEMAP)) != null ){
-
+                System.out.println(mapMenuController.changeCurrentCell(new String[]{matcher.group("firstdirection"), matcher.group("firstnumber")},
+                                                                       new String[]{matcher.group("seconddirection"), matcher.group("secondnumber")}));
             }
             else if ((matcher = MapMenuCommands.getMatcher(command , MapMenuCommands.MAPDETAILS)) != null ){
-
-            }
-            else if (command.matches("^exit$")){
-
+                System.out.println(mapMenuController.showCellDetails(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
             }
             else
                 System.out.println("Invalid Command!");
