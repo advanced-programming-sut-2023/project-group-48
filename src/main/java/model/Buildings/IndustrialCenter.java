@@ -10,28 +10,27 @@ import java.util.HashMap;
 public class IndustrialCenter extends Building {
     private static final HashMap<String, Property[]> industrialCentersProperties = new HashMap<>() {{
         // used property-provided property
-        // TODO: 5/29/2021 add properties
-        put("Stable", new Property[]{Property.OX, Property.OX});
-                put("Mill", new Property[]{Property.WHEAT, Property.OX});
-                put("Iron Mine", new Property[]{Property.IRON, Property.OX});
-                put("Pitch Rig", new Property[]{Property.IRON, Property.OX});
-                put("ًQuarry", new Property[]{Property.STONE, Property.OX});
-                put("Woodcutter", new Property[]{Property.WOOD, Property.OX});
-                put("Oil Smelter", new Property[]{Property.OIL, Property.OX});
-                put("Apple Orchard", new Property[]{Property.APPLE, Property.OX});
-                put("Diary Farmer", new Property[]{Property.CHEESE, Property.OX});
-                put("Hops Farmer", new Property[]{Property.IRON, Property.OX});
-                put("Hunter Post", new Property[]{Property.MEAT, Property.OX});
-                put("Wheat Farmer", new Property[]{Property.WHEAT, Property.OX});
-                put("Bakery", new Property[]{Property.BREAD, Property.OX});
-                put("Brewer", new Property[]{Property.IRON, Property.OX});
-                put("Armourer", new Property[]{Property.ARMOUR, Property.OX});
-                put("Blacksmith", new Property[]{Property.IRON, Property.OX});
-                put("Fletcher", new Property[]{Property.BOW, Property.OX});
-                put("Pole Turner", new Property[]{Property.IRON, Property.OX});
+        // TODO: add properties
+        put("Stable", new Property[]{null, Property.OX});
+        put("Mill", new Property[]{Property.WHEAT, Property.FLOUR});
+        put("Iron Mine", new Property[]{null, Property.IRON});
+        put("Pitch Rig", new Property[]{null, Property.PITCH});
+        put("ًQuarry", new Property[]{null, Property.STONE});
+        put("Woodcutter", new Property[]{null, Property.WOOD});//TODO: 2.cutting trees
+        put("Oil Smelter", new Property[]{null, Property.OIL});
+        put("Apple Orchard", new Property[]{null, Property.APPLE});
+        put("Diary Farmer", new Property[]{Property.HOPS, Property.CHEESE});
+        put("Hops Farmer", new Property[]{null, Property.HOPS});
+        put("Hunter Post", new Property[]{null, Property.MEAT});
+        put("Wheat Farmer", new Property[]{null, Property.WHEAT});
+        put("Bakery", new Property[]{Property.FLOUR, Property.BREAD});
+        put("Brewer", new Property[]{null, Property.BEER});
+        put("Armourer", new Property[]{Property.IRON , Property.ARMOUR});
+        put("Blacksmith", new Property[]{Property.IRON, Property.SWORD});
+        put("Fletcher", new Property[]{Property.WOOD, Property.BOW});
+        put("Pole Turner", new Property[]{Property.IRON, Property.SPEAR});
     }};
     private static final HashMap<String, Integer> industrialCentersRate = new HashMap<>(){{
-        // TODO: 5/29/2021 add properties
         put("Stable", 10);
         put("Mill", 10);
         put("Iron Mine", 10);
@@ -50,6 +49,26 @@ public class IndustrialCenter extends Building {
         put("Blacksmith", 10);
         put("Fletcher", 10);
         put("Pole Turner", 10);
+    }};
+    private static final HashMap<String, String> industrialCentersWorkers = new HashMap<>(){{
+        put("Stable", "Ox");
+        put("Mill", "Miller");
+        put("Iron Mine", "Iron Miner");
+        put("Pitch Rig", "Quarry Worker");
+        put("Quarry", "Quarry Worker");
+        put("Woodcutter", "Woodcutter");
+        put("Oil Smelter", "Quarry Smelter");
+        put("Apple Orchard", "Farmer");
+        put("Diary Farmer", "Farmer");
+        put("Hops Farmer", "Farmer");
+        put("Hunter Post", "Hunter");
+        put("Wheat Farmer", "Farmer");
+        put("Bakery", "Baker");
+        put("Brewer", "Brewer");
+        put("Armourer", "Armourer");
+        put("Blacksmith", "Blacksmith");
+        put("Fletcher", "Fletcher");
+        put("Pole Turner", "Tanner");
     }};
     private final Property usedProperty;
     private final Property producedProperty;

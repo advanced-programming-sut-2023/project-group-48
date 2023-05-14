@@ -194,6 +194,8 @@ public class Governance {
                 doubleFearFactor += 1;
             } else if (building.getType().equals("Bad Things")) {
                 doubleFearFactor -= 1;
+            } else if (building.getType().equals("Inn")) {
+                doubleFearFactor += 2;
             }
         }
         percentFearFactor = (int) Math.floor((doubleFearFactor / ((double) population)) * 1250);

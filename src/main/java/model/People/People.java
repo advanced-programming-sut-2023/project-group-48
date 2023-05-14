@@ -29,7 +29,7 @@ public abstract class People {
     public static People createPeopleByType(Governance governance, int row, int column, String type, PeopleType peopleType) {
         switch (peopleType) {
             case WORKER:
-                return new Worker(governance, row, column, type, PeopleType.WORKER, Job.getJob(type));
+                return new Worker(governance, row, column, type, PeopleType.WORKER);
             case TROOP:
                 return new Troop(governance, row, column, type, PeopleType.TROOP);
             default:

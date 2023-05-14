@@ -18,10 +18,8 @@ public class Match {
     private Cell selectedCell;
     private final int MAX_COLUMN;
     private final int MAX_ROW;
-    private final Market market;
     private final Shop shop;
     private final TurnManager turnManager;
-    private ArrayList<Trade> trades;
     private Building selectedBuilding;
     private ArrayList<People> selectedUnit;
     private final ArrayList<People> allTroops;
@@ -39,10 +37,8 @@ public class Match {
         this.selectedCell = null;
         this.MAX_COLUMN = map[0].length;
         this.MAX_ROW = map.length;
-        this.market = new Market();
         this.shop = new Shop();
         this.turnManager = new TurnManager(this);
-        this.trades = new ArrayList<>();
         this.selectedBuilding = null;
         this.selectedUnit = null;
         this.allTroops = new ArrayList<>();
@@ -65,9 +61,6 @@ public class Match {
         return MAX_ROW;
     }
 
-    public Market getMarket() {
-        return market;
-    }
 
     public TurnManager getTurnManager() {
         return turnManager;
@@ -92,9 +85,6 @@ public class Match {
 //    public void disbandUnit() {
 //    }
 
-    public ArrayList<Trade> getTrades() {
-        return trades;
-    }
 
     public Cell getCell(int row, int column) {
         return map[row - 1][column - 1];

@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class Tower extends Building {
+    //TODO : handle tower related stuff
     private static final ArrayList<String> towerRelated = new ArrayList<>(Arrays.asList("Tall Wall", "Short Wall", "Stair", "Lookout Tower", "Perimeter Tower", "Defence Turret", "Square Tower", "Round Tower"));
     private static final HashMap<String, Integer[]> towersStats = new HashMap<>() {{
         // fireRange-defendRange-capacity

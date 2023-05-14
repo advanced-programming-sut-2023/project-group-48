@@ -137,6 +137,8 @@ public class MatchMenuController {
     public String createUnit(String type, int count) {
         PeopleType peopleType = PeopleType.getPersonType(type);
         Building building = controller.getGame().getCurrentMatch().getSelectedBuilding();
+        if (building == null) return "no building selected!";
+        if()
         if (peopleType == null) return "invalid People type!";
         if (count <= 0) return "invalid count!";
         if (!building.canCreateUnit(type)) return "this building cannot create this unit!";

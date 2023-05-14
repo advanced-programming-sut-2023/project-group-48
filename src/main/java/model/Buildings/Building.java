@@ -24,7 +24,7 @@ public class Building {
         this.direction = direction;
     }
 
-    // TODO
+
     public static Building createBuildingByType(Governance governance, int row, int column, String type, BuildingType buildingType, Direction direction) {
         switch (buildingType) {
             case NORMAL:
@@ -92,6 +92,11 @@ public class Building {
     }
 
     public boolean canCreateUnit(String type) {
-        // TODO if there is enough resources
+        if(this instanceof RecruitmentCenter) {
+            if(((RecruitmentCenter) this).isRecruitTypeValid(type)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

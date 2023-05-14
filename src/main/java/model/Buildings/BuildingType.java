@@ -10,7 +10,7 @@ import java.util.List;
 
 public enum BuildingType {
     NORMAL(new ArrayList<>(Arrays.asList("Drawbridge", "Hovel", "Caged War Dogs", "Siege Tent", "Church", "Cathedral",
-            "Tall Wall", "Short Wall", "Stair", "Good Things", "Bad Things"))),
+            "Tall Wall", "Short Wall", "Stair", "Good Things", "Bad Things", "Shop"))),
     GATEHOUSE(new ArrayList<>(Arrays.asList("Small Stone Gatehouse", "Large Stone Gatehouse"))),
     TOWER(new ArrayList<>(Arrays.asList("Lookout Tower", "Perimeter Tower", "Defence Turret", "Square Tower", "Round Tower"))),
     INDUSTRIAL_CENTER(new ArrayList<>(Arrays.asList("Stable", "Mill", "Iron Mine", "Pitch Rig", "ًQuarry", "Woodcutter",
@@ -68,8 +68,13 @@ public enum BuildingType {
         put("Armoury", 100);
         put("Stockpile", 100);
         put("Granary", 100);
+        put("Shop", 100);
+        put("Good Things", 100);
+        put("Bad Things", 100);
+        //TODO: soldiers should not hurt all buildings(like trees and rocks)
+        //TODO: adding shop and its effect
     }};
-    private static final HashMap<String, ArrayList<LandType>> buildings ValidLandTypes = new HashMap<String, ArrayList<LandType>>() {{
+    private static final HashMap<String, ArrayList<LandType>> ValidLandTypes = new HashMap<String, ArrayList<LandType>>() {{
         put("Small Stone Gatehouse", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
         put("Large Stone Gatehouse", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
         put("Drawbridge", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
@@ -257,7 +262,7 @@ public enum BuildingType {
     }
 
     public static ArrayList<LandType> getValidLandTypes(String type) {
-        return buildingsValidLandTypes.get(type);
+        return ValidLandTypes.get(type);
     }
 
     public static HashMap<Property, Integer> getMaterialsNeedToBuild(String type) {

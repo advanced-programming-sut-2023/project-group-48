@@ -27,9 +27,7 @@ public class Shop {
         price.put(Property.ARMOUR, 10);
     }
 
-    public Shop() {
 
-    }
 
 
     public int getPropertyPrice(Property property) {
