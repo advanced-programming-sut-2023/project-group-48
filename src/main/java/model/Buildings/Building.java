@@ -29,25 +29,18 @@ public class Building {
         switch (buildingType) {
             case NORMAL:
                 return new Building(governance, row, column, type, BuildingType.NORMAL, direction);
-            break;
             case TOWER:
                 return new Tower(governance, row, column, type, BuildingType.TOWER, direction);
-            break;
             case INDUSTRIAL_CENTER:
                 return new IndustrialCenter(governance, row, column, type, BuildingType.INDUSTRIAL_CENTER, direction);
-            break;
             case INN:
                 return new Inn(governance, row, column, type, BuildingType.INN, direction);
-            break;
             case TRAP:
                 return new Trap(governance, row, column, type, BuildingType.TRAP, direction);
-            break;
             case RECRUITMENT_CENTER:
                 return new RecruitmentCenter(governance, row, column, type, BuildingType.RECRUITMENT_CENTER, direction);
-            break;
             case STORAGE:
                 return new Storage(governance, row, column, type, BuildingType.STORAGE, direction);
-            break;
             default:
                 return null;
         }
