@@ -3,7 +3,7 @@ package controller;
 import model.Match.Match;
 import model.User;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,7 +16,7 @@ public class MainMenuController {
     }
 
     public String startMatch(int rounds, int mapNumber, String usernames) {
-        ArrayList<String> playersUsernames = new ArrayList<String>();
+        ArrayList<String> playersUsernames = new ArrayList<>();
         String usernameRegex = "(?<username>\".+\"|\\S+)";
         Pattern pattern = Pattern.compile(usernameRegex);
         Matcher matcher = pattern.matcher(usernames);
@@ -30,8 +30,7 @@ public class MainMenuController {
         }
         if (players.size() <= 1) return "not enough players!";
         controller.getGame().setCurrentMatch(new Match(rounds, players, mapNumber));
-        controller.enterMatchMenu();
-        return "match started!";
+        return "match started!\n" + controller.enterMatchMenu();
     }
 
 }

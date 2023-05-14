@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum MainMenuCommands {
-    MATCHSTART (new ArrayList<>(List.of("match\\s+start" , "\\s+(?<rounds>\\d+)" , "\\s+(?<mapNumber>\\d+)" , "\\s+-u(?<usernames>(?<usernameTemplate>\\s+(?<username>\".+\"|\\S+))+)")));
+    MATCHSTART (new ArrayList<>(List.of("match\\s+start" , "\\s+-r\\s+(?<rounds>\\d+)" , "\\s+-m\\s+(?<mapNumber>\\d+)" , "\\s+-u(?<usernames>(?<usernameTemplate>\\s+(?<username>\".+\"|\\S+))+)")));
 
 
     private ArrayList<String> regexs;
