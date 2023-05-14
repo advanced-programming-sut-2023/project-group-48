@@ -32,5 +32,4 @@ public class MainMenuController {
         controller.getGame().setCurrentMatch(new Match(rounds, players, mapNumber));
         return "match started!\n" + controller.enterMatchMenu();
     }
-
 }

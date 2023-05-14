@@ -20,7 +20,10 @@ public class LoginMenu extends Menu {
         while (true) {
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.USERLOGIN)) != null){
+            if (command.matches("^enter\\s+sign\\s+up\\s+menu$")) {
+                System.out.println(controller.enterSignUpMenu());
+            }
+            else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.USERLOGIN)) != null){
                 if (userLogin(matcher)) return;
             }
             else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.FORGOTPASSWORD)) != null){

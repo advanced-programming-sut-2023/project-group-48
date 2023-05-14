@@ -6,7 +6,9 @@ import controller.Controller;
 import model.Match.Match;
 import model.Match.Cell;
 import model.People.Troop;
+import view.MainMenu;
 import view.Menu;
+import view.SignUpMenu;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class Game {
     private Troop selectedTroop;
     private Cell selectedCell;
 
-    public Game(Controller controller) throws IOException {
+    public Game(MainMenu mainMenu, SignUpMenu signUpMenu) throws IOException {
         File usersFile = new File("Users.json");
         if (usersFile.exists()) {
             BufferedReader fileReader = new BufferedReader(new FileReader(usersFile));
@@ -29,7 +31,7 @@ public class Game {
             }.getType());
             fileReader.close();
         } else {
-            users = new ArrayList<User>();
+            users = new ArrayList<>();
             FileWriter fileWriter = new FileWriter(usersFile);
             fileWriter.close();
         }
@@ -47,10 +49,10 @@ public class Game {
 
         if (db.getCurrentUser() != null) {
             currentUser = db.getCurrentUser();
-            controller.enterMainMenu();
+            currentMenu = mainMenu;
         } else {
             currentUser = null;
-            controller.enterSignUpMenu();
+            currentMenu = signUpMenu;
         }
     }
 
@@ -62,7 +64,7 @@ public class Game {
         for (int i = 0; i < digitCount; i++) {
             int number = random.nextInt(10);
             numbersToUserInCaptcha.add(number);
-            captchaAnswer.append(i == 0 ? "" : " ").append(Integer.toString(number));
+            captchaAnswer.append(Integer.toString(number));
         }
         return new String[]{Captcha.getFullArt(numbersToUserInCaptcha), captchaAnswer.toString()};
     }

@@ -104,7 +104,7 @@ public class SignUpMenuController {
     private String generateCaptcha() {
         String[] captcha = Game.getRandomCaptcha();
         captchaAnswer = captcha[1];
-        return captcha[0] + "\nenter the number: ";
+        return captcha[0] + "enter the number: ";
     }
 
     public String finalStep(String userCaptchaAnswer) throws IOException {

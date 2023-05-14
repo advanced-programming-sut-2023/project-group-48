@@ -25,7 +25,11 @@ public class Controller {
         this.matchMenu = new MatchMenu(this);
         this.tradeMenu = new TradeMenu(this);
         this.shopMenu = new ShopMenu(this);
-        this.game = new Game(this);
+        this.game = new Game(mainMenu, signUpMenu);
+    }
+    public static String getRemovedQuotationMarks(String input) {
+        if (input.startsWith("\"") && input.endsWith("\"")) return input.substring(1, input.length() - 1);
+        return input;
     }
 
     public void run() throws IOException {

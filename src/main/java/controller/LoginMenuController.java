@@ -20,6 +20,7 @@ public class LoginMenuController {
     }
 
     public String login(String username, String password, boolean stayLoggedIn) {
+        System.out.println(username + " " + password + " " + stayLoggedIn);
         attendedUser = controller.getGame().getUserByUsername(username);
         if (attendedUser == null) return "Username and password didn’t match!";
         if (attendedUser.isPasswordNotCorrect(password)) {
@@ -44,7 +45,7 @@ public class LoginMenuController {
     public String generateCaptcha() {
         String[] captcha = Game.getRandomCaptcha();
         captchaAnswer = captcha[1];
-        return captcha[0] + "\nenter the number: ";
+        return captcha[0] + "enter the number: ";
     }
 
     public String finalStep(String userCaptchaAnswer) throws IOException {

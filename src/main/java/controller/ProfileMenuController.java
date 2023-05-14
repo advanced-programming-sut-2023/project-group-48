@@ -20,7 +20,7 @@ public class ProfileMenuController {
     private String generateCaptcha() {
         String[] captcha = Game.getRandomCaptcha();
         captchaAnswer = captcha[1];
-        return captcha[0] + "\nenter the number: ";
+        return captcha[0] + "enter the number: ";
     }
 
     public String changeUserInfo(char infoType, String... info) {

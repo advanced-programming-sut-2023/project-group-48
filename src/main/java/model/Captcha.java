@@ -181,7 +181,6 @@ public enum Captcha {
             "██▓▓▒▒▒▒▒▒▓▓              ▒▒▒▒▒▒▒▒▒▒██",
             "██▒▒▒▒▒▒▒▒░░    ▓▓▓▓██░░    ▒▒▒▒▒▒▒▒▓▓",
             "██▒▒▒▒▒▒▒▒      ▓▓▓▓▓▓▓▓    ▓▓▒▒▒▒▒▒▓▓",
-            "██▒▒▒▒▒▒▒▒    ░░▓▓▓▓▓▓▓▓    ▓▓▓▓▒▒▒▒▓▓",
             "██▒▒▒▒▒▒▒▒    ░░▓▓▓▓▓▓▓▓    ██▓▓▒▒▓▓▓▓",
             "▓▓▒▒▒▒▒▒▒▒      ▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▒▒▓▓",
             "▓▓▒▒▒▒▒▒▒▒▒▒    ░░▓▓▒▒      ▓▓▓▓▓▓▓▓▓▓",
@@ -230,9 +229,12 @@ public enum Captcha {
 
     public static String getFullArt(ArrayList<Integer> numbersToUse) {
         String[] finalCaptcha = new String[15];
+        for (int i = 0; i < 15; i++) {
+            finalCaptcha[i] = "";
+        }
         for (Integer number : numbersToUse) {
             for (int index = 0; index < 15; index++) {
-                finalCaptcha[index] += getCaptchaNumberByNumber(numbersToUse.get(index)).getCaptchaArtLine(index);
+                finalCaptcha[index] += getCaptchaNumberByNumber(number).getCaptchaArtLine(index);
             }
         }
 
@@ -241,10 +243,10 @@ public enum Captcha {
             result.append(finalCaptcha[index]).append("\n");
         }
         Random rand = new Random();
-        int noiseCount = rand.nextInt(15 * numbersToUse.size());
+        int noiseCount = rand.nextInt(200 * numbersToUse.size());
         for (int i = 0; i < noiseCount; i++) {
             String[] noise = {"*", "%", "$", "?", "#", "@"};
-            int start = rand.nextInt(numbersToUse.size());
+            int start = rand.nextInt(result.length());
             if (result.charAt(start) != '\n') result.replace(start, start + 1, noise[rand.nextInt(noise.length)]);
         }
         return result.toString();

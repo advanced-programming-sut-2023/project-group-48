@@ -103,10 +103,10 @@ public class Match {
             path.add(direction);
             switch (direction) {
                 case UP:
-                    currentRow--;
+                    currentRow++;
                     break;
                 case DOWN:
-                    currentRow++;
+                    currentRow--;
                     break;
                 case LEFT:
                     currentColumn--;
