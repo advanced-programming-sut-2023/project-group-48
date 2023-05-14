@@ -213,17 +213,21 @@ public class Match {
         this.selectedUnit = selectedUnit;
     }
 
-    public void nextTurn() {
-        turnManager.nextTurn();
-        currentPlayer = currentPlayer.equals(players.get(players.size() - 1)) ? players.get(0) : players.get(players.indexOf(currentPlayer) + 1);
-    }
-
-    public void nextRound() {
-        currentRound++;
-    }
-
     public ArrayList<Governance> getGovernances() {
         return governances;
     }
 
+    public void nextTurn() {
+        currentPlayer = currentPlayer.equals(players.get(players.size() - 1)) ?
+                players.get(0) : players.get(players.indexOf(currentPlayer) + 1);
+    }
+
+    public boolean isRoundFinished() {
+        return currentPlayer.equals(players.get(0));
+    }
+
+    public void nextRound() {
+        turnManager.run();
+        currentRound++;
+    }
 }

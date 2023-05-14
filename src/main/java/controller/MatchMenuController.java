@@ -77,7 +77,6 @@ public class MatchMenuController {
         return "fear rate : " + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getFearRate();
     }
 
-    // TODO : print which property is not enough ?
     public String dropBuilding(int row, int column, String type, String... direction) {
         BuildingType buildingType = BuildingType.getBuildingType(type);
         if (controller.getGame().getCurrentMatch().areCoordinatesNotValid(row, column))
@@ -282,5 +281,10 @@ public class MatchMenuController {
     }
 
     public String nextTurn() {
+        controller.getGame().getCurrentMatch().nextTurn();
+        if (controller.getGame().getCurrentMatch().isRoundFinished())
+            controller.getGame().getCurrentMatch().nextRound();
+        return controller.getGame().getCurrentMatch().isRoundFinished() ? "round finished\n" : "" +
+               controller.getGame().getCurrentMatch().getCurrentPlayer().getUsername() + " is now playing!";
     }
 }
