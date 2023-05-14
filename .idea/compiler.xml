@@ -6,9 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Phase-0" />
+        <module name="project-group-48" />
         <module name="Phase 0" />
         <module name="Project Repo" />
-        <module name="project-group-48" />
       </profile>
     </annotationProcessing>
   </component>

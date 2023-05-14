@@ -2,6 +2,7 @@ package model.Match;
 
 import model.Buildings.Building;
 import model.Buildings.BuildingType;
+import model.People.Troop;
 import model.User;
 
 import java.util.*;
@@ -353,7 +354,13 @@ public class Governance {
     }
 
     public boolean areResourcesEnoughToCreateUnit(String type, int count) {
-        //TODO : Equipment
+        for(Map.Entry<String ,ArrayList<Property>> entry : Troop.getRequiredResource().entrySet()){
+            for(Property property : entry.getValue()){
+                if(properties.get(property) == 0) return false;
+            }
+
+        }
+        return true;
     }
 
     public boolean isPopularityEnoughToCreateUnit(String type) {
@@ -362,7 +369,11 @@ public class Governance {
     }
 
     public void payForCreatingUnit(String type, int count) {
-        //TODO : Equipment
+        for(Map.Entry<String ,ArrayList<Property>> entry : Troop.getRequiredResource().entrySet()){
+            for(Property property : entry.getValue()){
+                properties.put(property,properties.get(property)-1);
+            }
+        }
     }
 
 

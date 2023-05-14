@@ -2,7 +2,6 @@ package controller;
 
 import model.Match.Property;
 import model.Match.Request;
-import model.Match.Resource;
 import model.User;
 
 public class TradeMenuController {

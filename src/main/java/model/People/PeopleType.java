@@ -15,7 +15,8 @@ public enum PeopleType {
     WORKER(new ArrayList<>(List.of("Engineer")));
 
     private static final PeopleType[] peopleTypes = {TROOP, WORKER};
-    private static final HashMap<String, Integer> peopleHp = new HashMap<>() {{
+
+    private static final HashMap<String, Integer> peopleHp = new HashMap<>(){{
         put("Sultan", 100);
         put("Archer", 100);
         put("Crossbowmen", 100);
