@@ -2,6 +2,7 @@ package model.Match;
 
 import model.Buildings.Building;
 import model.Buildings.BuildingType;
+import model.Buildings.Storage;
 import model.People.Troop;
 import model.User;
 
@@ -15,7 +16,6 @@ public class Governance {
     private int unemployedPopulation; //TODO : Unemployed population
     private int maxPopulation;
     private int foodRate;
-    private int foodVariety;
     private int taxRate;
     private int fearRate;
     private final ArrayList<Building> buildings;
@@ -66,7 +66,7 @@ public class Governance {
     public void changeFoodPopularityFactor() {
         int finalFoodFactor = 0;
 
-        foodVariety = 0;
+        int foodVariety = 0;
         for (Property allProperty : Property.getAllFoods()) {
             if (properties.get(allProperty) > 0) {
                 foodVariety += 1;
@@ -360,9 +360,9 @@ public class Governance {
     }
 
     public boolean areResourcesEnoughToCreateUnit(String type, int count) {
-        for(Map.Entry<String ,ArrayList<Property>> entry : Troop.getRequiredResource().entrySet()){
-            for(Property property : entry.getValue()){
-                if(properties.get(property) == 0) return false;
+        for (Map.Entry<String, ArrayList<Property>> entry : Troop.getRequiredResource().entrySet()) {
+            for (Property property : entry.getValue()) {
+                if (properties.get(property) == 0) return false;
             }
 
         }
@@ -375,17 +375,60 @@ public class Governance {
     }
 
     public void payForCreatingUnit(String type, int count) {
-        for(Map.Entry<String ,ArrayList<Property>> entry : Troop.getRequiredResource().entrySet()){
-            for(Property property : entry.getValue()){
-                properties.put(property,properties.get(property)-1);
+        for (Map.Entry<String, ArrayList<Property>> entry : Troop.getRequiredResource().entrySet()) {
+            for (Property property : entry.getValue()) {
+                properties.put(property, properties.get(property) - 1);
             }
         }
     }
-
 
     public int getPropertyCount(Property property) {
         return properties.get(property);
     }
 
+    public boolean canStore (Property property) {
+        Storage storage = getFreeStorageToStore(property);
+        return storage != null;
+    }
 
+    public Storage getFreeStorageToStore(Property property) {
+        for (Building building : buildings) {
+            if (building instanceof Storage) {
+                Storage storage = (Storage) building;
+                if (storage.canStoreProperty(property) && storage.getTotalAmount() < storage.getCapacity())
+                    return storage;
+            }
+        }
+        return null;
+    }
+
+    private Storage getStorageWithProperty(Property property) {
+        for (Building building : buildings) {
+            if (building instanceof Storage) {
+                Storage storage = (Storage) building;
+                if (storage.canStoreProperty(property)) return storage;
+            }
+        }
+        return null;
+    }
+
+    public void loadStorages(Property property, int amount) {
+        while (amount != 0) {
+            Storage storage = getFreeStorageToStore(property);
+            if (storage == null) break;
+            int storageCapability = storage.getCapacity() - storage.getTotalAmount();
+            storage.addProperty(property, Math.min(amount, storageCapability));
+            amount -= storageCapability;
+        }
+    }
+
+    public void unloadStorages(Property property, int amount) {
+        while (amount != 0) {
+            Storage storage = getStorageWithProperty(property);
+            if (storage == null) break;
+            int storageAmount = storage.getPropertyCount(property);
+            storage.removeProperty(property, Math.min(amount, storageAmount));
+            amount -= storageAmount;
+        }
+    }
 }

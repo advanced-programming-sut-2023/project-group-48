@@ -235,4 +235,8 @@ public class Match {
         turnManager.run();
         currentRound++;
     }
+
+    public Shop getShop() {
+        return shop;
+    }
 }

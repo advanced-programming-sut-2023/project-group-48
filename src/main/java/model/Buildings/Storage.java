@@ -6,7 +6,9 @@ import model.Match.Property;
 import model.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Storage extends Building {
     private static final HashMap<String, Integer> storagesCapacities = new HashMap<>() {{
@@ -15,7 +17,7 @@ public class Storage extends Building {
         put("Granary", 1000);
         put("Stable", 1000);
     }};
-    private static final HashMap<String, ArrayList<Property>>  storageProperties= new HashMap<>() {{
+    private static final HashMap<String, ArrayList<Property>>  validPropertiesToStore= new HashMap<>() {{
         put("Armoury", new ArrayList<>() {{;
             add(Property.ARMOUR);
             add(Property.MACE);
@@ -55,22 +57,28 @@ public class Storage extends Building {
         }});
     }};
     private final HashMap<Property, Integer> properties;
-    private final String type;
     private final int capacity;
+    private int totalAmount;
 
     public Storage(Governance governance, int row, int column, String type, BuildingType buildingType, Direction direction) {
         super(governance, row, column, type, buildingType, direction);
         this.properties = new HashMap<>();
         this.capacity = storagesCapacities.get(type);
-        this.type = type;
+        this.totalAmount = 0;
+    }
+
+    public boolean canStoreProperty(Property property) {
+        return validPropertiesToStore.get(this.getType()).contains(property);
     }
 
     public void addProperty(Property property, int count) {
         properties.put(property, properties.getOrDefault(property, 0) + count);
+        totalAmount += count;
     }
 
     public void removeProperty(Property property, int count) {
         properties.put(property, properties.getOrDefault(property, 0) - count);
+        totalAmount -= count;
     }
 
     public int getPropertyCount(Property property) {
@@ -79,5 +87,9 @@ public class Storage extends Building {
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public int getTotalAmount() {
+        return totalAmount;
     }
 }

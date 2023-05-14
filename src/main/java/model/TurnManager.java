@@ -134,6 +134,8 @@ public class TurnManager {
         }
         updateAllPopularities();
         useFoods();
+        // change population
+        // Store industries provided properties
     }
 
     public void nextRound() {

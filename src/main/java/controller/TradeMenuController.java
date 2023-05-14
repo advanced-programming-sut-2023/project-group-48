@@ -19,6 +19,8 @@ public class TradeMenuController {
         if (property == null) return "Invalid property";
         if (amount <= 0) return "Invalid resource amount";
         if (price <= 0) return "Invalid price";
+        if (controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().canStore(property))
+            return "You don't have enough space in your storages!";
 
         controller.getGame().getCurrentMatch().sendTradeRequest(controller.getGame().getCurrentMatch().getCurrentPlayer(), receiver, property, amount, price, message);
         return "Trade request sent successfully!";
@@ -44,6 +46,8 @@ public class TradeMenuController {
         if (accepted) {
             request.getReceiver().addProperty(request.getProperty(), -1 * request.getAmount());
             request.getSender().addProperty(request.getProperty(), request.getAmount());
+            request.getReceiver().unloadStorages(request.getProperty(), request.getAmount());
+            request.getSender().loadStorages(request.getProperty(), request.getAmount());
             request.getReceiver().addProperty(Property.COIN, request.getPrice() * request.getAmount());
             request.getSender().addProperty(Property.COIN, -1 * request.getPrice() * request.getAmount());
         }

@@ -27,6 +27,10 @@ public class MatchMenuController {
         return controller.enterMapMenu();
     }
 
+    public String enterShopMenu() {
+        return controller.enterShopMenu();
+    }
+
 //    private boolean isEntryNotValid() {
 //    } // TODO: implement
 
