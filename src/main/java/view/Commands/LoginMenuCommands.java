@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum LoginMenuCommands {
-    USER_LOGIN(new ArrayList<>(List.of("user\\s+login", "\\s+-u\\s+(?<username>\".+\"|\\S+)", "\\s+-p\\s+(?<password>\\S+)", "(\\s+(?<stay>--stay-logged-in))?"))),
+    USER_LOGIN(new ArrayList<>(List.of("user\\s+login", "\\s+-u\\s+(?<username>\".+\"|\\S+)", "\\s+-p\\s+(?<password>\\S+)", "(?<stay>\\s+--stay-logged-in)?"))),
     FORGOT_PASSWORD(new ArrayList<>(List.of("forgot\\s+my\\s+password", "\\s+-u\\s+(?<username>\".+\"|\\S+)")));
 
     private final ArrayList<String> regexs;
@@ -50,5 +50,4 @@ public enum LoginMenuCommands {
         }
         return result;
     }
-
 }

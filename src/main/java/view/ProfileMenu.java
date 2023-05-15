@@ -20,7 +20,10 @@ public class ProfileMenu extends Menu {
         while (true) {
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.USERNAME_CHANGE)) != null) {
+            if (command.matches("^back$")) {
+                System.out.println(controller.enterMainMenu());
+            }
+            else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.USERNAME_CHANGE)) != null) {
                 System.out.println(profileMenuController.changeUserInfo('u', Controller.getRemovedQuotationMarks(matcher.group("username"))));
             } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.NICKNAME_CHANGE)) != null) {
                 System.out.println(profileMenuController.changeUserInfo('n', Controller.getRemovedQuotationMarks(matcher.group("nickname"))));

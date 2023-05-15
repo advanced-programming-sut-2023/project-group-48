@@ -2,10 +2,8 @@ package model.People;
 
 import model.Buildings.Building;
 import model.Match.Governance;
-import model.Match.LandType;
 import model.Match.Property;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -93,7 +91,6 @@ public class Troop extends People {
     private static final ArrayList<String> arabTroops = new ArrayList<>(Arrays.asList("ArcherBow", "Slaves", "Slingers", "Assassins", "HorseArchers", "ArabianSwordsmen", "FireThrowers"));
     private static final ArrayList<String> wallCrawler = new ArrayList<>(Arrays.asList("Laddermen", "Assassins"));
     private static final ArrayList<String> horseMan = new ArrayList<>(Arrays.asList("Knight", "HorseArchers", "ArabianSwordsmen"));
-
     private final Quality attackPower;
     private final Quality defensePower;
     private final Quality speed;
@@ -120,22 +117,6 @@ public class Troop extends People {
 
     public static ArrayList<Property> getRequiredResource(String type) {
         return requiredResource.get(type);
-    }
-
-    public Quality getAttackPower() {
-        return attackPower;
-    }
-
-    public Quality getDefensePower() {
-        return defensePower;
-    }
-
-    public Quality getSpeed() {
-        return speed;
-    }
-
-    public int getFireRange() {
-        return fireRange;
     }
 
     public static Quality getTroopAttackPower(String type) {
@@ -167,9 +148,24 @@ public class Troop extends People {
         return horseMan.contains(type);
     }
 
-
     public static int getTroopCost(String type) {
         return troopCost.get(type);
+    }
+
+    public Quality getAttackPower() {
+        return attackPower;
+    }
+
+    public Quality getDefensePower() {
+        return defensePower;
+    }
+
+    public Quality getSpeed() {
+        return speed;
+    }
+
+    public int getFireRange() {
+        return fireRange;
     }
 
     public Nation getNation() {

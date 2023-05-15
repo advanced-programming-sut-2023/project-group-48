@@ -10,17 +10,17 @@ import java.util.List;
 
 public enum BuildingType {
     NORMAL(new ArrayList<>(Arrays.asList("Drawbridge", "Hovel", "Caged War Dogs", "Siege Tent", "Church", "Cathedral",
-            "Tall Wall", "Short Wall", "Stair", "Good Things", "Bad Things", "Shop"))),
-    GATEHOUSE(new ArrayList<>(Arrays.asList("Small Stone Gatehouse", "Large Stone Gatehouse"))),
-    TOWER(new ArrayList<>(Arrays.asList("Lookout Tower", "Perimeter Tower", "Defence Turret", "Square Tower", "Round Tower"))),
+            "Tall Wall", "Short Wall", "Stair", "Good Things", "Bad Things", "Shop"))), // 12
+    GATEHOUSE(new ArrayList<>(Arrays.asList("Small Stone Gatehouse", "Large Stone Gatehouse"))), // 2
+    TOWER(new ArrayList<>(Arrays.asList("Lookout Tower", "Perimeter Tower", "Defence Turret", "Square Tower", "Round Tower"))), // 5
     INDUSTRIAL_CENTER(new ArrayList<>(Arrays.asList("Stable", "Mill", "Iron Mine", "Pitch Rig", "ًQuarry", "Woodcutter",
             "Oil Smelter", "Apple Orchard", "Diary Farmer", "Hops Farmer", "Hunter Post", "Wheat Farmer", "Bakery", "Brewer",
-            "Armourer", "Blacksmith", "Fletcher", "Pole Turner"))),
-    INN(new ArrayList<>(List.of("Inn"))),
-    TRAP(new ArrayList<>(Arrays.asList("Killing Pit", "Pitch Ditch", "Tunnel"))),
-    RECRUITMENT_CENTER(new ArrayList<>(Arrays.asList("Barrack", "Mercenary Post", "Engineer Guild"))),
-    STORAGE(new ArrayList<>(Arrays.asList("Armoury", "Stockpile", "Granary"))),
-    ENVIRONMENT(new ArrayList<>(Arrays.asList("Desert Shrub", "Cherry Palm", "olive Tree", "Coconut Palm", "Date", "Tree", "Rock")));
+            "Armourer", "Blacksmith", "Fletcher", "Pole Turner"))), // 18
+    INN(new ArrayList<>(List.of("Inn"))), // 1
+    TRAP(new ArrayList<>(Arrays.asList("Killing Pit", "Pitch Ditch", "Tunnel"))), // 3
+    RECRUITMENT_CENTER(new ArrayList<>(Arrays.asList("Barrack", "Mercenary Post", "Engineer Guild"))), // 3
+    STORAGE(new ArrayList<>(Arrays.asList("Armoury", "Stockpile", "Granary"))), // 3
+    ENVIRONMENT(new ArrayList<>(Arrays.asList("Desert Shrub", "Cherry Palm", "olive Tree", "Coconut Palm", "Date", "Tree", "Rock"))); // 7
 
     private static final BuildingType[] buildingTypes = {NORMAL, GATEHOUSE, TOWER, INDUSTRIAL_CENTER, INN, TRAP, RECRUITMENT_CENTER, STORAGE, ENVIRONMENT};
     private static final ArrayList<String> castleTypes = new ArrayList<>(Arrays.asList("Small Stone Gatehouse", "Large Stone Gatehouse",
@@ -63,6 +63,7 @@ public enum BuildingType {
         put("Inn", 100);
         put("Killing Pit", 100);
         put("Pitch Ditch", 100);
+        put("Barrack", 100);
         put("Mercenary Post", 100);
         put("Engineer Guild", 100);
         put("Armoury", 100);
@@ -110,6 +111,7 @@ public enum BuildingType {
         put("Pole Turner", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
         put("Inn", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
         put("Killing Pit", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
+        put("Barrack", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
         put("Pitch Ditch", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
         put("Mercenary Post", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
         put("Engineer Guild", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
@@ -218,6 +220,9 @@ public enum BuildingType {
             put(Property.WOOD, 10);
         }});
         put("Inn", new HashMap<>() {{
+            put(Property.WOOD, 10);
+        }});
+        put("Barrack", new HashMap<>() {{
             put(Property.WOOD, 10);
         }});
         put("Killing Pit", new HashMap<>() {{

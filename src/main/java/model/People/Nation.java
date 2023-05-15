@@ -1,6 +1,6 @@
 package model.People;
 
 public enum Nation {
-    EUROPE ,
+    EUROPE,
     ARAB;
 }

@@ -6,15 +6,14 @@ import model.People.Nation;
 import model.People.People;
 import model.People.PeopleType;
 import model.People.Troop;
-import model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RecruitmentCenter extends Building {
     private static final HashMap<String, String> validRecruitTypes = new HashMap<>() {{
-        put("Barrack","European");
-        put("Mercenary Post","Arabian");
+        put("Barrack", "European");
+        put("Mercenary Post", "Arabian");
         put("Engineer Guild", "Engineer");
     }};
     private final ArrayList<People> recruits;
@@ -32,6 +31,7 @@ public class RecruitmentCenter extends Building {
             recruits.add(People.createPeopleByType(getGovernance(), getRow(), getColumn(), validRecruitType, peopleType));
         }
     }
+
     public void removeRecruit(People people) {
         recruits.remove(people);
     }
@@ -39,14 +39,15 @@ public class RecruitmentCenter extends Building {
     public ArrayList<People> getRecruits() {
         return recruits;
     }
+
     public boolean isRecruitTypeValid(String type) {
-        if(type.equals("Engineer")){
+        if (type.equals("Engineer")) {
             return type.equals(validRecruitType);
+        } else if (Troop.getTroopNation(type).equals(Nation.ARAB)) {
+            return "Arabian".equals(validRecruitType);
+        } else if (Troop.getTroopNation(type).equals(Nation.EUROPE)) {
+            return "European".equals(validRecruitType);
         }
-        else if(Troop.getTroopNation(type) == Nation.ARAB){
-            return "Arabian".equals(validRecruitType);}
-        else if(Troop.getTroopNation(type) == Nation.EUROPE){
-            return "European".equals(validRecruitType);}
         return false;
     }
 }
