@@ -17,8 +17,9 @@ public class Storage extends Building {
         put("Granary", 1000);
         put("Stable", 1000);
     }};
-    private static final HashMap<String, ArrayList<Property>>  validPropertiesToStore= new HashMap<>() {{
-        put("Armoury", new ArrayList<>() {{;
+    private static final HashMap<String, ArrayList<Property>> validPropertiesToStore = new HashMap<>() {{
+        put("Armoury", new ArrayList<>() {{
+            ;
             add(Property.ARMOUR);
             add(Property.MACE);
             add(Property.SWORD);

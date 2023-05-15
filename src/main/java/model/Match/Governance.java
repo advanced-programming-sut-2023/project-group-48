@@ -286,9 +286,9 @@ public class Governance {
 
     public void addBuilding(Building building) {
         buildings.add(building);
-        if(building instanceof IndustrialCenter){
+        if (building instanceof IndustrialCenter) {
             unemployedPopulation--;
-        }else if(building.getType().equals("Hovel")){
+        } else if (building.getType().equals("Hovel")) {
             maxPopulation += 8;
         }
     }
@@ -387,7 +387,7 @@ public class Governance {
         return properties.get(property);
     }
 
-    public boolean canStore (Property property) {
+    public boolean canStore(Property property) {
         Storage storage = getFreeStorageToStore(property);
         return storage != null;
     }

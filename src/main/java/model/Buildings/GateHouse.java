@@ -3,7 +3,7 @@ package model.Buildings;
 import model.Match.Direction;
 import model.Match.Governance;
 
-public class GateHouse extends Building{
+public class GateHouse extends Building {
     private boolean isDoorOpen;
     private boolean isCaptured = false;
 

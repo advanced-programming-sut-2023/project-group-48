@@ -90,10 +90,10 @@ public class ProfileMenuController {
 
     public String profileDisplay() {
         return "username: " + controller.getGame().getCurrentUser().getUsername() + "\n" +
-               "email: " + controller.getGame().getCurrentUser().getEmail() + "\n" +
-               "nickname: " + controller.getGame().getCurrentUser().getNickname() + "\n" +
+                "email: " + controller.getGame().getCurrentUser().getEmail() + "\n" +
+                "nickname: " + controller.getGame().getCurrentUser().getNickname() + "\n" +
                 "slogan: " + controller.getGame().getCurrentUser().getSlogan() + "\n" +
-               "highscore: " + controller.getGame().getCurrentUser().getHighScore() + "\n" +
-               "rank: " + controller.getGame().getCurrentUser().getRank();
+                "highscore: " + controller.getGame().getCurrentUser().getHighScore() + "\n" +
+                "rank: " + controller.getGame().getCurrentUser().getRank();
     }
 }

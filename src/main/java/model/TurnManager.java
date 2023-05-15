@@ -89,17 +89,19 @@ public class TurnManager {
             }
         }
     }
+
     private void updateAllIndustries() {
         for (Governance governance : match.getGovernances()) {
             for (Building building : governance.getBuildings()) {
-                if(building.getBuildingType().equals(BuildingType.INDUSTRIAL_CENTER)){
-                    if(((IndustrialCenter)building).canProduce()){
-                        ((IndustrialCenter)building).produce();
+                if (building.getBuildingType().equals(BuildingType.INDUSTRIAL_CENTER)) {
+                    if (((IndustrialCenter) building).canProduce()) {
+                        ((IndustrialCenter) building).produce();
                     }
                 }
             }
         }
     }
+
     private void attackBuildings() {
         for (People people : match.getAllTroops()) {
             int row = people.getRow();
@@ -115,7 +117,8 @@ public class TurnManager {
     }
 
     private void removeDestroyedBuildings() {
-        for (Building destroyedBuilding : destroyedBuildings) {;
+        for (Building destroyedBuilding : destroyedBuildings) {
+            ;
             destroyedBuilding.getGovernance().getBuildings().remove(destroyedBuilding);
             match.getCell(destroyedBuilding.getRow(), destroyedBuilding.getColumn()).setBuilding(null);
         }
@@ -137,7 +140,7 @@ public class TurnManager {
 
     public void run() {
         //while (!areMovesFinished()) {     OLD METHOD FOR TURNS
-        for(int i=0;i<50;i++){
+        for (int i = 0; i < 50; i++) {
             doFights();
             removeDeadPeople();
             attackBuildings();

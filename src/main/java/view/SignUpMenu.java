@@ -22,18 +22,15 @@ public class SignUpMenu extends Menu {
         while (true) {
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if((matcher = SignUpMenuCommands.getMatcher(command, SignUpMenuCommands.CREATE_USER)) != null){
+            if ((matcher = SignUpMenuCommands.getMatcher(command, SignUpMenuCommands.CREATE_USER)) != null) {
                 createUser(matcher);
-            }
-            else if (command.matches("^enter\\s+login\\s+menu$")){
+            } else if (command.matches("^enter\\s+login\\s+menu$")) {
                 System.out.println(controller.enterLoginMenu());
                 break;
-            }
-            else if (command.matches("^exit$")){
+            } else if (command.matches("^exit$")) {
                 controller.exit();
                 break;
-            }
-            else
+            } else
                 System.out.println("Invalid Command!");
         }
     }
@@ -50,36 +47,33 @@ public class SignUpMenu extends Menu {
             slogan = matcher.group("slogan");
             result = signUpMenuController.createUserStep(Controller.getRemovedQuotationMarks(username), password,
                     passConfirmation, email, Controller.getRemovedQuotationMarks(nickname), Controller.getRemovedQuotationMarks(slogan));
-        }
-        else
+        } else
             result = signUpMenuController.createUserStep(Controller.getRemovedQuotationMarks(username), password,
                     passConfirmation, email, Controller.getRemovedQuotationMarks(nickname));
         System.out.println(result);
         if (signUpMenuController.getStep() == 0) return;
-        if (result.endsWith("Please re-enter your password here:\\n")){
+        if (result.endsWith("Please re-enter your password here:\\n")) {
             String string;
             do {
                 string = signUpMenuController.chooseQuestionStep(scanner.nextLine().trim());
                 System.out.println(string);
 
-            }while (string.startsWith("password"));
+            } while (string.startsWith("password"));
         }
-        if (result.startsWith("Your slogan") && !result.endsWith("Please re-enter your password here:\\n")){
+        if (result.startsWith("Your slogan") && !result.endsWith("Please re-enter your password here:\\n")) {
             System.out.println(signUpMenuController.chooseQuestionStep());
         }
         chooseSecurityQuestion();
     }
 
     private void chooseSecurityQuestion() throws IOException {
-        while(true){
+        while (true) {
             Matcher matcher = SignUpMenuCommands.getMatcher(scanner.nextLine().trim(), SignUpMenuCommands.ANSWER_SECURITY_QUESTION);
             if (!matcher.matches()) {
                 System.out.println("Invalid Command!\nPlease pick your security question again:");
-            }
-            else if (!(matcher.group("answer")).equals(matcher.group("answerConfirm"))){
+            } else if (!(matcher.group("answer")).equals(matcher.group("answerConfirm"))) {
                 System.out.println("answer confirmation is not correct!");
-            }
-            else {
+            } else {
                 System.out.println(signUpMenuController.captchaStep(Controller.getRemovedQuotationMarks(matcher.group("questionNumber")),
                         Controller.getRemovedQuotationMarks(matcher.group("answer"))));
                 answerCaptcha();
@@ -89,7 +83,7 @@ public class SignUpMenu extends Menu {
     }
 
     private void answerCaptcha() throws IOException {
-        while(true){
+        while (true) {
             String answer = signUpMenuController.finalStep(scanner.nextLine().trim());
             System.out.println(answer);
             if (answer.equals("user created successfully!")) break;

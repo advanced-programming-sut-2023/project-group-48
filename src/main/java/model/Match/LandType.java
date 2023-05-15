@@ -3,7 +3,7 @@ package model.Match;
 import model.BackGroundColor;
 
 public enum LandType {
-    LAND(BackGroundColor.BLACK), LAND_WITH_GRAVEL(BackGroundColor.RED), BOULDER(BackGroundColor.YELLOW), ROCK(BackGroundColor.BLUE), IRON(BackGroundColor.PURPLE), GRASS(BackGroundColor.GREEN), MEADOW(BackGroundColor.CYAN), DENSE_MEADOW(BackGroundColor.WHITE),OIL(BackGroundColor.RED),PLAIN(BackGroundColor.GREEN),SHALLOWWATER(BackGroundColor.BLUE), RIVER(BackGroundColor.BLUE), SMALLPOND(BackGroundColor.BLUE), BIGPOND(BackGroundColor.WHITE), BEACH(BackGroundColor.YELLOW),SEA(BackGroundColor.BLUE);
+    LAND(BackGroundColor.BLACK), LAND_WITH_GRAVEL(BackGroundColor.RED), BOULDER(BackGroundColor.YELLOW), ROCK(BackGroundColor.BLUE), IRON(BackGroundColor.PURPLE), GRASS(BackGroundColor.GREEN), MEADOW(BackGroundColor.CYAN), DENSE_MEADOW(BackGroundColor.WHITE), OIL(BackGroundColor.RED), PLAIN(BackGroundColor.GREEN), SHALLOWWATER(BackGroundColor.BLUE), RIVER(BackGroundColor.BLUE), SMALLPOND(BackGroundColor.BLUE), BIGPOND(BackGroundColor.WHITE), BEACH(BackGroundColor.YELLOW), SEA(BackGroundColor.BLUE);
     private static final LandType[] landTypes = {LAND, LAND_WITH_GRAVEL, BOULDER, ROCK, IRON, GRASS, MEADOW, DENSE_MEADOW};
     private static final LandType[] waterTypes = {OIL, PLAIN, SHALLOWWATER, RIVER, SMALLPOND, BIGPOND, BEACH, SEA};
 

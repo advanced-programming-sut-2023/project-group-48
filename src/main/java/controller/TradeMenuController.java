@@ -38,10 +38,13 @@ public class TradeMenuController {
         boolean accepted = answer.equals("yes");
         Request request = controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getRequestById(controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getReceivedRequests(), id);
         if (request == null) return "Invalid request id";
-        if (request.getReceiver() != controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance()) return "You are not the receiver of this request";
+        if (request.getReceiver() != controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance())
+            return "You are not the receiver of this request";
         if (!answer.equals("yes") && !answer.equals("no")) return "invalid answer!";
-        if (request.getReceiver().getPropertyCount(request.getProperty()) < request.getAmount()) return "You don't have enough resources";
-        if (request.getSender().getPropertyCount(Property.GOLD) < request.getPrice() * request.getAmount()) return "The sender doesn't have enough gold";
+        if (request.getReceiver().getPropertyCount(request.getProperty()) < request.getAmount())
+            return "You don't have enough resources";
+        if (request.getSender().getPropertyCount(Property.GOLD) < request.getPrice() * request.getAmount())
+            return "The sender doesn't have enough gold";
 
         request.setAccepted(accepted);
         request.setReceiverMessage(message);

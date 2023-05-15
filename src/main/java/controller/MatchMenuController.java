@@ -64,7 +64,8 @@ public class MatchMenuController {
     public String showFoodList() {
         StringBuilder result = new StringBuilder();
         for (Map.Entry<Property, Integer> entry : controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getFoods().entrySet()) {
-            if (entry.getValue() != 0) result.append(entry.getKey().getPropertyInString()).append(": ").append(entry.getValue()).append("\n");
+            if (entry.getValue() != 0)
+                result.append(entry.getKey().getPropertyInString()).append(": ").append(entry.getValue()).append("\n");
         }
         if (result.toString().equals("")) return "no food!";
         return result.toString();
@@ -245,7 +246,7 @@ public class MatchMenuController {
     public String patrolUnit(int row1, int column1, int row2, int column2) {
         for (People people : controller.getGame().getCurrentMatch().getSelectedUnit()) {
             Troop troop = (Troop) people;
-            troop.setPath(controller.getGame().getCurrentMatch().givePath(row1 , column1, row2, column2));
+            troop.setPath(controller.getGame().getCurrentMatch().givePath(row1, column1, row2, column2));
             if (!controller.getGame().getCurrentMatch().getMovingPeople().contains(troop))
                 controller.getGame().getCurrentMatch().getMovingPeople().add(troop);
             troop.setPatrolMode(true);
@@ -296,7 +297,7 @@ public class MatchMenuController {
         if (controller.getGame().getCurrentMatch().isRoundFinished())
             controller.getGame().getCurrentMatch().nextRound();
         return controller.getGame().getCurrentMatch().isRoundFinished() ? "round finished\n" : "" +
-               controller.getGame().getCurrentMatch().getCurrentPlayer().getUsername() + " is now playing!";
+                controller.getGame().getCurrentMatch().getCurrentPlayer().getUsername() + " is now playing!";
     }
 
     /*

@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 
 public class LoginMenu extends Menu {
     private final LoginMenuController loginMenuController;
+
     public LoginMenu(Controller controller) {
         super(controller);
         this.loginMenuController = new LoginMenuController(controller);
@@ -22,18 +23,14 @@ public class LoginMenu extends Menu {
             Matcher matcher;
             if (command.matches("^enter\\s+sign\\s+up\\s+menu$")) {
                 System.out.println(controller.enterSignUpMenu());
-            }
-            else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.USER_LOGIN)) != null){
+            } else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.USER_LOGIN)) != null) {
                 if (userLogin(matcher)) return;
-            }
-            else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.FORGOT_PASSWORD)) != null){
+            } else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.FORGOT_PASSWORD)) != null) {
                 if (forgotPassword(matcher)) return;
-            }
-            else if (command.matches("^enter\\s+signup\\s+menu$")){
+            } else if (command.matches("^enter\\s+signup\\s+menu$")) {
                 System.out.println(controller.enterSignUpMenu());
                 break;
-            }
-            else
+            } else
                 System.out.println("Invalid Command!");
         }
     }
@@ -48,7 +45,7 @@ public class LoginMenu extends Menu {
         String result = loginMenuController.login(Controller.getRemovedQuotationMarks(username), password, stayLoggedIn);
         System.out.println(result);
         if (loginMenuController.getStep() == 0) return false;
-        while(true){
+        while (true) {
             String answer = loginMenuController.finalStep(scanner.nextLine().trim());
             System.out.println(answer);
             if (answer.startsWith("logged in successfully!")) return true;
@@ -60,7 +57,7 @@ public class LoginMenu extends Menu {
         String result = loginMenuController.forgotPassword(username);
         System.out.println(result);
         if (loginMenuController.getStep() != 2) return false;
-        while (true){
+        while (true) {
             String answer = loginMenuController.AnswerToSecurityQuestion(scanner.nextLine().trim());
             System.out.println(answer);
             if (answer.startsWith("logged in successfully!")) return true;

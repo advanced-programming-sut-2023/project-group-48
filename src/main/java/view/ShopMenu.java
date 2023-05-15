@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 
 public class ShopMenu extends Menu {
     private final ShopMenuController shopMenuController;
+
     public ShopMenu(Controller controller) {
         super(controller);
         this.shopMenuController = new ShopMenuController(controller);
@@ -16,23 +17,19 @@ public class ShopMenu extends Menu {
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             String command = scanner.nextLine().trim();
             Matcher matcher;
             if (command.matches("^back$")) {
                 System.out.println(controller.enterMatchMenu());
                 break;
-            }
-            else if (command.matches("^show\\s+price\\s+list$")){
+            } else if (command.matches("^show\\s+price\\s+list$")) {
                 System.out.println(shopMenuController.showPriceList());
-            }
-            else if ((matcher = ShopMenuCommands.getMatcher(command, ShopMenuCommands.BUY)) != null){
+            } else if ((matcher = ShopMenuCommands.getMatcher(command, ShopMenuCommands.BUY)) != null) {
                 System.out.println(shopMenuController.buy(Controller.getRemovedQuotationMarks(matcher.group("itemName")), Integer.parseInt(matcher.group("itemAmount"))));
-            }
-            else if ((matcher = ShopMenuCommands.getMatcher(command, ShopMenuCommands.SELL)) != null){
+            } else if ((matcher = ShopMenuCommands.getMatcher(command, ShopMenuCommands.SELL)) != null) {
                 System.out.println(shopMenuController.sell(Controller.getRemovedQuotationMarks(matcher.group("itemName")), Integer.parseInt(matcher.group("itemAmount"))));
-            }
-            else
+            } else
                 System.out.println("Invalid Command!");
         }
     }

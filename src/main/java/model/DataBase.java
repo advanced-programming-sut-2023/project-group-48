@@ -2,6 +2,7 @@ package model;
 
 public class DataBase {
     private User currentUser;
+
     public DataBase() {
         currentUser = null;
     }

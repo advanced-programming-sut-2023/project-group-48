@@ -26,7 +26,7 @@ public class MapMenuController {
         for (int i = startingRow; i <= endingRow; i++) {
             for (int j = startingColumn; j <= endingColumn; j++) {
                 map.append(controller.getGame().getCurrentMatch().getCell(i, j).getLandType().getBackGroundColor()
-                   .getANSICode()).append(controller.getGame().getCurrentMatch().getCell(i, j).getSymbol()).append(BackGroundColor.RESET.getANSICode());
+                        .getANSICode()).append(controller.getGame().getCurrentMatch().getCell(i, j).getSymbol()).append(BackGroundColor.RESET.getANSICode());
             }
             map.append("\n");
         }
@@ -38,7 +38,8 @@ public class MapMenuController {
         int vCount = vDirection.length == 0 ? 1 : Integer.parseInt(vDirection[1]);
         ArrayList<String> horizontalMoves = new ArrayList<>(Arrays.asList("right", "left"));
         ArrayList<String> verticalMoves = new ArrayList<>(Arrays.asList("up", "down"));
-        if (!horizontalMoves.contains(hDirection[0]) || !verticalMoves.contains(vDirection[0])) return "invalid direction";
+        if (!horizontalMoves.contains(hDirection[0]) || !verticalMoves.contains(vDirection[0]))
+            return "invalid direction";
         int finalRow = currentRow + vCount * (vDirection[0].equals("up") ? 1 : -1);
         int finalColumn = currentColumn + hCount * (vDirection[0].equals("right") ? 1 : -1);
         if (controller.getGame().getCurrentMatch().areCoordinatesNotValid(finalRow, finalColumn)) return ""; // TODO

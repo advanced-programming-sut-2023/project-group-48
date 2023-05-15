@@ -14,7 +14,7 @@ public class Building {
     private final Direction direction;
 
 
-    public Building(Governance governance, int row, int column,  String type, BuildingType buildingType, Direction direction) {
+    public Building(Governance governance, int row, int column, String type, BuildingType buildingType, Direction direction) {
         this.governance = governance;
         this.row = row;
         this.column = column;
@@ -92,8 +92,8 @@ public class Building {
     }
 
     public boolean canCreateUnit(String type) {
-        if(this instanceof RecruitmentCenter) {
-            if(((RecruitmentCenter) this).isRecruitTypeValid(type)) {
+        if (this instanceof RecruitmentCenter) {
+            if (((RecruitmentCenter) this).isRecruitTypeValid(type)) {
                 return true;
             }
         }
