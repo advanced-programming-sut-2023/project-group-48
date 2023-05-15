@@ -70,6 +70,9 @@ public class IndustrialCenter extends Building {
         put("Fletcher", "Fletcher");
         put("Pole Turner", "Tanner");
     }};
+    public static String getWorkerType(String buildingType){
+        return industrialCentersWorkers.get(buildingType);
+    }
     private final Property usedProperty;
     private final Property producedProperty;
     private final int rate;

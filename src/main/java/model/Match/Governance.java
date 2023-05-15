@@ -1,7 +1,10 @@
 package model.Match;
 
 import model.Buildings.*;
+import model.People.People;
+import model.People.PeopleType;
 import model.People.Troop;
+import model.People.Worker;
 import model.User;
 
 import java.util.*;
@@ -287,6 +290,7 @@ public class Governance {
     public void addBuilding(Building building) {
         buildings.add(building);
         if (building instanceof IndustrialCenter) {
+            People.createPeopleByType(this, building.getRow(), building.getColumn(),IndustrialCenter.getWorkerType(building.getType()), PeopleType.WORKER);
             unemployedPopulation--;
         } else if (building.getType().equals("Hovel")) {
             maxPopulation += 8;
