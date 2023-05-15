@@ -3,6 +3,7 @@ package view;
 import controller.Controller;
 import controller.MatchMenuController;
 import model.Match.Direction;
+import model.Match.Match;
 import view.Commands.MatchMenuCommands;
 import view.Messages.MatchMenuMessages;
 
@@ -22,6 +23,7 @@ public class MatchMenu extends Menu {
             String command = scanner.nextLine().trim();
             Matcher matcher;
             if (command.matches("next turn")) {
+                String result = matchMenuController.nextTurn();
                 System.out.println(matchMenuController.nextTurn());
             } else if (command.matches("^enter\\s+shop\\s+menu$")) {
                 System.out.println(controller.enterShopMenu());
@@ -97,5 +99,9 @@ public class MatchMenu extends Menu {
             } else
                 System.out.println("Invalid Command!");
         }
+    }
+
+    public void setCurrentMatch(Match match) {
+        matchMenuController.setMatch(match);
     }
 }

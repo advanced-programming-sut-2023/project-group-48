@@ -236,9 +236,11 @@ public class Match {
         return currentPlayer.equals(players.get(0));
     }
 
-    public void nextRound() {
+    public boolean nextRound() {
+        if (currentRound == rounds) return true;
         turnManager.run();
         currentRound++;
+        return false;
     }
 
     public Shop getShop() {

@@ -1,6 +1,7 @@
 package controller;
 
 import model.Game;
+import model.Match.Match;
 import view.*;
 
 import java.io.IOException;
@@ -93,4 +94,7 @@ public class Controller {
         game.setCurrentMenu(null);
     }
 
+    public void setCurrentMatch(Match match) {
+        matchMenu.setCurrentMatch(match);
+    }
 }

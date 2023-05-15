@@ -42,6 +42,8 @@ public class Governance {
     public Governance(User owner) {
         this.owner = owner;
         this.buildings = new ArrayList<>();
+        this.population = 20;
+        this.unemployedPopulation = 20;
     }
 
     public User getOwner() {
