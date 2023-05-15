@@ -13,23 +13,23 @@ import java.util.HashMap;
 
 public class Troop extends People {
     private static final HashMap<String, ArrayList<Property>> requiredResource = new HashMap<>() {{
-        requiredResource.put("Archer", new ArrayList<Property>(Arrays.asList(Property.BOW)));
-        requiredResource.put("Crossbowmen", new ArrayList<Property>(Arrays.asList(Property.CROSSBOW)));
-        requiredResource.put("Spearmen", new ArrayList<Property>(Arrays.asList(Property.SPEAR)));
-        requiredResource.put("Pikemen", new ArrayList<Property>(Arrays.asList(Property.PIKE)));
-        requiredResource.put("Macemen", new ArrayList<Property>(Arrays.asList(Property.MACE)));
-        requiredResource.put("Swordsmen", new ArrayList<Property>(Arrays.asList(Property.SWORD)));
-        requiredResource.put("Knight", new ArrayList<Property>(Arrays.asList(Property.SWORD, Property.HORSE)));
-        requiredResource.put("Tunneler", new ArrayList<Property>(Arrays.asList()));
-        requiredResource.put("Laddermen", new ArrayList<Property>(Arrays.asList()));
-        requiredResource.put("Black Monk", new ArrayList<Property>(Arrays.asList()));
-        requiredResource.put("Archer Bow", new ArrayList<Property>(Arrays.asList(Property.BOW)));
-        requiredResource.put("Slaves", new ArrayList<Property>(Arrays.asList()));
-        requiredResource.put("Slingers", new ArrayList<Property>(Arrays.asList()));
-        requiredResource.put("Assassins", new ArrayList<Property>(Arrays.asList()));
-        requiredResource.put("Horse Archers", new ArrayList<Property>(Arrays.asList(Property.BOW, Property.HORSE)));
-        requiredResource.put("Arabian Swordsmen", new ArrayList<Property>(Arrays.asList(Property.SWORD, Property.HORSE)));
-        requiredResource.put("Fire Throwers", new ArrayList<Property>(Arrays.asList()));
+        put("Archer", new ArrayList<Property>(Arrays.asList(Property.BOW)));
+        put("Crossbowmen", new ArrayList<Property>(Arrays.asList(Property.CROSSBOW)));
+        put("Spearmen", new ArrayList<Property>(Arrays.asList(Property.SPEAR)));
+        put("Pikemen", new ArrayList<Property>(Arrays.asList(Property.PIKE)));
+        put("Macemen", new ArrayList<Property>(Arrays.asList(Property.MACE)));
+        put("Swordsmen", new ArrayList<Property>(Arrays.asList(Property.SWORD)));
+        put("Knight", new ArrayList<Property>(Arrays.asList(Property.SWORD, Property.HORSE)));
+        put("Tunneler", new ArrayList<Property>(Arrays.asList()));
+        put("Laddermen", new ArrayList<Property>(Arrays.asList()));
+        put("Black Monk", new ArrayList<Property>(Arrays.asList()));
+        put("Archer Bow", new ArrayList<Property>(Arrays.asList(Property.BOW)));
+        put("Slaves", new ArrayList<Property>(Arrays.asList()));
+        put("Slingers", new ArrayList<Property>(Arrays.asList()));
+        put("Assassins", new ArrayList<Property>(Arrays.asList()));
+        put("Horse Archers", new ArrayList<Property>(Arrays.asList(Property.BOW, Property.HORSE)));
+        put("Arabian Swordsmen", new ArrayList<Property>(Arrays.asList(Property.SWORD, Property.HORSE)));
+        put("Fire Throwers", new ArrayList<Property>(Arrays.asList()));
     }};
     private static final HashMap<String, Quality[]> troopPowers = new HashMap<>() {{
         put("Sultan", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
