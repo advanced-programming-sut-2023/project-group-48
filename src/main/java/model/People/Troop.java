@@ -2,10 +2,8 @@ package model.People;
 
 import model.Buildings.Building;
 import model.Match.Governance;
-import model.Match.LandType;
 import model.Match.Property;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,23 +11,23 @@ import java.util.HashMap;
 
 public class Troop extends People {
     private static final HashMap<String, ArrayList<Property>> requiredResource = new HashMap<>() {{
-        requiredResource.put("Archer", new ArrayList<Property>(Arrays.asList(Property.BOW)));
-        requiredResource.put("Crossbowmen", new ArrayList<Property>(Arrays.asList(Property.CROSSBOW)));
-        requiredResource.put("Spearmen", new ArrayList<Property>(Arrays.asList(Property.SPEAR)));
-        requiredResource.put("Pikemen", new ArrayList<Property>(Arrays.asList(Property.PIKE)));
-        requiredResource.put("Macemen", new ArrayList<Property>(Arrays.asList(Property.MACE)));
-        requiredResource.put("Swordsmen", new ArrayList<Property>(Arrays.asList(Property.SWORD)));
-        requiredResource.put("Knight", new ArrayList<Property>(Arrays.asList(Property.SWORD, Property.HORSE)));
-        requiredResource.put("Tunneler", new ArrayList<Property>(Arrays.asList()));
-        requiredResource.put("Laddermen", new ArrayList<Property>(Arrays.asList()));
-        requiredResource.put("Black Monk", new ArrayList<Property>(Arrays.asList()));
-        requiredResource.put("Archer Bow", new ArrayList<Property>(Arrays.asList(Property.BOW)));
-        requiredResource.put("Slaves", new ArrayList<Property>(Arrays.asList()));
-        requiredResource.put("Slingers", new ArrayList<Property>(Arrays.asList()));
-        requiredResource.put("Assassins", new ArrayList<Property>(Arrays.asList()));
-        requiredResource.put("Horse Archers", new ArrayList<Property>(Arrays.asList(Property.BOW, Property.HORSE)));
-        requiredResource.put("Arabian Swordsmen", new ArrayList<Property>(Arrays.asList(Property.SWORD, Property.HORSE)));
-        requiredResource.put("Fire Throwers", new ArrayList<Property>(Arrays.asList()));
+        put("Archer", new ArrayList<Property>(Arrays.asList(Property.BOW)));
+        put("Crossbowmen", new ArrayList<Property>(Arrays.asList(Property.CROSSBOW)));
+        put("Spearmen", new ArrayList<Property>(Arrays.asList(Property.SPEAR)));
+        put("Pikemen", new ArrayList<Property>(Arrays.asList(Property.PIKE)));
+        put("Macemen", new ArrayList<Property>(Arrays.asList(Property.MACE)));
+        put("Swordsmen", new ArrayList<Property>(Arrays.asList(Property.SWORD)));
+        put("Knight", new ArrayList<Property>(Arrays.asList(Property.SWORD, Property.HORSE)));
+        put("Tunneler", new ArrayList<Property>(Arrays.asList()));
+        put("Laddermen", new ArrayList<Property>(Arrays.asList()));
+        put("Black Monk", new ArrayList<Property>(Arrays.asList()));
+        put("Archer Bow", new ArrayList<Property>(Arrays.asList(Property.BOW)));
+        put("Slaves", new ArrayList<Property>(Arrays.asList()));
+        put("Slingers", new ArrayList<Property>(Arrays.asList()));
+        put("Assassins", new ArrayList<Property>(Arrays.asList()));
+        put("Horse Archers", new ArrayList<Property>(Arrays.asList(Property.BOW, Property.HORSE)));
+        put("Arabian Swordsmen", new ArrayList<Property>(Arrays.asList(Property.SWORD, Property.HORSE)));
+        put("Fire Throwers", new ArrayList<Property>(Arrays.asList()));
     }};
     private static final HashMap<String, Quality[]> troopPowers = new HashMap<>() {{
         put("Sultan", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
@@ -93,7 +91,6 @@ public class Troop extends People {
     private static final ArrayList<String> arabTroops = new ArrayList<>(Arrays.asList("ArcherBow", "Slaves", "Slingers", "Assassins", "HorseArchers", "ArabianSwordsmen", "FireThrowers"));
     private static final ArrayList<String> wallCrawler = new ArrayList<>(Arrays.asList("Laddermen", "Assassins"));
     private static final ArrayList<String> horseMan = new ArrayList<>(Arrays.asList("Knight", "HorseArchers", "ArabianSwordsmen"));
-
     private final Quality attackPower;
     private final Quality defensePower;
     private final Quality speed;
@@ -120,22 +117,6 @@ public class Troop extends People {
 
     public static ArrayList<Property> getRequiredResource(String type) {
         return requiredResource.get(type);
-    }
-
-    public Quality getAttackPower() {
-        return attackPower;
-    }
-
-    public Quality getDefensePower() {
-        return defensePower;
-    }
-
-    public Quality getSpeed() {
-        return speed;
-    }
-
-    public int getFireRange() {
-        return fireRange;
     }
 
     public static Quality getTroopAttackPower(String type) {
@@ -167,9 +148,24 @@ public class Troop extends People {
         return horseMan.contains(type);
     }
 
-
     public static int getTroopCost(String type) {
         return troopCost.get(type);
+    }
+
+    public Quality getAttackPower() {
+        return attackPower;
+    }
+
+    public Quality getDefensePower() {
+        return defensePower;
+    }
+
+    public Quality getSpeed() {
+        return speed;
+    }
+
+    public int getFireRange() {
+        return fireRange;
     }
 
     public Nation getNation() {

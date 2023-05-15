@@ -21,7 +21,11 @@ public class MainMenu extends Menu {
         while (true) {
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if (command.matches("^user\\s+logout$")) {
+            if (command.matches("^exit$")) {
+                controller.exit();
+                break;
+            }
+            else if (command.matches("^user\\s+logout$")) {
                 System.out.println(controller.logout());
                 break;
             } else if ((matcher = MainMenuCommands.getMatcher(command, MainMenuCommands.MATCH_START)) != null) {
