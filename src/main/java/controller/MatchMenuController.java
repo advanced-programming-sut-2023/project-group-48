@@ -50,7 +50,7 @@ public class MatchMenuController {
     public String showPopularityFactors() {
         String result = "your popularity factors are :\n";
         for (PopularityFactor popularityFactor : PopularityFactor.getPopularityFactors()) {
-            result += popularityFactor.getPopularityFactorInString() + " : "
+            result = result + popularityFactor.getPopularityFactorInString() + " : "
                     + controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getPopularityFactor(popularityFactor) + "\n";
         }
         result += showPopularity();
@@ -178,7 +178,7 @@ public class MatchMenuController {
         if (controller.getGame().getCurrentMatch().areCoordinatesNotValid(row, column))
             return "invalid coordinates!";
         if (landType == null) return "invalid texture type!";
-        if (controller.getGame().getCurrentMatch().getCell(row, column).getLandType().equals(type))
+        if (controller.getGame().getCurrentMatch().getCell(row, column).getLandType().toString().equals(type))
             return "this texture is already set!";
 
         controller.getGame().getCurrentMatch().getCell(row, column).setLandType(landType);
@@ -237,7 +237,7 @@ public class MatchMenuController {
         for (People people : controller.getGame().getCurrentMatch().getSelectedUnit()) {
             people.setPath(controller.getGame().getCurrentMatch().givePath(people.getRow(), people.getColumn(), row, column));
             if (!controller.getGame().getCurrentMatch().getMovingPeople().contains(people))
-            controller.getGame().getCurrentMatch().getMovingPeople().add(people);
+                controller.getGame().getCurrentMatch().getMovingPeople().add(people);
         }
         return "unit path set successfully!";
     }
