@@ -76,4 +76,8 @@ public class LoginMenuController {
     public int getStep() {
         return step;
     }
+
+    public String getCaptchaAnswer() {
+        return captchaAnswer;
+    }
 }
