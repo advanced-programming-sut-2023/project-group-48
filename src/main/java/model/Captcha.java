@@ -243,7 +243,7 @@ public enum Captcha {
             result.append(finalCaptcha[index]).append("\n");
         }
         Random rand = new Random();
-        int noiseCount = rand.nextInt(100 * numbersToUse.size()) + 100;
+        int noiseCount = rand.nextInt(100 * numbersToUse.size()) + 150;
         for (int i = 0; i < noiseCount; i++) {
             String[] noise = {"*", "%", "$", "?", "#", "@"};
             int start = rand.nextInt(result.length());

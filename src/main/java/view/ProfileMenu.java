@@ -22,8 +22,11 @@ public class ProfileMenu extends Menu {
             Matcher matcher;
             if (command.matches("^back$")) {
                 System.out.println(controller.enterMainMenu());
-            }
-            else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.USERNAME_CHANGE)) != null) {
+                break;
+            } else if (command.matches("^enter\\s+main\\s+menu$")) {
+                System.out.println(controller.enterMainMenu());
+                break;
+            } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.USERNAME_CHANGE)) != null) {
                 System.out.println(profileMenuController.changeUserInfo('u', Controller.getRemovedQuotationMarks(matcher.group("username"))));
             } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.NICKNAME_CHANGE)) != null) {
                 System.out.println(profileMenuController.changeUserInfo('n', Controller.getRemovedQuotationMarks(matcher.group("nickname"))));
@@ -43,9 +46,6 @@ public class ProfileMenu extends Menu {
                 System.out.println(profileMenuController.displaySlogan());
             } else if (command.matches("^profile\\s+display$")) {
                 System.out.println(profileMenuController.profileDisplay());
-            } else if (command.matches("^enter\\s+main\\s+menu$")) {
-                System.out.println(controller.enterMainMenu());
-                break;
             } else
                 System.out.println("Invalid Command!");
         }

@@ -21,15 +21,19 @@ public class LoginMenu extends Menu {
         while (true) {
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if (command.matches("^enter\\s+sign\\s+up\\s+menu$")) {
+            if (command.matches("^exit$")) {
+                controller.exit();
+                break;
+            } else if (command.matches("^enter\\s+sign\\s+up\\s+menu$")) {
                 System.out.println(controller.enterSignUpMenu());
+                break;
+            } else if (command.matches("^enter\\s+signup\\s+menu$")) {
+                System.out.println(controller.enterSignUpMenu());
+                break;
             } else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.USER_LOGIN)) != null) {
                 if (userLogin(matcher)) return;
             } else if ((matcher = LoginMenuCommands.getMatcher(command, LoginMenuCommands.FORGOT_PASSWORD)) != null) {
                 if (forgotPassword(matcher)) return;
-            } else if (command.matches("^enter\\s+signup\\s+menu$")) {
-                System.out.println(controller.enterSignUpMenu());
-                break;
             } else
                 System.out.println("Invalid Command!");
         }

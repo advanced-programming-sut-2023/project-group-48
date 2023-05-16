@@ -24,7 +24,8 @@ public class MatchMenu extends Menu {
             Matcher matcher;
             if (command.matches("next turn")) {
                 String result = matchMenuController.nextTurn();
-                System.out.println(matchMenuController.nextTurn());
+                System.out.println(result);
+                if (result.startsWith("match is finished\n")) break;
             } else if (command.matches("^enter\\s+shop\\s+menu$")) {
                 System.out.println(controller.enterShopMenu());
                 break;

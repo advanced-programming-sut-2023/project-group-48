@@ -22,14 +22,15 @@ public class SignUpMenu extends Menu {
         while (true) {
             String command = scanner.nextLine().trim();
             Matcher matcher;
-            if ((matcher = SignUpMenuCommands.getMatcher(command, SignUpMenuCommands.CREATE_USER)) != null) {
-                createUser(matcher);
-            } else if (command.matches("^enter\\s+login\\s+menu$")) {
+             if (command.matches("^enter\\s+login\\s+menu$")) {
                 System.out.println(controller.enterLoginMenu());
                 break;
             } else if (command.matches("^exit$")) {
                 controller.exit();
                 break;
+            }
+            else if ((matcher = SignUpMenuCommands.getMatcher(command, SignUpMenuCommands.CREATE_USER)) != null) {
+                createUser(matcher);
             } else
                 System.out.println("Invalid Command!");
         }
@@ -69,10 +70,10 @@ public class SignUpMenu extends Menu {
     private void chooseSecurityQuestion() throws IOException {
         while (true) {
             Matcher matcher = SignUpMenuCommands.getMatcher(scanner.nextLine().trim(), SignUpMenuCommands.ANSWER_SECURITY_QUESTION);
-            if (!matcher.matches()) {
+            if (matcher == null) {
                 System.out.println("Invalid Command!\nPlease pick your security question again:");
             } else if (!(matcher.group("answer")).equals(matcher.group("answerConfirm"))) {
-                System.out.println("answer confirmation is not correct!");
+                System.out.println("answer confirmation is not correct!\nPlease pick your security question again:");
             } else {
                 System.out.println(signUpMenuController.captchaStep(Controller.getRemovedQuotationMarks(matcher.group("questionNumber")),
                         Controller.getRemovedQuotationMarks(matcher.group("answer"))));
