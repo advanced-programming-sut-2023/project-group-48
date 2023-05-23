@@ -26,6 +26,7 @@ public class SignUpMenuController {
         Random rand = new Random();
         int length = MIN_PASSWORD_LENGTH + rand.nextInt(MAX_PASSWORD_LENGTH - MIN_PASSWORD_LENGTH + 1);
         LinkedList<Character> randomPasswords = new LinkedList<>();
+        String result = "";
         randomPasswords.add(alphabet.charAt(rand.nextInt(alphabet.length())));
         randomPasswords.add(alphabet.charAt(rand.nextInt(alphabet.length())));
         randomPasswords.add(Character.toLowerCase(alphabet.charAt(rand.nextInt(alphabet.length()))));
@@ -34,7 +35,11 @@ public class SignUpMenuController {
         for (int i = 0; i < length - 3; i++) {
             randomPasswords.add(rand.nextInt(randomPasswords.size()) + 1, characters.charAt(rand.nextInt(characters.length())));
         }
-        return randomPasswords.toString();
+
+        for (Character character : randomPasswords) {
+            result += character;
+        }
+        return result;
     }
 
     public static String getSuggestedUsername(String username) {
@@ -49,7 +54,7 @@ public class SignUpMenuController {
 
     public String createUserStep(String username, String password, String passwordConfirmation, String email, String nickname, String... slogan) {
         String result = "";
-        if (username.isEmpty() || password.isEmpty() || email.isEmpty() || nickname.isEmpty() || (slogan.length != 0 && slogan[0].isEmpty())) {
+        if (username.isEmpty() || password.isEmpty() || email.isEmpty() || nickname.isEmpty() || (slogan.length != 0 && slogan[0].isEmpty()))
             return "a filed is empty!";
 
         if (User.isUsernameNotValid(username)) return "not a valid username!";
@@ -57,10 +62,11 @@ public class SignUpMenuController {
         if (controller.getGame().getUserByUsername(username) != null)
             return "username already exists!\n" + "Our suggestion for username is \"" + getSuggestedUsername(username) + "\"";
 
-        if (!(result = User.isPasswordWeak(password)).isEmpty() && !password.equals("random")) return "password is weak: " + result;
+        if (!(result = User.isPasswordWeak(password)).isEmpty() && !password.equals("random"))
+            return "password is weak: " + result;
 
-        if ((passwordConfirmation != null && !password.equals(passwordConfirmation)) ||
-            (passwordConfirmation == null && !password.equals("random")))
+        if ((passwordConfirmation != null && !passwordConfirmation.isEmpty() && !password.equals(passwordConfirmation)) ||
+                ((passwordConfirmation == null || passwordConfirmation.isEmpty()) && !password.equals("random")))
             return "password confirmation is not correct!";
 
         if (controller.getGame().getUserByEmail(email) != null) return "email already exists!";
@@ -69,12 +75,14 @@ public class SignUpMenuController {
 
         if (slogan.length != 0 && slogan[0].equals("random")) {
             String randSlogan = User.getRandomSlogan();
-            result += "Your slogan is: \" " + randSlogan + " \"";
+            result = "Your slogan is: \" " + randSlogan + " \"";
             userDetails.put("slogan", randSlogan);
         }
-        if (passwordConfirmation == null && password.equals("random")) {
+
+        if ((passwordConfirmation == null || passwordConfirmation.isEmpty()) && password.equals("random")) {
             String randPassword = getRandomPassword();
-            result += (result.isEmpty() ? "" : "\n") + "Your random password is: " + randPassword + "\n Please re-enter your password here:\n";
+            if (result.startsWith("password")) result = "";
+            result += (result.isEmpty() ? "" : "\n") + "Your random password is: " + randPassword + "\nPlease re-enter your password here:\n";
             userDetails.put("password", randPassword);
         }
         userDetails.put("username", username);
