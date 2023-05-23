@@ -70,7 +70,7 @@ public class LoginMenuController {
 
         step = 0;
         controller.getGame().setCurrentUser(forgotUser);
-        return "logged in successfully\n" + controller.enterMainMenu();
+        return "logged in successfully!\n" + controller.enterMainMenu();
     }
 
     public int getStep() {

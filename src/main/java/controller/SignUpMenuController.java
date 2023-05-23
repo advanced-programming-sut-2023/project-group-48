@@ -49,15 +49,22 @@ public class SignUpMenuController {
 
     public String createUserStep(String username, String password, String passwordConfirmation, String email, String nickname, String... slogan) {
         String result = "";
-        if (username.isEmpty() || password.isEmpty() || email.isEmpty() || nickname.isEmpty() || (slogan.length != 0 && slogan[0].isEmpty()))
+        if (username.isEmpty() || password.isEmpty() || email.isEmpty() || nickname.isEmpty() || (slogan.length != 0 && slogan[0].isEmpty())) {
             return "a filed is empty!";
+
         if (User.isUsernameNotValid(username)) return "not a valid username!";
+
         if (controller.getGame().getUserByUsername(username) != null)
             return "username already exists!\n" + "Our suggestion for username is \"" + getSuggestedUsername(username) + "\"";
+
         if (!(result = User.isPasswordWeak(password)).isEmpty() && !password.equals("random")) return "password is weak: " + result;
-        if (passwordConfirmation != null && !password.equals(passwordConfirmation))
+
+        if ((passwordConfirmation != null && !password.equals(passwordConfirmation)) ||
+            (passwordConfirmation == null && !password.equals("random")))
             return "password confirmation is not correct!";
+
         if (controller.getGame().getUserByEmail(email) != null) return "email already exists!";
+
         if (User.isEmailNotValid(email)) return "email is not valid!";
 
         if (slogan.length != 0 && slogan[0].equals("random")) {

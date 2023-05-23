@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum SignUpMenuCommands {
-    CREATE_USER(new ArrayList<>(Arrays.asList("user\\s+create", "\\s+-u\\s+(?<username>\".*\"|\\S*)", "\\s+-p\\s+(?<password>\\S*)\\s*(?<passConfirm>\\S*)", "\\s+-email\\s+(?<email>\\S*)", "\\s+-n\\s+(?<nickname>\".*\"|\\S*)", "(\\s+-s\\s+(?<slogan>\".*\"|\\S*))?"))),
+    CREATE_USER(new ArrayList<>(Arrays.asList("user\\s+create", "\\s+-u\\s+(?<username>\".*\"|\\S*)", "\\s+-p\\s+(?<password>\\S*)\\s*(?<passConfirm>\\S*)?", "\\s+-email\\s+(?<email>\\S*)", "\\s+-n\\s+(?<nickname>\".*\"|\\S*)", "(\\s+-s\\s+(?<slogan>\".*\"|\\S*))?"))),
     ANSWER_SECURITY_QUESTION(new ArrayList<>(Arrays.asList("question\\s+pick", "\\s+-q\\s+(?<questionNumber>\\d)", "\\s+-a\\s+(?<answer>\".+\"|\\S+)", "\\s+-c\\s+(?<answerConfirm>\".+\"|\\S+)")));
 
     private final ArrayList<String> regexs;
