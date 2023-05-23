@@ -27,29 +27,32 @@ public class MapMenuController {
         int startingRow = Math.max(row - 10, 1);
         int endingColumn = Math.min(column + 10, controller.getGame().getCurrentMatch().getMAX_COLUMN());
         int endingRow = Math.min(row + 10, controller.getGame().getCurrentMatch().getMAX_ROW());
-        for (int i = startingRow; i <= endingRow; i++) {
+        for (int k = 0; k < endingColumn - startingColumn; k++) map.append(" ");
+        map.append("(").append(endingColumn).append(", ").append(endingRow).append(")\n");
+        for (int i = endingRow; i >= startingRow; i--) {
             for (int j = startingColumn; j <= endingColumn; j++) {
                 map.append(controller.getGame().getCurrentMatch().getCell(i, j).getLandType().getBackGroundColor()
                         .getANSICode()).append(controller.getGame().getCurrentMatch().getCell(i, j).getSymbol()).append(BackGroundColor.RESET.getANSICode());
             }
-            if (i != endingRow) map.append("\n");
+            map.append("\n");
         }
+        map.append("(").append(startingColumn).append(", ").append(startingRow).append(")");
         return map.toString();
     }
 
-    public String changeCurrentCell(String[] hDirection, String[] vDirection) {
+    public String changeCurrentCell(String[] vDirection, String[] hDirection) {
         int hCount, vCount;
-        if (hDirection.length == 2) hCount = Integer.parseInt(hDirection[1]);
-        else hCount = hDirection.length;
-        if (vDirection.length == 2) vCount = Integer.parseInt(vDirection[1]);
-        else vCount = vDirection.length;
+        hCount = (hDirection[1] != null) ? Integer.parseInt(hDirection[1]) : 1;
+        vCount = (vDirection[1] != null) ? Integer.parseInt(vDirection[1]) : 1;
         ArrayList<String> horizontalMoves = new ArrayList<>(Arrays.asList("right", "left"));
         ArrayList<String> verticalMoves = new ArrayList<>(Arrays.asList("up", "down"));
-        if (!horizontalMoves.contains(hDirection[0]) || !verticalMoves.contains(vDirection[0]))
-            return "invalid direction";
-        int finalRow = currentRow + vCount * (vDirection[0].equals("up") ? 1 : -1);
-        int finalColumn = currentColumn + hCount * (vDirection[0].equals("right") ? 1 : -1);
-        if (controller.getGame().getCurrentMatch().areCoordinatesNotValid(finalRow, finalColumn)) return "invalid move!";
+        if (!horizontalMoves.contains(hDirection[0]) && hDirection[0] != null) return "invalid direction";
+        if (!verticalMoves.contains(vDirection[0]) && vDirection[0] != null) return "invalid direction";
+        int finalRow = currentRow, finalColumn = currentColumn;
+        if (vDirection[0] != null) finalRow += vCount * (vDirection[0].equals("up") ? 1 : -1);
+        if (hDirection[0] != null) finalColumn += hCount * (hDirection[0].equals("right") ? 1 : -1);
+        if (controller.getGame().getCurrentMatch().areCoordinatesNotValid(finalRow, finalColumn))
+            return "invalid move!";
 
         currentRow = finalRow;
         currentColumn = finalColumn;

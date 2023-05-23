@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public enum MapMenuCommands {
     SHOW_MAP(new ArrayList<>(List.of("show\\s+map", "\\s+-x\\s+(?<x>\\d+)", "\\s+-y\\s+(?<y>\\d+)"))),
-    MOVE_MAP(new ArrayList<>(List.of("map", "(\\s+(?<firstDirection>\\S+)(\\s+(?<firstNumber>\\d+))?)?", "(\\s+(?<secondDirection>\\S+)(\\s+(?<secondNumber>\\d+))?)?"))),
+    MOVE_MAP(new ArrayList<>(List.of("map", "(\\s+(?<firstDirection>up|down)(\\s+(?<firstNumber>\\d+))?)?", "(\\s+(?<secondDirection>right|left)(\\s+(?<secondNumber>\\d+))?)?"))),
     MAP_DETAILS(new ArrayList<>(List.of("show\\s+details", "\\s+-x\\s+(?<x>\\d+)", "\\s+-y\\s+(?<y>\\d+)")));
 
 

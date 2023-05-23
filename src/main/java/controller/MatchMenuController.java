@@ -242,7 +242,7 @@ public class MatchMenuController {
         People firstPeople = match.getSelectedUnit().get(0);
         ArrayList<Direction> path = match.givePath(firstPeople.getRow(), firstPeople.getColumn(), row, column);
         for (People people : match.getSelectedUnit()) {
-            people.setPath(path);
+            people.setPath(new ArrayList<>(path));
             if (!match.getMovingPeople().contains(people))
                 match.getMovingPeople().add(people);
         }
@@ -250,9 +250,10 @@ public class MatchMenuController {
     }
 
     public String patrolUnit(int row1, int column1, int row2, int column2) {
+        ArrayList<Direction> path = match.givePath(row1, column1, row2, column2);
         for (People people : match.getSelectedUnit()) {
             Troop troop = (Troop) people;
-            troop.setPath(match.givePath(row1, column1, row2, column2));
+            troop.setPath(new ArrayList<>(path));
             if (!match.getMovingPeople().contains(troop))
                 match.getMovingPeople().add(troop);
             troop.setPatrolMode(true);

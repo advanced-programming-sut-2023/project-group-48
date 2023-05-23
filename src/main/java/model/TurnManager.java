@@ -26,15 +26,12 @@ public class TurnManager {
 
 
     private void doFights() {
-        for (People people : match.getAllTroops()) {
-            int row = people.getRow();
-            int column = people.getColumn();
-            if (people instanceof Troop) {
-                Troop attacker = (Troop) people;
-                for (People target : match.getNearByEnemy(row, column, attacker.getFireRange())) {
-                    attacker.attackPeople(target);
-                    if (target.getHp() <= 0) deadPeople.add(target);
-                }
+        for (Troop troop : match.getAllTroops()) {
+            int row = troop.getRow();
+            int column = troop.getColumn();
+            for (People target : match.getNearByEnemy(row, column, troop.getFireRange())) {
+                troop.attackPeople(target);
+                if (target.getHp() <= 0) deadPeople.add(target);
             }
         }
     }
@@ -68,10 +65,15 @@ public class TurnManager {
     }
 
     private void moveAllPeople() {
+        ArrayList<People> finishedPeople = new ArrayList<>();
         for (People people : match.getMovingPeople()) {
             if (people.getPath().size() > 0) {
                 movePeople(people);
+                if (people.getPath().size() == 0) finishedPeople.add(people);
             }
+        }
+        for (People people : finishedPeople) {
+            match.getMovingPeople().remove(people);
         }
     }
 
@@ -103,14 +105,14 @@ public class TurnManager {
     }
 
     private void attackBuildings() {
-        for (People people : match.getAllTroops()) {
-            int row = people.getRow();
-            int column = people.getColumn();
-            if (people instanceof Troop) {
-                Troop attacker = (Troop) people;
-                for (Building target : match.getNearByEnemyBuildings(row, column, attacker.getFireRange())) {
-                    attacker.attackBuilding(target);
-                    if (target.getHp() <= 0) destroyedBuildings.add(target);
+        for (Troop troop : match.getAllTroops()) {
+            int row = troop.getRow();
+            int column = troop.getColumn();
+            for (Building target : match.getNearByEnemyBuildings(troop, row, column, troop.getFireRange())) {
+                System.out.println(troop.getGovernance().getOwner().getUsername() + " " + target.getGovernance().getOwner().getUsername() + " " + troop.getRow() + " " + target.getRow());
+                troop.attackBuilding(target);
+                if (target.getHp() <= 0) {
+                    destroyedBuildings.add(target);
                 }
             }
         }
@@ -118,7 +120,6 @@ public class TurnManager {
 
     private void removeDestroyedBuildings() {
         for (Building destroyedBuilding : destroyedBuildings) {
-            ;
             destroyedBuilding.getGovernance().getBuildings().remove(destroyedBuilding);
             match.getCell(destroyedBuilding.getRow(), destroyedBuilding.getColumn()).setBuilding(null);
         }

@@ -25,7 +25,7 @@ public class Cell {
         defaultMaps.add(new Cell[200][200]);
         for (int i = 0; i < 200; i++) {
             for (int j = 0; j < 200; j++) {
-                defaultMaps.get(0)[i][j] = new Cell(i, j, LandType.LAND);
+                defaultMaps.get(0)[i][j] = new Cell(i + 1, j + 1, LandType.LAND);
             }
         }
     }

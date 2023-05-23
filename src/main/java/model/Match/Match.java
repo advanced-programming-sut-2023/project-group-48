@@ -22,7 +22,7 @@ public class Match {
     private final TurnManager turnManager;
     private Building selectedBuilding;
     private ArrayList<People> selectedUnit;
-    private final ArrayList<People> allTroops;
+    private final ArrayList<Troop> allTroops;
     private final ArrayList<People> movingPeople;
 
     public Match(int rounds, ArrayList<User> players, int mapNumber) {
@@ -87,7 +87,6 @@ public class Match {
 //    public void disbandUnit() {
 //    }
 
-
     public Cell getCell(int row, int column) {
         return map[row - 1][column - 1];
     }
@@ -100,7 +99,8 @@ public class Match {
         this.selectedCell = selectedCell;
     }
 
-    private boolean pathGenerator(int currentRow, int currentColumn, int destinationRow, int destinationColumn, final ArrayList<Direction> validDirections, ArrayList<Direction> path) {
+    private boolean pathGenerator(int currentRow, int currentColumn, final int destinationRow, final int destinationColumn,
+                                  final int borderRow, final int borderColumn, final ArrayList<Direction> validDirections, ArrayList<Direction> path) {
         for (Direction direction : validDirections) {
             path.add(direction);
             switch (direction) {
@@ -117,11 +117,38 @@ public class Match {
                     currentColumn++;
                     break;
             }
-            if (areCoordinatesNotValid(currentRow, currentColumn)) return false;
-            if (currentColumn == destinationColumn && currentRow == destinationRow) return true;
-            if (!map[currentRow - 1][currentColumn - 1].canPeoplePass()) return false;
-            if (pathGenerator(currentColumn, currentRow, destinationColumn, destinationRow, validDirections, path))
+            if (areCoordinatesNotValid(currentRow, currentColumn)) {
+                path.remove(path.size() - 1);
+                return false;
+            }
+            if (!map[currentRow - 1][currentColumn - 1].canPeoplePass()) {
+                path.remove(path.size() - 1);
+                return false;
+            }
+            if (currentRow == borderRow || currentColumn == borderColumn) {
+                path.remove(path.size() - 1);
+                return false;
+            }
+            if (currentColumn == destinationColumn && currentRow == destinationRow) {
                 return true;
+            }
+            if (pathGenerator(currentRow, currentColumn, destinationRow, destinationColumn, borderRow, borderColumn, validDirections, path))
+                return true;
+            path.remove(path.size() - 1);
+            switch (direction) {
+                case UP:
+                    currentRow--;
+                    break;
+                case DOWN:
+                    currentRow++;
+                    break;
+                case LEFT:
+                    currentColumn++;
+                    break;
+                case RIGHT:
+                    currentColumn--;
+                    break;
+            }
         }
         return false;
     }
@@ -129,11 +156,24 @@ public class Match {
     public ArrayList<Direction> givePath(int startRow, int startColumn, int destinationRow, int destinationColumn) {
         ArrayList<Direction> path = new ArrayList<>();
         final ArrayList<Direction> validDirections = new ArrayList<>();
-        if (startRow < destinationRow) validDirections.add(Direction.UP);
-        else if (startRow > destinationRow) validDirections.add(Direction.DOWN);
-        if (startColumn < destinationColumn) validDirections.add(Direction.RIGHT);
-        else if (startRow > destinationColumn) validDirections.add(Direction.LEFT);
-        if (pathGenerator(startRow, startColumn, destinationRow, destinationColumn, validDirections, path))
+        int borderRow = -1, borderColumn = -1;
+        if (startRow < destinationRow) {
+            validDirections.add(Direction.UP);
+            borderRow = destinationRow + 1;
+        }
+        else if (startRow > destinationRow) {
+            validDirections.add(Direction.DOWN);
+            borderRow = destinationRow - 1;
+        }
+        if (startColumn < destinationColumn) {
+            validDirections.add(Direction.RIGHT);
+            borderColumn = destinationColumn + 1;
+        }
+        else if (startRow > destinationColumn) {
+            validDirections.add(Direction.LEFT);
+            borderColumn = destinationColumn - 1;
+        }
+        if (pathGenerator(startRow, startColumn, destinationRow, destinationColumn, borderRow, borderColumn, validDirections, path))
             return path;
         return null;
     }
@@ -144,7 +184,7 @@ public class Match {
         receiver.getGovernance().addRequest(request);
     }
 
-    public ArrayList<People> getAllTroops() {
+    public ArrayList<Troop> getAllTroops() {
         return allTroops;
     }
 
@@ -156,15 +196,15 @@ public class Match {
         for (int i = 0; i < count; i++) {
             People people = People.createPeopleByType(currentPlayer.getGovernance(), row, column, type, peopleType);
             getCell(row, column).addPeople(people);
-            if (people instanceof Troop) allTroops.add(people);
+            if (people instanceof Troop) allTroops.add((Troop) people);
         }
     }
 
     public void removePeople(People people) {
         people.getGovernance().setPopulation(people.getGovernance().getPopulation() - 1);
         getCell(people.getRow(), people.getColumn()).removePeople(people);
-        if (people instanceof Troop) allTroops.remove(people);
-
+        if (people instanceof Troop) allTroops.remove((Troop) people);
+        movingPeople.remove(people);
     }
 
     public int getRoundsPlayed() {
@@ -200,7 +240,7 @@ public class Match {
         return enemies;
     }
 
-    public ArrayList<Building> getNearByEnemyBuildings(int row, int column, int range) {
+    public ArrayList<Building> getNearByEnemyBuildings(People people, int row, int column, int range) {
         ArrayList<Building> buildings = new ArrayList<>();
         int startRow = row - range;
         int startColumn = column - range;
@@ -208,8 +248,8 @@ public class Match {
             for (int j = 0; j < 2 * range + 1; j++) {
                 if (areCoordinatesNotValid(startRow + i, startColumn + j)) continue;
                 Building building = getCell(startRow + i, startColumn + j).getBuilding();
-                if (building != null && !building.getGovernance().equals(currentPlayer.getGovernance()))
-                    buildings.add(getCell(startRow + i, startColumn + j).getBuilding());
+                if (building != null && !building.getGovernance().equals(people.getGovernance()))
+                    buildings.add(building);
             }
         }
         return buildings;
