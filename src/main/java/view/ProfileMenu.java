@@ -33,7 +33,7 @@ public class ProfileMenu extends Menu {
                 System.out.println(profileMenuController.changeUserInfo('e', matcher.group("email")));
             } else if ((matcher = ProfileMenuCommands.getMatcher(command, ProfileMenuCommands.SLOGAN_CHANGE)) != null) {
                 System.out.println(profileMenuController.changeUserInfo('s', Controller.getRemovedQuotationMarks(matcher.group("slogan"))));
-            } else if (command.matches("^Profile\\s+remove\\s+slogan$")) {
+            } else if (command.matches("^profile\\s+remove\\s+slogan$")) {
                 System.out.println(profileMenuController.removeSlogan());
             } else if (command.matches("^profile\\s+display\\s+highscore$")) {
                 System.out.println(profileMenuController.displayHighScore());
