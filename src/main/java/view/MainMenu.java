@@ -33,7 +33,7 @@ public class MainMenu extends Menu {
             } else if ((matcher = MainMenuCommands.getMatcher(command, MainMenuCommands.MATCH_START)) != null) {
                 String result = mainMenuController.startMatch(Integer.parseInt(matcher.group("rounds")), Integer.parseInt(matcher.group("mapNumber")), matcher.group("userNames"));
                 System.out.println(result);
-                if (result.startsWith("match started!")) return;
+                if (result.startsWith("entered")) break;
             } else
                 System.out.println("Invalid Command!");
         }

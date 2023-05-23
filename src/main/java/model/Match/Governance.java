@@ -4,7 +4,6 @@ import model.Buildings.*;
 import model.People.People;
 import model.People.PeopleType;
 import model.People.Troop;
-import model.People.Worker;
 import model.User;
 
 import java.util.*;
@@ -60,16 +59,16 @@ public class Governance {
 
     public void updatePopularity() {
         this.popularity = 0;
-        changeFoodPopularityFactor();
-        changeTaxPopularityFactor();
-        changeReligionPopularityFactor();
-        changeFearPopularityFactor();
+        changeFoodPopularity();
+        changeTaxPopularity();
+        changeReligionPopularity();
+        changeFearPopularity();
         for (PopularityFactor factor : PopularityFactor.getPopularityFactors()) {
             this.popularity += popularityFactors.get(factor);
         }
     }
 
-    public void changeFoodPopularityFactor() {
+    public void changeFoodPopularity() {
         int finalFoodFactor = 0;
 
         int foodVariety = 0;
@@ -120,7 +119,7 @@ public class Governance {
         popularityFactors.put(PopularityFactor.FOOD, finalFoodFactor);
     }
 
-    public void changeTaxPopularityFactor() {
+    public void changeTaxPopularity() {
         int finalTaxFactor = 0;
         switch (taxRate) {
             case -3:
@@ -163,7 +162,7 @@ public class Governance {
         popularityFactors.put(PopularityFactor.TAX, finalTaxFactor);
     }
 
-    public void changeReligionPopularityFactor() {
+    public void changeReligionPopularity() {
         int finalReligionFactor = 0;
         double doubleReligionFactor = 0;
         int percentReligionFactor = 0;
@@ -190,7 +189,7 @@ public class Governance {
         popularityFactors.put(PopularityFactor.RELIGION, finalReligionFactor);
     }
 
-    public void changeFearPopularityFactor() {
+    public void changeFearPopularity() {
         int finalFearFactor = 0;
         double doubleFearFactor = 0;
         int percentFearFactor = 0;

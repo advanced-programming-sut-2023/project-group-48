@@ -48,7 +48,13 @@ public class Game {
         }
 
         if (db.getCurrentUser() != null) {
-            currentUser = db.getCurrentUser();
+            for (User user : users) {
+                if (user.getUsername().equals(db.getCurrentUser().getUsername())) {
+                    currentUser = user;
+                    db.setCurrentUser(user);
+                    break;
+                }
+            }
             currentMenu = mainMenu;
         } else {
             currentUser = null;
@@ -88,6 +94,18 @@ public class Game {
         FileWriter fileWriter = new FileWriter("DataBase.json");
         fileWriter.write(new Gson().toJson(db));
         fileWriter.close();
+    }
+
+    public void updateJsonFiles() throws IOException {
+        Gson gson = new Gson();
+        FileWriter fileWriter = new FileWriter("Users.json");
+        fileWriter.write(gson.toJson(users));
+        fileWriter.close();
+
+        FileWriter fileWriter2 = new FileWriter("DataBase.json");
+        fileWriter2.write(new Gson().toJson(db));
+        fileWriter2.close();
+
     }
 
     public Menu getCurrentMenu() {

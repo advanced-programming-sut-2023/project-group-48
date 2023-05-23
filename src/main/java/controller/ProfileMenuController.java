@@ -26,7 +26,9 @@ public class ProfileMenuController {
     public String changeUserInfo(char infoType, String... info) {
         if (infoType == 'u') {
             if (User.isUsernameNotValid(info[0])) return "not a valid username!";
+            System.out.println(info[0]);
             controller.getGame().getCurrentUser().setUsername(info[0]);
+            System.out.println(controller.getGame().getCurrentUser().getUsername());
             return "username changed successfully!";
         } else if (infoType == 'n') {
             controller.getGame().getCurrentUser().setNickname(info[0]);

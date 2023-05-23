@@ -34,15 +34,18 @@ public class MapMenuController {
     }
 
     public String changeCurrentCell(String[] hDirection, String[] vDirection) {
-        int hCount = hDirection.length == 0 ? 1 : Integer.parseInt(hDirection[1]);
-        int vCount = vDirection.length == 0 ? 1 : Integer.parseInt(vDirection[1]);
+        int hCount, vCount;
+        if (hDirection.length == 2) hCount = Integer.parseInt(hDirection[1]);
+        else hCount = hDirection.length;
+        if (vDirection.length == 2) vCount = Integer.parseInt(vDirection[1]);
+        else vCount = vDirection.length;
         ArrayList<String> horizontalMoves = new ArrayList<>(Arrays.asList("right", "left"));
         ArrayList<String> verticalMoves = new ArrayList<>(Arrays.asList("up", "down"));
         if (!horizontalMoves.contains(hDirection[0]) || !verticalMoves.contains(vDirection[0]))
             return "invalid direction";
         int finalRow = currentRow + vCount * (vDirection[0].equals("up") ? 1 : -1);
         int finalColumn = currentColumn + hCount * (vDirection[0].equals("right") ? 1 : -1);
-        if (controller.getGame().getCurrentMatch().areCoordinatesNotValid(finalRow, finalColumn)) return ""; // TODO
+        if (controller.getGame().getCurrentMatch().areCoordinatesNotValid(finalRow, finalColumn)) return "invalid move!";
 
         currentRow = finalRow;
         currentColumn = finalColumn;

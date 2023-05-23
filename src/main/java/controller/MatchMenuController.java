@@ -230,6 +230,8 @@ public class MatchMenuController {
         if (match.areCoordinatesNotValid(row, column))
             return "invalid coordinates!";
 
+        if (match.getCell(row, column).getPeople().size() == 0) return "there is no unit here!";
+
         match.setSelectedUnit(match.getCell(row, column).getPeople());
         return "unit selected successfully!";
     }

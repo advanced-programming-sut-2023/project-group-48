@@ -16,22 +16,16 @@ public class MainMenuController {
     }
 
     public String startMatch(int rounds, int mapNumber, String usernames) {
-        ArrayList<String> playersUsernames = new ArrayList<>();
-        String usernameRegex = "(?<username>\".+\"|\\S+)";
-        Pattern pattern = Pattern.compile(usernameRegex);
-        Matcher matcher = pattern.matcher(usernames);
-        while (matcher.find()) {
-            playersUsernames.add(matcher.group("username"));
-        }
         ArrayList<User> players = new ArrayList<>();
-        for (String username : playersUsernames) {
-            User user = controller.getGame().getUserByUsername(username);
+        Matcher matcher = Pattern.compile("(?<username>\".+\"|\\S+)").matcher(usernames);
+        while (matcher.find()) {
+            User user = controller.getGame().getUserByUsername(matcher.group("username"));
             if (user != null) players.add(user);
         }
         if (players.size() <= 1) return "not enough players!";
         Match match = new Match(rounds, players, mapNumber);
         controller.getGame().setCurrentMatch(match);
         controller.setCurrentMatch(match);
-        return controller.enterMatchMenu() + "match started!\n" + match.getCurrentPlayer().getUsername() + " is now playing!";
+        return controller.enterMatchMenu() + "\nmatch started!\n" + match.getCurrentPlayer().getUsername() + " is now playing!";
     }
 }

@@ -90,7 +90,8 @@ public class Controller {
         return "logged out!";
     }
 
-    public void exit() {
+    public void exit() throws IOException {
+        game.updateJsonFiles();
         game.setCurrentMenu(null);
     }
 

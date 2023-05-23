@@ -84,6 +84,7 @@ public class Cell {
     }
 
     public boolean canPeoplePass() {
+        if (building == null) return true;
         return BuildingType.isBuildingValidToPass(building);
     }
 
