@@ -101,7 +101,7 @@ public class Match {
     }
 
     private boolean pathGenerator(int currentRow, int currentColumn, int destinationRow, int destinationColumn, final ArrayList<Direction> validDirections, ArrayList<Direction> path) {
-        for (Direction direction : Direction.getDirections()) {
+        for (Direction direction : validDirections) {
             path.add(direction);
             switch (direction) {
                 case UP:
@@ -117,6 +117,7 @@ public class Match {
                     currentColumn++;
                     break;
             }
+            if (areCoordinatesNotValid(currentRow, currentColumn)) return false;
             if (currentColumn == destinationColumn && currentRow == destinationRow) return true;
             if (!map[currentRow - 1][currentColumn - 1].canPeoplePass()) return false;
             if (pathGenerator(currentColumn, currentRow, destinationColumn, destinationRow, validDirections, path))
@@ -128,8 +129,8 @@ public class Match {
     public ArrayList<Direction> givePath(int startRow, int startColumn, int destinationRow, int destinationColumn) {
         ArrayList<Direction> path = new ArrayList<>();
         final ArrayList<Direction> validDirections = new ArrayList<>();
-        if (startRow < destinationRow) validDirections.add(Direction.DOWN);
-        else if (startRow > destinationRow) validDirections.add(Direction.UP);
+        if (startRow < destinationRow) validDirections.add(Direction.UP);
+        else if (startRow > destinationRow) validDirections.add(Direction.DOWN);
         if (startColumn < destinationColumn) validDirections.add(Direction.RIGHT);
         else if (startRow > destinationColumn) validDirections.add(Direction.LEFT);
         if (pathGenerator(startRow, startColumn, destinationRow, destinationColumn, validDirections, path))

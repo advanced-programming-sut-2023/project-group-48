@@ -149,7 +149,6 @@ public class TurnManager {
         }
         updateAllPopularities();
         useFoods();
-
     }
 
 }

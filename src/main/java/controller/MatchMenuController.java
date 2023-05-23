@@ -8,6 +8,7 @@ import model.People.PeopleType;
 import model.People.State;
 import model.People.Troop;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MatchMenuController {
@@ -232,14 +233,16 @@ public class MatchMenuController {
 
         if (match.getCell(row, column).getPeople().size() == 0) return "there is no unit here!";
 
-        match.setSelectedUnit(match.getCell(row, column).getPeople());
+        match.setSelectedUnit(new ArrayList<>(match.getCell(row, column).getPeople()));
         return "unit selected successfully!";
     }
 
     public String moveUnit(int row, int column) {
         if (match.getSelectedUnit() == null) return "no unit selected!";
+        People firstPeople = match.getSelectedUnit().get(0);
+        ArrayList<Direction> path = match.givePath(firstPeople.getRow(), firstPeople.getColumn(), row, column);
         for (People people : match.getSelectedUnit()) {
-            people.setPath(match.givePath(people.getRow(), people.getColumn(), row, column));
+            people.setPath(path);
             if (!match.getMovingPeople().contains(people))
                 match.getMovingPeople().add(people);
         }
