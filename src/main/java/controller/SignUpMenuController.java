@@ -54,7 +54,7 @@ public class SignUpMenuController {
         if (User.isUsernameNotValid(username)) return "not a valid username!";
         if (controller.getGame().getUserByUsername(username) != null)
             return "username already exists!\n" + "Our suggestion for username is \"" + getSuggestedUsername(username) + "\"";
-        if (!(result = User.isPasswordWeak(password)).isEmpty()) return "password is weak: " + result;
+        if (!(result = User.isPasswordWeak(password)).isEmpty() && !password.equals("random")) return "password is weak: " + result;
         if (passwordConfirmation != null && !password.equals(passwordConfirmation))
             return "password confirmation is not correct!";
         if (controller.getGame().getUserByEmail(email) != null) return "email already exists!";

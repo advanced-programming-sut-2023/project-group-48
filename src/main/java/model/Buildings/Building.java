@@ -93,9 +93,7 @@ public class Building {
 
     public boolean canCreateUnit(String type) {
         if (this instanceof RecruitmentCenter) {
-            if (((RecruitmentCenter) this).isRecruitTypeValid(type)) {
-                return true;
-            }
+            return ((RecruitmentCenter) this).isRecruitTypeValid(type);
         }
         return false;
     }

@@ -48,7 +48,7 @@ public class User {
     }
 
     public static boolean isUsernameNotValid(String username) {
-        return !username.matches("\\w+");
+        return !username.matches("\\S+");
     }
 
     public static String isPasswordWeak(String password) {

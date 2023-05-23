@@ -28,7 +28,7 @@ public class MapMenuController {
                 map.append(controller.getGame().getCurrentMatch().getCell(i, j).getLandType().getBackGroundColor()
                         .getANSICode()).append(controller.getGame().getCurrentMatch().getCell(i, j).getSymbol()).append(BackGroundColor.RESET.getANSICode());
             }
-            map.append("\n");
+            if (i != endingRow) map.append("\n");
         }
         return map.toString();
     }
