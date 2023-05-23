@@ -237,6 +237,7 @@ public class MatchMenuController {
     }
 
     public String moveUnit(int row, int column) {
+        if (match.getSelectedUnit() == null) return "no unit selected!";
         for (People people : match.getSelectedUnit()) {
             people.setPath(match.givePath(people.getRow(), people.getColumn(), row, column));
             if (!match.getMovingPeople().contains(people))
@@ -300,7 +301,7 @@ public class MatchMenuController {
             if (match.nextRound()) {
                 controller.getGame().setCurrentMatch(null);
                 setMatch(null);
-                return "match is finished!" + controller.enterMainMenu();
+                return "match is finished!\n" + controller.enterMainMenu();
             }
         return (match.isRoundFinished() ? "round finished\n" : "") +
                 match.getCurrentPlayer().getUsername() + " is now playing!";

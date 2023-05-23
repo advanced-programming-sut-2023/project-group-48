@@ -64,7 +64,6 @@ public class Match {
         return MAX_ROW;
     }
 
-
     public TurnManager getTurnManager() {
         return turnManager;
     }

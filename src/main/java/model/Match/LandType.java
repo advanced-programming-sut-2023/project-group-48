@@ -21,6 +21,9 @@ public enum LandType {
         for (LandType landType : landTypes) {
             if (landType.toString().equals(name)) return landType;
         }
+        for (LandType waterType : waterTypes) {
+            if (waterType.toString().equals(name)) return waterType;
+        }
         return null;
     }
 

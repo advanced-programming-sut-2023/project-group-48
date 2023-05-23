@@ -15,9 +15,13 @@ public class MapMenuController {
 
     public MapMenuController(Controller controller) {
         this.controller = controller;
+        this.currentRow = 0;
+        this.currentColumn = 0;
     }
 
     public String showMap(int row, int column) {
+        currentRow = row;
+        currentColumn = column;
         StringBuilder map = new StringBuilder();
         int startingColumn = Math.max(column - 10, 1);
         int startingRow = Math.max(row - 10, 1);
@@ -61,6 +65,7 @@ public class MapMenuController {
         for (Map.Entry<String, Integer> entry : troopsPassing.entrySet()) {
             details.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
         }
+        details.deleteCharAt(details.length() - 1);
         return details.toString();
     }
 }
