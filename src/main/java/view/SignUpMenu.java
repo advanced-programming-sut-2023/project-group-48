@@ -44,7 +44,7 @@ public class SignUpMenu extends Menu {
         String nickname = matcher.group("nickname");
         String slogan;
         String result;
-        if (matcher.groupCount() == 6) {
+        if (matcher.group("slogan") != null) {
             slogan = matcher.group("slogan");
             result = signUpMenuController.createUserStep(Controller.getRemovedQuotationMarks(username), password,
                     passConfirmation, email, Controller.getRemovedQuotationMarks(nickname), Controller.getRemovedQuotationMarks(slogan));

@@ -75,7 +75,7 @@ public class SignUpMenuController {
 
         if (slogan.length != 0 && slogan[0].equals("random")) {
             String randSlogan = User.getRandomSlogan();
-            result = "Your slogan is: \" " + randSlogan + " \"";
+            result = "Your slogan is: \"" + randSlogan + "\"";
             userDetails.put("slogan", randSlogan);
         }
 

@@ -99,7 +99,7 @@ public class User {
     }
 
     public String getSecurityQuestion() {
-        return User.getQuestionByIndex(Integer.parseInt(securityQuestion));
+        return User.getQuestionByIndex(Integer.parseInt(securityQuestion)-1);
     }
 
     public boolean isSecurityAnswerNotCorrect(String securityAnswer) {
