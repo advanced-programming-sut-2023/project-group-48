@@ -45,6 +45,9 @@ public class Governance {
         this.population = 20;
         this.unemployedPopulation = 20;
         this.maxPopulation = 40;
+        this.sentRequests = new ArrayList<>();
+        this.receivedRequests = new ArrayList<>();
+        this.requestsHistory = new ArrayList<>();
     }
 
     public User getOwner() {
@@ -321,15 +324,16 @@ public class Governance {
 
     public void addProperty(Property property, int count) {
         properties.put(property, properties.get(property) + count);
+        if (!property.equals(Property.COIN)) loadStorages(property, count);
     }
 
     public void reduceProperty(Property property, int count) {
         properties.put(property, properties.get(property) - count);
+        if (!property.equals(Property.COIN)) unloadStorages(property, count);
     }
 
-
     public void addRequest(Request request) {
-        if (request.getReceiver().equals(owner.getGovernance())) receivedRequests.add(request);
+        if (request.getReceiver().equals(this)) receivedRequests.add(request);
         else sentRequests.add(request);
     }
 
@@ -415,8 +419,7 @@ public class Governance {
         for (Building building : buildings) {
             if (building instanceof Storage) {
                 Storage storage = (Storage) building;
-                System.out.println(storage.getTotalAmount() + " " + storage.getCapacity());
-                if (storage.canStoreProperty(property) && storage.getTotalAmount() < storage.getCapacity())
+                if (storage.canStoreProperty(property) && (storage.getTotalAmount() < storage.getCapacity()))
                     return storage;
             }
         }
@@ -427,14 +430,14 @@ public class Governance {
         for (Building building : buildings) {
             if (building instanceof Storage) {
                 Storage storage = (Storage) building;
-                if (storage.canStoreProperty(property)) return storage;
+                if (storage.canStoreProperty(property) && storage.getPropertyCount(property) > 0) return storage;
             }
         }
         return null;
     }
 
     public void loadStorages(Property property, int amount) {
-        while (amount != 0) {
+        while (amount >= 0) {
             Storage storage = getFreeStorageToStore(property);
             if (storage == null) break;
             int storageCapability = storage.getCapacity() - storage.getTotalAmount();
@@ -444,7 +447,7 @@ public class Governance {
     }
 
     public void unloadStorages(Property property, int amount) {
-        while (amount != 0) {
+        while (amount >= 0) {
             Storage storage = getStorageWithProperty(property);
             if (storage == null) break;
             int storageAmount = storage.getPropertyCount(property);

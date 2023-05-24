@@ -100,7 +100,7 @@ public class TurnManager {
                     int toUse = Math.min(usedFoodCount, entry.getValue());
                     usedFoodCount -= toUse;
                     entry.setValue(entry.getValue() - toUse);
-                    governance.unloadStorages(entry.getKey(), toUse);
+                    governance.reduceProperty(entry.getKey(), toUse);
                 }
             }
         }
@@ -123,7 +123,6 @@ public class TurnManager {
             int row = troop.getRow();
             int column = troop.getColumn();
             for (Building target : match.getNearByEnemyBuildings(troop, row, column, troop.getFireRange())) {
-                System.out.println(troop.getGovernance().getOwner().getUsername() + " " + target.getGovernance().getOwner().getUsername() + " " + troop.getRow() + " " + target.getRow());
                 troop.attackBuilding(target);
                 if (target.getHp() <= 0) {
                     destroyedBuildings.add(target);
@@ -134,7 +133,7 @@ public class TurnManager {
 
     private void removeDestroyedBuildings() {
         for (Building destroyedBuilding : destroyedBuildings) {
-            destroyedBuilding.getGovernance().getBuildings().remove(destroyedBuilding);
+            destroyedBuilding.getGovernance().removeBuilding(destroyedBuilding);
             match.getCell(destroyedBuilding.getRow(), destroyedBuilding.getColumn()).setBuilding(null);
         }
         destroyedBuildings.clear();

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public enum BuildingType {
-    NORMAL(new ArrayList<>(Arrays.asList("Drawbridge", "Hovel", "Caged War Dogs", "Siege Tent", "Church", "Cathedral",
+    NORMAL(new ArrayList<>(Arrays.asList("Base", "Drawbridge", "Hovel", "Caged War Dogs", "Siege Tent", "Church", "Cathedral",
             "Tall Wall", "Short Wall", "Stair", "Good Things", "Bad Things", "Shop"))), // 12
     GATEHOUSE(new ArrayList<>(Arrays.asList("Small Stone Gatehouse", "Large Stone Gatehouse"))), // 2
     TOWER(new ArrayList<>(Arrays.asList("Lookout Tower", "Perimeter Tower", "Defence Turret", "Square Tower", "Round Tower"))), // 5
@@ -20,8 +20,7 @@ public enum BuildingType {
     TRAP(new ArrayList<>(Arrays.asList("Killing Pit", "Pitch Ditch", "Tunnel"))), // 3
     RECRUITMENT_CENTER(new ArrayList<>(Arrays.asList("Barrack", "Mercenary Post", "Engineer Guild"))), // 3
     STORAGE(new ArrayList<>(Arrays.asList("Armoury", "Stockpile", "Granary"))), // 3
-    ENVIRONMENT(new ArrayList<>(Arrays.asList("Desert Shrub", "Cherry Palm", "olive Tree", "Coconut Palm", "Date", "Tree", "Rock"))),
-    BASE(new ArrayList<>(Arrays.asList("Base"))); // 7
+    ENVIRONMENT(new ArrayList<>(Arrays.asList("Desert Shrub", "Cherry Palm", "olive Tree", "Coconut Palm", "Date", "Tree", "Rock")));
 
     private static final BuildingType[] buildingTypes = {NORMAL, GATEHOUSE, TOWER, INDUSTRIAL_CENTER, INN, TRAP, RECRUITMENT_CENTER, STORAGE, ENVIRONMENT};
     private static final ArrayList<String> castleTypes = new ArrayList<>(Arrays.asList("Small Stone Gatehouse", "Large Stone Gatehouse",
@@ -77,6 +76,7 @@ public enum BuildingType {
         //TODO: adding shop and its effect
     }};
     private static final HashMap<String, ArrayList<LandType>> ValidLandTypes = new HashMap<>() {{
+        put("Base", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Small Stone Gatehouse", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Large Stone Gatehouse", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Drawbridge", new ArrayList<>(Arrays.asList(LandType.LAND)));

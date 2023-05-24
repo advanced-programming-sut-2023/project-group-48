@@ -4,6 +4,8 @@ import model.Match.Property;
 import model.Match.Request;
 import model.User;
 
+import java.util.ArrayList;
+
 public class TradeMenuController {
     private final Controller controller;
 
@@ -19,7 +21,7 @@ public class TradeMenuController {
         if (property == null) return "Invalid property";
         if (amount <= 0) return "Invalid resource amount";
         if (price <= 0) return "Invalid price";
-        if (controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().canStore(property))
+        if (!controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().canStore(property))
             return "You don't have enough space in your storages!";
 
         controller.getGame().getCurrentMatch().sendTradeRequest(controller.getGame().getCurrentMatch().getCurrentPlayer(), receiver, property, amount, price, message);
@@ -27,9 +29,13 @@ public class TradeMenuController {
     }
 
     public String tradeList() {
-        StringBuilder result = new StringBuilder("your trades:\n");
-        for (Request receivedRequest : controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getReceivedRequests()) {
-            result.append(receivedRequest.getId()).append(". Sender: ").append(receivedRequest.getSender().getOwner().getUsername()).append(", Property: ").append(receivedRequest.getProperty().getPropertyInString()).append(", Amount: ").append(receivedRequest.getAmount()).append(", Price: ").append(receivedRequest.getPrice()).append(", Sender's Message: ").append(receivedRequest.getSenderMessage()).append("\n");
+        ArrayList<Request> requests = controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getReceivedRequests();
+        StringBuilder result = new StringBuilder("your trades:");
+        for (Request receivedRequest : requests) {
+            result.append("\n").append(receivedRequest.getId()).append(". Sender: ").append(receivedRequest.getSender().getOwner().getUsername()).
+                    append(", Property: ").append(receivedRequest.getProperty().getPropertyInString()).append(", Amount: ").
+                    append(receivedRequest.getAmount()).append(", Price: ").append(receivedRequest.getPrice()).
+                    append(", Sender's Message: ").append(receivedRequest.getSenderMessage());
         }
         return result.toString();
     }
@@ -41,20 +47,18 @@ public class TradeMenuController {
         if (request.getReceiver() != controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance())
             return "You are not the receiver of this request";
         if (!answer.equals("yes") && !answer.equals("no")) return "invalid answer!";
-        if (request.getReceiver().getPropertyCount(request.getProperty()) < request.getAmount())
+        if ((request.getReceiver().getPropertyCount(request.getProperty()) < request.getAmount()) && accepted)
             return "You don't have enough resources";
-        if (request.getSender().getPropertyCount(Property.GOLD) < request.getPrice() * request.getAmount())
+        if ((request.getSender().getPropertyCount(Property.COIN) < request.getPrice() * request.getAmount()) && accepted)
             return "The sender doesn't have enough gold";
 
         request.setAccepted(accepted);
         request.setReceiverMessage(message);
         if (accepted) {
-            request.getReceiver().addProperty(request.getProperty(), -1 * request.getAmount());
+            request.getReceiver().reduceProperty(request.getProperty(), request.getAmount());
             request.getSender().addProperty(request.getProperty(), request.getAmount());
-            request.getReceiver().unloadStorages(request.getProperty(), request.getAmount());
-            request.getSender().loadStorages(request.getProperty(), request.getAmount());
             request.getReceiver().addProperty(Property.COIN, request.getPrice() * request.getAmount());
-            request.getSender().addProperty(Property.COIN, -1 * request.getPrice() * request.getAmount());
+            request.getSender().reduceProperty(Property.COIN, request.getPrice() * request.getAmount());
         }
         request.getReceiver().getReceivedRequests().remove(request);
         request.getReceiver().getRequestsHistory().add(request);
@@ -64,9 +68,14 @@ public class TradeMenuController {
     }
 
     public String tradeHistory() {
-        StringBuilder result = new StringBuilder("your trade history:\n");
-        for (Request request : controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getRequestsHistory()) {
-            result.append(request.getId()).append(". Sender: ").append(request.getSender().getOwner().getUsername()).append(", Property: ").append(request.getProperty().getPropertyInString()).append(", Amount: ").append(request.getAmount()).append(", Price: ").append(request.getPrice()).append(", Sender's Message: ").append(request.getSenderMessage()).append(", Receiver's Message: ").append(request.getReceiverMessage()).append(", Answer: ").append(request.isAccepted() ? "Yes" : "No").append("\n");
+        ArrayList<Request> requests = controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getRequestsHistory();
+        StringBuilder result = new StringBuilder("your trade history:");
+        for (Request request : requests) {
+            result.append("\n").append(request.getId()).append(". Sender: ").append(request.getSender().getOwner().getUsername()).
+                    append(", Property: ").append(request.getProperty().getPropertyInString()).append(", Amount: ").
+                    append(request.getAmount()).append(", Price: ").append(request.getPrice()).append(", Sender's Message: ").
+                    append(request.getSenderMessage()).append(", Receiver's Message: ").append(request.getReceiverMessage()).
+                    append(", Answer: ").append(request.isAccepted() ? "Yes" : "No");
         }
         return result.toString();
     }

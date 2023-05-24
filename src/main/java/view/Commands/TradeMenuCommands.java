@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public enum TradeMenuCommands {
     TRADE(new ArrayList<>(List.of("trade", "\\s+-u\\s+(?<username>\".+\"|\\S+)", "\\s+-t\\s+(?<resourceType>\".+\"|\\S+)", "\\s+-a\\s+(?<resourceAmount>\\d+)", "\\s+-p\\s+(?<price>\\d+)", "\\s+-m\\s+(?<message>\".+\"|\\S+)"))),
-    ANSWER_TRADE(new ArrayList<>(List.of("answer\\s+trade", "\\s+(?<answer>\\S+)", "\\s+-i\\s+(?<id>\\S+)", "\\s+-m\\s+(?<message>\".+\"|\\S+)")));
+    ANSWER_TRADE(new ArrayList<>(List.of("answer\\s+trade", "\\s+(?<answer>\\S+)", "\\s+-i\\s+(?<id>\\d+)", "\\s+-m\\s+(?<message>\".+\"|\\S+)")));
 
     private final ArrayList<String> regexs;
 

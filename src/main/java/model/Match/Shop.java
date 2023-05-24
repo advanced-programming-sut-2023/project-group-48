@@ -34,12 +34,11 @@ public class Shop {
 
     public void sellToGovernance(Governance governance, Property property, int amount) {
         governance.addProperty(property, amount);
-        governance.addProperty(Property.COIN, -prices.get(property) * amount);
+        governance.reduceProperty(Property.COIN, prices.get(property) * amount);
     }
 
     public void buyFromGovernance(Governance governance, Property property, int amount) {
-        governance.addProperty(property, -amount);
+        governance.reduceProperty(property, amount);
         governance.addProperty(Property.COIN, prices.get(property) / 2 * amount);
-
     }
 }

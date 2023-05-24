@@ -31,7 +31,6 @@ public class ShopMenuController {
             return "You don't have enough space in your storages!";
 
         controller.getGame().getCurrentMatch().getShop().sellToGovernance(controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance(), property, amount);
-        controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().loadStorages(property, amount);
         return "You bought " + amount + " " + name + "!";
     }
 
@@ -44,7 +43,6 @@ public class ShopMenuController {
             return "You don't have enough " + name + "!";
 
         controller.getGame().getCurrentMatch().getShop().buyFromGovernance(controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance(), property, amount);
-        controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().unloadStorages(property, amount);
         return "You sold " + amount + " " + name + "!";
     }
 }

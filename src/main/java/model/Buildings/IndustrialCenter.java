@@ -70,9 +70,11 @@ public class IndustrialCenter extends Building {
         put("Fletcher", "Fletcher");
         put("Pole Turner", "Tanner");
     }};
-    public static String getWorkerType(String buildingType){
+
+    public static String getWorkerType(String buildingType) {
         return industrialCentersWorkers.get(buildingType);
     }
+
     private final Property usedProperty;
     private final Property producedProperty;
     private final int rate;
@@ -89,10 +91,8 @@ public class IndustrialCenter extends Building {
     }
 
     public void produce() {
-        this.getGovernance().reduceProperty(usedProperty, rate);
+        if (usedProperty != null) this.getGovernance().reduceProperty(usedProperty, rate);
         this.getGovernance().addProperty(producedProperty, rate);
-        this.getGovernance().unloadStorages(usedProperty, rate);
-        this.getGovernance().loadStorages(producedProperty, rate);
     }
 
     public int getRate() {

@@ -4,6 +4,7 @@ import model.*;
 import model.Buildings.Building;
 import model.Buildings.BuildingType;
 import model.Buildings.Inn;
+import model.Buildings.Storage;
 import model.People.People;
 import model.People.PeopleType;
 import model.People.Troop;
@@ -29,30 +30,31 @@ public class Match {
     private final ArrayList<People> movingPeople;
     private final ArrayList<Integer> BaseLocationRows;
     private final ArrayList<Integer> BaseLocationColumns;
-    {
-        BaseLocationRows = new ArrayList<>(){{
-            add(30);
-            add(90);
-            add(120);
-            add(170);
-            add(30);
-            add(90);
-            add(120);
-            add(170);
 
+    {
+        BaseLocationRows = new ArrayList<>() {{
+            add(30);
+            add(90);
+            add(120);
+            add(170);
+            add(30);
+            add(90);
+            add(120);
+            add(170);
         }};
-        BaseLocationColumns = new ArrayList<>(){{
-                add(50);
-                add(50);
-                add(50);
-                add(50);
-                add(150);
-                add(150);
-                add(150);
-                add(150);
+        BaseLocationColumns = new ArrayList<>() {{
+            add(50);
+            add(50);
+            add(50);
+            add(50);
+            add(150);
+            add(150);
+            add(150);
+            add(150);
         }};
 
     }
+
     public Match(int rounds, ArrayList<User> players, int mapNumber) {
         this.rounds = rounds;
         this.currentRound = 1;
@@ -70,7 +72,6 @@ public class Match {
         this.movingPeople = new ArrayList<>();
 
         this.governances = new ArrayList<>();
-
         for (User player : players) {
             Governance governance = new Governance(player);
             governances.add(governance);
@@ -81,15 +82,19 @@ public class Match {
             allTroops.add(new Troop(governance, row, column, "Sultan", PeopleType.TROOP));
             getCell(row, column).addPeople(allTroops.get(allTroops.size() - 1));
             getCell(row, column).setAGovernmentBase(true);
-            Building building = Building.createBuildingByType(governance, row, column, "Base", BuildingType.BASE, null);
+            Building building = new Building(governance, row, column, "Base", BuildingType.NORMAL, null);
             getCell(row, column).setBuilding(building);
             governance.addBuilding(building);
-            building = Building.createBuildingByType(governance, row + 1, column, "Stockpile", BuildingType.STORAGE, null);
-            getCell(row + 1, column).setBuilding(building);
-            governance.addBuilding(building);
+            Storage storage = new Storage(governance, row + 1, column, "Stockpile", BuildingType.STORAGE, null);
+            governance.addProperty(Property.WOOD, 1000);
+            governance.addProperty(Property.STONE, 1000);
+            governance.addProperty(Property.COIN, 1000);
+            getCell(row + 1, column).setBuilding(storage);
+            governance.addBuilding(storage);
         }
     }
-    public void removePlayer(User player){
+
+    public void removePlayer(User player) {
         players.remove(player);
     }
 
@@ -206,16 +211,14 @@ public class Match {
         if (startRow < destinationRow) {
             validDirections.add(Direction.UP);
             borderRow = destinationRow + 1;
-        }
-        else if (startRow > destinationRow) {
+        } else if (startRow > destinationRow) {
             validDirections.add(Direction.DOWN);
             borderRow = destinationRow - 1;
         }
         if (startColumn < destinationColumn) {
             validDirections.add(Direction.RIGHT);
             borderColumn = destinationColumn + 1;
-        }
-        else if (startRow > destinationColumn) {
+        } else if (startRow > destinationColumn) {
             validDirections.add(Direction.LEFT);
             borderColumn = destinationColumn - 1;
         }
@@ -329,10 +332,11 @@ public class Match {
         }
         return sultanCount;
     }
+
     public boolean nextRound() {
         if (currentRound == rounds) return true;
 
-        if(getSultanCount() == 1){
+        if (getSultanCount() == 1) {
             for (Governance governance : governances) {
                 if (governance.isSultanAlive) matchWinner = governance;
             }

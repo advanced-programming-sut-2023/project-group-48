@@ -12,14 +12,13 @@ import java.util.Map;
 
 public class Storage extends Building {
     private static final HashMap<String, Integer> storagesCapacities = new HashMap<>() {{
-        put("Armoury", 1000);
-        put("Stockpile", 1000);
-        put("Granary", 1000);
-        put("Stable", 1000);
+        put("Armoury", 3000);
+        put("Stockpile", 3000);
+        put("Granary", 3000);
+        put("Stable", 3000);
     }};
     private static final HashMap<String, ArrayList<Property>> validPropertiesToStore = new HashMap<>() {{
         put("Armoury", new ArrayList<>() {{
-            ;
             add(Property.ARMOUR);
             add(Property.MACE);
             add(Property.SWORD);
