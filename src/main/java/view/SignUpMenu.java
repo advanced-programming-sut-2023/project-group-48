@@ -53,7 +53,7 @@ public class SignUpMenu extends Menu {
                     passConfirmation, email, Controller.getRemovedQuotationMarks(nickname));
         System.out.println(result);
         if (signUpMenuController.getStep() == 0) return;
-        if (result.endsWith("Please re-enter your password here:\\n")) {
+        if (result.endsWith("Please re-enter your password here:")) {
             String string;
             do {
                 string = signUpMenuController.chooseQuestionStep(scanner.nextLine().trim());
@@ -61,7 +61,7 @@ public class SignUpMenu extends Menu {
 
             } while (string.startsWith("password"));
         }
-        if (result.startsWith("Your slogan") && !result.endsWith("Please re-enter your password here:\\n")) {
+        if (result.startsWith("Your slogan") && !result.endsWith("Please re-enter your password here:")) {
             System.out.println(signUpMenuController.chooseQuestionStep());
         }
         chooseSecurityQuestion();

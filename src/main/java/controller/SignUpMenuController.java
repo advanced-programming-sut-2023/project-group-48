@@ -81,8 +81,8 @@ public class SignUpMenuController {
 
         if ((passwordConfirmation == null || passwordConfirmation.isEmpty()) && password.equals("random")) {
             String randPassword = getRandomPassword();
-            if (result.startsWith("password")) result = "";
-            result += (result.isEmpty() ? "" : "\n") + "Your random password is: " + randPassword + "\nPlease re-enter your password here:\n";
+            if (result.startsWith("no")) result = "";
+            result += (result.isEmpty() ? "" : "\n") + "Your random password is: " + randPassword + "\nPlease re-enter your password here:";
             userDetails.put("password", randPassword);
         }
         userDetails.put("username", username);
@@ -133,6 +133,7 @@ public class SignUpMenuController {
                 userDetails.get("securityQuestion"), userDetails.get("securityAnswer"),
                 userDetails.get("slogan")));
         userDetails = new HashMap<>();
+        step = 0;
         return "user created successfully!";
     }
 
