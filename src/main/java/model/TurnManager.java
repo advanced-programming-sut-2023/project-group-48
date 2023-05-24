@@ -8,6 +8,7 @@ import model.Match.Governance;
 import model.Match.Match;
 import model.Match.Property;
 import model.People.People;
+import model.People.State;
 import model.People.Troop;
 
 import java.util.ArrayList;
@@ -153,8 +154,29 @@ public class TurnManager {
         return true;
     }
 
+    private void addNonStandingTroops() {
+        ArrayList<People> nearbyEnemy;
+        for (Troop troop : match.getAllTroops()) {
+            if (troop.getState().equals(State.DEFENSIVE) &&
+                (nearbyEnemy = match.getNearByEnemy(troop.getRow(), troop.getColumn(), troop.getFireRange())).size() > 0 &&
+                !match.getMovingPeople().contains(troop)) {
+                People target = nearbyEnemy.get(0);
+                troop.setPath(match.givePath(troop.getRow(), troop.getColumn(), target.getRow(), target.getColumn()));
+                match.getMovingPeople().add(troop);
+            }
+            if (troop.getState().equals(State.AGGRESSIVE) &&
+                (nearbyEnemy = match.getNearByEnemy(troop.getRow(), troop.getColumn(), 20)).size() > 0 &&
+                !match.getMovingPeople().contains(troop)) {
+                People target = nearbyEnemy.get(0);
+                troop.setPath(match.givePath(troop.getRow(), troop.getColumn(), target.getRow(), target.getColumn()));
+                match.getMovingPeople().add(troop);
+            }
+        }
+    }
+
     public void run() {
         //while (!areMovesFinished()) {     OLD METHOD FOR TURNS
+        addNonStandingTroops();
         for (int i = 0; i < 50; i++) {
             doFights();
             removeDeadPeople();

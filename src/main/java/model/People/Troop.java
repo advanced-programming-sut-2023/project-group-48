@@ -113,7 +113,7 @@ public class Troop extends People {
         this.speed = Troop.getTroopSpeed(type);
         this.fireRange = Troop.getTroopFireRange(type);
         this.nation = Troop.getTroopNation(type);
-        this.state = null;
+        this.state = State.STANDING;
         this.ladderMan = Troop.isTroopWallCrawler(type);
         this.hasHorse = Troop.isTroopHasHorse(type);
         this.patrolMode = false;
