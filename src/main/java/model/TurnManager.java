@@ -24,7 +24,6 @@ public class TurnManager {
         this.destroyedBuildings = new ArrayList<>();
     }
 
-
     private void doFights() {
         for (Troop troop : match.getAllTroops()) {
             int row = troop.getRow();
@@ -69,7 +68,17 @@ public class TurnManager {
         for (People people : match.getMovingPeople()) {
             if (people.getPath().size() > 0) {
                 movePeople(people);
-                if (people.getPath().size() == 0) finishedPeople.add(people);
+                if (people.getPath().size() == 0 && people instanceof Troop) {
+                    Troop troop = (Troop) people;
+                    if (troop.isInPatrolMode()) {
+                        troop.setPath(troop.getPatrolPathIndex() == 1 ? troop.getPatrolPath1() : troop.getPatrolPath2());
+                        troop.setPatrolPathIndex(troop.getPatrolPathIndex() == 1 ? 2 : 1);
+                    } else {
+                        finishedPeople.add(people);
+                    }
+                } else if (people.getPath().size() == 0) {
+                    finishedPeople.add(people);
+                }
             }
         }
         for (People people : finishedPeople) {

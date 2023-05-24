@@ -223,10 +223,6 @@ public class MatchMenuController {
         return "rock dropped successfully!";
     }
 
-    public String enterTradeMenu() {
-        return controller.enterTradeMenu();
-    }
-
     public String selectUnit(int row, int column) {
         if (match.areCoordinatesNotValid(row, column))
             return "invalid coordinates!";
@@ -243,30 +239,37 @@ public class MatchMenuController {
         ArrayList<Direction> path = match.givePath(firstPeople.getRow(), firstPeople.getColumn(), row, column);
         for (People people : match.getSelectedUnit()) {
             people.setPath(new ArrayList<>(path));
-            if (!match.getMovingPeople().contains(people))
-                match.getMovingPeople().add(people);
+            if (!match.getMovingPeople().contains(people)) match.getMovingPeople().add(people);
         }
         return "unit path set successfully!";
     }
 
     public String patrolUnit(int row1, int column1, int row2, int column2) {
-        ArrayList<Direction> path = match.givePath(row1, column1, row2, column2);
+        ArrayList<Direction> path1 = match.givePath(row1, column1, row2, column2);
+        ArrayList<Direction> path2 = match.givePath(row2, column2, row1, column1);
         for (People people : match.getSelectedUnit()) {
-            Troop troop = (Troop) people;
-            troop.setPath(new ArrayList<>(path));
-            if (!match.getMovingPeople().contains(troop))
-                match.getMovingPeople().add(troop);
-            troop.setPatrolMode(true);
-            troop.setPatrolPoints(new int[][]{{row1, column1}, {row2, column2}});
+            if (people instanceof Troop) {
+                Troop troop = (Troop) people;
+                troop.setPath(new ArrayList<>(path1));
+                if (!match.getMovingPeople().contains(troop)) match.getMovingPeople().add(troop);
+                troop.setPatrolMode(true);
+                troop.setPatrolPath1(new ArrayList<>(path1));
+                troop.setPatrolPath2(new ArrayList<>(path2));
+                troop.setPatrolPathIndex(1);
+            }
         }
         return "unit patrol path set successfully!";
     }
 
     public String stopPatrolUnit() {
         for (People people : match.getSelectedUnit()) {
-            Troop troop = (Troop) people;
-            troop.setPatrolMode(false);
-            troop.setPatrolPoints(null);
+            if (people instanceof Troop) {
+                Troop troop = (Troop) people;
+                troop.setPatrolMode(false);
+                troop.setPath(null);
+                troop.setPatrolPath1(null);
+                troop.setPatrolPath2(null);
+            }
         }
         return "unit patrol stopped successfully!";
     }

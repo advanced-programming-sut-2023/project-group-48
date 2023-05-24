@@ -1,6 +1,7 @@
 package model.People;
 
 import model.Buildings.Building;
+import model.Match.Direction;
 import model.Match.Governance;
 import model.Match.Property;
 
@@ -30,23 +31,23 @@ public class Troop extends People {
         put("Fire Throwers", new ArrayList<Property>(Arrays.asList()));
     }};
     private static final HashMap<String, Quality[]> troopPowers = new HashMap<>() {{
-        put("Sultan", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Archer", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Crossbowmen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Spearmen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Macemen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Swordsmen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Knight", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Tunneler", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Laddermen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Black Monk", new Quality[]{Quality.HIGH, Quality.LOW, Quality.LOW});
-        put("Archer Bow", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Slaves", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Assassins", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Horse Archers", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Arabian Swordsmen", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Fire Throwers", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
-        put("Slingers", new Quality[]{Quality.LOW, Quality.LOW, Quality.LOW});
+        put("Sultan", new Quality[]{Quality.LOW, Quality.LOW, Quality.HIGH});
+        put("Archer", new Quality[]{Quality.LOW, Quality.LOW, Quality.HIGH});
+        put("Crossbowmen", new Quality[]{Quality.LOW, Quality.MEDIUM, Quality.LOW});
+        put("Spearmen", new Quality[]{Quality.MEDIUM, Quality.VERY_LOW, Quality.MEDIUM});
+        put("Macemen", new Quality[]{Quality.HIGH, Quality.MEDIUM, Quality.MEDIUM});
+        put("Swordsmen", new Quality[]{Quality.VERY_HIGH, Quality.VERY_LOW, Quality.VERY_LOW});
+        put("Knight", new Quality[]{Quality.VERY_HIGH, Quality.HIGH, Quality.VERY_HIGH});
+        put("Tunneler", new Quality[]{Quality.MEDIUM, Quality.VERY_LOW, Quality.HIGH});
+        put("Laddermen", new Quality[]{Quality.ZERO, Quality.VERY_LOW, Quality.HIGH});
+        put("Black Monk", new Quality[]{Quality.MEDIUM, Quality.MEDIUM, Quality.LOW});
+        put("Archer Bow", new Quality[]{Quality.LOW, Quality.LOW, Quality.HIGH});
+        put("Slaves", new Quality[]{Quality.VERY_LOW, Quality.ZERO, Quality.HIGH});
+        put("Assassins", new Quality[]{Quality.MEDIUM, Quality.MEDIUM, Quality.MEDIUM});
+        put("Horse Archers", new Quality[]{Quality.LOW, Quality.MEDIUM, Quality.VERY_HIGH});
+        put("Arabian Swordsmen", new Quality[]{Quality.HIGH, Quality.HIGH, Quality.VERY_HIGH});
+        put("Fire Throwers", new Quality[]{Quality.HIGH, Quality.LOW, Quality.VERY_HIGH});
+        put("Slingers", new Quality[]{Quality.LOW, Quality.VERY_LOW, Quality.HIGH});
     }};
     private static final HashMap<String, Integer> troopFireRange = new HashMap<>() {{
         put("Sultan", 1);
@@ -102,7 +103,9 @@ public class Troop extends People {
     private int finalColumn;
     private int finalRow;
     private boolean patrolMode;
-    private int[][] patrolPoints;
+    private ArrayList<Direction> patrolPath1, patrolPath2;
+    private int patrolPathIndex = 0;
+
 
     public Troop(Governance governance, int row, int column, String type, PeopleType peopleType) {
         super(governance, row, column, type, peopleType);
@@ -113,6 +116,9 @@ public class Troop extends People {
         this.nation = Troop.getTroopNation(type);
         this.ladderMan = Troop.isTroopWallCrawler(type);
         this.hasHorse = Troop.isTroopHasHorse(type);
+        this.patrolMode = false;
+        this.patrolPath1 = null;
+        this.patrolPath2 = null;
     }
 
     public static ArrayList<Property> getRequiredResource(String type) {
@@ -227,11 +233,27 @@ public class Troop extends People {
         this.patrolMode = patrolMode;
     }
 
-    public int[][] getPatrolPoints() {
-        return patrolPoints;
+    public ArrayList<Direction> getPatrolPath1() {
+        return patrolPath1;
     }
 
-    public void setPatrolPoints(int[][] patrolPoints) {
-        this.patrolPoints = patrolPoints;
+    public void setPatrolPath1(ArrayList<Direction> patrolPath1) {
+        this.patrolPath1 = patrolPath1;
+    }
+
+    public ArrayList<Direction> getPatrolPath2() {
+        return patrolPath2;
+    }
+
+    public void setPatrolPath2(ArrayList<Direction> patrolPath2) {
+        this.patrolPath2 = patrolPath2;
+    }
+
+    public int getPatrolPathIndex() {
+        return patrolPathIndex;
+    }
+
+    public void setPatrolPathIndex(int patrolPathIndex) {
+        this.patrolPathIndex = patrolPathIndex;
     }
 }

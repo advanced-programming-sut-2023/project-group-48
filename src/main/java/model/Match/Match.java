@@ -248,7 +248,7 @@ public class Match {
             for (int j = 0; j < 2 * range + 1; j++) {
                 if (areCoordinatesNotValid(startRow + i, startColumn + j)) continue;
                 Building building = getCell(startRow + i, startColumn + j).getBuilding();
-                if (building != null && !building.getGovernance().equals(people.getGovernance()))
+                if (building != null && building.getGovernance() != null && !building.getGovernance().equals(people.getGovernance()))
                     buildings.add(building);
             }
         }
