@@ -106,7 +106,6 @@ public class Troop extends People {
     private ArrayList<Direction> patrolPath1, patrolPath2;
     private int patrolPathIndex = 0;
 
-
     public Troop(Governance governance, int row, int column, String type, PeopleType peopleType) {
         super(governance, row, column, type, peopleType);
         this.attackPower = Troop.getTroopAttackPower(type);
@@ -114,6 +113,7 @@ public class Troop extends People {
         this.speed = Troop.getTroopSpeed(type);
         this.fireRange = Troop.getTroopFireRange(type);
         this.nation = Troop.getTroopNation(type);
+        this.state = null;
         this.ladderMan = Troop.isTroopWallCrawler(type);
         this.hasHorse = Troop.isTroopHasHorse(type);
         this.patrolMode = false;
@@ -203,7 +203,6 @@ public class Troop extends People {
     }
 
     public static boolean isMoveValid(int row, int column, Troop troop) {
-        //TODO : is move valid
         return Math.pow(troop.getSpeed().getValue(), 2) >= Math.pow(troop.getColumn() - column, 2) + Math.pow(troop.getRow() - row, 2);
     }
 
@@ -211,10 +210,6 @@ public class Troop extends People {
         finalRow = row;
         finalColumn = column;
     }
-
-//    public void patrol(int row1, int column1, int row2, int column2) {
-//
-//    }
 
     public void attackPeople(People targetPeople) {
         if (targetPeople instanceof Worker) targetPeople.takeDamage(attackPower.getValue());

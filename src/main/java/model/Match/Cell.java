@@ -16,8 +16,8 @@ public class Cell {
     private LandType landType;
     private Building building;
     private final ArrayList<People> people;
-
     private boolean isAGovernmentBase;
+    private boolean hasTunnel;
 
     static {
         // TODO: 2. add default maps
@@ -36,7 +36,8 @@ public class Cell {
         this.landType = landType;
         this.building = null;
         this.people = new ArrayList<>();
-        isAGovernmentBase = false;
+        this.isAGovernmentBase = false;
+        this.hasTunnel = false;
     }
 
     public static Cell[][] generateMap(int mapNumber) {
@@ -120,6 +121,7 @@ public class Cell {
     public void clearCell() {
         building = null;
         people.clear();
+        hasTunnel = false;
     }
 
     public void addPeople(People people) {
@@ -128,5 +130,13 @@ public class Cell {
 
     public void removePeople(People people) {
         this.people.remove(people);
+    }
+
+    public boolean hasTunnel() {
+        return hasTunnel;
+    }
+
+    public void setHasTunnel(boolean hasTunnel) {
+        this.hasTunnel = hasTunnel;
     }
 }

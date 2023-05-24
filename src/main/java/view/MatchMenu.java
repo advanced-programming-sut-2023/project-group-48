@@ -66,16 +66,24 @@ public class MatchMenu extends Menu {
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.PATROL_UNIT)) != null) {
                 System.out.println(matchMenuController.patrolUnit(Integer.parseInt(matcher.group("y1")), Integer.parseInt(matcher.group("x1")),
                         Integer.parseInt(matcher.group("y2")), Integer.parseInt(matcher.group("x2"))));
-            } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.SET_UNIT_STATE)) != null) {
+            } else if (command.matches("^stop\\s+patrol\\s+unit$")) {
+                System.out.println(matchMenuController.stopPatrolUnit());
+            }else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.SET_UNIT_STATE)) != null) {
                 System.out.println(matchMenuController.setTroopsState(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x")), matcher.group("state")));
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.ATTACK_ENEMY)) != null) {
                 // TODO
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.AIR_ATTACK)) != null) {
-                // TODO
+                System.out.println(matchMenuController.attack(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.POUR_OIL)) != null) {
-                // TODO
+                System.out.println(matchMenuController.pourOil(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DIG_TUNNEL)) != null) {
-                // TODO
+                System.out.println(matchMenuController.digTunnel(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
+            } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.COLLAPSE_TUNNEL)) != null) {
+                System.out.println(matchMenuController.collapseTunnel(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
+            } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DIG_DITCH)) != null) {
+                System.out.println(matchMenuController.digDitch(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
+            } else if (command.matches("^fill\\s+ditch$")) {
+                System.out.println(matchMenuController.fillDitch());
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.BUILD_EQUIPMENT)) != null) {
                 // TODO
             } else if (command.matches("^disband\\s+unit$")) {
@@ -92,7 +100,7 @@ public class MatchMenu extends Menu {
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DROP_ROCK)) != null) {
                 System.out.println(matchMenuController.dropRockOrTree(Integer.parseInt(matcher.group("y")),
                         Integer.parseInt(matcher.group("x")), "rock", Direction.getDirection(matcher.group("direction"))));
-            } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DROP_TREE)) != null) { // TODO Controller.getRemovedQuotationMarks(matcher.group("treetype"))
+            } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DROP_TREE)) != null) {
                 System.out.println(matchMenuController.dropRockOrTree(Integer.parseInt(matcher.group("y")),
                         Integer.parseInt(matcher.group("x")), "tree", Direction.getDirection(matcher.group("direction"))));
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DROP_UNIT)) != null) {

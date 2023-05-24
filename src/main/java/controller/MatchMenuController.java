@@ -2,6 +2,7 @@ package controller;
 
 import model.Buildings.Building;
 import model.Buildings.BuildingType;
+import model.Buildings.Trap;
 import model.Match.*;
 import model.People.People;
 import model.People.PeopleType;
@@ -22,14 +23,6 @@ public class MatchMenuController {
 
     public void setMatch(Match match) {
         this.match = match;
-    }
-
-    public String enterMapMenu() {
-        return controller.enterMapMenu();
-    }
-
-    public String enterShopMenu() {
-        return controller.enterShopMenu();
     }
 
     public String showMyInfo() {
@@ -234,8 +227,14 @@ public class MatchMenuController {
         return "unit selected successfully!";
     }
 
+    public String disbandUnit() {
+        match.setSelectedUnit(null);
+        return "unit disbanded successfully!";
+    }
+
     public String moveUnit(int row, int column) {
         if (match.getSelectedUnit() == null) return "no unit selected!";
+        if (match.areCoordinatesNotValid(row, column)) return "invalid coordinates!";
         People firstPeople = match.getSelectedUnit().get(0);
         ArrayList<Direction> path = match.givePath(firstPeople.getRow(), firstPeople.getColumn(), row, column);
         for (People people : match.getSelectedUnit()) {
@@ -246,6 +245,9 @@ public class MatchMenuController {
     }
 
     public String patrolUnit(int row1, int column1, int row2, int column2) {
+        if (match.getSelectedUnit() == null) return "no unit selected!";
+        if (match.areCoordinatesNotValid(row1, column1) || match.areCoordinatesNotValid(row2, column2))
+            return "invalid coordinates!";
         ArrayList<Direction> path1 = match.givePath(row1, column1, row2, column2);
         ArrayList<Direction> path2 = match.givePath(row2, column2, row1, column1);
         for (People people : match.getSelectedUnit()) {
@@ -262,7 +264,20 @@ public class MatchMenuController {
         return "unit patrol path set successfully!";
     }
 
+    public String attack(int row, int column) {
+        if (match.getSelectedUnit() == null) return "no unit selected!";
+        if (match.areCoordinatesNotValid(row, column)) return "invalid coordinates!";
+        People firstPeople = match.getSelectedUnit().get(0);
+        ArrayList<Direction> path = match.givePath(firstPeople.getRow(), firstPeople.getColumn(), row, column);
+        for (People people : match.getSelectedUnit()) {
+            people.setPath(new ArrayList<>(path));
+            if (!match.getMovingPeople().contains(people)) match.getMovingPeople().add(people);
+        }
+        return "unit path set successfully!";
+    }
+
     public String stopPatrolUnit() {
+        if (match.getSelectedUnit() == null) return "no unit selected!";
         for (People people : match.getSelectedUnit()) {
             if (people instanceof Troop) {
                 Troop troop = (Troop) people;
@@ -293,14 +308,48 @@ public class MatchMenuController {
     public String digTunnel(int row, int column) {
         if (match.areCoordinatesNotValid(row, column))
             return "invalid coordinates!";
-        Building building = Building.createBuildingByType(match.getCurrentPlayer().getGovernance(), row, column, "Tunnel", BuildingType.TRAP, null);
-        match.getCell(row, column).setBuilding(building);
+
+        match.getCell(row, column).setHasTunnel(true);
         return "tunnel dug successfully!";
     }
 
-    public String disbandUnit() {
-        match.setSelectedUnit(null);
-        return "unit disbanded successfully!";
+    public String collapseTunnel(int row, int column) {
+        Cell cell = match.getCell(row, column);
+        if (!cell.hasTunnel()) return "there is no tunnel here!";
+
+        cell.clearCell();
+        return "tunnel collapsed successfully!";
+    }
+
+    public String digDitch(int row, int column) {
+        if (match.areCoordinatesNotValid(row, column))
+            return "invalid coordinates!";
+        if (match.getCell(row, column).getBuilding() != null)
+            return "there is a building here!";
+
+        match.getCell(row, column).setBuilding(new Trap(match.getCurrentPlayer().getGovernance(), row, column, "Pitch Ditch", BuildingType.TRAP, null));
+        return "ditch dug successfully!";
+    }
+
+    public String pourOil(int row, int column) {
+        if (match.areCoordinatesNotValid(row, column))
+            return "invalid coordinates!";
+        if (match.getCell(row, column).getBuilding() == null || !match.getCell(row, column).getBuilding().getType().equals("Pitch Ditch"))
+            return "there is no ditch here!";
+
+        Trap trap = (Trap) match.getCell(row, column).getBuilding();
+        trap.setHasOil(true);
+        return "oil poured successfully!";
+    }
+
+    public String fillDitch() {
+        Building building = match.getSelectedBuilding();
+        if (building == null) return "no building selected!";
+        if (!building.getType().equals("Pitch Ditch"))
+            return "this building is not a ditch!";
+
+        match.getCell(building.getRow(), building.getColumn()).setBuilding(null);
+        return "ditch filled successfully!";
     }
 
     public String nextTurn() {
@@ -315,20 +364,4 @@ public class MatchMenuController {
         return (match.isRoundFinished() ? "round finished\n" : "") +
                 match.getCurrentPlayer().getUsername() + " is now playing!";
     }
-
-    /*
-    private boolean isEntryNotValid() {
-    } // TODO: implement
-    public String attackEnemy(int enemyRow, int enemyColumn) {
-    } // TODO: 5/29/2018
-
-    public String attack(int row, int column) {
-    } // TODO: 5/29/2018
-
-    public String pourOil(String direction) {
-    } // TODO: 5/29/2018
-    public String buildEquipment(String equipmentName) {
-        // TODO: 5/29/2018
-    } // TODO: 5/29/2018
-     */
 }
