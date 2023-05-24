@@ -2,6 +2,8 @@ package model.Match;
 
 import model.*;
 import model.Buildings.Building;
+import model.Buildings.BuildingType;
+import model.Buildings.Inn;
 import model.People.People;
 import model.People.PeopleType;
 import model.People.Troop;
@@ -11,8 +13,9 @@ import java.util.ArrayList;
 public class Match {
     private final int rounds;
     private int currentRound;
-    private final ArrayList<User> players;
+    private ArrayList<User> players;
     private final ArrayList<Governance> governances;
+    public Governance matchWinner;
     private User currentPlayer;
     private final Cell[][] map;
     private Cell selectedCell;
@@ -24,17 +27,36 @@ public class Match {
     private ArrayList<People> selectedUnit;
     private final ArrayList<Troop> allTroops;
     private final ArrayList<People> movingPeople;
+    private final ArrayList<Integer> BaseLocationRows;
+    private final ArrayList<Integer> BaseLocationColumns;
+    {
+        BaseLocationRows = new ArrayList<>(){{
+            add(30);
+            add(90);
+            add(120);
+            add(170);
+            add(30);
+            add(90);
+            add(120);
+            add(170);
 
+        }};
+        BaseLocationColumns = new ArrayList<>(){{
+                add(50);
+                add(50);
+                add(50);
+                add(50);
+                add(150);
+                add(150);
+                add(150);
+                add(150);
+        }};
+
+    }
     public Match(int rounds, ArrayList<User> players, int mapNumber) {
         this.rounds = rounds;
         this.currentRound = 1;
         this.players = players;
-        governances = new ArrayList<>();// TODO: generate governances
-        for (User player : players) {
-            Governance governance = new Governance(player);
-            governances.add(governance);
-            player.setGovernance(governance);
-        }
         this.currentPlayer = players.get(0);
         this.map = Cell.generateMap(mapNumber);
         this.selectedCell = null;
@@ -46,7 +68,26 @@ public class Match {
         this.selectedUnit = null;
         this.allTroops = new ArrayList<>();
         this.movingPeople = new ArrayList<>();
+
+        governances = new ArrayList<>();
+
+        for (User player : players) {
+            Governance governance = new Governance(player);
+            governances.add(governance);
+            player.setGovernance(governance);
+            int row, column;
+            row = BaseLocationRows.get(players.indexOf(player));
+            column = BaseLocationColumns.get(players.indexOf(player));
+            allTroops.add(new Troop(governance, row, column, "Sultan", PeopleType.TROOP));
+            map[row][column].addPeople(allTroops.get(allTroops.size() - 1));
+            map[row][column].setAGovernmentBase(true);
+            map[row][column].setBuilding(Building.createBuildingByType(governance, row, column, "BASE", BuildingType.BASE,Direction.UP));
+        }
     }
+    public void removePlayer(User player){
+        players.remove(player);
+    }
+
 
     public int getRounds() {
         return rounds;
@@ -276,8 +317,22 @@ public class Match {
         return currentPlayer.equals(players.get(0));
     }
 
+    public int getSultanCount() {
+        int sultanCount = 0;
+        for (Governance governance : governances) {
+            if (governance.isSultanAlive) sultanCount++;
+        }
+        return sultanCount;
+    }
     public boolean nextRound() {
         if (currentRound == rounds) return true;
+
+        if(getSultanCount() == 1){
+            for (Governance governance : governances) {
+                if (governance.isSultanAlive) matchWinner = governance;
+            }
+            return true;
+        }
         turnManager.run();
         currentRound++;
         return false;

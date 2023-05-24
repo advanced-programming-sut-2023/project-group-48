@@ -306,6 +306,7 @@ public class MatchMenuController {
         match.nextTurn();
         if (match.isRoundFinished())
             if (match.nextRound()) {
+                match.matchWinner.getOwner().setHighScore(match.matchWinner.getOwner().getHighScore() + (match.getGovernances().size()-match.getSultanCount())*100);
                 controller.getGame().setCurrentMatch(null);
                 setMatch(null);
                 return "match is finished!\n" + controller.enterMainMenu();

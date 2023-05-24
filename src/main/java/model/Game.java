@@ -16,6 +16,7 @@ import java.util.Random;
 
 public class Game {
     private final ArrayList<User> users;
+
     private final DataBase db;
     private User currentUser;
     private Menu currentMenu;

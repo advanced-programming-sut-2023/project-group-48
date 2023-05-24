@@ -23,6 +23,7 @@ public class Governance {
     private ArrayList<Request> sentRequests;
     private ArrayList<Request> receivedRequests;
     private ArrayList<Request> requestsHistory;
+    public boolean isSultanAlive = true;
 
     {
         properties = new HashMap<>();
@@ -43,6 +44,7 @@ public class Governance {
         this.buildings = new ArrayList<>();
         this.population = 20;
         this.unemployedPopulation = 20;
+        this.maxPopulation = 40;
     }
 
     public User getOwner() {
@@ -50,13 +52,22 @@ public class Governance {
     }
 
     public int getPopularity() {
+        updatePopularity();
         return popularity;
     }
-
     public int getPopularityFactor(PopularityFactor popularityFactor) {
+        updatePopularity();
         return popularityFactors.get(popularityFactor);
     }
-
+    public void updatePopulation() {
+        population += getPopularity() * 5;
+        if(population < 0) {
+            population = 0;
+        }
+        if(population > maxPopulation) {
+            population = maxPopulation;
+        }
+    }
     public void updatePopularity() {
         this.popularity = 0;
         changeFoodPopularity();
@@ -66,6 +77,7 @@ public class Governance {
         for (PopularityFactor factor : PopularityFactor.getPopularityFactors()) {
             this.popularity += popularityFactors.get(factor);
         }
+        System.out.println("Popularity: " + population);
     }
 
     public void changeFoodPopularity() {

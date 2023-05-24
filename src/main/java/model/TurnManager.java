@@ -37,6 +37,11 @@ public class TurnManager {
 
     private void removeDeadPeople() {
         for (People deadPerson : deadPeople) {
+            if(deadPerson.getType().equals("Sultan")){
+                deadPerson.getGovernance().getOwner().setHighScore(deadPerson.getGovernance().getOwner().getHighScore() + (match.getGovernances().size()-match.getSultanCount())*100);
+                match.removePlayer(deadPerson.getGovernance().getOwner());
+                deadPerson.getGovernance().isSultanAlive = false;
+            }
             match.removePeople(deadPerson);
         }
         deadPeople.clear();
@@ -138,6 +143,7 @@ public class TurnManager {
     private void updateAllPopularities() {
         for (Governance governance : match.getGovernances()) {
             governance.updatePopularity();
+            governance.updatePopulation();
         }
     }
 
@@ -158,6 +164,7 @@ public class TurnManager {
             moveAllPeople();
         }
         updateAllPopularities();
+        updateAllIndustries();
         useFoods();
     }
 
