@@ -57,12 +57,6 @@ public class Match {
         this.rounds = rounds;
         this.currentRound = 1;
         this.players = players;
-        governances = new ArrayList<>();
-        for (User player : players) {
-            Governance governance = new Governance(player);
-            governances.add(governance);
-            player.setGovernance(governance);
-        }
         this.currentPlayer = players.get(0);
         this.map = Cell.generateMap(mapNumber);
         this.selectedCell = null;
@@ -75,7 +69,7 @@ public class Match {
         this.allTroops = new ArrayList<>();
         this.movingPeople = new ArrayList<>();
 
-        governances = new ArrayList<>();
+        this.governances = new ArrayList<>();
 
         for (User player : players) {
             Governance governance = new Governance(player);
@@ -85,9 +79,14 @@ public class Match {
             row = BaseLocationRows.get(players.indexOf(player));
             column = BaseLocationColumns.get(players.indexOf(player));
             allTroops.add(new Troop(governance, row, column, "Sultan", PeopleType.TROOP));
-            map[row][column].addPeople(allTroops.get(allTroops.size() - 1));
-            map[row][column].setAGovernmentBase(true);
-            map[row][column].setBuilding(Building.createBuildingByType(governance, row, column, "BASE", BuildingType.BASE,Direction.UP));
+            getCell(row, column).addPeople(allTroops.get(allTroops.size() - 1));
+            getCell(row, column).setAGovernmentBase(true);
+            Building building = Building.createBuildingByType(governance, row, column, "Base", BuildingType.BASE, null);
+            getCell(row, column).setBuilding(building);
+            governance.addBuilding(building);
+            building = Building.createBuildingByType(governance, row + 1, column, "Stockpile", BuildingType.STORAGE, null);
+            getCell(row + 1, column).setBuilding(building);
+            governance.addBuilding(building);
         }
     }
     public void removePlayer(User player){
