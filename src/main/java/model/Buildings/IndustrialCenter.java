@@ -31,12 +31,12 @@ public class IndustrialCenter extends Building {
         put("Pole Turner", new Property[]{Property.IRON, Property.SPEAR});
     }};
     private static final HashMap<String, Integer> industrialCentersRate = new HashMap<>() {{
-        put("Stable", 10);
+        put("Stable", 1);
         put("Mill", 10);
         put("Iron Mine", 10);
         put("Pitch Rig", 10);
         put("ًQuarry", 10);
-        put("Woodcutter", 10);
+        put("Woodcutter", 5);
         put("Oil Smelter", 10);
         put("Apple Orchard", 10);
         put("Diary Farmer", 10);
@@ -45,10 +45,10 @@ public class IndustrialCenter extends Building {
         put("Wheat Farmer", 10);
         put("Bakery", 10);
         put("Brewer", 10);
-        put("Armourer", 10);
-        put("Blacksmith", 10);
-        put("Fletcher", 10);
-        put("Pole Turner", 10);
+        put("Armourer", 3);
+        put("Blacksmith", 3);
+        put("Fletcher", 3);
+        put("Pole Turner", 3);
     }};
     private static final HashMap<String, String> industrialCentersWorkers = new HashMap<>() {{
         put("Stable", "Ox");

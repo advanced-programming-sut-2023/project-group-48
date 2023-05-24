@@ -387,6 +387,7 @@ public class Governance {
         for (Property property : Troop.getRequiredResource(type)) {
             if (properties.get(property) == 0) return false;
         }
+        if(Troop.getTroopCost(type)>properties.get(Property.COIN)) return false;
         return true;
     }
 
@@ -398,6 +399,7 @@ public class Governance {
         for (Property property : Troop.getRequiredResource(type)) {
             properties.put(property, properties.get(property) - 1);
         }
+        properties.put(Property.COIN, properties.get(Property.COIN)- Troop.getTroopCost(type));
     }
 
     public int getPropertyCount(Property property) {
