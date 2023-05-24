@@ -121,6 +121,7 @@ public class MatchMenuController {
 
         Building building = Building.createBuildingByType(buildingGovernance, row, column, type, buildingType, dir);
         buildingGovernance.payForBuilding(type);
+        buildingGovernance.addBuilding(building);
         match.getCell(row, column).setBuilding(building);
         return "building dropped successfully!";
     }

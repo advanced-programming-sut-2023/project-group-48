@@ -12,6 +12,10 @@ public class Trap extends Building {
         isActive = type.equals("Killing Pit");
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
     public void activate() {
         isActive = true;
     }

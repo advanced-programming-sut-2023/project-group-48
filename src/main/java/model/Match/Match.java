@@ -57,6 +57,12 @@ public class Match {
         this.rounds = rounds;
         this.currentRound = 1;
         this.players = players;
+        governances = new ArrayList<>();
+        for (User player : players) {
+            Governance governance = new Governance(player);
+            governances.add(governance);
+            player.setGovernance(governance);
+        }
         this.currentPlayer = players.get(0);
         this.map = Cell.generateMap(mapNumber);
         this.selectedCell = null;

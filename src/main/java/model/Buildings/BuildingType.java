@@ -76,51 +76,51 @@ public enum BuildingType {
         //TODO: soldiers should not hurt all buildings(like trees and rocks)
         //TODO: adding shop and its effect
     }};
-    private static final HashMap<String, ArrayList<LandType>> ValidLandTypes = new HashMap<String, ArrayList<LandType>>() {{
-        put("Small Stone Gatehouse", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Large Stone Gatehouse", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Drawbridge", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Hovel", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Caged War Dogs", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Siege Tent", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Church", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Cathedral", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Tall Wall", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Short Wall", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Lookout Tower", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Perimeter Tower", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Defence Turret", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Square Tower", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Round Tower", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Stable", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Mill", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Iron Mine", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Pitch Rig", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Quarry", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Woodcutter", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Oil Smelter", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Apple Orchard", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Diary Farmer", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Hops Farmer", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Hunter Post", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Wheat Farmer", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Bakery", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Brewer", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Armourer", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Blacksmith", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Fletcher", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Pole Turner", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Inn", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Killing Pit", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Barrack", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Pitch Ditch", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Mercenary Post", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Engineer Guild", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Armoury", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Stockpile", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-        put("Granary", new ArrayList<LandType>(Arrays.asList(LandType.LAND)));
-    }};
-    private static final HashMap<String, HashMap<Property, Integer>> buildingsMaterialsNeedToBuild = new HashMap<String, HashMap<Property, Integer>>() {{
+    private static final HashMap<String, ArrayList<LandType>> ValidLandTypes = new HashMap<>() {{
+        put("Small Stone Gatehouse", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Large Stone Gatehouse", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Drawbridge", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Hovel", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Caged War Dogs", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Siege Tent", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Church", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Cathedral", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Tall Wall", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Short Wall", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Lookout Tower", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Perimeter Tower", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Defence Turret", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Square Tower", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Round Tower", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Stable", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Mill", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Iron Mine", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Pitch Rig", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Quarry", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Woodcutter", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Oil Smelter", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Apple Orchard", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Diary Farmer", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Hops Farmer", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Hunter Post", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Wheat Farmer", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Bakery", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Brewer", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Armourer", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Blacksmith", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Fletcher", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Pole Turner", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Inn", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Killing Pit", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Barrack", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Pitch Ditch", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Mercenary Post", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Engineer Guild", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Armoury", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Stockpile", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Granary", new ArrayList<>(Arrays.asList(LandType.LAND)));
+    }}; // TODO
+    private static final HashMap<String, HashMap<Property, Integer>> buildingsMaterialsNeedToBuild = new HashMap<>() {{
         put("Small Stone Gatehouse", new HashMap<>() {{
             put(Property.WOOD, 5);
         }});

@@ -6,6 +6,13 @@ defending methods : stair, oil, khandaq, wall
 how does dropunit command work??
 controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance() better way?
 x -> row && y -> column
+
+
+attack
+defending methods
+attacking methods
+state of troop
+
 -------------------------------------------------------------------------------------
 IRI ################################################################################
 yo Mr.White

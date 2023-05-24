@@ -415,6 +415,7 @@ public class Governance {
         for (Building building : buildings) {
             if (building instanceof Storage) {
                 Storage storage = (Storage) building;
+                System.out.println(storage.getTotalAmount() + " " + storage.getCapacity());
                 if (storage.canStoreProperty(property) && storage.getTotalAmount() < storage.getCapacity())
                     return storage;
             }
