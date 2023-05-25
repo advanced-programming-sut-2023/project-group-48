@@ -27,6 +27,7 @@ public enum BuildingType {
             "Drawbridge", "Lookout Tower", "Perimeter Tower", "Defence Turret", "Square Tower", "Round Tower", "Armoury",
             "Barrack", "Mercenary Post", "Engineer Guild", "Killing Pit", "Oil Smelter", "Pitch Ditch", "Caged War Dogs", "Siege Tent", "Stable"));
     private static final HashMap<String, Integer> buildingsHp = new HashMap<>() {{
+        put("Base", 1000);
         put("Small Stone Gatehouse", 300);
         put("Large Stone Gatehouse", 400);
         put("Drawbridge", 300);
