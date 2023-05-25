@@ -188,5 +188,4 @@ public class TurnManager {
         updateAllIndustries();
         useFoods();
     }
-
 }
