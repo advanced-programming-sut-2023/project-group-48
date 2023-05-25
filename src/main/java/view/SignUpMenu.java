@@ -3,7 +3,6 @@ package view;
 import controller.Controller;
 import controller.SignUpMenuController;
 import view.Commands.SignUpMenuCommands;
-import view.Messages.SignUpMenuMessages;
 
 import java.io.IOException;
 import java.util.regex.Matcher;

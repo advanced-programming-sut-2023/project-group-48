@@ -3,7 +3,6 @@ package view;
 import controller.Controller;
 import controller.MapMenuController;
 import view.Commands.MapMenuCommands;
-import view.Messages.MapMenuMessages;
 
 import java.util.regex.Matcher;
 

@@ -5,7 +5,6 @@ import controller.MatchMenuController;
 import model.Match.Direction;
 import model.Match.Match;
 import view.Commands.MatchMenuCommands;
-import view.Messages.MatchMenuMessages;
 
 import java.util.regex.Matcher;
 

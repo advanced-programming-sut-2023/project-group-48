@@ -3,7 +3,6 @@ package view;
 import controller.Controller;
 import controller.TradeMenuController;
 import view.Commands.TradeMenuCommands;
-import view.Messages.TradeMenuMessages;
 
 import java.util.regex.Matcher;
 

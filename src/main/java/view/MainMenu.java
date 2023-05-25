@@ -3,7 +3,6 @@ package view;
 import controller.Controller;
 import controller.MainMenuController;
 import view.Commands.MainMenuCommands;
-import view.Messages.MainMenuMessages;
 
 import java.io.IOException;
 import java.util.regex.Matcher;

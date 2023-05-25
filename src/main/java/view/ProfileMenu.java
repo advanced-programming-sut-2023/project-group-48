@@ -3,7 +3,6 @@ package view;
 import controller.Controller;
 import controller.ProfileMenuController;
 import view.Commands.ProfileMenuCommands;
-import view.Messages.ProfileMenuMessages;
 
 import java.util.regex.Matcher;
 
