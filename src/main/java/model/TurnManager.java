@@ -29,7 +29,7 @@ public class TurnManager {
         for (Troop troop : match.getAllTroops()) {
             int row = troop.getRow();
             int column = troop.getColumn();
-            for (People target : match.getNearByEnemy(row, column, troop.getFireRange())) {
+            for (People target : match.getNearByEnemy(troop.getGovernance(), row, column, troop.getFireRange())) {
                 troop.attackPeople(target);
                 if (target.getHp() <= 0) deadPeople.add(target);
             }
@@ -158,17 +158,21 @@ public class TurnManager {
         ArrayList<People> nearbyEnemy;
         for (Troop troop : match.getAllTroops()) {
             if (troop.getState().equals(State.DEFENSIVE) &&
-                (nearbyEnemy = match.getNearByEnemy(troop.getRow(), troop.getColumn(), troop.getFireRange())).size() > 0 &&
+                (nearbyEnemy = match.getNearByEnemy(troop.getGovernance(), troop.getRow(), troop.getColumn(), troop.getFireRange())).size() > 0 &&
                 !match.getMovingPeople().contains(troop)) {
                 People target = nearbyEnemy.get(0);
                 troop.setPath(match.givePath(troop.getRow(), troop.getColumn(), target.getRow(), target.getColumn()));
                 match.getMovingPeople().add(troop);
             }
             if (troop.getState().equals(State.AGGRESSIVE) &&
-                (nearbyEnemy = match.getNearByEnemy(troop.getRow(), troop.getColumn(), 20)).size() > 0 &&
+                (nearbyEnemy = match.getNearByEnemy(troop.getGovernance(), troop.getRow(), troop.getColumn(), 20)).size() > 0 &&
                 !match.getMovingPeople().contains(troop)) {
                 People target = nearbyEnemy.get(0);
-                troop.setPath(match.givePath(troop.getRow(), troop.getColumn(), target.getRow(), target.getColumn()));
+                System.out.println(nearbyEnemy.size());
+                System.out.println(troop.getRow() + " " + troop.getColumn() + " " + target.getRow() + " " + target.getColumn());
+                ArrayList<Direction> path = match.givePath(troop.getRow(), troop.getColumn(), target.getRow(), target.getColumn());
+                System.out.println(path.size());
+                troop.setPath(path);
                 match.getMovingPeople().add(troop);
             }
         }
@@ -177,7 +181,7 @@ public class TurnManager {
     public void run() {
         //while (!areMovesFinished()) {     OLD METHOD FOR TURNS
         addNonStandingTroops();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 10; i++) {
             doFights();
             removeDeadPeople();
             attackBuildings();

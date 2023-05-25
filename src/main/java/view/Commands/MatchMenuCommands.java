@@ -22,6 +22,7 @@ public enum MatchMenuCommands {
     DIG_TUNNEL(new ArrayList<>(List.of("dig\\s+tunnel", "\\s+-x\\s+(?<x>\\d+)", "\\s+-y\\s+(?<y>\\d+)"))),
     COLLAPSE_TUNNEL(new ArrayList<>(List.of("collapse\\s+tunnel", "\\s+-x\\s+(?<x>\\d+)", "\\s+-y\\s+(?<y>\\d+)"))),
     DIG_DITCH(new ArrayList<>(List.of("dig\\s+Pitch Ditch", "\\s+-x\\s+(?<x>\\d+)", "\\s+-y\\s+(?<y>\\d+)"))),
+    FILL_DITCH(new ArrayList<>(List.of("fill\\s+Pitch Ditch", "\\s+-x\\s+(?<x>\\d+)", "\\s+-y\\s+(?<y>\\d+)"))),
     BUILD_EQUIPMENT(new ArrayList<>(List.of("build", "\\s+-q\\s+(?<equipmentName>\".+\"|\\S+)"))),
     SET_TEXTURE_ONE_BLOCK(new ArrayList<>(List.of("settexture", "\\s+-x\\s+(?<x>\\d+)", "\\s+-y\\s+(?<y>\\d+)", "\\s+-t\\s+(?<type>\".+\"|\\S+)"))),
     SET_TEXTURE_BLOCKS(new ArrayList<>(List.of("settexture", "\\s+-x1\\s+(?<x1>\\d+)", "\\s+-y1\\s+(?<y1>\\d+)", "\\s+-x2\\s+(?<x2>\\d+)", "\\s+-y2\\s+(?<y2>\\d+)", "\\s+-t\\s+(?<type>\".+\"|\\S+)"))),
