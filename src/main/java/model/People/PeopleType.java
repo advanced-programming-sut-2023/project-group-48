@@ -52,6 +52,7 @@ public enum PeopleType {
         put("Black Monk", new ArrayList<LandType>(Arrays.asList(LandType.ROCK,LandType.BIGPOND,LandType.SEA,LandType.OIL,LandType.IRON,LandType.RIVER)));
         put("Archer Bow", new ArrayList<LandType>(Arrays.asList(LandType.ROCK,LandType.BIGPOND,LandType.SEA,LandType.OIL,LandType.IRON,LandType.RIVER)));
         put("Slaves", new ArrayList<LandType>(Arrays.asList(LandType.ROCK,LandType.BIGPOND,LandType.SEA,LandType.OIL,LandType.IRON,LandType.RIVER)));
+        put("Assassins", new ArrayList<LandType>(Arrays.asList(LandType.ROCK,LandType.BIGPOND,LandType.SEA,LandType.OIL,LandType.IRON,LandType.RIVER)));
         put("Slingers", new ArrayList<LandType>(Arrays.asList(LandType.ROCK,LandType.BIGPOND,LandType.SEA,LandType.OIL,LandType.IRON,LandType.RIVER)));
         put("Horse Archers", new ArrayList<LandType>(Arrays.asList(LandType.ROCK,LandType.BIGPOND,LandType.SEA,LandType.OIL,LandType.IRON,LandType.RIVER)));
         put("Arabian Swordsmen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK,LandType.BIGPOND,LandType.SEA,LandType.OIL,LandType.IRON,LandType.RIVER)));

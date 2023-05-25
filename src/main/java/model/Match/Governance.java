@@ -80,7 +80,7 @@ public class Governance {
         for (PopularityFactor factor : PopularityFactor.getPopularityFactors()) {
             this.popularity += popularityFactors.get(factor);
         }
-        System.out.println("Popularity: " + population);
+//        System.out.println("Popularity: " + population);
     }
 
     public void changeFoodPopularity() {

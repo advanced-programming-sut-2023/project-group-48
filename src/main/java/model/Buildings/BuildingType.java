@@ -258,6 +258,7 @@ public enum BuildingType {
     }
 
     public static BuildingType getBuildingType(String type) {
+        System.out.println(type);
         for (BuildingType buildingType : buildingTypes) {
             if (buildingType.buildings.contains(type)) return buildingType;
         }

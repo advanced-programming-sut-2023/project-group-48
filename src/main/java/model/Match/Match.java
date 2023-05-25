@@ -16,7 +16,7 @@ public class Match {
     private int currentRound;
     private ArrayList<User> players;
     private final ArrayList<Governance> governances;
-    public Governance matchWinner;
+    private Governance matchWinner;
     private User currentPlayer;
     private final Cell[][] map;
     private Cell selectedCell;
@@ -70,6 +70,7 @@ public class Match {
         this.selectedUnit = null;
         this.allTroops = new ArrayList<>();
         this.movingPeople = new ArrayList<>();
+        this.matchWinner = null;
 
         this.governances = new ArrayList<>();
         for (User player : players) {
@@ -349,5 +350,9 @@ public class Match {
 
     public Shop getShop() {
         return shop;
+    }
+
+    public Governance getMatchWinner() {
+        return matchWinner;
     }
 }

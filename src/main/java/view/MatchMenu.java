@@ -51,7 +51,7 @@ public class MatchMenu extends Menu {
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.FEAR_RATE)) != null) {
                 System.out.println(matchMenuController.setFearRate(Integer.parseInt(matcher.group("rateNumber"))));
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DROP_BUILDING)) != null) {
-                System.out.println(matchMenuController.dropBuilding(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("y")), Controller.getRemovedQuotationMarks(matcher.group("type")))); // TODO direction
+                System.out.println(matchMenuController.dropBuilding(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x")), Controller.getRemovedQuotationMarks(matcher.group("type")))); // TODO direction
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.SELECT_BUILDING)) != null) {
                 System.out.println(matchMenuController.selectBuilding(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.CREATE_UNIT)) != null) {

@@ -356,10 +356,11 @@ public class MatchMenuController {
         match.nextTurn();
         if (match.isRoundFinished())
             if (match.nextRound()) {
-                match.matchWinner.getOwner().setHighScore(match.matchWinner.getOwner().getHighScore() + (match.getGovernances().size()-match.getSultanCount())*100);
+                if (match.getMatchWinner() != null) match.getMatchWinner().getOwner().setHighScore(match.getMatchWinner().getOwner().getHighScore() + (match.getGovernances().size()-match.getSultanCount())*100);
+                String result = (match.getMatchWinner() == null) ? "now winner!" : match.getMatchWinner().getOwner().getUsername() + " won the match!\n";
                 controller.getGame().setCurrentMatch(null);
                 setMatch(null);
-                return "match is finished!\n" + controller.enterMainMenu();
+                return "match is finished!\n" + result + "\n" + controller.enterMainMenu();
             }
         return (match.isRoundFinished() ? "round finished\n" : "") +
                 match.getCurrentPlayer().getUsername() + " is now playing!";
