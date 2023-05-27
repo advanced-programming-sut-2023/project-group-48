@@ -1,7 +1,6 @@
 package model;
 
 import model.Match.Governance;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -79,7 +78,7 @@ public class User {
     }
 
     private static String getEncryptedString(String originalString) {
-        return DigestUtils.sha256Hex(originalString);
+        return "";//DigestUtils.sha256Hex(originalString);
     }
 
     public boolean isPasswordNotCorrect(String password) {
