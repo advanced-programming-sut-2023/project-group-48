@@ -1,4 +1,4 @@
-`package view;
+package view;
 
 import controller.Controller;
 import controller.MatchMenuController;
@@ -114,4 +114,3 @@ public class MatchMenu extends Menu {
         matchMenuController.setMatch(match);
     }
 }
-`
