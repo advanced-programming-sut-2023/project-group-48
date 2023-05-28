@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.stage.Stage;
 import model.Game;
 import model.Match.Match;
 import view.*;
@@ -10,17 +11,19 @@ public class Controller {
     private final SignUpMenuJFX signUpMenuJFX;
     private final LogInMenuJFX logInMenuJFX;
     private final MainMenuJFX mainMenuJFX;
-//    private final SignUpMenu signUpMenu;
-//    private final LoginMenu loginMenu;
-//    private final MainMenu mainMenu;
-//    private final MapMenu mapMenu;
-//    private final MatchMenu matchMenu;
-//    private final ProfileMenu profileMenu;
-//    private final TradeMenu tradeMenu;
-//    private final ShopMenu shopMenu;
+    private final SignUpMenu signUpMenu;
+    private final LoginMenu loginMenu;
+    private final MainMenu mainMenu;
+    private final MapMenu mapMenu;
+    private final MatchMenu matchMenu;
+    private final ProfileMenu profileMenu;
+    private final TradeMenu tradeMenu;
+    private final ShopMenu shopMenu;
     private final Game game;
+    private Stage stage;
 
-    public Controller() throws IOException {
+    public Controller(Stage stage) throws IOException {
+        this.stage = stage;
         this.signUpMenuJFX = new SignUpMenuJFX();
         signUpMenuJFX.setController(this);
         signUpMenuJFX.setSignUpMenuController(new SignUpMenuController(this));
@@ -31,15 +34,19 @@ public class Controller {
         mainMenuJFX.setController(this);
         mainMenuJFX.setMainMenuController(new MainMenuController(this));
         this.game = new Game(mainMenuJFX, signUpMenuJFX);
-//        this.signUpMenu = new SignUpMenu(this);
-//        this.loginMenu = new LoginMenu(this);
-//        this.mainMenu = new MainMenu(this);
-//        this.mapMenu = new MapMenu(this);
-//        this.profileMenu = new ProfileMenu(this);
-//        this.matchMenu = new MatchMenu(this);
-//        this.tradeMenu = new TradeMenu(this);
-//        this.shopMenu = new ShopMenu(this);
+        this.signUpMenu = new SignUpMenu(this);
+        this.loginMenu = new LoginMenu(this);
+        this.mainMenu = new MainMenu(this);
+        this.mapMenu = new MapMenu(this);
+        this.profileMenu = new ProfileMenu(this);
+        this.matchMenu = new MatchMenu(this);
+        this.tradeMenu = new TradeMenu(this);
+        this.shopMenu = new ShopMenu(this);
 //        this.game = new Game(mainMenu, signUpMenu);
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 
     public static String getRemovedQuotationMarks(String input) {
@@ -47,9 +54,12 @@ public class Controller {
         return input;
     }
 
-    public void run() throws IOException {
-        while (game.getCurrentMenu() != null) {
-            game.getCurrentMenuJFX().start();
+    public void run() throws Exception {
+//        while (game.getCurrentMenuJFX() != null) {
+//            game.getCurrentMenuJFX().start(stage);
+//        }
+        if (game.getCurrentMenuJFX() != null) {
+            game.getCurrentMenuJFX().start(stage);
         }
     }
 
@@ -57,51 +67,69 @@ public class Controller {
         return game;
     }
 
-//    public String enterLoginMenu() {
-//        game.setCurrentMenu(loginMenu);
-//        return "entered login Menu!";
-//    }
-//
-//    public String enterSignUpMenu() {
-//        game.setCurrentMenu(signUpMenu);
-//        return "entered signup Menu!";
-//    }
-//
-//    public String enterMainMenu() {
-//        game.setCurrentMenu(mainMenu);
-//        return "entered main Menu!";
-//    }
-//
-//    public String enterProfileMenu() {
-//        game.setCurrentMenu(profileMenu);
-//        return "entered profile Menu!";
-//    }
-//
-//    public String enterMatchMenu() {
-//        game.setCurrentMenu(matchMenu);
-//        return "entered match Menu!";
-//    }
-//
-//    public String enterTradeMenu() {
-//        game.setCurrentMenu(tradeMenu);
-//        return "entered trade Menu!";
-//    }
-//
-//    public String enterShopMenu() {
-//        game.setCurrentMenu(shopMenu);
-//        return "entered shop Menu!";
-//    }
-//
-//    public String enterMapMenu() {
-//        game.setCurrentMenu(mapMenu);
-//        return "entered map Menu!";
-//    }
-//
-//    public String logout() throws IOException {
-//        game.setCurrentMenu(signUpMenu);
-//        game.setCurrentUser(null);
-//        return "logged out!";
-//    }
+    public void enterSignUpMenuJFX() {
+        game.setCurrentMenuJFX(signUpMenuJFX);
+    }
+    public void enterLogInMenuJFX() {
+        game.setCurrentMenuJFX(logInMenuJFX);
+    }
+    public void enterMainMenuJFX() {
+        game.setCurrentMenuJFX(mainMenuJFX);
+    }
+    public void logOutJFX() throws IOException {
+        game.setCurrentMenuJFX(signUpMenuJFX);
+        game.setCurrentUser(null);
+    }
+    public void exitJFX() throws IOException {
+        game.updateJsonFiles();
+        game.setCurrentMenuJFX(null);
+    }
+
+    public String enterLoginMenu() {
+        game.setCurrentMenu(loginMenu);
+        return "entered login Menu!";
+    }
+
+    public String enterSignUpMenu() {
+        game.setCurrentMenu(signUpMenu);
+        return "entered signup Menu!";
+    }
+
+    public String enterMainMenu() {
+        game.setCurrentMenu(mainMenu);
+        return "entered main Menu!";
+    }
+
+    public String enterProfileMenu() {
+        game.setCurrentMenu(profileMenu);
+        return "entered profile Menu!";
+    }
+
+    public String enterMatchMenu() {
+        game.setCurrentMenu(matchMenu);
+        return "entered match Menu!";
+    }
+
+    public String enterTradeMenu() {
+        game.setCurrentMenu(tradeMenu);
+        return "entered trade Menu!";
+    }
+
+    public String enterShopMenu() {
+        game.setCurrentMenu(shopMenu);
+        return "entered shop Menu!";
+    }
+
+    public String enterMapMenu() {
+        game.setCurrentMenu(mapMenu);
+        return "entered map Menu!";
+    }
+
+    public String logout() throws IOException {
+        game.setCurrentMenu(signUpMenu);
+        game.setCurrentUser(null);
+        return "logged out!";
+    }
 
     public void exit() throws IOException {
         game.updateJsonFiles();

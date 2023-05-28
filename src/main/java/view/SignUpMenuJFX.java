@@ -5,6 +5,7 @@ import controller.SignUpMenuController;
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -55,22 +56,25 @@ public class SignUpMenuJFX extends Application {
         passwordError = (Label) signUpMenuPane.getChildren().get(7);
         passwordConfirmation = (PasswordField) signUpMenuPane.getChildren().get(8);
         passwordConfirmationError = (Label) signUpMenuPane.getChildren().get(9);
+        setPasswordProperties();
 
         nickname = (TextField) signUpMenuPane.getChildren().get(10);
         nicknameError = (Label) signUpMenuPane.getChildren().get(11);
 
         email = (TextField) signUpMenuPane.getChildren().get(12);
         emailError = (Label) signUpMenuPane.getChildren().get(13);
+        setEmailProperties();
 
         slogan = (TextField) signUpMenuPane.getChildren().get(14);
         sloganChoiceBox = (ChoiceBox) signUpMenuPane.getChildren().get(15);
         customSlogan = (CheckBox) signUpMenuPane.getChildren().get(16);
         sloganError = (Label) signUpMenuPane.getChildren().get(17);
+        setSloganProperties();
 
         passwordRecoveryQuestion = (ChoiceBox) signUpMenuPane.getChildren().get(19);
-
         passwordRecoveryAnswer = (TextField) signUpMenuPane.getChildren().get(20);
         passwordRecoveryAnswerError = (Label) signUpMenuPane.getChildren().get(21);
+        setPasswordRecoveryProperties();
 
         logInLink = (Hyperlink) signUpMenuPane.getChildren().get(22);
         logInLink.setOnMouseClicked(event -> {
@@ -87,17 +91,23 @@ public class SignUpMenuJFX extends Application {
     }
 
     private void setSignUpProperties() {
-        EventHandler clickHandler = event -> {
-            if (usernameError.getText().equals("") && passwordError.getText().equals("") && emailError.getText().equals("") &&
-                    passwordConfirmationError.getText().equals("") && !passwordRecoveryAnswer.getText().equals("") && !nickname.getText().equals("") || true) {
-                try {
-                    new MainMenuJFX().start(stage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                if (passwordRecoveryAnswer.getText().equals("")) {
-                    passwordRecoveryAnswerError.setText("Please answer the recovery question!");
+        EventHandler clickHandler = new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                if (!username.getText().isEmpty() && !password.getText().isEmpty() && !nickname.getText().isEmpty() &&
+                        !email.getText().isEmpty() && !passwordRecoveryAnswer.getText().isEmpty() && !slogan.getText().isEmpty() &&
+                        !passwordConfirmation.getText().isEmpty() && usernameError.getText().isEmpty() && passwordError.getText().isEmpty() &&
+                        nicknameError.getText().isEmpty() && emailError.getText().isEmpty() && passwordRecoveryAnswerError.getText().isEmpty() &&
+                        sloganError.getText().isEmpty() && passwordConfirmationError.getText().isEmpty()) {
+                    try {
+                        // TODO
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else if (username.getText().isEmpty() || password.getText().isEmpty() || nickname.getText().isEmpty() ||
+                        email.getText().isEmpty() || passwordRecoveryAnswer.getText().isEmpty() || slogan.getText().isEmpty() ||
+                        passwordConfirmation.getText().isEmpty()) {
+
                 }
             }
         };
