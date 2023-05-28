@@ -3,28 +3,30 @@ package model;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import controller.Controller;
+import javafx.application.Application;
 import model.Match.Match;
 import model.Match.Cell;
 import model.People.Troop;
-import view.MainMenu;
-import view.Menu;
-import view.SignUpMenu;
+import view.*;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Game {
+    private static final ArrayList<String> CAPTCHA = new ArrayList<>();
     private final ArrayList<User> users;
-
     private final DataBase db;
     private User currentUser;
+    private Application currentMenuJFX;
     private Menu currentMenu;
     private Match currentMatch;
     private Troop selectedTroop;
     private Cell selectedCell;
+    static {
+    }
 
-    public Game(MainMenu mainMenu, SignUpMenu signUpMenu) throws IOException {
+    public Game(MainMenuJFX mainMenuJFX, SignUpMenuJFX signUpMenuJFX) throws IOException {
         File usersFile = new File("Users.json");
         if (usersFile.exists()) {
             BufferedReader fileReader = new BufferedReader(new FileReader(usersFile));
@@ -56,11 +58,15 @@ public class Game {
                     break;
                 }
             }
-            currentMenu = mainMenu;
+            currentMenuJFX = mainMenuJFX;
         } else {
             currentUser = null;
-            currentMenu = signUpMenu;
+            currentMenuJFX = signUpMenuJFX;
         }
+    }
+
+    public static ArrayList<String> getCaptcha() {
+        return CAPTCHA;
     }
 
     public static String[] getRandomCaptcha() {
@@ -107,6 +113,14 @@ public class Game {
         fileWriter2.write(new Gson().toJson(db));
         fileWriter2.close();
 
+    }
+
+    public Application getCurrentMenuJFX() {
+        return currentMenuJFX;
+    }
+
+    public void setCurrentMenuJFX(Application currentMenuJFX) {
+        this.currentMenuJFX = currentMenuJFX;
     }
 
     public Menu getCurrentMenu() {

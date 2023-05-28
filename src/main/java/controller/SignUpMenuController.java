@@ -52,6 +52,29 @@ public class SignUpMenuController {
         return username + additionalUsername;
     }
 
+    public String checkUsername(String username) {
+        if (User.isUsernameNotValid(username)) return "not a valid username!";
+        if (controller.getGame().getUserByUsername(username) != null)
+            return "username already exists!\n" + "Our suggestion for username is \"" + getSuggestedUsername(username) + "\"";
+        return "";
+    }
+
+    public String checkPassword(String password) {
+        return User.isPasswordWeak(password);
+    }
+
+    public String checkEmail(String email) {
+        if (User.isEmailNotValid(email)) return "not a valid email!";
+        return "";
+    }
+
+    public ArrayList<String> getDefaultSlogans() {
+        return User.getSlogans();
+    }
+    public ArrayList<String> getDefaultRecoveryQuestions() {
+        return User.getQuestions();
+    }
+
     public String createUserStep(String username, String password, String passwordConfirmation, String email, String nickname, String... slogan) {
         String result = "";
         if (username.isEmpty() || password.isEmpty() || email.isEmpty() || nickname.isEmpty() || (slogan.length != 0 && slogan[0].isEmpty()))

@@ -2,11 +2,13 @@ package controller;
 
 import model.Game;
 import model.User;
+import view.LogInMenuJFX;
 
 import java.io.IOException;
 
 public class LoginMenuController {
-    private final Controller controller;
+    private Controller controller;
+    private LogInMenuJFX logInMenuJFX;
     private int wrongPasswordCount = 0;
     private User attendedUser = null;
     private boolean mustStayLoggedIn = false;
@@ -19,9 +21,10 @@ public class LoginMenuController {
         this.controller = controller;
     }
 
+
     public String login(String username, String password, boolean stayLoggedIn) {
         attendedUser = controller.getGame().getUserByUsername(username);
-        if (attendedUser == null) return "Username and password didn’t match!";
+        if (attendedUser == null) return "User not found!";
         if (attendedUser.isPasswordNotCorrect(password)) {
             if (!attendedUser.equals(failedUser)) {
                 failedUser = attendedUser;
@@ -38,7 +41,8 @@ public class LoginMenuController {
         mustStayLoggedIn = stayLoggedIn;
         failedUser = null;
         step = 1;
-        return generateCaptcha();
+        return "";
+//        return generateCaptcha();
     }
 
     public String generateCaptcha() {
@@ -79,5 +83,8 @@ public class LoginMenuController {
 
     public String getCaptchaAnswer() {
         return captchaAnswer;
+    }
+    public void setCaptchaAnswer(String captchaAnswer) {
+        this.captchaAnswer = captchaAnswer;
     }
 }

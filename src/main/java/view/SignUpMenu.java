@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 
 public class SignUpMenu extends Menu {
-
     private final SignUpMenuController signUpMenuController;
 
     public SignUpMenu(Controller controller) {
