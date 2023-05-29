@@ -118,8 +118,9 @@ public class MainMenuJFX extends Application {
             @Override
             public void handle(Event event) {
                 try {
-                    controller.enterSignUpMenu();
                     stop();
+                    controller.getGame().getCurrentMenuJFX().stop();
+                    controller.exit();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

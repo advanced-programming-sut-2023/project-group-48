@@ -80,11 +80,4 @@ public class LoginMenuController {
     public int getStep() {
         return step;
     }
-
-    public String getCaptchaAnswer() {
-        return captchaAnswer;
-    }
-    public void setCaptchaAnswer(String captchaAnswer) {
-        this.captchaAnswer = captchaAnswer;
-    }
 }

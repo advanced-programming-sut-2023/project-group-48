@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.scene.Node;
 import javafx.stage.Stage;
 import model.Game;
 import model.Match.Match;
@@ -20,6 +21,7 @@ public class Controller {
     private final TradeMenu tradeMenu;
     private final ShopMenu shopMenu;
     private final Game game;
+    private String captchaAnswer;
     private Stage stage;
 
     public Controller(Stage stage) throws IOException {
@@ -134,9 +136,24 @@ public class Controller {
     public void exit() throws IOException {
         game.updateJsonFiles();
         game.setCurrentMenu(null);
+        game.setCurrentMenuJFX(null);
     }
 
     public void setCurrentMatch(Match match) {
         matchMenu.setCurrentMatch(match);
+    }
+
+    public void setHoverProperty(Node node) {
+        node.hoverProperty().addListener(event -> {
+            node.setOpacity(1.5 - node.getOpacity());
+        });
+    }
+
+    public String getCaptchaAnswer() {
+        return captchaAnswer;
+    }
+
+    public void setCaptchaAnswer(String captchaAnswer) {
+        this.captchaAnswer = captchaAnswer;
     }
 }

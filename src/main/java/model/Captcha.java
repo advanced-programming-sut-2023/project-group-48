@@ -1,6 +1,9 @@
 package model;
 
+import javafx.scene.layout.Pane;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public enum Captcha {
@@ -194,12 +197,20 @@ public enum Captcha {
     });
 
 
+    private static final ArrayList<String> CAPTCHA = new ArrayList<>(List.of("11811", "1381", "1491", "1722", "1959", "2163",
+            "2177", "2723", "2785", "3541", "3847", "3855", "3876", "3967", "4185", "4310", "4487", "4578", "4602", "4681",
+            "4924", "5326", "5463", "5771", "5849", "6426", "6553", "6601", "6733", "6960", "7415", "7609", "7755", "7825",
+            "7905", "8003", "8070", "8368", "8455", "8506", "8555", "8583", "8692", "8776", "8972", "8996", "9061", "9386",
+            "9582", "9633"));
     private final String[] AsciiArt;
 
     Captcha(String[] asciiArt) {
         AsciiArt = asciiArt;
     }
 
+    public static String getRandomCaptcha() {
+        return CAPTCHA.get(new Random().nextInt(CAPTCHA.size()));
+    }
     private static Captcha getCaptchaNumberByNumber(int number) {
         switch (number) {
             case 0:

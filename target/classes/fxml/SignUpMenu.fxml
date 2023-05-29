@@ -29,9 +29,12 @@
       <TextField alignment="CENTER" layoutX="396.0" layoutY="205.0" prefHeight="50.0" prefWidth="300.0" promptText="username" />
       <Label alignment="CENTER" layoutX="96.0" layoutY="205.0" prefHeight="50.0" prefWidth="300.0" textFill="RED" />
       <PasswordField alignment="CENTER" layoutX="396.0" layoutY="263.0" prefHeight="50.0" prefWidth="300.0" promptText="password" />
-      <CheckBox alignment="CENTER" contentDisplay="CENTER" layoutX="679.0" layoutY="263.0" mnemonicParsing="false" />
+      <TextField alignment="CENTER" layoutX="396.0" layoutY="263.0" prefHeight="50.0" prefWidth="300.0" promptText="password" visible="false" />
+      <CheckBox alignment="CENTER" contentDisplay="CENTER" layoutX="679.0" layoutY="263.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" />
+      <Circle fill="#1f78ff00" layoutX="687.0" layoutY="302.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
       <Label alignment="CENTER" layoutX="96.0" layoutY="263.0" prefHeight="50.0" prefWidth="300.0" textFill="RED" />
       <PasswordField alignment="CENTER" layoutX="396.0" layoutY="321.0" prefHeight="50.0" prefWidth="300.0" promptText="password confirmarion" />
+      <TextField alignment="CENTER" layoutX="396.0" layoutY="321.0" prefHeight="50.0" prefWidth="300.0" promptText="password confirmarion" visible="false" />
       <Label alignment="CENTER" layoutX="96.0" layoutY="321.0" prefHeight="50.0" prefWidth="300.0" textFill="RED" />
       <TextField alignment="CENTER" layoutX="396.0" layoutY="379.0" prefHeight="50.0" prefWidth="300.0" promptText="nickname" />
       <Label alignment="CENTER" layoutX="96.0" layoutY="379.0" prefHeight="50.0" prefWidth="300.0" textFill="RED" />
@@ -39,7 +42,7 @@
       <Label alignment="CENTER" layoutX="96.0" layoutY="437.0" prefHeight="50.0" prefWidth="300.0" textFill="RED" />
       <TextField alignment="CENTER" layoutX="396.0" layoutY="495.0" prefHeight="50.0" prefWidth="300.0" promptText="slogan" />
       <ChoiceBox layoutX="396.0" layoutY="495.0" prefHeight="50.0" prefWidth="300.0" />
-      <CheckBox alignment="CENTER" contentDisplay="CENTER" layoutX="372.0" layoutY="489.0" mnemonicParsing="false" />
+      <CheckBox alignment="CENTER" contentDisplay="CENTER" layoutX="372.0" layoutY="489.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" />
       <Label alignment="CENTER" layoutX="96.0" layoutY="495.0" prefHeight="50.0" prefWidth="300.0" />
       <Label alignment="CENTER" layoutX="704.0" layoutY="277.0" prefHeight="50.0" prefWidth="300.0" text="Recovery Question">
          <font>
@@ -53,12 +56,13 @@
          <font>
             <Font size="18.0" />
          </font></Hyperlink>
-      <Pane layoutX="540.0" layoutY="190.0" prefHeight="320.0" prefWidth="320.0" visible="false">
+      <Pane layoutX="560.0" layoutY="184.0" prefHeight="320.0" prefWidth="320.0" visible="false">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="120.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="320.0" />
-            <Circle centerX="300.0" centerY="180.0" fill="DODGERBLUE" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle centerX="300.0" centerY="180.0" fill="#1f93ff00" layoutX="5.0" layoutY="-20.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Label alignment="CENTER" layoutY="190.0" prefHeight="30.0" prefWidth="320.0" textFill="RED" />
             <TextField layoutY="220.0" prefHeight="30.0" prefWidth="320.0" />
-            <Button layoutY="250.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="320.0" text="Button" />
+            <Button layoutY="250.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="320.0" text="apply" />
          </children>
       </Pane>
    </children>

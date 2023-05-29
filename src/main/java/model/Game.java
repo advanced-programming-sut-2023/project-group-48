@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Game {
-    private static final ArrayList<String> CAPTCHA = new ArrayList<>();
     private final ArrayList<User> users;
     private final DataBase db;
     private User currentUser;
@@ -63,10 +62,6 @@ public class Game {
             currentUser = null;
             currentMenuJFX = signUpMenuJFX;
         }
-    }
-
-    public static ArrayList<String> getCaptcha() {
-        return CAPTCHA;
     }
 
     public static String[] getRandomCaptcha() {

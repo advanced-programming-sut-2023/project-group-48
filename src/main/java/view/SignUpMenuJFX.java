@@ -2,9 +2,9 @@ package view;
 
 import controller.Controller;
 import controller.SignUpMenuController;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -13,27 +13,36 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import model.User;
+import javafx.util.Duration;
+import model.Captcha;
+import model.Game;
 
-import java.util.EventListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Objects;
+import java.util.Random;
 
 public class SignUpMenuJFX extends Application {
     private Controller controller;
     private SignUpMenuController signUpMenuController;
     private AnchorPane signUpMenuPane;
-    private TextField username, nickname, email, passwordRecoveryAnswer, slogan;
-    private Label usernameError, nicknameError, emailError, passwordError, passwordConfirmationError, sloganError, passwordRecoveryAnswerError, signUpButtonText;
+    private TextField username, visiblePassword, visiblePasswordConfirmation, nickname, email, passwordRecoveryAnswer, slogan;
+    private Label usernameError, nicknameError, emailError, passwordError, passwordConfirmationError, sloganError,
+            passwordRecoveryAnswerError, signUpButtonText, mainError;
     private PasswordField password, passwordConfirmation;
     private ChoiceBox sloganChoiceBox, passwordRecoveryQuestion;
     private CheckBox showPassword, customSlogan;
-    private Circle randomPassword, changeCaptcha;
+    private Circle randomPassword;
     private Hyperlink logInLink;
     private Rectangle signUpButton;
+    private CaptchaJFX captchaJFX;
     private Stage stage;
 
 
@@ -42,6 +51,12 @@ public class SignUpMenuJFX extends Application {
         this.stage = stage;
         signUpMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/SignUpMenu.fxml")));
         signUpMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/2.jpg")).toExternalForm()))));
+        signUpMenuPane.setOnMouseClicked(new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                    signUpMenuPane.requestFocus();
+            }
+        });
 
         signUpButton = (Rectangle) signUpMenuPane.getChildren().get(0);
         signUpButtonText = (Label) signUpMenuPane.getChildren().get(1);
@@ -52,38 +67,41 @@ public class SignUpMenuJFX extends Application {
         setUsernameProperties();
 
         password = (PasswordField) signUpMenuPane.getChildren().get(5);
-        showPassword = (CheckBox) signUpMenuPane.getChildren().get(6);
-        passwordError = (Label) signUpMenuPane.getChildren().get(7);
-        passwordConfirmation = (PasswordField) signUpMenuPane.getChildren().get(8);
-        passwordConfirmationError = (Label) signUpMenuPane.getChildren().get(9);
+        visiblePassword = (TextField) signUpMenuPane.getChildren().get(6);
+        showPassword = (CheckBox) signUpMenuPane.getChildren().get(7);
+        randomPassword = (Circle) signUpMenuPane.getChildren().get(8);
+        passwordError = (Label) signUpMenuPane.getChildren().get(9);
+        passwordConfirmation = (PasswordField) signUpMenuPane.getChildren().get(10);
+        visiblePasswordConfirmation = (TextField) signUpMenuPane.getChildren().get(11);
+
+        passwordConfirmationError = (Label) signUpMenuPane.getChildren().get(12);
         setPasswordProperties();
 
-        nickname = (TextField) signUpMenuPane.getChildren().get(10);
-        nicknameError = (Label) signUpMenuPane.getChildren().get(11);
+        nickname = (TextField) signUpMenuPane.getChildren().get(13);
+        nicknameError = (Label) signUpMenuPane.getChildren().get(14);
 
-        email = (TextField) signUpMenuPane.getChildren().get(12);
-        emailError = (Label) signUpMenuPane.getChildren().get(13);
+        email = (TextField) signUpMenuPane.getChildren().get(15);
+        emailError = (Label) signUpMenuPane.getChildren().get(16);
         setEmailProperties();
 
-        slogan = (TextField) signUpMenuPane.getChildren().get(14);
-        sloganChoiceBox = (ChoiceBox) signUpMenuPane.getChildren().get(15);
-        customSlogan = (CheckBox) signUpMenuPane.getChildren().get(16);
-        sloganError = (Label) signUpMenuPane.getChildren().get(17);
+        slogan = (TextField) signUpMenuPane.getChildren().get(17);
+        sloganChoiceBox = (ChoiceBox) signUpMenuPane.getChildren().get(18);
+        customSlogan = (CheckBox) signUpMenuPane.getChildren().get(19);
+        sloganError = (Label) signUpMenuPane.getChildren().get(20);
         setSloganProperties();
 
-        passwordRecoveryQuestion = (ChoiceBox) signUpMenuPane.getChildren().get(19);
-        passwordRecoveryAnswer = (TextField) signUpMenuPane.getChildren().get(20);
-        passwordRecoveryAnswerError = (Label) signUpMenuPane.getChildren().get(21);
+        passwordRecoveryQuestion = (ChoiceBox) signUpMenuPane.getChildren().get(22);
+        passwordRecoveryAnswer = (TextField) signUpMenuPane.getChildren().get(23);
+        passwordRecoveryAnswerError = (Label) signUpMenuPane.getChildren().get(24);
         setPasswordRecoveryProperties();
 
-        logInLink = (Hyperlink) signUpMenuPane.getChildren().get(22);
-        logInLink.setOnMouseClicked(event -> {
-            try {
-                new LogInMenuJFX().start(stage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        logInLink = (Hyperlink) signUpMenuPane.getChildren().get(25);
+        setHyperLinkProperties();
+
+        mainError = (Label) signUpMenuPane.getChildren().get(26);
+
+        captchaJFX = new CaptchaJFX(controller, signUpMenuPane);
+        setCaptchaPaneProperties();
 
         Scene scene = new Scene(signUpMenuPane);
         stage.setScene(scene);
@@ -94,20 +112,14 @@ public class SignUpMenuJFX extends Application {
         EventHandler clickHandler = new EventHandler() {
             @Override
             public void handle(Event event) {
-                if (!username.getText().isEmpty() && !password.getText().isEmpty() && !nickname.getText().isEmpty() &&
-                        !email.getText().isEmpty() && !passwordRecoveryAnswer.getText().isEmpty() && !slogan.getText().isEmpty() &&
-                        !passwordConfirmation.getText().isEmpty() && usernameError.getText().isEmpty() && passwordError.getText().isEmpty() &&
-                        nicknameError.getText().isEmpty() && emailError.getText().isEmpty() && passwordRecoveryAnswerError.getText().isEmpty() &&
-                        sloganError.getText().isEmpty() && passwordConfirmationError.getText().isEmpty()) {
+                if (!isAFieldEmpty() && areErrorsEmpty()) {
                     try {
-                        // TODO
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        popOutCaptchaPane();
+                    } catch (URISyntaxException e) {
+                        throw new RuntimeException(e);
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
                     }
-                } else if (username.getText().isEmpty() || password.getText().isEmpty() || nickname.getText().isEmpty() ||
-                        email.getText().isEmpty() || passwordRecoveryAnswer.getText().isEmpty() || slogan.getText().isEmpty() ||
-                        passwordConfirmation.getText().isEmpty()) {
-
                 }
             }
         };
@@ -130,19 +142,39 @@ public class SignUpMenuJFX extends Application {
 
     private void setPasswordProperties() {
         password.textProperty().addListener((observable, oldValue, newValue) -> {
+            visiblePassword.setText(password.getText());
             passwordError.setText(signUpMenuController.checkPassword(password.getText()));
+        });
+        visiblePassword.textProperty().addListener((observable, oldValue, newValue) -> {
+            password.setText(visiblePassword.getText());
+        });
+        passwordConfirmation.textProperty().addListener((observable, oldValue, newValue) -> {
+            visiblePasswordConfirmation.setText(passwordConfirmation.getText());
             if (!password.getText().equals(passwordConfirmation.getText())) {
                 passwordConfirmationError.setText("Passwords don't match!");
+            } else {
+                passwordConfirmationError.setText("");
             }
+        });
+        visiblePasswordConfirmation.textProperty().addListener((observable, oldValue, newValue) -> {
+            passwordConfirmation.setText(visiblePasswordConfirmation.getText());
         });
         showPassword.setOnMouseClicked(event -> {
             if (showPassword.isSelected()) {
-                password.setPromptText(password.getText());
-                password.setText("");
+                password.setVisible(false);
+                passwordConfirmation.setVisible(false);
+                visiblePassword.setVisible(true);
+                visiblePasswordConfirmation.setVisible(true);
             } else {
-                password.setText(password.getPromptText());
-                password.setPromptText("");
+                password.setVisible(true);
+                passwordConfirmation.setVisible(true);
+                visiblePassword.setVisible(false);
+                visiblePasswordConfirmation.setVisible(false);
             }
+        });
+        randomPassword.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/icons/refresh.png")).toExternalForm())));
+        randomPassword.setOnMouseClicked(event -> {
+            password.setText(signUpMenuController.getRandomPassword());
         });
     }
 
@@ -154,7 +186,7 @@ public class SignUpMenuJFX extends Application {
 
     private void setSloganProperties() {
         sloganChoiceBox.getItems().add("Slogan : None");
-        sloganChoiceBox.getItems().addAll(User.getSlogans());
+        sloganChoiceBox.getItems().addAll(signUpMenuController.getDefaultSlogans());
         sloganChoiceBox.getSelectionModel().selectFirst();
         customSlogan.setOnMouseClicked(event -> {
             if (customSlogan.isSelected()) {
@@ -169,8 +201,89 @@ public class SignUpMenuJFX extends Application {
     }
 
     private void setPasswordRecoveryProperties() {
-        passwordRecoveryQuestion.getItems().addAll(User.getQuestions());
+        passwordRecoveryQuestion.getItems().addAll(signUpMenuController.getDefaultRecoveryQuestions());
         passwordRecoveryQuestion.getSelectionModel().selectFirst();
+    }
+
+    private void setHyperLinkProperties() {
+        logInLink.setOnMouseClicked(event -> {
+            try {
+                new LogInMenuJFX().start(stage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void setCaptchaPaneProperties() {
+        signUpMenuPane.getChildren().add(captchaJFX.getCaptchaPane());
+        captchaJFX.getCaptchaAnswerButton().setOnMouseClicked((event) -> {
+            if (captchaJFX.getCaptchaAnswer().getText().equals(controller.getCaptchaAnswer())) {
+                try {
+                    createUser();
+                    mainError.setText("user created successfully!");
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(3000), event2 -> {
+                            mainError.setText("");
+                    }));
+                    timeline.setCycleCount(1);
+                    timeline.play();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                captchaJFX.getCaptchaError().setText("captcha answer is incorrect!");
+                captchaJFX.refreshCaptcha();
+            }
+        });
+    }
+
+    private boolean isAFieldEmpty() {
+        if (username.getText().isEmpty()) {
+            usernameError.setText("empty field!");
+            return true;
+        }
+        if (password.getText().isEmpty()) {
+            passwordError.setText("empty field!");
+            return true;
+        }
+        if (nickname.getText().isEmpty()) {
+            nicknameError.setText("empty field!");
+            return true;
+        }
+        if (email.getText().isEmpty()) {
+            emailError.setText("empty field!");
+            return true;
+        }
+        if (passwordRecoveryAnswer.getText().isEmpty()) {
+            passwordRecoveryAnswerError.setText("empty field!");
+            return true;
+        }
+        if (passwordConfirmation.getText().isEmpty()) {
+            passwordConfirmationError.setText("empty field!");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean areErrorsEmpty() {
+        return usernameError.getText().isEmpty() && passwordError.getText().isEmpty() && emailError.getText().isEmpty() &&
+                passwordRecoveryAnswerError.getText().isEmpty() && sloganError.getText().isEmpty() &&
+                passwordConfirmationError.getText().isEmpty();
+    }
+
+    private void createUser() throws IOException {
+        String slogan = sloganChoiceBox.getSelectionModel().getSelectedItem().equals("Slogan : None") ? customSlogan.getText() : (String) sloganChoiceBox.getSelectionModel().getSelectedItem();
+        if (slogan.isEmpty()) slogan = null;
+        signUpMenuController.createUserJFX(username.getText(), password.getText(), nickname.getText(), email.getText(),
+                (String) passwordRecoveryQuestion.getSelectionModel().getSelectedItem(),
+                passwordRecoveryAnswer.getText(), slogan);
+    }
+
+    private void popOutCaptchaPane() throws MalformedURLException, URISyntaxException {
+        captchaJFX.getCaptchaPane().setVisible(true);
+        captchaJFX.getCaptchaPane().toFront();
     }
 
     public Controller getController() {
