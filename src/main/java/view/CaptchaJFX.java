@@ -14,6 +14,8 @@ import javafx.scene.shape.Rectangle;
 import model.Captcha;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 public class CaptchaJFX {
@@ -26,7 +28,6 @@ public class CaptchaJFX {
     private Button captchaAnswerButton;
 
     public CaptchaJFX(Controller controller, AnchorPane anchorPane) throws IOException {
-        super();
         this.controller = controller;
         captchaPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/CaptchaPane.fxml")));
         anchorPane.getChildren().add(captchaPane);
@@ -66,9 +67,24 @@ public class CaptchaJFX {
         return captchaError;
     }
 
+    public void popOutCaptchaPane() throws MalformedURLException, URISyntaxException {
+        captchaPane.setVisible(true);
+        captchaPane.toFront();
+    }
+
+    public void popOffCaptchaPane() {
+        this.captchaAnswer.setText("");
+        controller.setCaptchaAnswer(null);
+        this.captchaError.setText("");
+        captchaPane.setVisible(false);
+        captchaPane.toBack();
+    }
+
     public void refreshCaptcha() {
         String captchaAns = Captcha.getRandomCaptcha();
+        System.out.println(captchaAns);
         captchaPicture.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/captcha/" + captchaAns + ".png")).toExternalForm())));
         controller.setCaptchaAnswer(captchaAns);
+        this.captchaAnswer.setText("");
     }
 }

@@ -21,8 +21,7 @@ public class LoginMenuController {
         this.controller = controller;
     }
 
-
-    public String login(String username, String password, boolean stayLoggedIn) {
+    public String login(String username, String password, boolean stayLoggedIn) throws IOException {
         attendedUser = controller.getGame().getUserByUsername(username);
         if (attendedUser == null) return "User not found!";
         if (attendedUser.isPasswordNotCorrect(password)) {
@@ -35,14 +34,15 @@ public class LoginMenuController {
             if (wrongPasswordCount >= 3) {
                 return "you have to wait for " + wrongPasswordCount * 2 + " seconds!";
             }
-            return "Username and password didn’t match!";
+            return "Username and password did’t match!";
         }
 
         mustStayLoggedIn = stayLoggedIn;
         failedUser = null;
-        step = 1;
+        controller.getGame().setCurrentUser(attendedUser);
+        if (mustStayLoggedIn) controller.getGame().setDataBaseCurrentUser(attendedUser);
+//        step = 1;
         return "";
-//        return generateCaptcha();
     }
 
     public String generateCaptcha() {

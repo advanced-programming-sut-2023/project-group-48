@@ -29,7 +29,7 @@
       <PasswordField alignment="CENTER" layoutX="396.0" layoutY="212.0" prefHeight="50.0" prefWidth="300.0" promptText="password" />
       <TextField alignment="CENTER" layoutX="396.0" layoutY="212.0" prefHeight="50.0" prefWidth="300.0" promptText="password" visible="false" />
       <CheckBox alignment="CENTER" contentDisplay="CENTER" layoutX="679.0" layoutY="212.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" />
-      <Circle fill="#1f78ff00" layoutX="684.0" layoutY="180.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle fill="#1f78ff00" layoutX="687.0" layoutY="249.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
       <Label alignment="CENTER" layoutX="93.0" layoutY="141.0" prefHeight="50.0" prefWidth="300.0" textFill="RED" />
       <PasswordField alignment="CENTER" layoutX="396.0" layoutY="270.0" prefHeight="50.0" prefWidth="300.0" promptText="password confirmarion" />
       <TextField alignment="CENTER" layoutX="396.0" layoutY="270.0" prefHeight="50.0" prefWidth="300.0" promptText="password confirmarion" visible="false" />

@@ -96,11 +96,11 @@ public class MainMenuJFX extends Application {
             public void handle(Event event) {
                 try {
                     controller.logOutJFX();
+                    stop();
                     controller.getGame().getCurrentMenuJFX().start(stage);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-
             }
         };
         logOut.hoverProperty().addListener((event) -> {
@@ -118,9 +118,9 @@ public class MainMenuJFX extends Application {
             @Override
             public void handle(Event event) {
                 try {
-                    stop();
-                    controller.getGame().getCurrentMenuJFX().stop();
                     controller.exit();
+                    stop();
+                    stage.close();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

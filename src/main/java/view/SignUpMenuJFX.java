@@ -13,21 +13,16 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.Captcha;
-import model.Game;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Objects;
-import java.util.Random;
 
 public class SignUpMenuJFX extends Application {
     private Controller controller;
@@ -96,7 +91,7 @@ public class SignUpMenuJFX extends Application {
         setPasswordRecoveryProperties();
 
         logInLink = (Hyperlink) signUpMenuPane.getChildren().get(25);
-        setHyperLinkProperties();
+        setLogInLinkProperties();
 
         mainError = (Label) signUpMenuPane.getChildren().get(26);
 
@@ -114,7 +109,7 @@ public class SignUpMenuJFX extends Application {
             public void handle(Event event) {
                 if (!isAFieldEmpty() && areErrorsEmpty()) {
                     try {
-                        popOutCaptchaPane();
+                        captchaJFX.popOutCaptchaPane();
                     } catch (URISyntaxException e) {
                         throw new RuntimeException(e);
                     } catch (MalformedURLException e) {
@@ -131,7 +126,6 @@ public class SignUpMenuJFX extends Application {
         });
         signUpButton.setOnMouseClicked(clickHandler);
         signUpButtonText.setOnMouseClicked(clickHandler);
-
     }
 
     private void setUsernameProperties() {
@@ -205,10 +199,12 @@ public class SignUpMenuJFX extends Application {
         passwordRecoveryQuestion.getSelectionModel().selectFirst();
     }
 
-    private void setHyperLinkProperties() {
+    private void setLogInLinkProperties() {
         logInLink.setOnMouseClicked(event -> {
             try {
-                new LogInMenuJFX().start(stage);
+                controller.enterLogInMenuJFX();
+                stop();
+                controller.getGame().getCurrentMenuJFX().start(stage);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -216,20 +212,18 @@ public class SignUpMenuJFX extends Application {
     }
 
     private void setCaptchaPaneProperties() {
-        signUpMenuPane.getChildren().add(captchaJFX.getCaptchaPane());
         captchaJFX.getCaptchaAnswerButton().setOnMouseClicked((event) -> {
             if (captchaJFX.getCaptchaAnswer().getText().equals(controller.getCaptchaAnswer())) {
                 try {
                     createUser();
                     mainError.setText("user created successfully!");
+                    captchaJFX.popOffCaptchaPane();
                     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(3000), event2 -> {
                             mainError.setText("");
                     }));
                     timeline.setCycleCount(1);
                     timeline.play();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             } else {
@@ -279,11 +273,6 @@ public class SignUpMenuJFX extends Application {
         signUpMenuController.createUserJFX(username.getText(), password.getText(), nickname.getText(), email.getText(),
                 (String) passwordRecoveryQuestion.getSelectionModel().getSelectedItem(),
                 passwordRecoveryAnswer.getText(), slogan);
-    }
-
-    private void popOutCaptchaPane() throws MalformedURLException, URISyntaxException {
-        captchaJFX.getCaptchaPane().setVisible(true);
-        captchaJFX.getCaptchaPane().toFront();
     }
 
     public Controller getController() {
