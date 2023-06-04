@@ -2,11 +2,13 @@ package controller;
 
 import model.Game;
 import model.User;
+import view.LogInMenuJFX;
 
 import java.io.IOException;
 
 public class LoginMenuController {
-    private final Controller controller;
+    private Controller controller;
+    private LogInMenuJFX logInMenuJFX;
     private int wrongPasswordCount = 0;
     private User attendedUser = null;
     private boolean mustStayLoggedIn = false;
@@ -19,9 +21,9 @@ public class LoginMenuController {
         this.controller = controller;
     }
 
-    public String login(String username, String password, boolean stayLoggedIn) {
+    public String login(String username, String password, boolean stayLoggedIn) throws IOException {
         attendedUser = controller.getGame().getUserByUsername(username);
-        if (attendedUser == null) return "Username and password didn’t match!";
+        if (attendedUser == null) return "User not found!";
         if (attendedUser.isPasswordNotCorrect(password)) {
             if (!attendedUser.equals(failedUser)) {
                 failedUser = attendedUser;
@@ -32,13 +34,15 @@ public class LoginMenuController {
             if (wrongPasswordCount >= 3) {
                 return "you have to wait for " + wrongPasswordCount * 2 + " seconds!";
             }
-            return "Username and password didn’t match!";
+            return "Username and password did’t match!";
         }
 
         mustStayLoggedIn = stayLoggedIn;
         failedUser = null;
-        step = 1;
-        return generateCaptcha();
+        controller.getGame().setCurrentUser(attendedUser);
+        if (mustStayLoggedIn) controller.getGame().setDataBaseCurrentUser(attendedUser);
+//        step = 1;
+        return "";
     }
 
     public String generateCaptcha() {
@@ -75,9 +79,5 @@ public class LoginMenuController {
 
     public int getStep() {
         return step;
-    }
-
-    public String getCaptchaAnswer() {
-        return captchaAnswer;
     }
 }

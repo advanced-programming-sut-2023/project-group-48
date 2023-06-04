@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.scene.Node;
+import javafx.stage.Stage;
 import model.Game;
 import model.Match.Match;
 import view.*;
@@ -7,6 +9,9 @@ import view.*;
 import java.io.IOException;
 
 public class Controller {
+    private final SignUpMenuJFX signUpMenuJFX;
+    private final LogInMenuJFX logInMenuJFX;
+    private final MainMenuJFX mainMenuJFX;
     private final SignUpMenu signUpMenu;
     private final LoginMenu loginMenu;
     private final MainMenu mainMenu;
@@ -16,8 +21,21 @@ public class Controller {
     private final TradeMenu tradeMenu;
     private final ShopMenu shopMenu;
     private final Game game;
+    private String captchaAnswer;
+    private Stage stage;
 
-    public Controller() throws IOException {
+    public Controller(Stage stage) throws IOException {
+        this.stage = stage;
+        this.signUpMenuJFX = new SignUpMenuJFX();
+        signUpMenuJFX.setController(this);
+        signUpMenuJFX.setSignUpMenuController(new SignUpMenuController(this));
+        this.logInMenuJFX = new LogInMenuJFX();
+        logInMenuJFX.setController(this);
+        logInMenuJFX.setLoginMenuController(new LoginMenuController(this));
+        this.mainMenuJFX = new MainMenuJFX();
+        mainMenuJFX.setController(this);
+        mainMenuJFX.setMainMenuController(new MainMenuController(this));
+        this.game = new Game(mainMenuJFX, signUpMenuJFX);
         this.signUpMenu = new SignUpMenu(this);
         this.loginMenu = new LoginMenu(this);
         this.mainMenu = new MainMenu(this);
@@ -26,7 +44,11 @@ public class Controller {
         this.matchMenu = new MatchMenu(this);
         this.tradeMenu = new TradeMenu(this);
         this.shopMenu = new ShopMenu(this);
-        this.game = new Game(mainMenu, signUpMenu);
+//        this.game = new Game(mainMenu, signUpMenu);
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 
     public static String getRemovedQuotationMarks(String input) {
@@ -34,14 +56,35 @@ public class Controller {
         return input;
     }
 
-    public void run() throws IOException {
-        while (game.getCurrentMenu() != null) {
-            game.getCurrentMenu().run();
+    public void run() throws Exception {
+//        while (game.getCurrentMenuJFX() != null) {
+//            game.getCurrentMenuJFX().start(stage);
+//        }
+        if (game.getCurrentMenuJFX() != null) {
+            game.getCurrentMenuJFX().start(stage);
         }
     }
 
     public Game getGame() {
         return game;
+    }
+
+    public void enterSignUpMenuJFX() {
+        game.setCurrentMenuJFX(signUpMenuJFX);
+    }
+    public void enterLogInMenuJFX() {
+        game.setCurrentMenuJFX(logInMenuJFX);
+    }
+    public void enterMainMenuJFX() {
+        game.setCurrentMenuJFX(mainMenuJFX);
+    }
+    public void logOutJFX() throws IOException {
+        game.setCurrentMenuJFX(signUpMenuJFX);
+        game.setCurrentUser(null);
+    }
+    public void exitJFX() throws IOException {
+        game.updateJsonFiles();
+        game.setCurrentMenuJFX(null);
     }
 
     public String enterLoginMenu() {
@@ -93,9 +136,24 @@ public class Controller {
     public void exit() throws IOException {
         game.updateJsonFiles();
         game.setCurrentMenu(null);
+        game.setCurrentMenuJFX(null);
     }
 
     public void setCurrentMatch(Match match) {
         matchMenu.setCurrentMatch(match);
+    }
+
+    public void setHoverProperty(Node node) {
+        node.hoverProperty().addListener(event -> {
+            node.setOpacity(1.5 - node.getOpacity());
+        });
+    }
+
+    public String getCaptchaAnswer() {
+        return captchaAnswer;
+    }
+
+    public void setCaptchaAnswer(String captchaAnswer) {
+        this.captchaAnswer = captchaAnswer;
     }
 }

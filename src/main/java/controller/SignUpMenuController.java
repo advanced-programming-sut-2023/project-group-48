@@ -19,7 +19,7 @@ public class SignUpMenuController {
         this.controller = controller;
     }
 
-    public static String getRandomPassword() {
+    public String getRandomPassword() {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String digit = "0123456789";
         String symbol = "`~!@#$%^&*()-_=+[]{}\\|'\";:,<.>/?";
@@ -42,7 +42,7 @@ public class SignUpMenuController {
         return result;
     }
 
-    public static String getSuggestedUsername(String username) {
+    public String getSuggestedUsername(String username) {
         String additionalUsername = "";
         Random random = new Random();
         int length = random.nextInt(5) + 1;
@@ -50,6 +50,34 @@ public class SignUpMenuController {
             additionalUsername += characters.charAt(random.nextInt(characters.length()));
         }
         return username + additionalUsername;
+    }
+
+    public String checkUsername(String username) {
+        if (User.isUsernameNotValid(username)) return "not a valid username!";
+        if (controller.getGame().getUserByUsername(username) != null)
+            return "username already exists!\n" + "Our suggestion for username is \"" + getSuggestedUsername(username) + "\"";
+        return "";
+    }
+
+    public String checkPassword(String password) {
+        return User.isPasswordWeak(password);
+    }
+
+    public String checkEmail(String email) {
+        if (User.isEmailNotValid(email)) return "not a valid email!";
+        return "";
+    }
+
+    public ArrayList<String> getDefaultSlogans() {
+        return User.getSlogans();
+    }
+
+    public ArrayList<String> getDefaultRecoveryQuestions() {
+        return User.getQuestions();
+    }
+
+    public void createUserJFX(String username, String password, String email, String nickname, String recoveryQuestion, String recoveryAnswer, String slogan) throws IOException {
+        controller.getGame().addUser(new User(username, password, email, nickname, recoveryQuestion, recoveryAnswer, slogan));
     }
 
     public String createUserStep(String username, String password, String passwordConfirmation, String email, String nickname, String... slogan) {

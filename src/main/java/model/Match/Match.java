@@ -181,7 +181,7 @@ public class Match {
                 path.remove(path.size() - 1);
                 return false;
             }
-            if (currentColumn == destinationColumn && currentRow == destinationRow) {
+            if (Math.abs(currentColumn - destinationColumn) == 1 && Math.abs(currentRow - destinationRow) == 1) {
                 return true;
             }
             if (pathGenerator(currentRow, currentColumn, destinationRow, destinationColumn, borderRow, borderColumn, validDirections, path))
@@ -223,8 +223,11 @@ public class Match {
             validDirections.add(Direction.LEFT);
             borderColumn = destinationColumn - 1;
         }
-        if (pathGenerator(startRow, startColumn, destinationRow, destinationColumn, borderRow, borderColumn, validDirections, path))
+        if (pathGenerator(startRow, startColumn, destinationRow, destinationColumn, borderRow, borderColumn, validDirections, path)) {
+            path.remove(path.size() - 1);
             return path;
+        }
+        System.out.println("fialed");
         return null;
     }
 
@@ -273,7 +276,7 @@ public class Match {
         return row < 1 || row > MAX_ROW || column < 1 || column > MAX_COLUMN;
     }
 
-    public ArrayList<People> getNearByEnemy(int row, int column, int range) {
+    public ArrayList<People> getNearByEnemy(Governance governance, int row, int column, int range) {
         ArrayList<People> enemies = new ArrayList<>();
         int startRow = row - range;
         int startColumn = column - range;
@@ -281,7 +284,7 @@ public class Match {
             for (int j = 0; j < 2 * range + 1; j++) {
                 if (areCoordinatesNotValid(startRow + i, startColumn + j)) continue;
                 for (People person : getCell(startRow + i, startColumn + j).getPeople()) {
-                    if (!person.getGovernance().equals(currentPlayer.getGovernance()) && person instanceof Troop) {
+                    if (!person.getGovernance().equals(governance) && person instanceof Troop) {
                         enemies.add(person);
                     }
                 }

@@ -5,6 +5,7 @@ import controller.MatchMenuController;
 import model.Match.Direction;
 import model.Match.Match;
 import view.Commands.MatchMenuCommands;
+import view.Menu;
 
 import java.util.regex.Matcher;
 
@@ -81,8 +82,8 @@ public class MatchMenu extends Menu {
                 System.out.println(matchMenuController.collapseTunnel(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.DIG_DITCH)) != null) {
                 System.out.println(matchMenuController.digDitch(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
-            } else if (command.matches("^fill\\s+ditch$")) {
-                System.out.println(matchMenuController.fillDitch());
+            } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.FILL_DITCH)) != null) {
+                System.out.println(matchMenuController.fillDitch(Integer.parseInt(matcher.group("y")), Integer.parseInt(matcher.group("x"))));
             } else if ((matcher = MatchMenuCommands.getMatcher(command, MatchMenuCommands.BUILD_EQUIPMENT)) != null) {
                 // TODO
             } else if (command.matches("^disband\\s+unit$")) {

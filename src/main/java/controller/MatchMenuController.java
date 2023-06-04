@@ -161,7 +161,7 @@ public class MatchMenuController {
             return "building is already at full health!";
         if (!building.getGovernance().areResourcesEnoughToRepair(building.getType()))
             return "you don't have enough resources to repair this building!";
-        if (match.getNearByEnemy(building.getRow(), building.getColumn(), 1).size() != 0)
+        if (match.getNearByEnemy(match.getCurrentPlayer().getGovernance(), building.getRow(), building.getColumn(), 1).size() != 0)
             return "there is an enemy nearby!";
 
         match.getSelectedBuilding().repair();
@@ -342,8 +342,8 @@ public class MatchMenuController {
         return "oil poured successfully!";
     }
 
-    public String fillDitch() {
-        Building building = match.getSelectedBuilding();
+    public String fillDitch(int row, int column) {
+        Building building = match.getCell(row, column).getBuilding();
         if (building == null) return "no building selected!";
         if (!building.getType().equals("Pitch Ditch"))
             return "this building is not a ditch!";

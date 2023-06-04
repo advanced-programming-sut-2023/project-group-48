@@ -69,6 +69,9 @@ public class User {
     public static String getQuestionByIndex(int index) {
         return questions.get(index);
     }
+    public static ArrayList<String> getQuestions() {
+        return questions;
+    }
 
     public static int questionsCount() {
         return questions.size();
@@ -76,6 +79,10 @@ public class User {
 
     public static String getRandomSlogan() {
         return slogans.get(new Random().nextInt(slogans.size()));
+    }
+
+    public static ArrayList<String> getSlogans() {
+        return slogans;
     }
 
     private static String getEncryptedString(String originalString) {
