@@ -44,7 +44,7 @@ public class MatchMenuJFX extends Application {
         Rectangle[][] map = new Rectangle[height][width];
         double[][] verticalCoordinate = new double[height][width];
         double[][] horizontalCoordinate = new double[height][width];
-        for (int i = 0; i < height; i++)
+        for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 map[i][j] = new Rectangle(j * 50, i * 50, 50, 50);
                 pane.getChildren().add(map[i][j]);
@@ -66,5 +66,6 @@ public class MatchMenuJFX extends Application {
                     }
                 });
             }
+        }
     }
 }

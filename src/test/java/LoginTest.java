@@ -1,13 +1,13 @@
 import controller.Controller;
 import controller.LoginMenuController;
+import javafx.stage.Stage;
 import model.User;
 import org.junit.jupiter.api.Assertions;
 
 import java.io.IOException;
 
 public class LoginTest {
-
-    private final Controller controller = new Controller();
+    private final Controller controller = new Controller(new Stage());
     private final LoginMenuController loginMenuController = new LoginMenuController(controller);
 
 
@@ -44,7 +44,7 @@ public class LoginTest {
     @org.junit.jupiter.api.Test
     public void correctLoginAttemptTest() throws IOException {
         loginMenuController.login("rahim", "RahimKh2000$", false);
-        String output = loginMenuController.finalStep(loginMenuController.getCaptchaAnswer());
+        String output = loginMenuController.finalStep(controller.getCaptchaAnswer());
         Assertions.assertEquals(output, "logged in successfully!\n" + controller.enterMainMenu());
     }
 }

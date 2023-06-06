@@ -7,7 +7,7 @@ import view.LogInMenuJFX;
 import java.io.IOException;
 
 public class LoginMenuController {
-    private Controller controller;
+    private final Controller controller;
     private LogInMenuJFX logInMenuJFX;
     private int wrongPasswordCount = 0;
     private User attendedUser = null;
