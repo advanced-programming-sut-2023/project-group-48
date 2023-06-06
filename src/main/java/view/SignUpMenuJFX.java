@@ -45,7 +45,7 @@ public class SignUpMenuJFX extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         signUpMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/SignUpMenu.fxml")));
-        signUpMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/2.jpg")).toExternalForm()))));
+        signUpMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/4.jpg")).toExternalForm()))));
         signUpMenuPane.setOnMouseClicked(new EventHandler() {
             @Override
             public void handle(Event event) {
@@ -138,6 +138,11 @@ public class SignUpMenuJFX extends Application {
         password.textProperty().addListener((observable, oldValue, newValue) -> {
             visiblePassword.setText(password.getText());
             passwordError.setText(signUpMenuController.checkPassword(password.getText()));
+            if (!password.getText().equals(passwordConfirmation.getText())) {
+                passwordConfirmationError.setText("Passwords don't match!");
+            } else {
+                passwordConfirmationError.setText("");
+            }
         });
         visiblePassword.textProperty().addListener((observable, oldValue, newValue) -> {
             password.setText(visiblePassword.getText());
@@ -184,6 +189,7 @@ public class SignUpMenuJFX extends Application {
         sloganChoiceBox.getSelectionModel().selectFirst();
         customSlogan.setOnMouseClicked(event -> {
             if (customSlogan.isSelected()) {
+                sloganChoiceBox.getSelectionModel().selectFirst();
                 sloganChoiceBox.setVisible(false);
                 slogan.setVisible(true);
             } else {
