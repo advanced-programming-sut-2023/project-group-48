@@ -1,13 +1,6 @@
 package view;
 
-import controller.Controller;
-import controller.MapMenuController;
-import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -16,57 +9,56 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
-import javafx.stage.Stage;
+import javafx.scene.shape.Rectangle;
 import model.Match.Tile;
 
 import java.util.Objects;
 
-public class MapMenuJFX extends Application {
-    private Controller controller;
-    private MapMenuController mapMenuController;
-    private AnchorPane viewPane;
-    private Pane mapPane;
+public class MapJFX {
+    private final AnchorPane viewPane;
+    private final Pane mapPane;
     private Tile[][] map;
     private int firstI = 199, lastI = 0, firstJ = 199, lastJ = 0;
 
-    private Stage stage;
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        this.stage = stage;
-        viewPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MapMenu.fxml")));
-        mapPane = (Pane) viewPane.getChildren().get(0);
-        setMapPaneMovable();
+    public MapJFX(AnchorPane viewPane) {
+        this.viewPane = viewPane;
+        mapPane = new Pane();
+        setMapPane();
         setMap();
-        Scene scene = new Scene(viewPane);
-        stage.setScene(scene);
-        mapPane.requestFocus();
-        stage.show();
     }
 
-    private void setMapPaneMovable() {
+    public Pane getMapPane() {
+        return mapPane;
+    }
+
+    public void addNodeToMap()
+
+    private void setMapPane() {
         mapPane.setPrefWidth(200 * Tile.WIDTH + 20);
         mapPane.setPrefHeight(200 * Tile.HEIGHT / 2 + 20);
         mapPane.setLayoutX(viewPane.getPrefWidth() / 2 - mapPane.getPrefWidth() / 2);
         mapPane.setLayoutY(viewPane.getPrefHeight() / 2 - mapPane.getPrefHeight() / 2);
+        Rectangle rectangle = new Rectangle(0, 0, mapPane.getPrefWidth(), mapPane.getPrefHeight());
+        rectangle.setStroke(Color.BLACK);
+        mapPane.getChildren().add(rectangle);
+        viewPane.getChildren().add(mapPane);
+
         mapPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 System.out.println(keyEvent.getCode().toString());
                 switch (keyEvent.getCode()) {
                     case RIGHT:
-                        mapPane.setLayoutX(mapPane.getLayoutX() - 100);
+                        mapPane.setLayoutX(mapPane.getLayoutX() - (2 * Tile.WIDTH));
                         break;
                     case LEFT:
-                        mapPane.setLayoutX(mapPane.getLayoutX() + 100);
+                        mapPane.setLayoutX(mapPane.getLayoutX() + (2 * Tile.WIDTH));
                         break;
                     case UP:
-                        mapPane.setLayoutY(mapPane.getLayoutY() + 100);
+                        mapPane.setLayoutY(mapPane.getLayoutY() + (2 * Tile.HEIGHT / 2));
                         break;
                     case DOWN:
-                        mapPane.setLayoutY(mapPane.getLayoutY() - 100);
+                        mapPane.setLayoutY(mapPane.getLayoutY() - (2 * Tile.HEIGHT / 2));
                         break;
                     case Z:
                         mapPane.setScaleX(0.9 * mapPane.getScaleX());
@@ -81,8 +73,8 @@ public class MapMenuJFX extends Application {
                         || keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.UP)) {
                     addNewCells(keyEvent);
                     removeOldCells(keyEvent);
+                    System.out.println("firstI = " + firstI + " lastI = " + lastI + " firstJ = " + firstJ + " lastJ = " + lastJ);
                 }
-                mapPane.requestFocus();
             }
         });
     }
@@ -118,27 +110,31 @@ public class MapMenuJFX extends Application {
     private void addNewCells(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.RIGHT) || keyEvent.getCode().equals(KeyCode.LEFT)) {
             boolean isRight = keyEvent.getCode().equals(KeyCode.RIGHT);
-            for (int j = isRight ? lastJ : firstJ; j != (isRight ? 200 : 0); j += isRight ? 1 : -1) {
-                for (int i = 0; i < 200; i++) {
+            for (int j = isRight ? lastJ : firstJ; j != (isRight ? 200 : -1); j += isRight ? 1 : -1) {
+                for (int i = firstI; i <= lastI; i++) {
                     if (isInBorder(map[i][j])) {
-                        mapPane.getChildren().add(map[i][j]);
-                        System.out.println("added");
+                        if (!mapPane.getChildren().contains(map[i][j])) mapPane.getChildren().add(map[i][j]);
                     }
                     else {
-                        if (isRight) lastJ = j;
-                        else firstJ = j;
+                        if (isRight) lastJ = j - 1;
+                        else firstJ = j + 1;
                         return;
                     }
                 }
             }
         } else {
             boolean isUp = keyEvent.getCode().equals(KeyCode.UP);
-            for (int i = isUp ? lastI : firstI; i != (isUp ? 200 : 0); i += isUp ? 1 : -1) {
-                for (int j = 0; j < 200; j++) {
-                    if (isInBorder(map[i][j])) mapPane.getChildren().add(map[i][j]);
+            for (int i = isUp ? lastI : firstI; i != (isUp ? 200 : -1); i += isUp ? 1 : -1) {
+                for (int j = firstJ; j <= lastJ; j++) {
+                    if (isInBorder(map[i][j])) {
+                        if (!mapPane.getChildren().contains(map[i][j])) mapPane.getChildren().add(map[i][j]);
+                    }
                     else {
-                        if (isUp) lastI = i;
-                        else firstI = i;
+                        System.out.println("i = " + i + " j = " + j);
+                        System.out.println(isInBorder(map[i][j]));
+                        System.out.println("x = " + (map[i][j].getX() + mapPane.getLayoutX())  + " y = " + (map[i][j].getY() + mapPane.getLayoutY()));
+                        if (isUp) lastI = i - 1;
+                        else firstI = i + 1;
                         return;
                     }
                 }
@@ -146,10 +142,10 @@ public class MapMenuJFX extends Application {
         }
     }
 
-    public void removeOldCells(KeyEvent keyEvent) {
+    private void removeOldCells(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.RIGHT) || keyEvent.getCode().equals(KeyCode.LEFT)) {
             boolean isRight = keyEvent.getCode().equals(KeyCode.RIGHT);
-            for (int j = isRight ? firstJ : lastJ; j != (isRight ? 200 : 0); j += isRight ? 1 : -1) {
+            for (int j = isRight ? firstJ : lastJ; j != (isRight ? 200 : -1); j += isRight ? 1 : -1) {
                 for (int i = 0; i < 200; i++) {
                     if (!isInBorder(map[i][j])) mapPane.getChildren().remove(map[i][j]);
                     else {
@@ -161,7 +157,7 @@ public class MapMenuJFX extends Application {
             }
         } else {
             boolean isUp = keyEvent.getCode().equals(KeyCode.UP);
-            for (int i = isUp ? firstI : lastI; i != (isUp ? 200 : 0); i += isUp ? 1 : -1) {
+            for (int i = isUp ? firstI : lastI; i != (isUp ? 200 : -1); i += isUp ? 1 : -1) {
                 for (int j = 0; j < 200; j++) {
                     if (!isInBorder(map[i][j])) mapPane.getChildren().remove(map[i][j]);
                     else {
