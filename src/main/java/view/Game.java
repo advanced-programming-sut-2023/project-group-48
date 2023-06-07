@@ -48,7 +48,7 @@ public class Game extends Application {
             for (int j = 0; j < width; j++) {
                 map[i][j] = new Rectangle(j * 50, i * 50, 50, 50);
                 pane.getChildren().add(map[i][j]);
-                map[i][j].setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/tile/desert_tile.jpg")).toExternalForm())));
+                map[i][j].setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/tiles/desert_tile.jpg")).toExternalForm())));
                 map[i][j].getTransforms().addAll(rotateZ, rotateX);
                 verticalCoordinate[i][j] = 50 * (i + j) / Math.sqrt(2) * Math.cos(60 * Math.PI / 180);
                 horizontalCoordinate[i][j] = 50 * (j - i) / Math.sqrt(2) - 25 * Math.sqrt(2);
@@ -61,7 +61,7 @@ public class Game extends Application {
                     public void handle(MouseEvent mouseEvent) {
                         Rectangle building = new Rectangle(horizontalCoordinate[finalI][finalJ], verticalCoordinate[finalI][finalJ], 50 * Math.sqrt(2), 309 / 190 * (50 * Math.sqrt(2)));
                         building.setY(building.getY() - building.getHeight() + 50 * Math.sqrt(2) * Math.cos(60 * Math.PI / 180));
-                        building.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/tile/collection12.png")).toExternalForm())));
+                        building.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/tiles/collection12.png")).toExternalForm())));
                         pane.getChildren().add(building);
                     }
                 });
