@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.Buildings.BuildingType;
 import model.Match.Tile;
 
 import java.util.Objects;
@@ -34,6 +35,7 @@ public class MatchMenuJFX extends Application {
         viewPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MapMenu.fxml")));
         setViePane();
         mapJFX = new MapJFX(viewPane);
+        mapJFX.addBuildingToMap(100 ,100, BuildingType.getImagePattern("Barrack"));
         Scene scene = new Scene(viewPane);
         stage.setScene(scene);
         mapJFX.getMapPane().requestFocus();
