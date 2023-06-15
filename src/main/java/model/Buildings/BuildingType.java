@@ -1,26 +1,25 @@
 package model.Buildings;
 
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import model.Match.LandType;
 import model.Match.Property;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public enum BuildingType {
     NORMAL(new ArrayList<>(Arrays.asList("Base", "Drawbridge", "Hovel", "Caged War Dogs", "Siege Tent", "Church", "Cathedral",
-            "Tall Wall", "Short Wall", "Stair", "Good Things", "Bad Things", "Shop"))), // 12
+            "Tall Wall", "Short Wall", "Stair", "Good Things", "Bad Things", "Shop"))), // 13
     GATEHOUSE(new ArrayList<>(Arrays.asList("Small Stone Gatehouse", "Large Stone Gatehouse"))), // 2
     TOWER(new ArrayList<>(Arrays.asList("Lookout Tower", "Perimeter Tower", "Defence Turret", "Square Tower", "Round Tower"))), // 5
     INDUSTRIAL_CENTER(new ArrayList<>(Arrays.asList("Stable", "Mill", "Iron Mine", "Pitch Rig", "ًQuarry", "Woodcutter",
             "Oil Smelter", "Apple Orchard", "Diary Farmer", "Hops Farmer", "Hunter Post", "Wheat Farmer", "Bakery", "Brewer",
             "Armourer", "Blacksmith", "Fletcher", "Pole Turner"))), // 18
     INN(new ArrayList<>(List.of("Inn"))), // 1
-    TRAP(new ArrayList<>(Arrays.asList("Killing Pit", "Pitch Ditch", "Tunnel"))), // 3
+    TRAP(new ArrayList<>(Arrays.asList("Killing Pit", "Pitch Ditch"))), // 2
     RECRUITMENT_CENTER(new ArrayList<>(Arrays.asList("Barrack", "Mercenary Post", "Engineer Guild"))), // 3
     STORAGE(new ArrayList<>(Arrays.asList("Armoury", "Stockpile", "Granary"))), // 3
-    ENVIRONMENT(new ArrayList<>(Arrays.asList("Desert Shrub", "Cherry Palm", "olive Tree", "Coconut Palm", "Date", "Tree", "Rock")));
+    ENVIRONMENT(new ArrayList<>(Arrays.asList("Desert Shrub", "Cherry Palm", "olive Tree", "Coconut Palm", "Date", "Tree", "Rock"))); // 7
 
     private static final BuildingType[] buildingTypes = {NORMAL, GATEHOUSE, TOWER, INDUSTRIAL_CENTER, INN, TRAP, RECRUITMENT_CENTER, STORAGE, ENVIRONMENT};
     private static final ArrayList<String> castleTypes = new ArrayList<>(Arrays.asList("Small Stone Gatehouse", "Large Stone Gatehouse",
@@ -28,8 +27,6 @@ public enum BuildingType {
             "Barrack", "Mercenary Post", "Engineer Guild", "Killing Pit", "Oil Smelter", "Pitch Ditch", "Caged War Dogs", "Siege Tent", "Stable"));
     private static final HashMap<String, Integer> buildingsHp = new HashMap<>() {{
         put("Base", 1000);
-        put("Small Stone Gatehouse", 300);
-        put("Large Stone Gatehouse", 400);
         put("Drawbridge", 300);
         put("Hovel", 400);
         put("Caged War Dogs", 300);
@@ -38,6 +35,12 @@ public enum BuildingType {
         put("Cathedral", 700);
         put("Tall Wall", 300);
         put("Short Wall", 200);
+        put("Stair", 200);
+        put("Good Things", 100);
+        put("Bad Things", 100);
+        put("Shop", 300);
+        put("Small Stone Gatehouse", 300);
+        put("Large Stone Gatehouse", 400);
         put("Lookout Tower", 400);
         put("Perimeter Tower", 400);
         put("Defence Turret", 300);
@@ -70,16 +73,11 @@ public enum BuildingType {
         put("Armoury", 500);
         put("Stockpile", 500);
         put("Granary", 400);
-        put("Shop", 300);
-        put("Good Things", 100);
-        put("Bad Things", 100);
         //TODO: soldiers should not hurt all buildings(like trees and rocks)
         //TODO: adding shop and its effect
     }};
     private static final HashMap<String, ArrayList<LandType>> ValidLandTypes = new HashMap<>() {{
         put("Base", new ArrayList<>(Arrays.asList(LandType.LAND)));
-        put("Small Stone Gatehouse", new ArrayList<>(Arrays.asList(LandType.LAND)));
-        put("Large Stone Gatehouse", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Drawbridge", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Hovel", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Caged War Dogs", new ArrayList<>(Arrays.asList(LandType.LAND)));
@@ -88,6 +86,10 @@ public enum BuildingType {
         put("Cathedral", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Tall Wall", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Short Wall", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Stair", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Small Stone Gatehouse", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Large Stone Gatehouse", new ArrayList<>(Arrays.asList(LandType.LAND)));
+        put("Shop", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Lookout Tower", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Perimeter Tower", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Defence Turret", new ArrayList<>(Arrays.asList(LandType.LAND)));
@@ -120,14 +122,8 @@ public enum BuildingType {
         put("Armoury", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Stockpile", new ArrayList<>(Arrays.asList(LandType.LAND)));
         put("Granary", new ArrayList<>(Arrays.asList(LandType.LAND)));
-    }}; // TODO
+    }};
     private static final HashMap<String, HashMap<Property, Integer>> buildingsMaterialsNeedToBuild = new HashMap<>() {{
-        put("Small Stone Gatehouse", new HashMap<>() {{
-            put(Property.WOOD, 5);
-        }});
-        put("Large Stone Gatehouse", new HashMap<>() {{
-            put(Property.WOOD, 10);
-        }});
         put("Drawbridge", new HashMap<>() {{
             put(Property.WOOD, 10);
         }});
@@ -151,6 +147,24 @@ public enum BuildingType {
         }});
         put("Short Wall", new HashMap<>() {{
             put(Property.WOOD, 5);
+        }});
+        put("Stair", new HashMap<>() {{
+            put(Property.WOOD, 5);
+        }});
+        put("Good Things", new HashMap<>() {{
+            put(Property.WOOD, 5);
+        }});
+        put("Bad Things", new HashMap<>() {{
+            put(Property.WOOD, 5);
+        }});
+        put("Shop", new HashMap<>() {{
+            put(Property.WOOD, 5);
+        }});
+        put("Small Stone Gatehouse", new HashMap<>() {{
+            put(Property.WOOD, 5);
+        }});
+        put("Large Stone Gatehouse", new HashMap<>() {{
+            put(Property.WOOD, 10);
         }});
         put("Lookout Tower", new HashMap<>() {{
             put(Property.WOOD, 50);
@@ -250,6 +264,55 @@ public enum BuildingType {
         }});
     }};
     private static final ArrayList<String> validBuildingsToPass = new ArrayList<>(Arrays.asList("Short Wall"));
+    private static final HashMap<String, ImagePattern> imagePatterns = new HashMap<>() {{
+        put("Base", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Base.png")).toExternalForm())));
+        put("Drawbridge", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Drawbridge.png")).toExternalForm())));
+        put("Hovel", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Hovel.png")).toExternalForm())));
+//        put("Caged War Dogs", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Caged War Dogs.png")).toExternalForm())));
+//        put("Siege Tent", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Siege Tent.png")).toExternalForm())));
+        put("Church", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Church.png")).toExternalForm())));
+        put("Cathedral", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Cathedral.png")).toExternalForm())));
+        put("Tall Wall", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Tall Wall.png")).toExternalForm())));
+        put("Short Wall", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Short Wall.png")).toExternalForm())));
+//        put("Stair", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Stair.png")).toExternalForm())));
+//        put("Good Things", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Good Stuff.png")).toExternalForm())));
+//        put("Bad Things", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Bad Stuff.png")).toExternalForm())));
+        put("Shop", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Shop.png")).toExternalForm())));
+        put("Small Stone Gatehouse", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/GateHouse/Small Stone Gatehouse.png")).toExternalForm())));
+        put("Large Stone Gatehouse", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/GateHouse/Large Stone Gatehouse.png")).toExternalForm())));
+        put("Lookout Tower", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Tower/Lookout Tower.png")).toExternalForm())));
+        put("Perimeter Tower", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Tower/Perimeter Tower.png")).toExternalForm())));
+        put("Defence Turret", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Tower/Defence Turret.png")).toExternalForm())));
+        put("Square Tower", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Tower/Square Tower.png")).toExternalForm())));
+        put("Round Tower", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Tower/Round Tower.png")).toExternalForm())));
+        put("Stable", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Stable.png")).toExternalForm())));
+        put("Mill", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Mill.png")).toExternalForm())));
+        put("Iron Mine", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Iron Mine.png")).toExternalForm())));
+        put("Pitch Rig", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Pitch Rig.png")).toExternalForm())));
+        put("Quarry", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Quarry.png")).toExternalForm())));
+        put("Woodcutter", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Woodcutter.png")).toExternalForm())));
+        put("Oil Smelter", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Oil Smelter.png")).toExternalForm())));
+        put("Apple Orchard", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Apple Orchard.png")).toExternalForm())));
+        put("Diary Farmer", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Diary Farmer.png")).toExternalForm())));
+        put("Hops Farmer", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Hops Farmer.png")).toExternalForm())));
+        put("Hunter Post", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Hunter Post.png")).toExternalForm())));
+        put("Wheat Farmer", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Wheat Farmer.png")).toExternalForm())));
+        put("Bakery", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Bakery.png")).toExternalForm())));
+        put("Brewer", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Brewer.png")).toExternalForm())));
+        put("Armourer", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Armourer.png")).toExternalForm())));
+        put("Blacksmith", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Blacksmith.png")).toExternalForm())));
+        put("Fletcher", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Fletcher.png")).toExternalForm())));
+        put("Pole Turner", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/IndustrialCenter/Pole Turner.png")).toExternalForm())));
+        put("Inn", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Inn/Inn.png")).toExternalForm())));
+        put("Barrack", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/RecruitmentCenter/Barrack.png")).toExternalForm())));
+        put("Mercenary Post", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/RecruitmentCenter/Mercenary Post.png")).toExternalForm())));
+        put("Engineer Guild", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/RecruitmentCenter/Engineer Guild.png")).toExternalForm())));
+//        put("Killing Pit", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Trap/Killing Pit.png")).toExternalForm())));
+        put("Pitch Ditch", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Trap/Pitch Ditch.png")).toExternalForm())));
+        put("Armoury", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Storage/Armoury.png")).toExternalForm())));
+        put("Stockpile", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Storage/Stockpile.png")).toExternalForm())));
+        put("Granary", new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Storage/Granary.png")).toExternalForm())));
+    }};
 
     private final ArrayList<String> buildings;
 
@@ -287,5 +350,16 @@ public enum BuildingType {
 
     public static boolean isBuildingValidToPass(Building building) {
         return validBuildingsToPass.contains(building.getType());
+    }
+
+    public static ImagePattern getImagePattern(String type) {
+        return imagePatterns.get(type);
+    }
+
+    public static String getTypeByImagePattern(ImagePattern imagePattern) {
+        for (String type : imagePatterns.keySet()) {
+            if (imagePatterns.get(type).equals(imagePattern)) return type;
+        }
+        return null;
     }
 }
