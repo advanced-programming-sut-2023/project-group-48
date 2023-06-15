@@ -112,7 +112,7 @@ public class LogInMenuJFX extends Application {
     private void setSignUpLinkProperties() {
         signUpLink.setOnMouseClicked((event) -> {
             try {
-                controller.enterMainMenuJFX();
+                controller.enterSignUpMenu();
                 stop();
                 controller.getGame().getCurrentMenuJFX().start(stage);
             } catch (Exception e) {
