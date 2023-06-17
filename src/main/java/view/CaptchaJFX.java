@@ -87,4 +87,13 @@ public class CaptchaJFX {
         controller.setCaptchaAnswer(captchaAns);
         this.captchaAnswer.setText("");
     }
+
+    public void adjust(double ratioX, double ratioY) {
+        Adjust.adjustPane(captchaPane, ratioX, ratioY);
+        Adjust.adjustRectangle(captchaPicture, ratioX, ratioY);
+        Adjust.adjustCircle(refreshCaptchaButton, ratioX, ratioY);
+        Adjust.adjustLabel(captchaError, ratioX, ratioY);
+        Adjust.adjustTextField(captchaAnswer, ratioX, ratioY);
+        Adjust.adjustButton(captchaAnswerButton, ratioX, ratioY);
+    }
 }

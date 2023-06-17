@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LogInMenuJFX">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="80.0" layoutX="440.0" layoutY="393.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" x="70.0" y="177.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="80.0" layoutX="510.0" layoutY="570.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" />
       <Label alignment="CENTER" layoutX="610.0" layoutY="585.0" prefHeight="50.0" prefWidth="200.0" text="Log In">
          <font>
             <Font size="24.0" />

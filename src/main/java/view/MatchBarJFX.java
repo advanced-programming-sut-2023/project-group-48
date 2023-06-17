@@ -13,11 +13,14 @@ import javafx.scene.shape.Rectangle;
 import model.Buildings.BuildingType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class MatchBarJFX {
     private AnchorPane viewPane;
     private AnchorPane mainBarPane, normalBuildingsPane, gateHousePane, industrialCenterPane1, industrialCenterPane2, industrialCenterPane3, recruitmentCenterPane, storagePane, trapPane;
+    private Rectangle normalButton, gateHouseButton, industrialButton, recruitmentButton, storageButton, trapButton;
+    private ArrayList<AnchorPane> anchorPanes;
     private double selectBarWidth, selectBarHeight, selectBarX, selectBarY;
     private ImagePattern selectedBuildingImagePattern;
 
@@ -33,6 +36,7 @@ public class MatchBarJFX {
         setRecruitmentCenterPane();
         setStoragePane();
         setTrapPane();
+        this.anchorPanes = new ArrayList<>(Arrays.asList(normalBuildingsPane, gateHousePane, industrialCenterPane1, recruitmentCenterPane, storagePane, trapPane));
     }
 
     private void addClickableToRectangle(AnchorPane pane, ImagePattern... imagePatterns) {
@@ -84,12 +88,46 @@ public class MatchBarJFX {
         mainBarPane.setLayoutX(0);
         mainBarPane.setLayoutY(viewPane.getPrefHeight() - mainBarPane.getPrefHeight());
         mainBarPane.setBackground(Background.fill(mainBarImage));
+        addButtons();
         selectBarY = mainBarPane.getLayoutY();
         selectBarX = mainBarPane.getLayoutX() + mainBarPane.getPrefWidth() / 3;
         selectBarHeight = mainBarPane.getHeight();
         selectBarWidth = mainBarPane.getPrefWidth() / 3;
-        // TODO add buttons
         viewPane.getChildren().add(mainBarPane);
+    }
+
+    private void addButtons() {
+        double lastX = selectBarX;
+        ArrayList<ImagePattern> imagePatterns = new ArrayList<>();
+        ArrayList<Rectangle> rectangles = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            imagePatterns.add(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/menu/" + (i + 1))).toExternalForm())));
+            imagePatterns.add(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/menu/" + (i + 2))).toExternalForm())));
+            imagePatterns.add(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/menu/" + (i + 3))).toExternalForm())));
+            rectangles.add(new Rectangle(lastX, mainBarPane.getPrefHeight() - imagePatterns.get(i).getImage().getHeight(), imagePatterns.get(i).getImage().getWidth(), imagePatterns.get(i).getImage().getWidth()));
+            rectangles.get(i).setFill(imagePatterns.get(i));
+            int finalI = i;
+            rectangles.get(i).hoverProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                    if (t1) {
+                        rectangles.get(finalI).setFill(imagePatterns.get(finalI));
+                    } else {
+                        rectangles.get(finalI).setFill(imagePatterns.get(finalI + 1));
+                    }
+                }
+            });
+            int finalI1 = i;
+            rectangles.get(i).setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    rectangles.get(finalI).setFill(imagePatterns.get(finalI + 2));
+                    anchorPanes.get(finalI1).setVisible(true);
+                    anchorPanes.get(finalI1).toFront();
+                }
+            });
+            mainBarPane.getChildren().add(rectangles.get(i));
+        }
     }
 
     private AnchorPane getBarPane() {
