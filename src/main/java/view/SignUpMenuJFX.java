@@ -43,6 +43,7 @@ public class SignUpMenuJFX extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        System.out.println("started");
         this.stage = stage;
         signUpMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/SignUpMenu.fxml")));
         signUpMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/4.jpg")).toExternalForm()))));
@@ -180,14 +181,16 @@ public class SignUpMenuJFX extends Application {
 
     private void setUsernameProperties() {
         username.textProperty().addListener((observable, oldValue, newValue) -> {
-            usernameError.setText(signUpMenuController.checkUsername(username.getText()));
+            if (username.getText().isEmpty()) usernameError.setText("");
+            else usernameError.setText(signUpMenuController.checkUsername(username.getText()));
         });
     }
 
     private void setPasswordProperties() {
         password.textProperty().addListener((observable, oldValue, newValue) -> {
             visiblePassword.setText(password.getText());
-            passwordError.setText(signUpMenuController.checkPassword(password.getText()));
+            if (password.getText().isEmpty()) passwordError.setText("");
+            else passwordError.setText(signUpMenuController.checkPassword(password.getText()));
             if (!password.getText().equals(passwordConfirmation.getText())) {
                 passwordConfirmationError.setText("Passwords don't match!");
             } else {
@@ -290,31 +293,32 @@ public class SignUpMenuJFX extends Application {
     }
 
     private boolean isAFieldEmpty() {
+        boolean result = false;
         if (username.getText().isEmpty()) {
             usernameError.setText("empty field!");
-            return true;
+            result = true;
         }
         if (password.getText().isEmpty()) {
             passwordError.setText("empty field!");
-            return true;
+            result = true;
         }
         if (nickname.getText().isEmpty()) {
             nicknameError.setText("empty field!");
-            return true;
+            result = true;
         }
         if (email.getText().isEmpty()) {
             emailError.setText("empty field!");
-            return true;
+            result = true;
         }
         if (passwordRecoveryAnswer.getText().isEmpty()) {
             passwordRecoveryAnswerError.setText("empty field!");
-            return true;
+            result = true;
         }
         if (passwordConfirmation.getText().isEmpty()) {
             passwordConfirmationError.setText("empty field!");
-            return true;
+            result = true;
         }
-        return false;
+        return result;
     }
 
     private boolean areErrorsEmpty() {

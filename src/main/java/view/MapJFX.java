@@ -15,12 +15,14 @@ import model.Match.Tile;
 import java.util.Objects;
 
 public class MapJFX {
+    private final MatchMenuJFX matchMenuJFX;
     private final AnchorPane viewPane;
     private final Pane mapPane;
     private Tile[][] map;
     private int firstI = 199, lastI = 0, firstJ = 199, lastJ = 0;
 
-    public MapJFX(AnchorPane viewPane) {
+    public MapJFX(MatchMenuJFX matchMenuJFX, AnchorPane viewPane) {
+        this.matchMenuJFX = matchMenuJFX;
         this.viewPane = viewPane;
         mapPane = new Pane();
         setMapPane();
@@ -40,6 +42,9 @@ public class MapJFX {
         map[i][j].setRectangle(rectangle);
         mapPane.getChildren().add(rectangle);
         rectangle.toFront();
+        // TODO
+//        if (i % 2 == 0 && map[i - 1][j - 1].getRectangle() != null) map[i - 1][j - 1].getRectangle().toFront();
+//        if (i % 2 == 1 && map[i - 1][j].getRectangle() !=null) map[i - 1][j].getRectangle().toFront();
     }
 
     private void setMapPane() {
@@ -109,13 +114,13 @@ public class MapJFX {
                 map[i][j].setFill(defaultTileImage);
                 int finalJ = j;
                 int finalI = i;
-                int finalJ1 = j;
-                int finalI1 = i;
                 map[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        System.out.println("i " + finalI1 + " j " + finalJ1);
-                        map[finalI][finalJ].setOpacity(1.5 - map[finalI][finalJ].getOpacity());
+                        if (matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern() != null)
+                            addBuildingToMap(finalI, finalJ, matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern());
+                        else
+                            map[finalI][finalJ].setOpacity(1.5 - map[finalI][finalJ].getOpacity());
                     }
                 });
                 if (isInBorder(map[i][j])) {

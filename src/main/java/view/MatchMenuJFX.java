@@ -26,6 +26,7 @@ public class MatchMenuJFX extends Application {
     private MapMenuController mapMenuController;
     private AnchorPane viewPane;
     private MapJFX mapJFX;
+    private MatchBarJFX matchBarJFX;
 
     private Stage stage;
 
@@ -34,7 +35,8 @@ public class MatchMenuJFX extends Application {
         this.stage = stage;
         viewPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MapMenu.fxml")));
         setViePane();
-        mapJFX = new MapJFX(viewPane);
+        mapJFX = new MapJFX(this, viewPane);
+        matchBarJFX = new MatchBarJFX(this, viewPane);
         mapJFX.addBuildingToMap(100 ,100, BuildingType.getImagePattern("Barrack"));
         Scene scene = new Scene(viewPane);
         stage.setScene(scene);
@@ -45,5 +47,13 @@ public class MatchMenuJFX extends Application {
     private void setViePane() {
         viewPane.setPrefWidth(Math.ceil(viewPane.getPrefWidth() / Tile.WIDTH) * Tile.WIDTH);
         viewPane.setPrefHeight(Math.ceil(viewPane.getPrefHeight() / Tile.HEIGHT) * Tile.HEIGHT);
+    }
+
+    public MapJFX getMapJFX() {
+        return mapJFX;
+    }
+
+    public MatchBarJFX getMatchBarJFX() {
+        return matchBarJFX;
     }
 }
