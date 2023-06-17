@@ -29,7 +29,7 @@ public class SignUpMenuJFX extends Application {
     private SignUpMenuController signUpMenuController;
     private AnchorPane signUpMenuPane;
     private TextField username, visiblePassword, visiblePasswordConfirmation, nickname, email, passwordRecoveryAnswer, slogan;
-    private Label usernameError, nicknameError, emailError, passwordError, passwordConfirmationError, sloganError,
+    private Label title, recoveryTitle, usernameError, nicknameError, emailError, passwordError, passwordConfirmationError, sloganError,
             passwordRecoveryAnswerError, signUpButtonText, mainError;
     private PasswordField password, passwordConfirmation;
     private ChoiceBox sloganChoiceBox, passwordRecoveryQuestion;
@@ -49,13 +49,15 @@ public class SignUpMenuJFX extends Application {
         signUpMenuPane.setOnMouseClicked(new EventHandler() {
             @Override
             public void handle(Event event) {
-                    signUpMenuPane.requestFocus();
+                signUpMenuPane.requestFocus();
             }
         });
 
         signUpButton = (Rectangle) signUpMenuPane.getChildren().get(0);
         signUpButtonText = (Label) signUpMenuPane.getChildren().get(1);
         setSignUpProperties();
+
+        title = (Label) signUpMenuPane.getChildren().get(2);
 
         username = (TextField) signUpMenuPane.getChildren().get(3);
         usernameError = (Label) signUpMenuPane.getChildren().get(4);
@@ -85,6 +87,8 @@ public class SignUpMenuJFX extends Application {
         sloganError = (Label) signUpMenuPane.getChildren().get(20);
         setSloganProperties();
 
+        recoveryTitle = (Label) signUpMenuPane.getChildren().get(21);
+
         passwordRecoveryQuestion = (ChoiceBox) signUpMenuPane.getChildren().get(22);
         passwordRecoveryAnswer = (TextField) signUpMenuPane.getChildren().get(23);
         passwordRecoveryAnswerError = (Label) signUpMenuPane.getChildren().get(24);
@@ -98,9 +102,55 @@ public class SignUpMenuJFX extends Application {
         captchaJFX = new CaptchaJFX(controller, signUpMenuPane);
         setCaptchaPaneProperties();
 
+        adjust(controller.getMaxSceneWidth() * 2 / (3 * signUpMenuPane.getPrefWidth()), controller.getMaxSceneHeight() * 2/ (3 * signUpMenuPane.getPrefHeight()));
         Scene scene = new Scene(signUpMenuPane);
         stage.setScene(scene);
+        System.out.println(stage.getScene().getWidth());
+        stage.getScene().heightProperty().addListener((observable, oldValue, newValue) -> {
+            if(controller.getGame().getCurrentMenuJFX().equals(this)) {
+                System.out.println(stage.isMaximized() + " " + stage.widthProperty().get());
+                adjust(stage.getScene().getWidth() / signUpMenuPane.getPrefWidth(), stage.getScene().getHeight() / signUpMenuPane.getPrefHeight());
+            }
+        });
         stage.show();
+    }
+
+    public void adjust(double ratioX, double ratioY) {
+        System.out.println("Before:\nratioX=" + ratioX + " ratioY=" + ratioY +
+                " stageWidth=" + stage.getScene().getWidth() + " stageHeight=" + stage.getScene().getHeight() +
+                " paneWidth=" + signUpMenuPane.getPrefWidth() + " paneHeight=" + signUpMenuPane.getPrefHeight());
+        Adjust.adjustPane(signUpMenuPane, ratioX, ratioY);
+        Adjust.adjustTextField(username, ratioX, ratioY);
+        Adjust.adjustTextField(visiblePassword, ratioX, ratioY);
+        Adjust.adjustTextField(visiblePasswordConfirmation, ratioX, ratioY);
+        Adjust.adjustTextField(nickname, ratioX, ratioY);
+        Adjust.adjustTextField(email, ratioX, ratioY);
+        Adjust.adjustTextField(slogan, ratioX, ratioY);
+        Adjust.adjustTextField(passwordRecoveryAnswer, ratioX, ratioY);
+        Adjust.adjustLabel(title, ratioX, ratioY);
+        Adjust.adjustLabel(recoveryTitle, ratioX, ratioY);
+        Adjust.adjustLabel(usernameError, ratioX, ratioY);
+        Adjust.adjustLabel(nicknameError, ratioX, ratioY);
+        Adjust.adjustLabel(emailError, ratioX, ratioY);
+        Adjust.adjustLabel(passwordError, ratioX, ratioY);
+        Adjust.adjustLabel(passwordConfirmationError, ratioX, ratioY);
+        Adjust.adjustLabel(sloganError, ratioX, ratioY);
+        Adjust.adjustLabel(passwordRecoveryAnswerError, ratioX, ratioY);
+        Adjust.adjustLabel(signUpButtonText, ratioX, ratioY);
+        Adjust.adjustLabel(mainError, ratioX, ratioY);
+        Adjust.adjustPasswordField(password, ratioX, ratioY);
+        Adjust.adjustPasswordField(passwordConfirmation, ratioX, ratioY);
+        Adjust.adjustChoiceBox(sloganChoiceBox, ratioX, ratioY);
+        Adjust.adjustChoiceBox(passwordRecoveryQuestion, ratioX, ratioY);
+        Adjust.adjustCheckBox(showPassword, ratioX, ratioY);
+        Adjust.adjustCheckBox(customSlogan, ratioX, ratioY);
+        Adjust.adjustHyperlink(logInLink, ratioX, ratioY);
+        Adjust.adjustRectangle(signUpButton, ratioX, ratioY);
+        Adjust.adjustCircle(randomPassword, ratioX, ratioY);
+        captchaJFX.adjust(ratioX, ratioY);
+        System.out.println("After:\nratioX=" + ratioX + " ratioY=" + ratioY +
+                " stageWidth=" + stage.getScene().getWidth() + " stageHeight=" + stage.getScene().getHeight() +
+                " paneWidth=" + signUpMenuPane.getPrefWidth() + " paneHeight=" + signUpMenuPane.getPrefHeight());
     }
 
     private void setSignUpProperties() {
@@ -225,7 +275,7 @@ public class SignUpMenuJFX extends Application {
                     mainError.setText("user created successfully!");
                     captchaJFX.popOffCaptchaPane();
                     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(3000), event2 -> {
-                            mainError.setText("");
+                        mainError.setText("");
                     }));
                     timeline.setCycleCount(1);
                     timeline.play();

@@ -1,6 +1,9 @@
 package controller;
 
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Game;
 import model.Match.Match;
@@ -23,9 +26,11 @@ public class Controller {
     private final Game game;
     private String captchaAnswer;
     private Stage stage;
+    private double maxSceneWidth, maxSceneHeight;
 
     public Controller(Stage stage) throws IOException {
         this.stage = stage;
+        setStage();
         this.signUpMenuJFX = new SignUpMenuJFX();
         signUpMenuJFX.setController(this);
         signUpMenuJFX.setSignUpMenuController(new SignUpMenuController(this));
@@ -47,8 +52,26 @@ public class Controller {
 //        this.game = new Game(mainMenu, signUpMenu);
     }
 
+    private void setStage() {
+        stage.setScene(new Scene(new Pane()));
+        stage.getScene().setFill(Color.BLACK);
+        stage.setMaximized(true);
+        stage.show();
+        maxSceneWidth = stage.getScene().getWidth();
+        maxSceneHeight = stage.getScene().getHeight();
+        stage.setMaximized(false);
+    }
+
     public Stage getStage() {
         return stage;
+    }
+
+    public double getMaxSceneWidth() {
+        return maxSceneWidth;
+    }
+
+    public double getMaxSceneHeight() {
+        return maxSceneHeight;
     }
 
     public static String getRemovedQuotationMarks(String input) {
@@ -72,16 +95,20 @@ public class Controller {
     public void enterSignUpMenuJFX() {
         game.setCurrentMenuJFX(signUpMenuJFX);
     }
+
     public void enterLogInMenuJFX() {
         game.setCurrentMenuJFX(logInMenuJFX);
     }
+
     public void enterMainMenuJFX() {
         game.setCurrentMenuJFX(mainMenuJFX);
     }
+
     public void logOutJFX() throws IOException {
         game.setCurrentMenuJFX(signUpMenuJFX);
         game.setCurrentUser(null);
     }
+
     public void exitJFX() throws IOException {
         game.updateJsonFiles();
         game.setCurrentMenuJFX(null);

@@ -2,14 +2,11 @@ package view;
 
 import controller.Controller;
 import controller.LoginMenuController;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -18,7 +15,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -32,7 +28,7 @@ public class LogInMenuJFX extends Application {
     private TextField username, visiblePassword, captchaAnswer;
     private PasswordField password;
     private CheckBox showPassword, stayLoggedIn;
-    private Label mainError, loginButtonText, captchaError;
+    private Label title, mainError, loginButtonText, captchaError;
     private Hyperlink forgotPasswordLink, signUpLink;
     private Rectangle loginButton, captchaPicture;
     private Circle refreshCaptchaButton;
@@ -50,6 +46,8 @@ public class LogInMenuJFX extends Application {
         loginButton = (Rectangle) logInMenuPane.getChildren().get(0);
         loginButtonText = (Label) logInMenuPane.getChildren().get(1);
         setLogInButtonProperties();
+
+        title = (Label) logInMenuPane.getChildren().get(2);
 
         username = (TextField) logInMenuPane.getChildren().get(3);
 
@@ -72,10 +70,31 @@ public class LogInMenuJFX extends Application {
         captchaJFX = new CaptchaJFX(controller, logInMenuPane);
         setCaptchaPaneProperties();
 
-
+        adjust(controller.getMaxSceneWidth() * 2 / (3 * stage.getScene().getWidth()), controller.getMaxSceneHeight() * 2 / (3 * stage.getScene().getHeight()));
         Scene scene = new Scene(logInMenuPane);
         stage.setScene(scene);
+        stage.getScene().heightProperty().addListener((observable, oldValue, newValue) -> {
+            if(controller.getGame().getCurrentMenuJFX().equals(this)) {
+                adjust(stage.getScene().getWidth() / logInMenuPane.getPrefWidth(), stage.getScene().getHeight() / logInMenuPane.getPrefHeight());
+            }
+        });
         stage.show();
+    }
+
+    public void adjust(double ratioX, double ratioY) {
+        Adjust.adjustPane(logInMenuPane, ratioX, ratioY);
+        Adjust.adjustTextField(username, ratioX, ratioY);
+        Adjust.adjustTextField(visiblePassword, ratioX, ratioY);
+        Adjust.adjustPasswordField(password, ratioX, ratioY);
+        Adjust.adjustCheckBox(showPassword, ratioX, ratioY);
+        Adjust.adjustCheckBox(stayLoggedIn, ratioX, ratioY);
+        Adjust.adjustLabel(title, ratioX, ratioY);
+        Adjust.adjustLabel(mainError, ratioX, ratioY);
+        Adjust.adjustLabel(loginButtonText, ratioX, ratioY);
+        Adjust.adjustHyperlink(forgotPasswordLink, ratioX, ratioY);
+        Adjust.adjustHyperlink(signUpLink, ratioX, ratioY);
+        Adjust.adjustRectangle(loginButton, ratioX, ratioY);
+        captchaJFX.adjust(ratioX, ratioY);
     }
 
     private void setPasswordProperties() {
