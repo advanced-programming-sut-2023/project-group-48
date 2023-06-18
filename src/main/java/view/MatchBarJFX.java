@@ -48,11 +48,10 @@ public class MatchBarJFX {
     private void addClickableToRectangle(AnchorPane pane, ImagePattern... imagePatterns) {
         double clickableWidths = 0;
         ArrayList<Rectangle> rectangles = new ArrayList<>();
-        double lastX = 0, distance = 20;
+        double lastX = 20, distance = 20;
         double ratio = 1;
         for (int i = 0; i < imagePatterns.length; i++) {
-            rectangles.add(new Rectangle(lastX, pane.getPrefHeight() / 2 - imagePatterns[i].getImage().getHeight() / 2, imagePatterns[i].getImage().getWidth(), imagePatterns[i].getImage().getWidth()));
-            lastX = rectangles.get(i).getX() + rectangles.get(i).getWidth() + distance;
+            rectangles.add(new Rectangle(imagePatterns[i].getImage().getWidth(), imagePatterns[i].getImage().getWidth()));
         }
         for (Rectangle rectangle : rectangles) {
             clickableWidths += rectangle.getWidth();
@@ -62,9 +61,13 @@ public class MatchBarJFX {
         ratio = Math.min(ratio, (pane.getPrefWidth() - (imagePatterns.length + 1) * 20) / (clickableWidths));
 
         for (int i = 0; i < imagePatterns.length; i++) {
-            rectangles.get(i).setLayoutY(pane.getPrefHeight() / 2 - ratio * rectangles.get(i).getHeight() / 2);
+            rectangles.get(i).setX(lastX);
+            rectangles.get(i).setY(pane.getPrefHeight() / 2 - ratio * rectangles.get(i).getHeight() / 2);
+            System.out.println(rectangles.get(i).getY() + ratio * rectangles.get(i).getHeight() / 2);
             rectangles.get(i).setWidth(ratio * rectangles.get(i).getWidth());
             rectangles.get(i).setHeight(ratio * rectangles.get(i).getHeight());
+            lastX += rectangles.get(i).getWidth() + distance;
+
             int finalI = i;
             rectangles.get(i).hoverProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
@@ -157,7 +160,7 @@ public class MatchBarJFX {
     private AnchorPane getBarPane() {
         AnchorPane pane = new AnchorPane();
         pane.setPrefWidth(selectBarWidth);
-        pane.setPrefHeight(selectBarHeight - 60);
+        pane.setPrefHeight(selectBarHeight - 40);
         pane.setLayoutX(selectBarX);
         pane.setLayoutY(selectBarY);
         return pane;
@@ -222,7 +225,7 @@ public class MatchBarJFX {
     private void setStoragePane() {
         storagePane = getBarPane();
 //        storagePane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/menu/temp.png")).toExternalForm()))));
-        storagePane.setVisible(true);
+        storagePane.setVisible(false);
         addClickableToRectangle(storagePane, BuildingType.getImagePattern("Armoury"), BuildingType.getImagePattern("Stockpile"), BuildingType.getImagePattern("Granary"));
         mainBarPane.getChildren().add(storagePane);
     }

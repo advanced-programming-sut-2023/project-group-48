@@ -40,11 +40,13 @@ public class MapJFX {
         rectangle.setLayoutY(map[i][j].getY() + Tile.HEIGHT / 2 - rectangle.getHeight());
         rectangle.setFill(imagePattern);
         map[i][j].setRectangle(rectangle);
-        mapPane.getChildren().add(rectangle);
-        rectangle.toFront();
-        // TODO
-//        if (i % 2 == 0 && map[i - 1][j - 1].getRectangle() != null) map[i - 1][j - 1].getRectangle().toFront();
-//        if (i % 2 == 1 && map[i - 1][j].getRectangle() !=null) map[i - 1][j].getRectangle().toFront();
+        int index = mapPane.getChildren().size();
+        if (i % 2 == 0 && map[i - 1][j - 1].getRectangle() != null) index = Math.min(index, mapPane.getChildren().indexOf(map[i - 1][j - 1].getRectangle()));
+        if (i % 2 == 0 && map[i - 1][j].getRectangle() != null) index = Math.min(index, mapPane.getChildren().indexOf(map[i - 1][j].getRectangle()));
+        if (i % 2 == 1 && map[i - 1][j].getRectangle() != null) index = Math.min(index, mapPane.getChildren().indexOf(map[i - 1][j].getRectangle()));
+        if (i % 2 == 1 && map[i - 1][j + 1].getRectangle() != null) index = Math.min(index, mapPane.getChildren().indexOf(map[i - 1][j + 1].getRectangle()));
+        if (index != mapPane.getChildren().size()) mapPane.getChildren().add(index, rectangle);
+        else mapPane.getChildren().add(rectangle);
     }
 
     private void setMapPane() {
