@@ -3,18 +3,9 @@ package view;
 import controller.Controller;
 import controller.MapMenuController;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.Buildings.BuildingType;
 import model.Match.Tile;
@@ -34,17 +25,17 @@ public class MatchMenuJFX extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         viewPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MapMenu.fxml")));
-        setViePane();
+        setViewPane();
         mapJFX = new MapJFX(this, viewPane);
         matchBarJFX = new MatchBarJFX(this, viewPane);
-        mapJFX.addBuildingToMap(100 ,100, BuildingType.getImagePattern("Barrack"));
+        mapJFX.addImageToMap(100 ,100, BuildingType.getImagePattern("Barrack"));
         Scene scene = new Scene(viewPane);
         stage.setScene(scene);
         mapJFX.getMapPane().requestFocus();
         stage.show();
     }
 
-    private void setViePane() {
+    private void setViewPane() {
         viewPane.setPrefWidth(Math.ceil(viewPane.getPrefWidth() / Tile.WIDTH) * Tile.WIDTH);
         viewPane.setPrefHeight(Math.ceil(viewPane.getPrefHeight() / Tile.HEIGHT) * Tile.HEIGHT);
     }

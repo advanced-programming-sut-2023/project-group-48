@@ -1,5 +1,7 @@
 package model.People;
 
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import model.Buildings.Building;
 import model.Match.Direction;
 import model.Match.Governance;
@@ -92,6 +94,7 @@ public class Troop extends People {
     private static final ArrayList<String> arabTroops = new ArrayList<>(Arrays.asList("ArcherBow", "Slaves", "Slingers", "Assassins", "HorseArchers", "ArabianSwordsmen", "FireThrowers"));
     private static final ArrayList<String> wallCrawler = new ArrayList<>(Arrays.asList("Laddermen", "Assassins"));
     private static final ArrayList<String> horseMan = new ArrayList<>(Arrays.asList("Knight", "HorseArchers", "ArabianSwordsmen"));
+    private static final HashMap<String, ArrayList<ArrayList<ImagePattern>>> fightingImages = new HashMap<>();
     private final Quality attackPower;
     private final Quality defensePower;
     private final Quality speed;
@@ -156,6 +159,11 @@ public class Troop extends People {
 
     public static int getTroopCost(String type) {
         return troopCost.get(type);
+    }
+
+    public static ArrayList<ImagePattern> getFightingImages(String type, int colorNumber) {
+        // TODO
+        return null;
     }
 
     public Quality getAttackPower() {

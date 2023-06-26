@@ -48,7 +48,7 @@ public class Game extends Application {
             for (int j = 0; j < width; j++) {
                 map[i][j] = new Rectangle(j * 50, i * 50, 50, 50);
                 pane.getChildren().add(map[i][j]);
-                map[i][j].setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/tiles/desert_tile.jpg")).toExternalForm())));
+                map[i][j].setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/tiles/land.jpg")).toExternalForm())));
                 map[i][j].getTransforms().addAll(rotateZ, rotateX);
                 verticalCoordinate[i][j] = 50 * (i + j) / Math.sqrt(2) * Math.cos(60 * Math.PI / 180);
                 horizontalCoordinate[i][j] = 50 * (j - i) / Math.sqrt(2) - 25 * Math.sqrt(2);

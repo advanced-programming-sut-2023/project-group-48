@@ -33,7 +33,7 @@ public class MapJFX {
         return mapPane;
     }
 
-    public void addBuildingToMap(int i, int j, ImagePattern imagePattern) {
+    public void addImageToMap(int i, int j, ImagePattern imagePattern) {
         System.out.println(imagePattern.getImage().getWidth() + " " + imagePattern.getImage().getHeight());
         Rectangle rectangle = new Rectangle(Tile.WIDTH, imagePattern.getImage().getHeight() / imagePattern.getImage().getWidth() * Tile.WIDTH);
         rectangle.setLayoutX(map[i][j].getX() - rectangle.getWidth() / 2);
@@ -107,7 +107,7 @@ public class MapJFX {
     }
 
     private void setMap() {
-        ImagePattern defaultTileImage = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/tiles/desert_tile.jpg")).toExternalForm()));
+        ImagePattern defaultTileImage = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/tiles/land.jpg")).toExternalForm()));
         map = new Tile[200][200];
         for (int i = 0; i < 200; i++) {
             for (int j = 0; j < 200; j++) {
@@ -120,7 +120,7 @@ public class MapJFX {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         if (matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern() != null)
-                            addBuildingToMap(finalI, finalJ, matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern());
+                            addImageToMap(finalI, finalJ, matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern());
                         else
                             map[finalI][finalJ].setOpacity(1.5 - map[finalI][finalJ].getOpacity());
                     }

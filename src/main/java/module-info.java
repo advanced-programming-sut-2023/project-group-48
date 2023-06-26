@@ -4,6 +4,7 @@ module Project.Repo {
     requires javafx.media;
     requires com.google.gson;
     requires org.apache.commons.codec;
+    requires org.apache.commons.io;
 
     exports controller;
     exports model;
