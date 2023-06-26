@@ -20,6 +20,7 @@ public class MapJFX {
     private final Pane mapPane;
     private Tile[][] map;
     private int firstI = 199, lastI = 0, firstJ = 199, lastJ = 0;
+    private final int SIZE = 400;
 
     public MapJFX(MatchMenuJFX matchMenuJFX, AnchorPane viewPane) {
         this.matchMenuJFX = matchMenuJFX;
@@ -107,7 +108,7 @@ public class MapJFX {
     }
 
     private void setMap() {
-        ImagePattern defaultTileImage = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/tiles/land.jpg")).toExternalForm()));
+        ImagePattern defaultTileImage = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/tiles/land.png")).toExternalForm()));
         map = new Tile[200][200];
         for (int i = 0; i < 200; i++) {
             for (int j = 0; j < 200; j++) {

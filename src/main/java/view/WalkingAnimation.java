@@ -1,6 +1,7 @@
 package view;
 
 import javafx.animation.Transition;
+import javafx.util.Duration;
 import model.Match.Direction;
 import model.People.People;
 import model.People.PeopleType;
@@ -14,24 +15,13 @@ public class WalkingAnimation extends Transition {
     public WalkingAnimation(People people, ArrayList<Direction> path) {
         this.people = people;
         this.path = path;
+        setCycleDuration(Duration.millis(1000));
+        setCycleCount(path.size());
     }
 
     @Override
     protected void interpolate(double v) {
-        if (path.size() == 0) {
-            stop();
-            return;
-        }
         Direction direction = path.get(0);
-        if (direction == Direction.UP) {
-            people.setRow(people.getRow() + 1);
-        } else if (direction == Direction.DOWN) {
-            people.setRow(people.getRow() - 1);
-        } else if (direction == Direction.LEFT) {
-            people.setRow(people.getRow() - 1);
-        } else if (direction == Direction.RIGHT) {
-            people.setRow(people.getRow() + 1);
-        }
-        path.remove(0);
+        // TODO: 5/29/2021
     }
 }
