@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public enum LandType {
     LAND(BackGroundColor.BLACK, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/land.png")).toString()))),
-    LAND_WITH_GRAVEL(BackGroundColor.RED, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/land_with_gravel.png")).toString()))),
+    LAND_WITH_GRAVEL(BackGroundColor.RED, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/land-with-gravel.png")).toString()))),
     BOULDER(BackGroundColor.YELLOW, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/boulder.png")).toString()))),
     ROCK(BackGroundColor.BLUE, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/rock.png")).toString()))),
     IRON(BackGroundColor.PURPLE, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/iron.png")).toString()))),

@@ -31,7 +31,7 @@ public class MainMenuJFX extends Application {
         this.stage = stage;
         System.out.println(0);
         mainMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MainMenu.fxml")));
-        mainMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/3.png")).toExternalForm()))));
+//        mainMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/3.png")).toExternalForm()))));
 
         startMatch = (Rectangle) mainMenuPane.getChildren().get(0);
         startMatchText = (Text) mainMenuPane.getChildren().get(1);

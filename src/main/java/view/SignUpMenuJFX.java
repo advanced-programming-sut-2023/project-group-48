@@ -46,7 +46,7 @@ public class SignUpMenuJFX extends Application {
         System.out.println("started");
         this.stage = stage;
         signUpMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/SignUpMenu.fxml")));
-        signUpMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/4.jpg")).toExternalForm()))));
+//        signUpMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/4.jpg")).toExternalForm()))));
         signUpMenuPane.setOnMouseClicked(new EventHandler() {
             @Override
             public void handle(Event event) {
