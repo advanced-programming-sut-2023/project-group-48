@@ -41,7 +41,7 @@ public class LogInMenuJFX extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         logInMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/LogInMenu.fxml")));
-        logInMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/5.png")).toExternalForm()))));
+//        logInMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/5.png")).toExternalForm()))));
 
         loginButton = (Rectangle) logInMenuPane.getChildren().get(0);
         loginButtonText = (Label) logInMenuPane.getChildren().get(1);
@@ -131,7 +131,7 @@ public class LogInMenuJFX extends Application {
     private void setSignUpLinkProperties() {
         signUpLink.setOnMouseClicked((event) -> {
             try {
-                controller.enterSignUpMenu();
+                controller.enterSignUpMenuJFX();
                 stop();
                 controller.getGame().getCurrentMenuJFX().start(stage);
             } catch (Exception e) {
