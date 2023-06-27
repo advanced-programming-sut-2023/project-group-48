@@ -11,8 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
+import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -46,6 +45,7 @@ public class SignUpMenuJFX extends Application {
         System.out.println("started");
         this.stage = stage;
         signUpMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/SignUpMenu.fxml")));
+        signUpMenuPane.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/backgrounds/4.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,  BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 //        signUpMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/4.jpg")).toExternalForm()))));
         signUpMenuPane.setOnMouseClicked(new EventHandler() {
             @Override
@@ -77,6 +77,7 @@ public class SignUpMenuJFX extends Application {
 
         nickname = (TextField) signUpMenuPane.getChildren().get(13);
         nicknameError = (Label) signUpMenuPane.getChildren().get(14);
+        setNickNameProperties();
 
         email = (TextField) signUpMenuPane.getChildren().get(15);
         emailError = (Label) signUpMenuPane.getChildren().get(16);
@@ -227,6 +228,12 @@ public class SignUpMenuJFX extends Application {
         randomPassword.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/icons/refresh.png")).toExternalForm())));
         randomPassword.setOnMouseClicked(event -> {
             password.setText(signUpMenuController.getRandomPassword());
+        });
+    }
+
+    private void setNickNameProperties() {
+        nickname.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!nickname.getText().isEmpty()) nicknameError.setText("");
         });
     }
 

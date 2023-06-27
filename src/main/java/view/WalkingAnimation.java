@@ -1,27 +1,78 @@
 package view;
 
+import controller.Controller;
+import javafx.animation.Animation;
 import javafx.animation.Transition;
+import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 import model.Match.Direction;
+import model.Match.Match;
+import model.Match.Tile;
 import model.People.People;
 import model.People.PeopleType;
 
 import java.util.ArrayList;
 
 public class WalkingAnimation extends Transition {
+    private static final double TILE_DISTANCE = Math.sqrt(Math.pow(Tile.WIDTH, 2) + Math.pow(Tile.HEIGHT, 2));
+    private final Match match;
     private final People people;
-    private final ArrayList<Direction> path;
+    private final MapJFX mapJFX;
+    private final int imagesCount;
+    private ArrayList<ImagePattern> moves;
 
-    public WalkingAnimation(People people, ArrayList<Direction> path) {
+    private ImagePattern currentImagePattern;
+    private int lastPathSize, indexOfCurrentImage;
+    private Tile targetTile;
+
+    public WalkingAnimation(Match match, People people, MapJFX mapJFX) {
+        this.match = match;
         this.people = people;
-        this.path = path;
-        setCycleDuration(Duration.millis(1000));
-        setCycleCount(path.size());
+        this.mapJFX = mapJFX;
+        this.imagesCount = PeopleType.getMovingImages(people.getType(), 1).size();
+        setCycleDuration(Duration.millis((double) 1000 / imagesCount));
+        setCycleCount(people.getPath().size() * imagesCount);
     }
 
     @Override
     protected void interpolate(double v) {
-        Direction direction = path.get(0);
-        // TODO: 5/29/2021
+        if (people.getPath().size() != lastPathSize) {
+            targetTile = getTargetTile();
+            moves = PeopleType.getMovingImages(people.getType(), match.getGovernances().indexOf(people.getGovernance()) + 1);
+            indexOfCurrentImage = 0;
+            lastPathSize = people.getPath().size();
+        }
+
+        double x = people.getRectangle().getX() + (targetTile.getX() - people.getCurrentTile().getX()) / imagesCount;
+        double y = people.getRectangle().getY() + (targetTile.getY() - people.getCurrentTile().getY()) / imagesCount;
+        currentImagePattern = moves.get(indexOfCurrentImage);
+
+        people.getRectangle().setX(x);
+        people.getRectangle().setY(y);
+        people.getRectangle().setFill(currentImagePattern);
+
+        if (people.getRectangle().getX() == targetTile.getX() - people.getRectangle().getWidth() / 2) {
+            people.getPath().remove(0);
+            people.setCurrentTile(targetTile);
+        }
     }
+
+    private Tile getTargetTile() {
+        Direction direction = people.getPath().get(0);
+        int[] coordinates = mapJFX.getCoordinates(people.getRow(), people.getColumn());
+        switch (direction) {
+            case UP:
+                return mapJFX.getTile(coordinates[0] + 1, coordinates[1]);
+            case DOWN:
+                return mapJFX.getTile(coordinates[0] - 1, coordinates[1]);
+            case LEFT:
+                return mapJFX.getTile(coordinates[0], coordinates[1] - 1);
+            case RIGHT:
+                return mapJFX.getTile(coordinates[0], coordinates[1] + 1);
+            default:
+                return null;
+        }
+    }
+
+
 }

@@ -233,4 +233,8 @@ public class MapJFX {
         }
         return new int[]{i, j};
     }
+
+    public Tile getTile(int i, int j) {
+        return map[i][j];
+    }
 }
