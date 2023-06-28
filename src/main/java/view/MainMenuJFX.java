@@ -3,26 +3,26 @@ package view;
 import controller.Controller;
 import controller.MainMenuController;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.Objects;
 
-public class MainMenuJFX extends Application {
+public class MainMenuJFX extends Application implements MenuJFX {
     private Controller controller;
     private MainMenuController mainMenuController;
     private AnchorPane mainMenuPane;
     private Rectangle startMatch, profileMenu, logOut, exit;
-    private Text startMatchText, profileMenuText, logOutText, exitText;
+    private Label startMatchLabel, profileMenuLabel, logOutLabel, exitLabel;
     private Stage stage;
 
     @Override
@@ -30,30 +30,53 @@ public class MainMenuJFX extends Application {
         this.stage = stage;
         System.out.println(0);
         mainMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MainMenu.fxml")));
-        mainMenuPane.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/backgrounds/3.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,  BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        mainMenuPane.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/backgrounds/3.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 //        mainMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/3.png")).toExternalForm()))));
 
         startMatch = (Rectangle) mainMenuPane.getChildren().get(0);
-        startMatchText = (Text) mainMenuPane.getChildren().get(1);
+        startMatchLabel = (Label) mainMenuPane.getChildren().get(1);
         setStartMatchProperties();
 
         profileMenu = (Rectangle) mainMenuPane.getChildren().get(2);
-        profileMenuText = (Text) mainMenuPane.getChildren().get(3);
+        profileMenuLabel = (Label) mainMenuPane.getChildren().get(3);
         setProfileMenuProperties();
 
         logOut = (Rectangle) mainMenuPane.getChildren().get(4);
-        logOutText = (Text) mainMenuPane.getChildren().get(5);
+        logOutLabel = (Label) mainMenuPane.getChildren().get(5);
         setLogOutProperties();
 
         exit = (Rectangle) mainMenuPane.getChildren().get(6);
-        exitText = (Text) mainMenuPane.getChildren().get(7);
+        exitLabel = (Label) mainMenuPane.getChildren().get(7);
         setExitProperties();
 
-
+        adjustWithScene();
         Scene scene = new Scene(mainMenuPane);
         stage.setScene(scene);
+        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+            adjustWithScene();
+        });
+        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+            adjustWithScene();
+        });
         stage.show();
-        System.out.println(1);
+    }
+
+    @Override
+    public void adjust(double ratioX, double ratioY) {
+        Adjust.adjustPane(mainMenuPane, ratioX, ratioY);
+        Adjust.adjustRectangle(startMatch, ratioX, ratioY);
+        Adjust.adjustLabel(startMatchLabel, ratioX, ratioY);
+        Adjust.adjustRectangle(profileMenu, ratioX, ratioY);
+        Adjust.adjustLabel(profileMenuLabel, ratioX, ratioY);
+        Adjust.adjustRectangle(logOut, ratioX, ratioY);
+        Adjust.adjustLabel(logOutLabel, ratioX, ratioY);
+        Adjust.adjustRectangle(exit, ratioX, ratioY);
+        Adjust.adjustLabel(exitLabel, ratioX, ratioY);
+    }
+
+    @Override
+    public void adjustWithScene() {
+        adjust(stage.getScene().getWidth() / mainMenuPane.getPrefWidth(), stage.getScene().getHeight() / mainMenuPane.getPrefHeight());
     }
 
     private void setStartMatchProperties() {
@@ -66,11 +89,11 @@ public class MainMenuJFX extends Application {
         startMatch.hoverProperty().addListener((event) -> {
             startMatch.setOpacity(1.5 - startMatch.getOpacity());
         });
-        startMatchText.hoverProperty().addListener((event) -> {
+        startMatchLabel.hoverProperty().addListener((event) -> {
             startMatch.setOpacity(1.5 - startMatch.getOpacity());
         });
         startMatch.setOnMouseClicked(startMatchHandler);
-        startMatchText.setOnMouseClicked(startMatchHandler);
+        startMatchLabel.setOnMouseClicked(startMatchHandler);
     }
 
     private void setProfileMenuProperties() {
@@ -83,11 +106,11 @@ public class MainMenuJFX extends Application {
         profileMenu.hoverProperty().addListener((event) -> {
             profileMenu.setOpacity(1.5 - profileMenu.getOpacity());
         });
-        profileMenuText.hoverProperty().addListener((event) -> {
+        profileMenuLabel.hoverProperty().addListener((event) -> {
             profileMenu.setOpacity(1.5 - profileMenu.getOpacity());
         });
         profileMenu.setOnMouseClicked(profileMenuHandler);
-        profileMenuText.setOnMouseClicked(profileMenuHandler);
+        profileMenuLabel.setOnMouseClicked(profileMenuHandler);
     }
 
     private void setLogOutProperties() {
@@ -106,11 +129,11 @@ public class MainMenuJFX extends Application {
         logOut.hoverProperty().addListener((event) -> {
             logOut.setOpacity(1.5 - logOut.getOpacity());
         });
-        logOutText.hoverProperty().addListener((event) -> {
+        logOutLabel.hoverProperty().addListener((event) -> {
             logOut.setOpacity(1.5 - logOut.getOpacity());
         });
         logOut.setOnMouseClicked(logoutHandler);
-        logOutText.setOnMouseClicked(logoutHandler);
+        logOutLabel.setOnMouseClicked(logoutHandler);
     }
 
     private void setExitProperties() {
@@ -129,11 +152,11 @@ public class MainMenuJFX extends Application {
         exit.hoverProperty().addListener((event) -> {
             exit.setOpacity(1.5 - exit.getOpacity());
         });
-        exitText.hoverProperty().addListener((event) -> {
+        exitLabel.hoverProperty().addListener((event) -> {
             exit.setOpacity(1.5 - exit.getOpacity());
         });
         exit.setOnMouseClicked(exitHandler);
-        exitText.setOnMouseClicked(exitHandler);
+        exitLabel.setOnMouseClicked(exitHandler);
     }
 
     public Controller getController() {

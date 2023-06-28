@@ -25,9 +25,10 @@
       <TextField alignment="CENTER" layoutX="560.0" layoutY="251.0" prefHeight="50.0" prefWidth="300.0" promptText="username" />
       <PasswordField alignment="CENTER" layoutX="560.0" layoutY="309.0" prefHeight="50.0" prefWidth="300.0" promptText="password" />
       <TextField alignment="CENTER" layoutX="560.0" layoutY="309.0" prefHeight="50.0" prefWidth="300.0" promptText="password" visible="false" />
-      <CheckBox alignment="CENTER" contentDisplay="CENTER" layoutX="843.0" layoutY="309.0" mnemonicParsing="false" />
+      <CheckBox alignment="CENTER" contentDisplay="CENTER" layoutX="843.0" layoutY="309.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" />
       <Label alignment="CENTER" layoutX="560.0" layoutY="359.0" prefHeight="50.0" prefWidth="300.0" textFill="RED" />
-      <CheckBox layoutX="666.0" layoutY="416.0" mnemonicParsing="false" text="Stay Logged" />
+      <CheckBox alignment="CENTER" layoutX="666.0" layoutY="416.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" />
+      <Label alignment="CENTER" layoutX="682.0" layoutY="416.0" prefHeight="16.0" prefWidth="100.0" text="Stay Logged In" />
       <Hyperlink alignment="CENTER" layoutX="560.0" layoutY="470.0" prefHeight="50.0" prefWidth="300.0" text="forgot my password" textFill="#4c0aff">
          <font>
             <Font size="18.0" />

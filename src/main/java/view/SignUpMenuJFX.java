@@ -23,7 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Objects;
 
-public class SignUpMenuJFX extends Application {
+public class SignUpMenuJFX extends Application implements MenuJFX {
     private Controller controller;
     private SignUpMenuController signUpMenuController;
     private AnchorPane signUpMenuPane;
@@ -45,7 +45,7 @@ public class SignUpMenuJFX extends Application {
         System.out.println("started");
         this.stage = stage;
         signUpMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/SignUpMenu.fxml")));
-        signUpMenuPane.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/backgrounds/4.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,  BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        signUpMenuPane.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/backgrounds/4.jpg").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 //        signUpMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/4.jpg")).toExternalForm()))));
         signUpMenuPane.setOnMouseClicked(new EventHandler() {
             @Override
@@ -104,23 +104,20 @@ public class SignUpMenuJFX extends Application {
         captchaJFX = new CaptchaJFX(controller, signUpMenuPane);
         setCaptchaPaneProperties();
 
-        adjust(controller.getMaxSceneWidth() * 2 / (3 * signUpMenuPane.getPrefWidth()), controller.getMaxSceneHeight() * 2/ (3 * signUpMenuPane.getPrefHeight()));
+        adjustWithScene();
         Scene scene = new Scene(signUpMenuPane);
         stage.setScene(scene);
-        System.out.println(stage.getScene().getWidth());
-        stage.getScene().heightProperty().addListener((observable, oldValue, newValue) -> {
-            if(controller.getGame().getCurrentMenuJFX().equals(this)) {
-                System.out.println(stage.isMaximized() + " " + stage.widthProperty().get());
-                adjust(stage.getScene().getWidth() / signUpMenuPane.getPrefWidth(), stage.getScene().getHeight() / signUpMenuPane.getPrefHeight());
-            }
+        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+            adjustWithScene();
+        });
+        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+            adjustWithScene();
         });
         stage.show();
     }
 
+    @Override
     public void adjust(double ratioX, double ratioY) {
-        System.out.println("Before:\nratioX=" + ratioX + " ratioY=" + ratioY +
-                " stageWidth=" + stage.getScene().getWidth() + " stageHeight=" + stage.getScene().getHeight() +
-                " paneWidth=" + signUpMenuPane.getPrefWidth() + " paneHeight=" + signUpMenuPane.getPrefHeight());
         Adjust.adjustPane(signUpMenuPane, ratioX, ratioY);
         Adjust.adjustTextField(username, ratioX, ratioY);
         Adjust.adjustTextField(visiblePassword, ratioX, ratioY);
@@ -150,9 +147,11 @@ public class SignUpMenuJFX extends Application {
         Adjust.adjustRectangle(signUpButton, ratioX, ratioY);
         Adjust.adjustCircle(randomPassword, ratioX, ratioY);
         captchaJFX.adjust(ratioX, ratioY);
-        System.out.println("After:\nratioX=" + ratioX + " ratioY=" + ratioY +
-                " stageWidth=" + stage.getScene().getWidth() + " stageHeight=" + stage.getScene().getHeight() +
-                " paneWidth=" + signUpMenuPane.getPrefWidth() + " paneHeight=" + signUpMenuPane.getPrefHeight());
+    }
+
+    @Override
+    public void adjustWithScene() {
+        adjust(stage.getScene().getWidth() / signUpMenuPane.getPrefWidth(), stage.getScene().getHeight() / signUpMenuPane.getPrefHeight());
     }
 
     private void setSignUpProperties() {
@@ -268,6 +267,9 @@ public class SignUpMenuJFX extends Application {
     private void setLogInLinkProperties() {
         logInLink.setOnMouseClicked(event -> {
             try {
+                controller.setSceneWidth(stage.getScene().getWidth());
+                controller.setSceneHeight(stage.getScene().getHeight());
+                System.out.println("exited sign up menu " + stage.getScene().getWidth() + " " + stage.getScene().getHeight());
                 controller.enterLogInMenuJFX();
                 stop();
                 controller.getGame().getCurrentMenuJFX().start(stage);

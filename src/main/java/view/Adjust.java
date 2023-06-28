@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class Adjust {
 
@@ -42,22 +43,19 @@ public class Adjust {
     }
 
     public static void adjustCheckBox(CheckBox box, double ratioX, double ratioY) {
-        System.out.println("Before box" + box.getPrefWidth() + " " + box.getPrefHeight());
         box.setPrefWidth(box.getPrefWidth() * ratioX);
         box.setPrefHeight(box.getPrefHeight() * ratioY);
         box.setLayoutX(box.getLayoutX() * ratioX);
         box.setLayoutY(box.getLayoutY() * ratioY);
-        System.out.println("After box" + box.getPrefWidth() + " " + box.getPrefHeight());
+        box.setFont(Font.font(ratioX * box.getFont().getSize()));
     }
 
     public static void adjustHyperlink(Hyperlink link, double ratioX, double ratioY) {
-        System.out.println("Before link" + link.getPrefWidth() + " " + link.getPrefHeight());
         link.setPrefWidth(link.getPrefWidth() * ratioX);
         link.setPrefHeight(link.getPrefHeight() * ratioY);
         link.setLayoutX(link.getLayoutX() * ratioX);
         link.setLayoutY(link.getLayoutY() * ratioY);
         link.setFont(Font.font(ratioX * link.getFont().getSize()));
-        System.out.println("After link" + link.getPrefWidth() + " " + link.getPrefHeight());
     }
 
     public static void adjustRectangle(Rectangle rectangle, double ratioX, double ratioY) {

@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -26,7 +28,7 @@ public class Controller {
     private final Game game;
     private String captchaAnswer;
     private Stage stage;
-    private double maxSceneWidth, maxSceneHeight;
+    private double sceneWidth, sceneHeight;
 
     public Controller(Stage stage) throws IOException {
         this.stage = stage;
@@ -57,21 +59,35 @@ public class Controller {
         stage.getScene().setFill(Color.BLACK);
         stage.setMaximized(true);
         stage.show();
-        maxSceneWidth = stage.getScene().getWidth();
-        maxSceneHeight = stage.getScene().getHeight();
-        stage.setMaximized(false);
+        sceneWidth = stage.getScene().getWidth();
+        sceneHeight = stage.getScene().getHeight();
+        System.out.println("width: " + sceneWidth + ", height: " + sceneHeight);
+        stage.maximizedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                System.out.println("maximized: " + stage.isMaximized());
+            }
+        });
     }
 
     public Stage getStage() {
         return stage;
     }
 
-    public double getMaxSceneWidth() {
-        return maxSceneWidth;
+    public double getSceneWidth() {
+        return sceneWidth;
     }
 
-    public double getMaxSceneHeight() {
-        return maxSceneHeight;
+    public void setSceneWidth(double sceneWidth) {
+        this.sceneWidth = sceneWidth;
+    }
+
+    public double getSceneHeight() {
+        return sceneHeight;
+    }
+
+    public void setSceneHeight(double sceneHeight) {
+        this.sceneHeight = sceneHeight;
     }
 
     public static String getRemovedQuotationMarks(String input) {
