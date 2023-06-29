@@ -2,18 +2,19 @@ package view;
 
 import controller.Controller;
 import controller.MapMenuController;
+import controller.MatchMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Buildings.BuildingType;
-import model.Match.Tile;
 
 import java.util.Objects;
 
 public class MatchMenuJFX extends Application {
     private Controller controller;
+    private MatchMenuController matchMenuController;
     private MapMenuController mapMenuController;
     private AnchorPane viewPane;
     private MapJFX mapJFX;
@@ -26,9 +27,8 @@ public class MatchMenuJFX extends Application {
         this.stage = stage;
         viewPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MapMenu.fxml")));
         setViewPane();
-        mapJFX = new MapJFX(this, viewPane);
+        mapJFX = new MapJFX(mapMenuController, this, viewPane);
         matchBarJFX = new MatchBarJFX(this, viewPane);
-        mapJFX.addImageToMap(100 ,100, BuildingType.getImagePattern("Barrack"));
         Scene scene = new Scene(viewPane);
         stage.setScene(scene);
         mapJFX.getMapPane().requestFocus();
@@ -46,5 +46,17 @@ public class MatchMenuJFX extends Application {
 
     public MatchBarJFX getMatchBarJFX() {
         return matchBarJFX;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
+    public void setMatchMenuController(MatchMenuController matchMenuController) {
+        this.matchMenuController = matchMenuController;
+    }
+
+    public void setMapMenuController(MapMenuController mapMenuController) {
+        this.mapMenuController = mapMenuController;
     }
 }

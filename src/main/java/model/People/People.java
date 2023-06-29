@@ -1,11 +1,10 @@
 package model.People;
 
 import javafx.scene.shape.Rectangle;
-import model.Buildings.BuildingType;
 import model.Match.Direction;
 import model.Match.Governance;
 import model.Match.LandType;
-import model.Match.Tile;
+import view.Tile;
 
 import java.util.ArrayList;
 

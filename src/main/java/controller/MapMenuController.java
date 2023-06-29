@@ -62,7 +62,8 @@ public class MapMenuController {
     public String showCellDetails(int row, int column) {
         StringBuilder details = new StringBuilder();
         Building building = controller.getGame().getCurrentMatch().getCell(row, column).getBuilding();
-        details.append("Land Type: ").append(controller.getGame().getCurrentMatch().getCell(row, column).getLandType().toString()).append("\n");
+        details.append("Land Type: ").append(controller.getGame().getCurrentMatch().getCell(row, column).getLandType().
+                toString()).append("\n");
         if (building != null) details.append("Building: ").append(building.getType()).append("\n");
         HashMap<String, Integer> troopsPassing = controller.getGame().getCurrentMatch().getCell(row, column).getTroopsPassing();
         for (Map.Entry<String, Integer> entry : troopsPassing.entrySet()) {

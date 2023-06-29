@@ -141,7 +141,7 @@ public class MainMenuJFX extends Application implements MenuJFX {
             @Override
             public void handle(Event event) {
                 try {
-                    controller.exit();
+                    controller.exitJFX();
                     stop();
                     stage.close();
                 } catch (Exception e) {

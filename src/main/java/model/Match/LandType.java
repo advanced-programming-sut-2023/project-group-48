@@ -7,22 +7,38 @@ import model.BackGroundColor;
 import java.util.Objects;
 
 public enum LandType {
-    LAND(BackGroundColor.BLACK, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/land.png")).toString()))),
-    LAND_WITH_GRAVEL(BackGroundColor.RED, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/land-with-gravel.png")).toString()))),
-    BOULDER(BackGroundColor.YELLOW, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/boulder.png")).toString()))),
-    ROCK(BackGroundColor.BLUE, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/rock.png")).toString()))),
-    IRON(BackGroundColor.PURPLE, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/iron.png")).toString()))),
-    GRASS(BackGroundColor.GREEN, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/grass.png")).toString()))),
-    MEADOW(BackGroundColor.CYAN, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/meadow.png")).toString()))),
-    DENSE_MEADOW(BackGroundColor.WHITE, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/dense-meadow.png")).toString()))),
-    OIL(BackGroundColor.RED, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/oil.png")).toString()))),
-    PLAIN(BackGroundColor.GREEN, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/plain.png")).toString()))),
-    SHALLOW_WATER(BackGroundColor.BLUE, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/shallow-water.png")).toString()))),
-    RIVER(BackGroundColor.BLUE, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/river.png")).toString()))),
-    SMALL_POND(BackGroundColor.BLUE, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/small-pond.png")).toString()))),
-    BIG_POND(BackGroundColor.WHITE, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/big-pond.png")).toString()))),
-    BEACH(BackGroundColor.YELLOW, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/beach.png")).toString()))),
-    SEA(BackGroundColor.BLUE, new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/sea.png")).toString())));
+    LAND(BackGroundColor.BLACK,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/land.png")).toString()))),
+    LAND_WITH_GRAVEL(BackGroundColor.RED,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/land-with-gravel.png")).toString()))),
+    BOULDER(BackGroundColor.YELLOW,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/boulder.png")).toString()))),
+    ROCK(BackGroundColor.BLUE,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/rock.png")).toString()))),
+    IRON(BackGroundColor.PURPLE,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/iron.png")).toString()))),
+    GRASS(BackGroundColor.GREEN,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/grass.png")).toString()))),
+    MEADOW(BackGroundColor.CYAN,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/meadow.png")).toString()))),
+    DENSE_MEADOW(BackGroundColor.WHITE,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/dense-meadow.png")).toString()))),
+    OIL(BackGroundColor.RED,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/oil.png")).toString()))),
+    PLAIN(BackGroundColor.GREEN,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/plain.png")).toString()))),
+    SHALLOW_WATER(BackGroundColor.BLUE,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/shallow-water.png")).toString()))),
+    RIVER(BackGroundColor.BLUE,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/river.png")).toString()))),
+    SMALL_POND(BackGroundColor.BLUE,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/small-pond.png")).toString()))),
+    BIG_POND(BackGroundColor.WHITE,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/big-pond.png")).toString()))),
+    BEACH(BackGroundColor.YELLOW,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/beach.png")).toString()))),
+    SEA(BackGroundColor.BLUE,
+            new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/sea.png")).toString())));
     private static final LandType[] landTypes = {LAND, LAND_WITH_GRAVEL, BOULDER, ROCK, IRON, GRASS, MEADOW, DENSE_MEADOW};
     private static final LandType[] waterTypes = {OIL, PLAIN, SHALLOW_WATER, RIVER, SMALL_POND, BIG_POND, BEACH, SEA};
 
@@ -36,6 +52,10 @@ public enum LandType {
 
     public BackGroundColor getBackGroundColor() {
         return backGroundColor;
+    }
+
+    public ImagePattern getImagePattern() {
+        return imagePattern;
     }
 
     public static LandType getLandType(String name) {

@@ -9,9 +9,9 @@ module Project.Repo {
     exports controller;
     exports model;
     exports view;
-    opens view to javafx.fxml;
     opens model.Match to com.google.gson;
     opens model.Buildings to com.google.gson;
     opens model.People to com.google.gson;
     opens model to com.google.gson, javafx.fxml;
+    opens view to com.google.gson, javafx.fxml;
 }

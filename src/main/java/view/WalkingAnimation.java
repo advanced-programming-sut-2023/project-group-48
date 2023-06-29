@@ -1,13 +1,10 @@
 package view;
 
-import controller.Controller;
-import javafx.animation.Animation;
 import javafx.animation.Transition;
 import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 import model.Match.Direction;
 import model.Match.Match;
-import model.Match.Tile;
 import model.People.People;
 import model.People.PeopleType;
 
