@@ -62,19 +62,21 @@ public class LoginMenuController {
         return "logged in successfully!";
     }
 
-    public String forgotPassword(String username) {
+    public String forgotPassword(String username, boolean stayLoggedIn) {
         forgotUser = controller.getGame().getUserByUsername(username);
         if (forgotUser == null) return "user doesn't exist!";
 
         step = 2;
+        mustStayLoggedIn = stayLoggedIn;
         return "please enter your answer:\n" + forgotUser.getSecurityQuestion();
     }
 
-    public String AnswerToSecurityQuestion(String answer) throws IOException {
+    public String answerToSecurityQuestion(String answer) throws IOException {
         if (forgotUser.isSecurityAnswerNotCorrect(answer)) return "answer is not correct!";
 
         step = 0;
         controller.getGame().setCurrentUser(forgotUser);
+        if (mustStayLoggedIn) controller.getGame().setDataBaseCurrentUser(attendedUser);
         controller.enterMainMenuJFX();
         return "logged in successfully!";
     }

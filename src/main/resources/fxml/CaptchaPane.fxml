@@ -7,12 +7,12 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<Pane prefHeight="320.0" prefWidth="320.0" visible="false" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="242.0" prefWidth="320.0" visible="false" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="120.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="320.0" />
-      <Circle fill="#1f93ff00" layoutX="305.0" layoutY="160.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-      <Label alignment="CENTER" layoutY="190.0" prefHeight="30.0" prefWidth="320.0" textFill="RED" />
-      <TextField layoutY="220.0" prefHeight="30.0" prefWidth="320.0" />
-      <Button layoutY="250.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="320.0" text="apply" />
+      <Circle fill="#1f93ff00" layoutX="306.0" layoutY="140.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Label alignment="CENTER" layoutY="155.0" prefHeight="30.0" prefWidth="320.0" textFill="RED" />
+      <TextField layoutY="185.0" prefHeight="30.0" prefWidth="320.0" />
+      <Button layoutY="215.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="320.0" text="apply" />
    </children>
 </Pane>
