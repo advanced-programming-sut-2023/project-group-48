@@ -227,6 +227,10 @@ public class MatchMenuController {
         return "unit selected successfully!";
     }
 
+    public void selectUnit(ArrayList<People> people) {
+        match.setSelectedUnit(people);
+    }
+
     public String disbandUnit() {
         match.setSelectedUnit(null);
         return "unit disbanded successfully!";

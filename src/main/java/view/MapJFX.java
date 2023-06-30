@@ -24,6 +24,8 @@ import model.People.People;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MapJFX {
     private final Controller controller;
@@ -109,6 +111,10 @@ public class MapJFX {
                             setTextureJFX.popOutSetTexture(selectedTiles.get(0).getX(), selectedTiles.get(0).getY());
                         }
                         break;
+                    case ESCAPE:
+                        deSelect();
+                        matchMenuJFX.getMatchBarJFX().deselect();
+                        break;
                 }
                 if (keyEvent.getCode().equals(KeyCode.RIGHT) || keyEvent.getCode().equals(KeyCode.DOWN)
                         || keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.UP)) {
@@ -165,7 +171,12 @@ public class MapJFX {
             public void handle(MouseEvent mouseEvent) {
                 if (matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern() != null) {
                     addBuildingToMap(tile.getI(), tile.getJ(), matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern());
-                    // TODO add to cell
+                    String type = Pattern.compile(".+/(?<type>.+).png").
+                            matcher(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern().getImage().getUrl()).group("type");
+                    matchMenuController.dropBuilding(tile.getCell().getRow(), tile.getCell().getColumn(), type);
+                } else if (!selectedPeople.isEmpty()) {
+                    matchMenuController.moveUnit(tile.getCell().getRow(), tile.getCell().getColumn());
+                    // TODO Auto-generated method stub
                 } else {
                     tile.setStrokeWidth(1 - tile.getStrokeWidth());
                 }
@@ -233,6 +244,7 @@ public class MapJFX {
                 selectedTile.setOpacity(0.8);
             }
         } else {
+            matchMenuController.selectUnit(selectedPeople);
             for (People selectedPerson : selectedPeople) {
                 selectedPerson.getRectangle().setOpacity(0.8);
             }
@@ -245,10 +257,13 @@ public class MapJFX {
             for (Tile selectedTile : selectedTiles) {
                 selectedTile.setOpacity(1);
             }
+            selectedTiles.clear();
         } else {
+            matchMenuController.disbandUnit();
             for (People selectedPerson : selectedPeople) {
                 selectedPerson.getRectangle().setOpacity(1);
             }
+            selectedPeople.clear();
         }
     }
 
