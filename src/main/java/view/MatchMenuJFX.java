@@ -6,6 +6,7 @@ import controller.MatchMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Buildings.BuildingType;
@@ -19,6 +20,7 @@ public class MatchMenuJFX extends Application {
     private AnchorPane viewPane;
     private MapJFX mapJFX;
     private MatchBarJFX matchBarJFX;
+    private SetTextureJFX setTextureJFX;
 
     private Stage stage;
 
@@ -27,7 +29,7 @@ public class MatchMenuJFX extends Application {
         this.stage = stage;
         viewPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MapMenu.fxml")));
         setViewPane();
-        mapJFX = new MapJFX(mapMenuController, this, viewPane);
+        mapJFX = new MapJFX(controller, mapMenuController, matchMenuController, this, viewPane);
         matchBarJFX = new MatchBarJFX(this, viewPane);
         Scene scene = new Scene(viewPane);
         stage.setScene(scene);

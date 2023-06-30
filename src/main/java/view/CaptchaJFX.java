@@ -40,11 +40,11 @@ public class CaptchaJFX implements MenuJFX {
 
         captchaPicture = (Rectangle) captchaPane.getChildren().get(0);
 
-        refreshCaptchaButton = (Circle) captchaPane.getChildren().get(1);
-        setRefreshCaptchaButton();
-
-        captchaError = (Label) captchaPane.getChildren().get(2);
+        captchaError = (Label) captchaPane.getChildren().get(1);
         setCaptchaError();
+
+        refreshCaptchaButton = (Circle) captchaPane.getChildren().get(2);
+        setRefreshCaptchaButton();
 
         captchaAnswer = (TextField) captchaPane.getChildren().get(3);
 

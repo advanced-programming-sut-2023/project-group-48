@@ -1,6 +1,8 @@
 package view;
 
+import controller.Controller;
 import controller.MapMenuController;
+import controller.MatchMenuController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -11,36 +13,55 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.Match.LandType;
+import model.People.People;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class MapJFX {
+    private final Controller controller;
     private final MapMenuController mapMenuController;
+    private final MatchMenuController matchMenuController;
     private final MatchMenuJFX matchMenuJFX;
+    private final SetTextureJFX setTextureJFX;
     private final AnchorPane viewPane, tileStatusPane;
     private final Label tileStatus;
     private final Pane mapPane;
     private Tile[][] map;
+    private ArrayList<Tile> cells;
     private Rectangle selectionArea;
+    private ArrayList<Tile> selectedTiles;
+    private ArrayList<People> selectedPeople;
     private final int MAP_SIZE = 200;
     private int firstI = MAP_SIZE * 2 - 2, lastI = 0, firstJ = MAP_SIZE - 1, lastJ = 0;
 
-    public MapJFX(MapMenuController mapMenuController, MatchMenuJFX matchMenuJFX, AnchorPane viewPane) throws IOException {
+    public MapJFX(Controller controller, MapMenuController mapMenuController, MatchMenuController matchMenuController,
+                  MatchMenuJFX matchMenuJFX, AnchorPane viewPane) throws IOException {
+        this.controller = controller;
         this.mapMenuController = mapMenuController;
+        this.matchMenuController = matchMenuController;
         this.matchMenuJFX = matchMenuJFX;
         this.viewPane = viewPane;
+        this.mapPane = new Pane();
         this.tileStatusPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/TileStatus.fxml")));
         this.tileStatus = (Label) tileStatusPane.getChildren().get(0);
-        mapPane = new Pane();
+        setTileStatusProperties();
         setMapPane();
         setMap();
+        setCells();
         setSelectionArea();
+        this.setTextureJFX = new SetTextureJFX(matchMenuController, mapPane);
+    }
+
+    private void setTileStatusProperties() {
+        tileStatusPane.setBackground(Background.fill(Color.BEIGE));
     }
 
     private void setMapPane() {
@@ -75,12 +96,18 @@ public class MapJFX {
                         mapPane.setLayoutY(mapPane.getLayoutY() - Tile.HEIGHT / 2);
                         break;
                     case Z:
-                        mapPane.setScaleX(0.9 * mapPane.getScaleX());
-                        mapPane.setScaleY(0.9 * mapPane.getScaleY());
+                        mapPane.setScaleX(mapPane.getScaleX() > 0.59049 ? 0.9 * mapPane.getScaleX() : 1 * mapPane.getScaleX());
+                        mapPane.setScaleY(mapPane.getScaleY() > 0.59049 ? 0.9 * mapPane.getScaleY() : 1 * mapPane.getScaleY());
                         break;
                     case X:
-                        mapPane.setScaleX(1 / 0.9 * mapPane.getScaleX());
-                        mapPane.setScaleY(1 / 0.9 * mapPane.getScaleY());
+                        mapPane.setScaleX(mapPane.getScaleX() < 1.693508780843029 ? 1 / 0.9 * mapPane.getScaleX() : 1 * mapPane.getScaleX());
+                        mapPane.setScaleY(mapPane.getScaleY() < 1.693508780843029 ? 1 / 0.9 * mapPane.getScaleY() : 1 * mapPane.getScaleY());
+                        break;
+                    case T:
+                        if (!selectedTiles.isEmpty()) {
+                            setTextureJFX.setSelectedTiles(selectedTiles);
+                            setTextureJFX.popOutSetTexture(selectedTiles.get(0).getX(), selectedTiles.get(0).getY());
+                        }
                         break;
                 }
                 if (keyEvent.getCode().equals(KeyCode.RIGHT) || keyEvent.getCode().equals(KeyCode.DOWN)
@@ -93,47 +120,16 @@ public class MapJFX {
         });
     }
 
-    private void setSelectionArea() {
-        selectionArea = new Rectangle();
-        selectionArea.setFill(Color.DARKGRAY);
-        selectionArea.setOpacity(0.1);
-        final MouseEvent[] pressedEvent = {null};
-        mapPane.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                pressedEvent[0] = mouseEvent;
-                selectionArea.setX(mouseEvent.getX());
-                selectionArea.setY(mouseEvent.getY());
-                mapPane.getChildren().add(selectionArea);
-                selectionArea.toFront();
-            }
-        });
-        mapPane.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                selectionArea.setWidth(Math.abs(mouseEvent.getX() - pressedEvent[0].getX()));
-                selectionArea.setHeight(Math.abs(mouseEvent.getY() - pressedEvent[0].getY()));
-                selectionArea.setX(Math.min(mouseEvent.getX(), pressedEvent[0].getX()));
-                selectionArea.setY(Math.min(mouseEvent.getY(), pressedEvent[0].getY()));
-            }
-        });
-        mapPane.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                selectionArea.setWidth(0);
-                selectionArea.setHeight(0);
-                mapPane.getChildren().remove(selectionArea);
-            }
-        });
-    }
-
     private void setMap() {
         map = new Tile[MAP_SIZE * 2 - 1][MAP_SIZE];
+        cells = new ArrayList<>();
         for (int i = 0; i < MAP_SIZE * 2 - 1; i++) {
             for (int j = 0; j < MAP_SIZE; j++) {
                 double x = Tile.WIDTH / 2 + j * Tile.WIDTH + ((i % 2 == 0) ? 0 : Tile.WIDTH / 2);
                 double y = mapPane.getPrefHeight() - Tile.HEIGHT / 2 - i * (Tile.HEIGHT / 2);
-                map[i][j] = new Tile(x, y, i, j, null);
+                map[i][j] = new Tile(x, y, i, j);
+                map[i][j].setOpacity(0.4);
+
                 setTile(map[i][j]);
 
                 if (isInBorder(map[i][j])) {
@@ -175,6 +171,85 @@ public class MapJFX {
                 }
             }
         });
+    }
+
+    private void setCells() {
+        for (int row = 0; row < MAP_SIZE - 1; row++) {
+            for (int column = 0; column < MAP_SIZE - 1; column++) {
+                int[] coordinates = getCoordinates(row, column);
+                map[coordinates[0]][coordinates[1]].setCell(controller.getGame().getCurrentMatch().getCell(row, column));
+                map[coordinates[0]][coordinates[1]].setOpacity(1);
+                cells.add(map[coordinates[0]][coordinates[1]]);
+            }
+        }
+    }
+
+    private void setSelectionArea() {
+        this.selectedTiles = new ArrayList<>();
+        this.selectedPeople = new ArrayList<>();
+        this.selectionArea = new Rectangle();
+        selectionArea.setFill(Color.DARKGRAY);
+        selectionArea.setOpacity(0.1);
+        final MouseEvent[] pressedEvent = {null};
+        mapPane.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                pressedEvent[0] = mouseEvent;
+                selectionArea.setX(mouseEvent.getX());
+                selectionArea.setY(mouseEvent.getY());
+                mapPane.getChildren().add(selectionArea);
+                selectionArea.toFront();
+            }
+        });
+        mapPane.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                selectionArea.setWidth(Math.abs(mouseEvent.getX() - pressedEvent[0].getX()));
+                selectionArea.setHeight(Math.abs(mouseEvent.getY() - pressedEvent[0].getY()));
+                selectionArea.setX(Math.min(mouseEvent.getX(), pressedEvent[0].getX()));
+                selectionArea.setY(Math.min(mouseEvent.getY(), pressedEvent[0].getY()));
+                select();
+            }
+        });
+        mapPane.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                selectionArea.setWidth(0);
+                selectionArea.setHeight(0);
+                mapPane.getChildren().remove(selectionArea);
+            }
+        });
+    }
+
+    private void select() {
+        for (Tile cellTile : cells) {
+            if (selectionArea.getBoundsInParent().intersects(cellTile.getBoundsInParent())) {
+                selectedTiles.add(cellTile);
+                selectedPeople.addAll(cellTile.getCell().getPeople());
+            }
+        }
+        if (selectedPeople.isEmpty()) {
+            for (Tile selectedTile : selectedTiles) {
+                selectedTile.setOpacity(0.8);
+            }
+        } else {
+            for (People selectedPerson : selectedPeople) {
+                selectedPerson.getRectangle().setOpacity(0.8);
+            }
+            selectedTiles.clear();
+        }
+    }
+
+    private void deSelect() {
+        if (selectedPeople.isEmpty()) {
+            for (Tile selectedTile : selectedTiles) {
+                selectedTile.setOpacity(1);
+            }
+        } else {
+            for (People selectedPerson : selectedPeople) {
+                selectedPerson.getRectangle().setOpacity(1);
+            }
+        }
     }
 
     private void locateTileStatusPane(Tile tile) {
