@@ -18,7 +18,6 @@ public class Game {
     private final DataBase db;
     private User currentUser;
     private Application currentMenuJFX;
-    private Menu currentMenu;
     private Match currentMatch;
     private Troop selectedTroop;
     private Cell selectedCell;
@@ -116,14 +115,6 @@ public class Game {
 
     public void setCurrentMenuJFX(Application currentMenuJFX) {
         this.currentMenuJFX = currentMenuJFX;
-    }
-
-    public Menu getCurrentMenu() {
-        return currentMenu;
-    }
-
-    public void setCurrentMenu(Menu currentMenu) {
-        this.currentMenu = currentMenu;
     }
 
     public Match getCurrentMatch() {

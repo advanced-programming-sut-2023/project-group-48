@@ -58,7 +58,8 @@ public class LoginMenuController {
         step = 0;
         controller.getGame().setCurrentUser(attendedUser);
         if (mustStayLoggedIn) controller.getGame().setDataBaseCurrentUser(attendedUser);
-        return "logged in successfully!\n" + controller.enterMainMenu();
+        controller.enterMainMenuJFX();
+        return "logged in successfully!";
     }
 
     public String forgotPassword(String username) {
@@ -74,7 +75,8 @@ public class LoginMenuController {
 
         step = 0;
         controller.getGame().setCurrentUser(forgotUser);
-        return "logged in successfully!\n" + controller.enterMainMenu();
+        controller.enterMainMenuJFX();
+        return "logged in successfully!";
     }
 
     public int getStep() {

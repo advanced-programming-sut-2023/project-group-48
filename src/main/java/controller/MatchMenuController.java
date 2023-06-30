@@ -360,7 +360,8 @@ public class MatchMenuController {
                 String result = (match.getMatchWinner() == null) ? "now winner!" : match.getMatchWinner().getOwner().getUsername() + " won the match!\n";
                 controller.getGame().setCurrentMatch(null);
                 setMatch(null);
-                return "match is finished!\n" + result + "\n" + controller.enterMainMenu();
+                controller.enterMainMenuJFX();
+                return "match is finished!\n" + result;
             }
         return (match.isRoundFinished() ? "round finished\n" : "") +
                 match.getCurrentPlayer().getUsername() + " is now playing!";

@@ -3,15 +3,15 @@ package view;
 import controller.Controller;
 import controller.LoginMenuController;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.paint.ImagePattern;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -21,14 +21,14 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Objects;
 
-public class LogInMenuJFX extends Application {
+public class LogInMenuJFX extends Application implements MenuJFX {
     private Controller controller;
     private LoginMenuController loginMenuController;
     private AnchorPane logInMenuPane;
     private TextField username, visiblePassword, captchaAnswer;
     private PasswordField password;
     private CheckBox showPassword, stayLoggedIn;
-    private Label title, mainError, loginButtonText, captchaError;
+    private Label title, mainError, loginButtonText, captchaError, stayLoggedInLabel;
     private Hyperlink forgotPasswordLink, signUpLink;
     private Rectangle loginButton, captchaPicture;
     private Circle refreshCaptchaButton;
@@ -41,6 +41,7 @@ public class LogInMenuJFX extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         logInMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/LogInMenu.fxml")));
+        logInMenuPane.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/backgrounds/5.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 //        logInMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/5.png")).toExternalForm()))));
 
         loginButton = (Rectangle) logInMenuPane.getChildren().get(0);
@@ -60,27 +61,30 @@ public class LogInMenuJFX extends Application {
         setErrorProperties();
 
         stayLoggedIn = (CheckBox) logInMenuPane.getChildren().get(8);
+        stayLoggedInLabel = (Label) logInMenuPane.getChildren().get(9);
 
-        forgotPasswordLink = (Hyperlink) logInMenuPane.getChildren().get(9);
+        forgotPasswordLink = (Hyperlink) logInMenuPane.getChildren().get(10);
         setForgotPasswordLinkProperties();
 
-        signUpLink = (Hyperlink) logInMenuPane.getChildren().get(10);
+        signUpLink = (Hyperlink) logInMenuPane.getChildren().get(11);
         setSignUpLinkProperties();
 
         captchaJFX = new CaptchaJFX(controller, logInMenuPane);
         setCaptchaPaneProperties();
 
-        adjust(controller.getMaxSceneWidth() * 2 / (3 * stage.getScene().getWidth()), controller.getMaxSceneHeight() * 2 / (3 * stage.getScene().getHeight()));
+        adjustWithScene();
         Scene scene = new Scene(logInMenuPane);
         stage.setScene(scene);
-        stage.getScene().heightProperty().addListener((observable, oldValue, newValue) -> {
-            if(controller.getGame().getCurrentMenuJFX().equals(this)) {
-                adjust(stage.getScene().getWidth() / logInMenuPane.getPrefWidth(), stage.getScene().getHeight() / logInMenuPane.getPrefHeight());
-            }
+        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+            adjustWithScene();
+        });
+        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+            adjustWithScene();
         });
         stage.show();
     }
 
+    @Override
     public void adjust(double ratioX, double ratioY) {
         Adjust.adjustPane(logInMenuPane, ratioX, ratioY);
         Adjust.adjustTextField(username, ratioX, ratioY);
@@ -88,6 +92,7 @@ public class LogInMenuJFX extends Application {
         Adjust.adjustPasswordField(password, ratioX, ratioY);
         Adjust.adjustCheckBox(showPassword, ratioX, ratioY);
         Adjust.adjustCheckBox(stayLoggedIn, ratioX, ratioY);
+        Adjust.adjustLabel(stayLoggedInLabel, ratioX, ratioY);
         Adjust.adjustLabel(title, ratioX, ratioY);
         Adjust.adjustLabel(mainError, ratioX, ratioY);
         Adjust.adjustLabel(loginButtonText, ratioX, ratioY);
@@ -95,6 +100,11 @@ public class LogInMenuJFX extends Application {
         Adjust.adjustHyperlink(signUpLink, ratioX, ratioY);
         Adjust.adjustRectangle(loginButton, ratioX, ratioY);
         captchaJFX.adjust(ratioX, ratioY);
+    }
+
+    @Override
+    public void adjustWithScene() {
+        adjust(stage.getScene().getWidth() / logInMenuPane.getPrefWidth(), stage.getScene().getHeight() / logInMenuPane.getPrefHeight());
     }
 
     private void setPasswordProperties() {
@@ -131,6 +141,8 @@ public class LogInMenuJFX extends Application {
     private void setSignUpLinkProperties() {
         signUpLink.setOnMouseClicked((event) -> {
             try {
+                controller.setSceneWidth(stage.getScene().getWidth());
+                controller.setSceneHeight(stage.getScene().getHeight());
                 controller.enterSignUpMenuJFX();
                 stop();
                 controller.getGame().getCurrentMenuJFX().start(stage);

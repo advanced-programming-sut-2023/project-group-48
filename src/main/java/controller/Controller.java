@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -15,18 +17,11 @@ public class Controller {
     private final SignUpMenuJFX signUpMenuJFX;
     private final LogInMenuJFX logInMenuJFX;
     private final MainMenuJFX mainMenuJFX;
-    private final SignUpMenu signUpMenu;
-    private final LoginMenu loginMenu;
-    private final MainMenu mainMenu;
-    private final MapMenu mapMenu;
-    private final MatchMenu matchMenu;
-    private final ProfileMenu profileMenu;
-    private final TradeMenu tradeMenu;
-    private final ShopMenu shopMenu;
+    private final MatchMenuJFX matchMenuJFX;
     private final Game game;
     private String captchaAnswer;
     private Stage stage;
-    private double maxSceneWidth, maxSceneHeight;
+    private double sceneWidth, sceneHeight;
 
     public Controller(Stage stage) throws IOException {
         this.stage = stage;
@@ -40,16 +35,11 @@ public class Controller {
         this.mainMenuJFX = new MainMenuJFX();
         mainMenuJFX.setController(this);
         mainMenuJFX.setMainMenuController(new MainMenuController(this));
+        this.matchMenuJFX = new MatchMenuJFX();
+        matchMenuJFX.setController(this);
+        matchMenuJFX.setMatchMenuController(new MatchMenuController(this));
+        matchMenuJFX.setMapMenuController(new MapMenuController(this));
         this.game = new Game(mainMenuJFX, signUpMenuJFX);
-        this.signUpMenu = new SignUpMenu(this);
-        this.loginMenu = new LoginMenu(this);
-        this.mainMenu = new MainMenu(this);
-        this.mapMenu = new MapMenu(this);
-        this.profileMenu = new ProfileMenu(this);
-        this.matchMenu = new MatchMenu(this);
-        this.tradeMenu = new TradeMenu(this);
-        this.shopMenu = new ShopMenu(this);
-//        this.game = new Game(mainMenu, signUpMenu);
     }
 
     private void setStage() {
@@ -57,21 +47,35 @@ public class Controller {
         stage.getScene().setFill(Color.BLACK);
         stage.setMaximized(true);
         stage.show();
-        maxSceneWidth = stage.getScene().getWidth();
-        maxSceneHeight = stage.getScene().getHeight();
-        stage.setMaximized(false);
+        sceneWidth = stage.getScene().getWidth();
+        sceneHeight = stage.getScene().getHeight();
+        System.out.println("width: " + sceneWidth + ", height: " + sceneHeight);
+        stage.maximizedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                System.out.println("maximized: " + stage.isMaximized());
+            }
+        });
     }
 
     public Stage getStage() {
         return stage;
     }
 
-    public double getMaxSceneWidth() {
-        return maxSceneWidth;
+    public double getSceneWidth() {
+        return sceneWidth;
     }
 
-    public double getMaxSceneHeight() {
-        return maxSceneHeight;
+    public void setSceneWidth(double sceneWidth) {
+        this.sceneWidth = sceneWidth;
+    }
+
+    public double getSceneHeight() {
+        return sceneHeight;
+    }
+
+    public void setSceneHeight(double sceneHeight) {
+        this.sceneHeight = sceneHeight;
     }
 
     public static String getRemovedQuotationMarks(String input) {
@@ -112,62 +116,6 @@ public class Controller {
     public void exitJFX() throws IOException {
         game.updateJsonFiles();
         game.setCurrentMenuJFX(null);
-    }
-
-    public String enterLoginMenu() {
-        game.setCurrentMenu(loginMenu);
-        return "entered login Menu!";
-    }
-
-    public String enterSignUpMenu() {
-        game.setCurrentMenu(signUpMenu);
-        return "entered signup Menu!";
-    }
-
-    public String enterMainMenu() {
-        game.setCurrentMenu(mainMenu);
-        return "entered main Menu!";
-    }
-
-    public String enterProfileMenu() {
-        game.setCurrentMenu(profileMenu);
-        return "entered profile Menu!";
-    }
-
-    public String enterMatchMenu() {
-        game.setCurrentMenu(matchMenu);
-        return "entered match Menu!";
-    }
-
-    public String enterTradeMenu() {
-        game.setCurrentMenu(tradeMenu);
-        return "entered trade Menu!";
-    }
-
-    public String enterShopMenu() {
-        game.setCurrentMenu(shopMenu);
-        return "entered shop Menu!";
-    }
-
-    public String enterMapMenu() {
-        game.setCurrentMenu(mapMenu);
-        return "entered map Menu!";
-    }
-
-    public String logout() throws IOException {
-        game.setCurrentMenu(signUpMenu);
-        game.setCurrentUser(null);
-        return "logged out!";
-    }
-
-    public void exit() throws IOException {
-        game.updateJsonFiles();
-        game.setCurrentMenu(null);
-        game.setCurrentMenuJFX(null);
-    }
-
-    public void setCurrentMatch(Match match) {
-        matchMenu.setCurrentMatch(match);
     }
 
     public void setHoverProperty(Node node) {

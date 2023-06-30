@@ -13,7 +13,8 @@ public enum PeopleType {
     TROOP(new ArrayList<>(List.of("Sultan", "Archer", "Crossbowmen", "Spearmen", "Pikemen", "Macemen", "Swordsmen",
             "Knight", "Tunneler", "Laddermen", "Black Monk", "Archer Bow", "Slaves",
             "Slingers", "Assassins", "Horse Archers", "Arabian Swordsmen", "Fire Throwers"))),
-    WORKER(new ArrayList<>(List.of("Engineer", "Baker", "Brewer", "Farmer", "Hunter", "Innkeeper", "Miller", "Iron Miner", "Quarry Worker", "Woodcutter", "Stone Miner", "Trader", "Armourer", "Blacksmith", "Fletcher", "Tanner")));
+    WORKER(new ArrayList<>(List.of("Engineer", "Baker", "Brewer", "Farmer", "Hunter", "Innkeeper", "Miller", "Iron Miner",
+            "Quarry Worker", "Woodcutter", "Stone Miner", "Trader", "Armourer", "Blacksmith", "Fletcher", "Tanner")));
 
     private static final PeopleType[] peopleTypes = {TROOP, WORKER};
 
