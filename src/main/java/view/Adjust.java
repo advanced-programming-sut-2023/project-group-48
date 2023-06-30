@@ -64,6 +64,7 @@ public class Adjust {
         rectangle.setLayoutX(rectangle.getLayoutX() * ratioX);
         rectangle.setLayoutY(rectangle.getLayoutY() * ratioY);
     }
+
     public static void adjustCircle(Circle circle, double ratioX, double ratioY) {
         circle.setRadius(circle.getRadius() * ratioX);
         circle.setLayoutX(circle.getLayoutX() * ratioX);
