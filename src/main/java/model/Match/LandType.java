@@ -41,6 +41,8 @@ public enum LandType {
             new ImagePattern(new Image(Objects.requireNonNull(LandType.class.getResource("/tiles/sea.png")).toString())));
     private static final LandType[] landTypes = {LAND, LAND_WITH_GRAVEL, BOULDER, ROCK, IRON, GRASS, MEADOW, DENSE_MEADOW};
     private static final LandType[] waterTypes = {OIL, PLAIN, SHALLOW_WATER, RIVER, SMALL_POND, BIG_POND, BEACH, SEA};
+    private static final LandType[] allLandTypes = {LAND, LAND_WITH_GRAVEL, BOULDER, ROCK, IRON, GRASS, MEADOW, DENSE_MEADOW,
+            OIL, PLAIN, SHALLOW_WATER, RIVER, SMALL_POND, BIG_POND, BEACH, SEA};
 
     private final BackGroundColor backGroundColor;
     private final ImagePattern imagePattern;
@@ -66,6 +68,10 @@ public enum LandType {
             if (waterType.toString().equals(name)) return waterType;
         }
         return null;
+    }
+
+    public static LandType[] getAllLandTypes() {
+        return allLandTypes;
     }
 
     @Override

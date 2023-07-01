@@ -237,4 +237,8 @@ public class MatchBarJFX {
         addClickableToRectangle(trapPane, BuildingType.getImagePattern("Pitch Ditch")); // BuildingType.getImagePattern("Killing Pit")
         mainBarPane.getChildren().add(trapPane);
     }
+
+    public void deselect() {
+        selectedBuildingImagePattern = null;
+    }
 }

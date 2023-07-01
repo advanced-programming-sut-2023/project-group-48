@@ -7,25 +7,25 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainMenuJFX">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" x="70.0" y="177.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" layoutX="70.0" layoutY="177.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" />
       <Label alignment="CENTER" layoutX="170.0" layoutY="197.0" prefHeight="40.0" prefWidth="200.0" text="Start Match">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" x="70.0" y="265.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" layoutX="70.0" layoutY="265.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" />
       <Label alignment="CENTER" layoutX="170.0" layoutY="285.0" prefHeight="40.0" prefWidth="200.0" text="Profile Menu">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" x="70.0" y="354.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" layoutX="70.0" layoutY="354.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" />
       <Label alignment="CENTER" layoutX="170.0" layoutY="374.0" prefHeight="40.0" prefWidth="200.0" text="Log Out">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" x="70.0" y="442.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" layoutX="70.0" layoutY="442.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" />
       <Label alignment="CENTER" layoutX="170.0" layoutY="462.0" prefHeight="40.0" prefWidth="200.0" text="Exit">
          <font>
             <Font size="24.0" />

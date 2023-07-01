@@ -3,8 +3,6 @@ package view;
 import controller.Controller;
 import controller.LoginMenuController;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -34,6 +33,7 @@ public class LogInMenuJFX extends Application implements MenuJFX {
     private Circle refreshCaptchaButton;
     private Button captchaAnswerButton;
     private CaptchaJFX captchaJFX;
+    private ForgotPasswordJFX forgotPasswordJFX;
     private int wrongPasswordCount;
     private Stage stage;
 
@@ -42,6 +42,7 @@ public class LogInMenuJFX extends Application implements MenuJFX {
         this.stage = stage;
         logInMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/LogInMenu.fxml")));
         logInMenuPane.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/backgrounds/5.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        Line line = new Line(logInMenuPane.getPrefWidth() / 2, 0, logInMenuPane.getPrefWidth() / 2, logInMenuPane.getPrefHeight());
 //        logInMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/5.png")).toExternalForm()))));
 
         loginButton = (Rectangle) logInMenuPane.getChildren().get(0);
@@ -71,6 +72,9 @@ public class LogInMenuJFX extends Application implements MenuJFX {
 
         captchaJFX = new CaptchaJFX(controller, logInMenuPane);
         setCaptchaPaneProperties();
+
+        forgotPasswordJFX = new ForgotPasswordJFX(logInMenuPane);
+        setForgotPasswordProperties();
 
         adjustWithScene();
         Scene scene = new Scene(logInMenuPane);
@@ -130,11 +134,9 @@ public class LogInMenuJFX extends Application implements MenuJFX {
 
     private void setForgotPasswordLinkProperties() {
         forgotPasswordLink.setOnMouseClicked((event) -> {
-            try {
-                // TODO Auto-generated method stub
-            } catch (Exception e) {
-
-            }
+            String result = loginMenuController.forgotPassword(username.getText(), stayLoggedIn.isSelected());
+            if (result.equals("user doesn't exist!")) mainError.setText(result);
+            else forgotPasswordJFX.popOutForgotPasswordPane(result);
         });
     }
 
@@ -186,19 +188,44 @@ public class LogInMenuJFX extends Application implements MenuJFX {
                     mainError.setText(result);
                     captchaJFX.popOffCaptchaPane();
                 } else {
-                    try {
-                        controller.enterMainMenuJFX();
-                        stop();
-                        controller.getGame().getCurrentMenuJFX().start(stage);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
+                    login();
                 }
             } else {
                 captchaJFX.getCaptchaError().setText("captcha answer is incorrect!");
                 captchaJFX.refreshCaptcha();
             }
         });
+    }
+
+    private void setForgotPasswordProperties() {
+        forgotPasswordJFX.getApplyButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                String result = null;
+                try {
+                    result = loginMenuController.answerToSecurityQuestion(forgotPasswordJFX.getAnswerTextField().getText());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                if (!result.equals("logged in successfully!")) forgotPasswordJFX.getErrorLabel().setText(result);
+                else {
+                    forgotPasswordJFX.popOffForgotPasswordPane();
+                    login();
+                }
+            }
+        });
+    }
+
+    private void login() {
+        try {
+            controller.setSceneWidth(stage.getScene().getWidth());
+            controller.setSceneHeight(stage.getScene().getHeight());
+            controller.enterMainMenuJFX();
+            stop();
+            controller.getGame().getCurrentMenuJFX().start(stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Controller getController() {

@@ -1,13 +1,17 @@
 package view;
 
 import controller.Controller;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -18,37 +22,58 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Objects;
 
-public class CaptchaJFX {
+public class CaptchaJFX implements MenuJFX {
     private final Controller controller;
+    private final AnchorPane anchorPane;
     private final Pane captchaPane;
     private final Rectangle captchaPicture;
-    private Circle refreshCaptchaButton;
+    private final Circle refreshCaptchaButton;
     private final Label captchaError;
     private final TextField captchaAnswer;
-    private Button captchaAnswerButton;
+    private final Button captchaAnswerButton;
 
     public CaptchaJFX(Controller controller, AnchorPane anchorPane) throws IOException {
         this.controller = controller;
+        this.anchorPane = anchorPane;
         captchaPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/CaptchaPane.fxml")));
-        anchorPane.getChildren().add(captchaPane);
-        captchaPane.setLayoutX(anchorPane.getPrefWidth() / 2 - captchaPane.getPrefWidth() / 2);
-        captchaPane.setLayoutY(anchorPane.getPrefHeight() / 2 - captchaPane.getPrefHeight() / 2);
+        setCaptchaPane();
 
         captchaPicture = (Rectangle) captchaPane.getChildren().get(0);
 
-        refreshCaptchaButton = (Circle) captchaPane.getChildren().get(1);
-        refreshCaptchaButton.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/icons/refresh.png")).toExternalForm())));
-        refreshCaptchaButton.setOnMouseClicked((event) -> {
-            refreshCaptcha();
-        });
+        captchaError = (Label) captchaPane.getChildren().get(1);
+        setCaptchaError();
 
-        captchaError = (Label) captchaPane.getChildren().get(2);
+        refreshCaptchaButton = (Circle) captchaPane.getChildren().get(2);
+        setRefreshCaptchaButton();
 
         captchaAnswer = (TextField) captchaPane.getChildren().get(3);
 
         captchaAnswerButton = (Button) captchaPane.getChildren().get(4);
 
         refreshCaptcha();
+    }
+
+    private void setCaptchaPane() {
+        captchaPane.setBackground(Background.fill(Color.WHITE));
+        anchorPane.getChildren().add(captchaPane);
+        captchaPane.setLayoutX(anchorPane.getPrefWidth() / 2 - captchaPane.getPrefWidth() / 2);
+        captchaPane.setLayoutY(anchorPane.getPrefHeight() / 2 - captchaPane.getPrefHeight() / 2);
+    }
+
+    private void setRefreshCaptchaButton() {
+        refreshCaptchaButton.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/icons/refresh.png")).toExternalForm())));
+        refreshCaptchaButton.setOnMouseClicked((event) -> {
+            refreshCaptcha();
+        });
+    }
+
+    private void setCaptchaError() {
+        captchaAnswer.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                captchaError.setText("");
+            }
+        });
     }
 
     public Pane getCaptchaPane() {
@@ -95,5 +120,10 @@ public class CaptchaJFX {
         Adjust.adjustLabel(captchaError, ratioX, ratioY);
         Adjust.adjustTextField(captchaAnswer, ratioX, ratioY);
         Adjust.adjustButton(captchaAnswerButton, ratioX, ratioY);
+    }
+
+    @Override
+    public void adjustWithScene() {
+
     }
 }
