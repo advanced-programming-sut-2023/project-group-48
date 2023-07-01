@@ -30,9 +30,9 @@ public class ForgotPasswordJFX implements MenuJFX {
         this.questionLabel = (Label) forgotPasswordPane.getChildren().get(0);
 
         this.errorLabel = (Label) forgotPasswordPane.getChildren().get(1);
-        setErrorLabel();
 
         this.answerTextField = (TextField) forgotPasswordPane.getChildren().get(2);
+        setErrorLabel();
 
         this.applyButton = (Button) forgotPasswordPane.getChildren().get(3);
     }
