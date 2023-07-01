@@ -55,9 +55,18 @@ public class MainMenuJFX extends Application implements MenuJFX {
         startMatchJFX = new StartMatchJFX(mainMenuPane, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                String result = mainMenuController.startMatch(startMatchJFX.getRoundsCount() , 0, startMatchJFX.getUsernames());
+                String result = mainMenuController.startMatch(startMatchJFX.getRoundsCount() , 0,
+                        controller.getGame().getCurrentUser().getUsername() + " " +startMatchJFX.getUsernames());
+                System.out.println(result);
                 if (result.contains("match started!")) {
                     startMatchJFX.popOff();
+                    try {
+                        controller.enterMatchMenuJFX();
+                        stop();
+                        controller.getGame().getCurrentMenuJFX().start(stage);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
                     startMatchJFX.getErrorLabel().setText(result);
                 }

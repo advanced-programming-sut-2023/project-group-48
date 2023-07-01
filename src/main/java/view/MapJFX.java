@@ -8,6 +8,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -34,7 +35,7 @@ public class MapJFX {
     private final MatchMenuJFX matchMenuJFX;
     private final SetTextureJFX setTextureJFX;
     private final AnchorPane viewPane, tileStatusPane;
-    private final Label tileStatus;
+    private Label tileStatus;
     private final Pane mapPane;
     private Tile[][] map;
     private ArrayList<Tile> cells;
@@ -52,18 +53,26 @@ public class MapJFX {
         this.matchMenuJFX = matchMenuJFX;
         this.viewPane = viewPane;
         this.mapPane = new Pane();
-        this.tileStatusPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/TileStatus.fxml")));
-        this.tileStatus = (Label) tileStatusPane.getChildren().get(0);
+        this.tileStatusPane = new AnchorPane();
         setTileStatusProperties();
         setMapPane();
         setMap();
         setCells();
         setSelectionArea();
-        this.setTextureJFX = new SetTextureJFX(matchMenuController, mapPane);
+        this.setTextureJFX = new SetTextureJFX(matchMenuController, viewPane, mapPane);
     }
 
     private void setTileStatusProperties() {
+        tileStatusPane.setPrefWidth(200);
+        tileStatusPane.setPrefHeight(200);
         tileStatusPane.setBackground(Background.fill(Color.BEIGE));
+        tileStatus = new Label();
+        tileStatus.setLayoutX(0);
+        tileStatus.setLayoutY(0);
+        tileStatus.setPrefWidth(200);
+        tileStatus.setPrefHeight(200);
+        tileStatus.setAlignment(Pos.CENTER);
+        tileStatusPane.getChildren().add(tileStatus);
     }
 
     private void setMapPane() {
@@ -127,10 +136,10 @@ public class MapJFX {
     }
 
     private void setMap() {
-        map = new Tile[MAP_SIZE * 2 - 1][MAP_SIZE];
+        map = new Tile[MAP_SIZE * 2 - 1][MAP_SIZE + 1];
         cells = new ArrayList<>();
         for (int i = 0; i < MAP_SIZE * 2 - 1; i++) {
-            for (int j = 0; j < MAP_SIZE; j++) {
+            for (int j = 0; j < MAP_SIZE + 1; j++) {
                 double x = Tile.WIDTH / 2 + j * Tile.WIDTH + ((i % 2 == 0) ? 0 : Tile.WIDTH / 2);
                 double y = mapPane.getPrefHeight() - Tile.HEIGHT / 2 - i * (Tile.HEIGHT / 2);
                 map[i][j] = new Tile(x, y, i, j);
@@ -156,9 +165,9 @@ public class MapJFX {
         tile.hoverProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                if (t1) {
+                if (!t1) {
                     mapPane.getChildren().remove(tileStatusPane);
-                } else {
+                } else if (!mapPane.getChildren().contains(selectionArea) && tile.getCell() != null) {
                     tileStatus.setText(mapMenuController.showCellDetails(tile.getCell().getRow(), tile.getCell().getColumn()));
                     locateTileStatusPane(tile);
                     mapPane.getChildren().add(tileStatusPane);
@@ -178,6 +187,9 @@ public class MapJFX {
                     matchMenuController.moveUnit(tile.getCell().getRow(), tile.getCell().getColumn());
                     // TODO Auto-generated method stub
                 } else {
+                    int[] coordinates = tile.getCell() == null ? new int[]{0, 0} : getCoordinates(tile.getCell().getRow() - 1, tile.getCell().getColumn());
+                    System.out.println(tile.getI() + " " + tile.getJ() + " " + coordinates[0] + " " + coordinates[1]);
+                    if (tile.getCell() != null) System.out.println(tile.getCell().getRow() + " " + tile.getCell().getColumn());
                     tile.setStrokeWidth(1 - tile.getStrokeWidth());
                 }
             }
@@ -185,8 +197,8 @@ public class MapJFX {
     }
 
     private void setCells() {
-        for (int row = 0; row < MAP_SIZE - 1; row++) {
-            for (int column = 0; column < MAP_SIZE - 1; column++) {
+        for (int row = 1; row <= MAP_SIZE; row++) {
+            for (int column = 1; column <= MAP_SIZE; column++) {
                 int[] coordinates = getCoordinates(row, column);
                 map[coordinates[0]][coordinates[1]].setCell(controller.getGame().getCurrentMatch().getCell(row, column));
                 map[coordinates[0]][coordinates[1]].setOpacity(1);
@@ -338,9 +350,6 @@ public class MapJFX {
                     if (isInBorder(map[i][j])) {
                         if (!mapPane.getChildren().contains(map[i][j])) addCellToPane(map[i][j]);
                     } else {
-                        System.out.println("i = " + i + " j = " + j);
-                        System.out.println(isInBorder(map[i][j]));
-                        System.out.println("x = " + (map[i][j].getX() + mapPane.getLayoutX()) + " y = " + (map[i][j].getY() + mapPane.getLayoutY()));
                         if (isUp) lastI = i - 1;
                         else firstI = i + 1;
                         return;
@@ -401,12 +410,12 @@ public class MapJFX {
     public int[] getCoordinates(int row, int column) {
         int i = MAP_SIZE - 1, j = 0;
         for (int k = 0; k < row - 1; k++) {
+            j += (i % 2 == 0) ? 0 : 1;
             i++;
-            j += (i % 2 == 0) ? 1 : 0;
         }
         for (int k = 0; k < column - 1; k++) {
-            i--;
             j += (i % 2 == 0) ? 0 : 1;
+            i--;
         }
         return new int[]{i, j};
     }

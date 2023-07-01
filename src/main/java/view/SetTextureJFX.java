@@ -22,11 +22,12 @@ public class SetTextureJFX {
     private final MatchMenuController matchMenuController;
     private final Pane mapPane;
     private final ScrollPane scrollPane;
-    private final AnchorPane anchorPane;
+    private final AnchorPane viewPane, anchorPane;
     private ArrayList<Tile> selectedTiles;
 
-    public SetTextureJFX(MatchMenuController matchMenuController, Pane mapPane) throws IOException {
+    public SetTextureJFX(MatchMenuController matchMenuController, AnchorPane viewPane, Pane mapPane) throws IOException {
         this.matchMenuController = matchMenuController;
+        this.viewPane = viewPane;
         this.mapPane = mapPane;
         this.scrollPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/SetTexture.fxml")));
         this.anchorPane = (AnchorPane) scrollPane.getContent();
@@ -69,7 +70,10 @@ public class SetTextureJFX {
     }
 
     public void popOutSetTexture(double x, double y) {
+        scrollPane.setLayoutX(viewPane.getPrefWidth() / 2 - mapPane.getLayoutX() - scrollPane.getPrefWidth() / 2);
+        scrollPane.setLayoutY(viewPane.getPrefHeight() / 2 - mapPane.getLayoutY() - scrollPane.getPrefHeight() / 2);
         mapPane.getChildren().add(scrollPane);
+        scrollPane.setVisible(true);
     }
 
     private void popOffSetTexture() {

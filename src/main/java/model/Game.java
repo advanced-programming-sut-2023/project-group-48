@@ -21,8 +21,6 @@ public class Game {
     private Match currentMatch;
     private Troop selectedTroop;
     private Cell selectedCell;
-    static {
-    }
 
     public Game(MainMenuJFX mainMenuJFX, SignUpMenuJFX signUpMenuJFX) throws IOException {
         File usersFile = new File("Users.json");

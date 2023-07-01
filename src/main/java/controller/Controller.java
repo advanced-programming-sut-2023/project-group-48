@@ -108,6 +108,10 @@ public class Controller {
         game.setCurrentMenuJFX(mainMenuJFX);
     }
 
+    public void enterMatchMenuJFX() {
+        game.setCurrentMenuJFX(matchMenuJFX);
+    }
+
     public void logOutJFX() throws IOException {
         game.setCurrentMenuJFX(signUpMenuJFX);
         game.setCurrentUser(null);
@@ -128,7 +132,7 @@ public class Controller {
         return captchaAnswer;
     }
 
-    public void setCaptchaAnswer(String captchaAnswer) {
+   public void setCaptchaAnswer(String captchaAnswer) {
         this.captchaAnswer = captchaAnswer;
     }
 }

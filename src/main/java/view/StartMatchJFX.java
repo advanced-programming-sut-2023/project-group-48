@@ -20,8 +20,8 @@ public class StartMatchJFX implements MenuJFX {
     private final EventHandler<MouseEvent> startMatchHandler, errorHandler;
     private final ChoiceBox<Integer> roundsCountChoiceBox, playersCountChoiceBox;
     private final TextField[] usernames;
-    private final Rectangle startButton;
-    private final Label startButtonLabel, errorLabel;
+    private final Rectangle startButton, backButton;
+    private final Label startButtonLabel, backButtonLabel, errorLabel;
 
     public StartMatchJFX(AnchorPane mainMenuPane, EventHandler<MouseEvent> startMatchHandler) throws IOException {
         this.mainMenuPane = mainMenuPane;
@@ -65,7 +65,11 @@ public class StartMatchJFX implements MenuJFX {
         startButtonLabel = (Label) startMatchPane.getChildren().get(10);
         setStartButtonProperties();
 
-        errorLabel = (Label) startMatchPane.getChildren().get(11);
+        backButton = (Rectangle) startMatchPane.getChildren().get(11);
+        backButtonLabel = (Label) startMatchPane.getChildren().get(12);
+        setBackButtonProperties();
+
+        errorLabel = (Label) startMatchPane.getChildren().get(13);
     }
 
     private void setStartMatchPane() {
@@ -128,6 +132,29 @@ public class StartMatchJFX implements MenuJFX {
         });
     }
 
+    private void setBackButtonProperties() {
+        EventHandler<MouseEvent> backHandler = new EventHandler<>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                popOff();
+            }
+        };
+        backButton.setOnMouseClicked(backHandler);
+        backButtonLabel.setOnMouseClicked(backHandler);
+        backButton.hoverProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                backButton.setOpacity(1.5 - backButton.getOpacity());
+            }
+        });
+        backButtonLabel.hoverProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                backButton.setOpacity(1.5 - backButton.getOpacity());
+            }
+        });
+    }
+
     public void popOut() {
         for (Node child : mainMenuPane.getChildren()) {
             child.setVisible(false);
@@ -136,7 +163,6 @@ public class StartMatchJFX implements MenuJFX {
     }
 
     public void popOff() {
-        mainMenuPane.getChildren().remove(startMatchPane);
         for (TextField username : usernames) {
             username.setText("");
         }
@@ -159,6 +185,8 @@ public class StartMatchJFX implements MenuJFX {
         }
         Adjust.adjustRectangle(startButton, ratioX, ratioY);
         Adjust.adjustLabel(startButtonLabel, ratioX, ratioY);
+        Adjust.adjustRectangle(backButton, ratioX, ratioY);
+        Adjust.adjustLabel(backButtonLabel, ratioX, ratioY);
         Adjust.adjustLabel(errorLabel, ratioX, ratioY);
     }
 

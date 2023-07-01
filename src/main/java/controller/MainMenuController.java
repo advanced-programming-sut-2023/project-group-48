@@ -25,8 +25,6 @@ public class MainMenuController {
         if (players.size() <= 1) return "not enough players!";
         Match match = new Match(rounds, players, mapNumber);
         controller.getGame().setCurrentMatch(match);
-//        controller.setCurrentMatch(match);
-//        controller.enterMatchMenuJFX();
         return "\nmatch started!\n" + match.getCurrentPlayer().getUsername() + " is now playing!";
     }
 }
