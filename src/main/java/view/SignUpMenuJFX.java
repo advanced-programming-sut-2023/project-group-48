@@ -5,6 +5,8 @@ import controller.SignUpMenuController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -262,6 +264,12 @@ public class SignUpMenuJFX extends Application implements MenuJFX {
     private void setPasswordRecoveryProperties() {
         passwordRecoveryQuestion.getItems().addAll(signUpMenuController.getDefaultRecoveryQuestions());
         passwordRecoveryQuestion.getSelectionModel().selectFirst();
+        passwordRecoveryAnswer.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                passwordRecoveryAnswerError.setText("");
+            }
+        });
     }
 
     private void setLogInLinkProperties() {

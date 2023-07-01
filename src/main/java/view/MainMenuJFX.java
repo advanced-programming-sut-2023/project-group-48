@@ -9,7 +9,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -23,6 +25,7 @@ public class MainMenuJFX extends Application implements MenuJFX {
     private AnchorPane mainMenuPane;
     private Rectangle startMatch, profileMenu, logOut, exit;
     private Label startMatchLabel, profileMenuLabel, logOutLabel, exitLabel;
+    private StartMatchJFX startMatchJFX;
     private Stage stage;
 
     @Override
@@ -48,6 +51,18 @@ public class MainMenuJFX extends Application implements MenuJFX {
         exit = (Rectangle) mainMenuPane.getChildren().get(6);
         exitLabel = (Label) mainMenuPane.getChildren().get(7);
         setExitProperties();
+
+        startMatchJFX = new StartMatchJFX(mainMenuPane, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                String result = mainMenuController.startMatch(startMatchJFX.getRoundsCount() , 0, startMatchJFX.getUsernames());
+                if (result.contains("match started!")) {
+
+                } else {
+
+                }
+            }
+        });
 
         adjustWithScene();
         Scene scene = new Scene(mainMenuPane);
