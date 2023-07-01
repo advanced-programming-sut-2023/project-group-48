@@ -38,9 +38,9 @@ public class SignUpMenuJFX extends Application implements MenuJFX {
     private Circle randomPassword;
     private Hyperlink logInLink;
     private Rectangle signUpButton;
+    private Alert recoveryErrorAlert;
     private CaptchaJFX captchaJFX;
     private Stage stage;
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -102,6 +102,8 @@ public class SignUpMenuJFX extends Application implements MenuJFX {
         setLogInLinkProperties();
 
         mainError = (Label) signUpMenuPane.getChildren().get(26);
+
+        recoveryErrorAlert = new Alert(Alert.AlertType.ERROR, "Recovery Answer is Empty", ButtonType.CLOSE);
 
         captchaJFX = new CaptchaJFX(controller, signUpMenuPane);
         setCaptchaPaneProperties();
@@ -329,6 +331,7 @@ public class SignUpMenuJFX extends Application implements MenuJFX {
         }
         if (passwordRecoveryAnswer.getText().isEmpty()) {
             passwordRecoveryAnswerError.setText("empty field!");
+            recoveryErrorAlert.show();
             result = true;
         }
         if (passwordConfirmation.getText().isEmpty()) {
