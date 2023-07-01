@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 
 public class Troop extends People {
+    private static final int RUNNING_IMAGE_COUNT = 16, FIGHTING_IMAGE_COUNT = 8;
     private static final HashMap<String, ArrayList<Property>> requiredResource = new HashMap<>() {{
         put("Archer", new ArrayList<Property>(Arrays.asList(Property.BOW)));
         put("Crossbowmen", new ArrayList<Property>(Arrays.asList(Property.CROSSBOW)));
@@ -94,7 +95,9 @@ public class Troop extends People {
     private static final ArrayList<String> arabTroops = new ArrayList<>(Arrays.asList("ArcherBow", "Slaves", "Slingers", "Assassins", "HorseArchers", "ArabianSwordsmen", "FireThrowers"));
     private static final ArrayList<String> wallCrawler = new ArrayList<>(Arrays.asList("Laddermen", "Assassins"));
     private static final ArrayList<String> horseMan = new ArrayList<>(Arrays.asList("Knight", "HorseArchers", "ArabianSwordsmen"));
+    private static final HashMap<String, ArrayList<ArrayList<ImagePattern>>> runningImages = new HashMap<>();
     private static final HashMap<String, ArrayList<ArrayList<ImagePattern>>> fightingImages = new HashMap<>();
+
     private final Quality attackPower;
     private final Quality defensePower;
     private final Quality speed;
@@ -161,9 +164,32 @@ public class Troop extends People {
         return troopCost.get(type);
     }
 
+    public static ArrayList<ImagePattern> getRunningImages(String type, int colorNumber) {
+        if (!PeopleType.getPersonType(type).equals(PeopleType.TROOP)) return null;
+        if (!runningImages.containsKey(type)) {
+            runningImages.put(type, new ArrayList<>());
+            for (int i = 0; i < 8; i++) {
+                runningImages.get(type).add(new ArrayList<>());
+                for (int j = 0; j < RUNNING_IMAGE_COUNT; j++) {
+                    runningImages.get(type).get(i).add(new ImagePattern(new Image("/people/Color" + (i + 1) + "/" + type + "/" + (j + 1 + 16) + ".png")));
+                }
+            }
+        }
+        return runningImages.get(type).get(colorNumber);
+    }
+
     public static ArrayList<ImagePattern> getFightingImages(String type, int colorNumber) {
-        // TODO
-        return null;
+        if (!PeopleType.getPersonType(type).equals(PeopleType.TROOP)) return null;
+        if (!fightingImages.containsKey(type)) {
+            runningImages.put(type, new ArrayList<>());
+            for (int i = 0; i < 8; i++) {
+                runningImages.get(type).add(new ArrayList<>());
+                for (int j = 0; j < FIGHTING_IMAGE_COUNT; j++) {
+                    runningImages.get(type).get(i).add(new ImagePattern(new Image("/people/Color" + (i + 1) + "/" + type + "/" + (j + 1 + 32) + ".png")));
+                }
+            }
+        }
+        return runningImages.get(type).get(colorNumber);
     }
 
     public Quality getAttackPower() {

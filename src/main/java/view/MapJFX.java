@@ -6,8 +6,6 @@ import controller.MatchMenuController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -24,8 +22,6 @@ import model.People.People;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MapJFX {
@@ -65,7 +61,7 @@ public class MapJFX {
     private void setTileStatusProperties() {
         tileStatusPane.setPrefWidth(200);
         tileStatusPane.setPrefHeight(200);
-        tileStatusPane.setBackground(Background.fill(Color.BEIGE));
+        tileStatusPane.setBackground(Background.fill(Color.PERU));
         tileStatus = new Label();
         tileStatus.setLayoutX(0);
         tileStatus.setLayoutY(0);
@@ -85,10 +81,10 @@ public class MapJFX {
         mapPane.getChildren().add(rectangle);
         viewPane.getChildren().add(mapPane);
 
-        setMapMovable();
+        setMapActions();
     }
 
-    private void setMapMovable() {
+    private void setMapActions() {
         mapPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -117,7 +113,7 @@ public class MapJFX {
                     case T:
                         if (!selectedTiles.isEmpty()) {
                             setTextureJFX.setSelectedTiles(selectedTiles);
-                            setTextureJFX.popOutSetTexture(selectedTiles.get(0).getX(), selectedTiles.get(0).getY());
+                            setTextureJFX.popOutSetTexture();
                         }
                         break;
                     case ESCAPE:
@@ -162,6 +158,22 @@ public class MapJFX {
         tile.setFill(LandType.LAND.getImagePattern());
         tile.setStroke(Color.BLACK);
         tile.setStrokeWidth(0);
+    }
+
+    private void setCells() {
+        for (int row = 1; row <= MAP_SIZE; row++) {
+            for (int column = 1; column <= MAP_SIZE; column++) {
+                int[] coordinates = getCoordinates(row, column);
+                Tile tile = map[coordinates[0]][coordinates[1]];
+                tile.setCell(controller.getGame().getCurrentMatch().getCell(row, column));
+                tile.setOpacity(1);
+                cells.add(map[coordinates[0]][coordinates[1]]);
+                setCell(tile);
+            }
+        }
+    }
+
+    private void setCell(Tile tile) {
         tile.hoverProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
@@ -179,32 +191,36 @@ public class MapJFX {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern() != null) {
-                    addBuildingToMap(tile.getI(), tile.getJ(), matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern());
-                    String type = Pattern.compile(".+/(?<type>.+).png").
-                            matcher(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern().getImage().getUrl()).group("type");
-                    matchMenuController.dropBuilding(tile.getCell().getRow(), tile.getCell().getColumn(), type);
+                    placeBuilding(tile);
                 } else if (!selectedPeople.isEmpty()) {
-                    matchMenuController.moveUnit(tile.getCell().getRow(), tile.getCell().getColumn());
-                    // TODO Auto-generated method stub
+                    movePeople(tile);
+                } else if (tile.getCell().getBuilding() != null) {
+                    selectBuilding(tile);
                 } else {
-                    int[] coordinates = tile.getCell() == null ? new int[]{0, 0} : getCoordinates(tile.getCell().getRow() - 1, tile.getCell().getColumn());
-                    System.out.println(tile.getI() + " " + tile.getJ() + " " + coordinates[0] + " " + coordinates[1]);
-                    if (tile.getCell() != null) System.out.println(tile.getCell().getRow() + " " + tile.getCell().getColumn());
                     tile.setStrokeWidth(1 - tile.getStrokeWidth());
                 }
             }
         });
     }
 
-    private void setCells() {
-        for (int row = 1; row <= MAP_SIZE; row++) {
-            for (int column = 1; column <= MAP_SIZE; column++) {
-                int[] coordinates = getCoordinates(row, column);
-                map[coordinates[0]][coordinates[1]].setCell(controller.getGame().getCurrentMatch().getCell(row, column));
-                map[coordinates[0]][coordinates[1]].setOpacity(1);
-                cells.add(map[coordinates[0]][coordinates[1]]);
-            }
+    private void placeBuilding(Tile tile) {
+        addBuildingToMap(tile.getI(), tile.getJ(), matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern());
+        System.out.println(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern().getImage().getUrl());
+        String type = Pattern.compile(".+/(?<type>.+).png").
+                matcher(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern().getImage().getUrl()).group("type");
+        matchMenuController.dropBuilding(tile.getCell().getRow(), tile.getCell().getColumn(), type);
+
+    }
+
+    private void movePeople(Tile tile) {
+        matchMenuController.moveUnit(tile.getCell().getRow(), tile.getCell().getColumn());
+        for (People selectedPerson : selectedPeople) {
+            // Animations
         }
+    }
+
+    private void selectBuilding(Tile tile) {
+        matchMenuController.selectBuilding(tile.getCell().getRow(), tile.getCell().getColumn());
     }
 
     private void setSelectionArea() {

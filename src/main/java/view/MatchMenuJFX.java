@@ -27,6 +27,7 @@ public class MatchMenuJFX extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
+        matchMenuController.setMatch();
         viewPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MapMenu.fxml")));
         setViewPane();
         mapJFX = new MapJFX(controller, mapMenuController, matchMenuController, this, viewPane);

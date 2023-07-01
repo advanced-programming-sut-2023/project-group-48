@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -47,6 +48,7 @@ public class StartMatchJFX implements MenuJFX {
         usernames = new TextField[7];
         for (int i = 0; i < usernames.length; i++) {
             usernames[i] = (TextField) startMatchPane.getChildren().get(i + 2);
+            usernames[i].setAlignment(Pos.CENTER);
             usernames[i].textProperty().addListener(new ChangeListener<>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {

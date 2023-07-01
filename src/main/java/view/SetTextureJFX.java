@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -35,6 +36,8 @@ public class SetTextureJFX {
     }
 
     private void setScrollPane() {
+        anchorPane.setBackground(Background.fill(Color.SEAGREEN));
+        scrollPane.setBackground(Background.fill(Color.SEAGREEN));
         Tile[] sampleLandTypes = new Tile[LandType.getAllLandTypes().length];
         scrollPane.setPrefHeight(Tile.HEIGHT * 2);
         anchorPane.setPrefHeight(Tile.HEIGHT * 2);
@@ -69,7 +72,7 @@ public class SetTextureJFX {
         this.selectedTiles = selectedTiles;
     }
 
-    public void popOutSetTexture(double x, double y) {
+    public void popOutSetTexture() {
         scrollPane.setLayoutX(viewPane.getPrefWidth() / 2 - mapPane.getLayoutX() - scrollPane.getPrefWidth() / 2);
         scrollPane.setLayoutY(viewPane.getPrefHeight() / 2 - mapPane.getLayoutY() - scrollPane.getPrefHeight() / 2);
         mapPane.getChildren().add(scrollPane);
@@ -78,5 +81,6 @@ public class SetTextureJFX {
 
     private void popOffSetTexture() {
         mapPane.getChildren().remove(scrollPane);
+        mapPane.requestFocus();
     }
 }

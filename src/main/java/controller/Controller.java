@@ -132,7 +132,11 @@ public class Controller {
         return captchaAnswer;
     }
 
-   public void setCaptchaAnswer(String captchaAnswer) {
+    public void setCaptchaAnswer(String captchaAnswer) {
         this.captchaAnswer = captchaAnswer;
+    }
+
+    public void setMatch(Match match) {
+
     }
 }
