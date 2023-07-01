@@ -92,6 +92,9 @@ public class User {
     public boolean isPasswordNotCorrect(String password) {
         return !getEncryptedString(password).equals(this.password);
     }
+    public String getEncryptedPassword() {
+        return getEncryptedString(password);
+    }
 
     public String getUsername() {
         return username;

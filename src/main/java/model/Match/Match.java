@@ -1,5 +1,7 @@
 package model.Match;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import model.*;
 import model.Buildings.Building;
 import model.Buildings.BuildingType;
@@ -9,6 +11,9 @@ import model.People.People;
 import model.People.PeopleType;
 import model.People.Troop;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class Match {
@@ -358,4 +363,11 @@ public class Match {
     public Governance getMatchWinner() {
         return matchWinner;
     }
+    public Cell[][] getMap() {
+        return map;
+    }
+
+
+
+
 }

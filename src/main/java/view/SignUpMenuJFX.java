@@ -24,7 +24,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Objects;
-
+//TODO : reEmptying the errorFields
+//TODO : popup message and red Fields for errors
+//TODO : the bug that captcha is on the fields
 public class SignUpMenuJFX extends Application implements MenuJFX {
     private Controller controller;
     private SignUpMenuController signUpMenuController;
