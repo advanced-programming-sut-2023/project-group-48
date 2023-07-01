@@ -19,7 +19,7 @@
       <TextField layoutX="500.0" layoutY="410.0" prefHeight="40.0" prefWidth="400.0" visible="false" />
       <TextField layoutX="500.0" layoutY="450.0" prefHeight="40.0" prefWidth="400.0" visible="false" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" layoutX="500.0" layoutY="490.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" />
-      <Label alignment="CENTER" layoutX="600.0" layoutY="510.0" prefHeight="40.0" prefWidth="200.0" text="Start">
+      <Label alignment="CENTER" layoutX="600.0" layoutY="510.0" prefHeight="40.0" prefWidth="200.0" text="Start" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
