@@ -4,10 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import model.Match.LandType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public enum PeopleType {
     TROOP(new ArrayList<>(List.of("Sultan", "Archer", "Crossbowmen", "Spearmen", "Pikemen", "Macemen", "Swordsmen",
@@ -16,6 +13,7 @@ public enum PeopleType {
     WORKER(new ArrayList<>(List.of("Engineer", "Baker", "Brewer", "Farmer", "Hunter", "Innkeeper", "Miller", "Iron Miner",
             "Quarry Worker", "Woodcutter", "Stone Miner", "Trader", "Armourer", "Blacksmith", "Fletcher", "Tanner")));
 
+    private static final int WALKIG_IMAGE_COUNT = 16;
     private static final PeopleType[] peopleTypes = {TROOP, WORKER};
 
     private static final HashMap<String, Integer> peopleHp = new HashMap<>() {{
@@ -40,30 +38,31 @@ public enum PeopleType {
     }};
 
     private static final HashMap<String, ArrayList<LandType>> notValidLandTypesToCreate = new HashMap<>() {{
-        put("Sultan", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Archer", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Crossbowmen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Spearmen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Pikemen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Macemen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Swordsmen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Knight", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Tunneler", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Laddermen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Black Monk", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Archer Bow", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Slaves", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Assassins", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Slingers", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Horse Archers", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Arabian Swordsmen", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Fire Throwers", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
-        put("Engineer", new ArrayList<LandType>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.RIVER)));
+        put("Sultan", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Archer", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Crossbowmen", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Spearmen", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Pikemen", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Macemen", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Swordsmen", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Knight", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Tunneler", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Laddermen", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Black Monk", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Archer Bow", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Slaves", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Assassins", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Slingers", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Horse Archers", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Arabian Swordsmen", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Fire Throwers", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.OIL, LandType.IRON, LandType.RIVER)));
+        put("Engineer", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.RIVER)));
     }};
 
     private static final HashMap<String, ArrayList<ArrayList<ImagePattern>>> movingImages = new HashMap<>();
-    private static final HashMap<String, ArrayList<ArrayList<ImagePattern>>> runningImages = new HashMap<>();
-    private static final HashMap<String, ArrayList<ArrayList<ImagePattern>>> standingImages = new HashMap<>();
+    private static final HashMap<String, ArrayList<ImagePattern>> standingImages = new HashMap<>();
+
+
     private final ArrayList<String> People;
 
     PeopleType(ArrayList<String> people) {
@@ -94,16 +93,29 @@ public enum PeopleType {
             movingImages.put(type, new ArrayList<>());
             for (int i = 0; i < 8; i++) {
                 movingImages.get(type).add(new ArrayList<>());
-                for (int j = 0; j < 16; j++) {
-                    movingImages.get(type).get(i).add(new ImagePattern(new Image("/people/" + type + "/" + (i + 1) + "/" + (j + 1) + ".png")));
+                for (int j = 0; j < WALKIG_IMAGE_COUNT; j++) {
+                    movingImages.get(type).get(i).add(new ImagePattern(new Image("/people/Color" + (i + 1) + "/" + type + "/" + (j + 1) + ".png")));
                 }
             }
         }
         return movingImages.get(type).get(colorNumber);
     }
 
-    public static ArrayList<ImagePattern> getRunningImages(String type, int colorNumber) {
-        // TODD
-        return null;
+    public static ImagePattern getStandingImage(String type, int colorNumber) {
+        if (!standingImages.containsKey(type)) {
+            standingImages.put(type, new ArrayList<>());
+            for (int i = 0; i < 8; i++) {
+                standingImages.get(type).add(new ImagePattern(new Image("/people/Color" + (i + 1) + "/" + type + "/1" + ".png")));
+            }
+        }
+        return standingImages.get(type).get(colorNumber);
+    }
+
+    public static String getPeople(int index) {
+        if (TROOP.People.size() > index) {
+            return TROOP.People.get(index);
+        } else {
+            return WORKER.getPeople(index - TROOP.People.size());
+        }
     }
 }

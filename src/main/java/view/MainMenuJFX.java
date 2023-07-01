@@ -35,7 +35,6 @@ public class MainMenuJFX extends Application implements MenuJFX {
         System.out.println(0);
         mainMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MainMenu.fxml")));
         mainMenuPane.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/backgrounds/3.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-//        mainMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/3.png")).toExternalForm()))));
 
         startMatch = (Rectangle) mainMenuPane.getChildren().get(0);
         startMatchLabel = (Label) mainMenuPane.getChildren().get(1);
@@ -56,11 +55,20 @@ public class MainMenuJFX extends Application implements MenuJFX {
         startMatchJFX = new StartMatchJFX(mainMenuPane, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                String result = mainMenuController.startMatch(startMatchJFX.getRoundsCount() , 0, startMatchJFX.getUsernames());
+                String result = mainMenuController.startMatch(startMatchJFX.getRoundsCount() , 0,
+                        controller.getGame().getCurrentUser().getUsername() + " " +startMatchJFX.getUsernames());
+                System.out.println(result);
                 if (result.contains("match started!")) {
-
+                    startMatchJFX.popOff();
+                    try {
+                        controller.enterMatchMenuJFX();
+                        stop();
+                        controller.getGame().getCurrentMenuJFX().start(stage);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
-
+                    startMatchJFX.getErrorLabel().setText(result);
                 }
             }
         });
@@ -88,6 +96,7 @@ public class MainMenuJFX extends Application implements MenuJFX {
         Adjust.adjustLabel(logOutLabel, ratioX, ratioY);
         Adjust.adjustRectangle(exit, ratioX, ratioY);
         Adjust.adjustLabel(exitLabel, ratioX, ratioY);
+        startMatchJFX.adjust(ratioX, ratioY);
     }
 
     @Override
@@ -99,7 +108,7 @@ public class MainMenuJFX extends Application implements MenuJFX {
         EventHandler startMatchHandler = new EventHandler() {
             @Override
             public void handle(Event event) {
-                // TODO
+                startMatchJFX.popOut();
             }
         };
         startMatch.hoverProperty().addListener((event) -> {

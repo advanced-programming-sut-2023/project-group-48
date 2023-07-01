@@ -21,8 +21,8 @@ public class MatchMenuController {
         this.match = null;
     }
 
-    public void setMatch(Match match) {
-        this.match = match;
+    public void setMatch() {
+        this.match = controller.getGame().getCurrentMatch();
     }
 
     public String showMyInfo() {
@@ -171,8 +171,10 @@ public class MatchMenuController {
 
     public String setTexture(int row, int column, String type) {
         LandType landType = LandType.getLandType(type);
-        if (match.areCoordinatesNotValid(row, column))
+        if (match.areCoordinatesNotValid(row, column)) {
+            System.out.println(row + " " + column);
             return "invalid coordinates!";
+        }
         if (landType == null) return "invalid texture type!";
         if (match.getCell(row, column).getLandType().toString().equals(type))
             return "this texture is already set!";
@@ -363,7 +365,7 @@ public class MatchMenuController {
                 if (match.getMatchWinner() != null) match.getMatchWinner().getOwner().setHighScore(match.getMatchWinner().getOwner().getHighScore() + (match.getGovernances().size()-match.getSultanCount())*100);
                 String result = (match.getMatchWinner() == null) ? "now winner!" : match.getMatchWinner().getOwner().getUsername() + " won the match!\n";
                 controller.getGame().setCurrentMatch(null);
-                setMatch(null);
+                match = null;
                 controller.enterMainMenuJFX();
                 return "match is finished!\n" + result;
             }
