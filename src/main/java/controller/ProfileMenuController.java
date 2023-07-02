@@ -1,7 +1,11 @@
 package controller;
 
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import model.Game;
 import model.User;
+
+import java.util.ArrayList;
 
 public class ProfileMenuController {
     private final Controller controller;
@@ -70,9 +74,8 @@ public class ProfileMenuController {
         return "password changed successfully!";
     }
 
-    public String removeSlogan() {
+    public void removeSlogan() {
         controller.getGame().getCurrentUser().removeSlogan();
-        return "slogan removed successfully!";
     }
 
     public String displayHighScore() {
@@ -95,5 +98,21 @@ public class ProfileMenuController {
                 "slogan: " + controller.getGame().getCurrentUser().getSlogan() + "\n" +
                 "highscore: " + controller.getGame().getCurrentUser().getHighScore() + "\n" +
                 "rank: " + controller.getGame().getCurrentUser().getRank();
+    }
+
+    public ArrayList<String> getDefaultSlogans() {
+        return User.getSlogans();
+    }
+
+    public String changeAvatar(ImagePattern imagePattern) {
+        return null;
+    }
+
+    public ImagePattern getAvatarImagePattern() {
+        return new ImagePattern(new Image(controller.getGame().getCurrentUser().getAvatarUrl()));
+    }
+
+    public void setAvatar(String avatarUrl) {
+        controller.getGame().getCurrentUser().setAvatarUrl(avatarUrl);
     }
 }

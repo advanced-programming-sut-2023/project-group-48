@@ -18,6 +18,7 @@ public class Controller {
     private final LogInMenuJFX logInMenuJFX;
     private final MainMenuJFX mainMenuJFX;
     private final MatchMenuJFX matchMenuJFX;
+    private final ProfileMenuJFX profileMenuJFX;
     private final Game game;
     private String captchaAnswer;
     private Stage stage;
@@ -39,6 +40,9 @@ public class Controller {
         matchMenuJFX.setController(this);
         matchMenuJFX.setMatchMenuController(new MatchMenuController(this));
         matchMenuJFX.setMapMenuController(new MapMenuController(this));
+        this.profileMenuJFX = new ProfileMenuJFX();
+        profileMenuJFX.setController(this);
+        profileMenuJFX.setProfileMenuController(new ProfileMenuController(this));
         this.game = new Game(mainMenuJFX, signUpMenuJFX);
     }
 

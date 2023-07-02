@@ -93,19 +93,20 @@ public class SignUpMenuJFX extends Application implements MenuJFX {
         sloganChoiceBox = (ChoiceBox) signUpMenuPane.getChildren().get(18);
         customSlogan = (CheckBox) signUpMenuPane.getChildren().get(19);
         sloganError = (Label) signUpMenuPane.getChildren().get(20);
+        randomSloganButton = (Circle) signUpMenuPane.getChildren().get(21);
         setSloganProperties();
 
-        recoveryTitle = (Label) signUpMenuPane.getChildren().get(21);
+        recoveryTitle = (Label) signUpMenuPane.getChildren().get(22);
 
-        passwordRecoveryQuestion = (ChoiceBox) signUpMenuPane.getChildren().get(22);
-        passwordRecoveryAnswer = (TextField) signUpMenuPane.getChildren().get(23);
-        passwordRecoveryAnswerError = (Label) signUpMenuPane.getChildren().get(24);
+        passwordRecoveryQuestion = (ChoiceBox) signUpMenuPane.getChildren().get(23);
+        passwordRecoveryAnswer = (TextField) signUpMenuPane.getChildren().get(24);
+        passwordRecoveryAnswerError = (Label) signUpMenuPane.getChildren().get(25);
         setPasswordRecoveryProperties();
 
-        logInLink = (Hyperlink) signUpMenuPane.getChildren().get(25);
+        logInLink = (Hyperlink) signUpMenuPane.getChildren().get(26);
         setLogInLinkProperties();
 
-        mainError = (Label) signUpMenuPane.getChildren().get(26);
+        mainError = (Label) signUpMenuPane.getChildren().get(27);
 
         recoveryErrorAlert = new Alert(Alert.AlertType.ERROR, "Recovery Answer is Empty", ButtonType.CLOSE);
 

@@ -19,6 +19,7 @@ public class User {
     private int highScore;
     private int rank;
     private Governance governance;
+    private String avatarUrl;
 
     static {
         questions.add("What is your favorite food?");
@@ -166,5 +167,13 @@ public class User {
 
     public void setGovernance(Governance governance) {
         this.governance = governance;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }
