@@ -30,11 +30,8 @@ public class LogInMenuJFX extends Application implements MenuJFX {
     private Label title, mainError, loginButtonText, captchaError, stayLoggedInLabel;
     private Hyperlink forgotPasswordLink, signUpLink;
     private Rectangle loginButton, captchaPicture;
-    private Circle refreshCaptchaButton;
-    private Button captchaAnswerButton;
     private CaptchaJFX captchaJFX;
     private ForgotPasswordJFX forgotPasswordJFX;
-    private int wrongPasswordCount;
     private Stage stage;
 
     @Override

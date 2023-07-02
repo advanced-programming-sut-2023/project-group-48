@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Objects;
+import java.util.Random;
+
 //TODO : reEmptying the errorFields
 //TODO : popup message and red Fields for errors
 //TODO : the bug that captcha is on the fields
@@ -37,7 +39,7 @@ public class SignUpMenuJFX extends Application implements MenuJFX {
     private PasswordField password, passwordConfirmation;
     private ChoiceBox sloganChoiceBox, passwordRecoveryQuestion;
     private CheckBox showPassword, customSlogan;
-    private Circle randomPassword;
+    private Circle randomPassword, randomSloganButton;
     private Hyperlink logInLink;
     private Rectangle signUpButton;
     private Alert recoveryErrorAlert;
@@ -262,6 +264,14 @@ public class SignUpMenuJFX extends Application implements MenuJFX {
                 slogan.setVisible(false);
                 slogan.setText("");
             }
+        });
+        randomSloganButton.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/icons/refresh.png")).toExternalForm())));
+        randomSloganButton.setOnMouseClicked(event -> {
+            slogan.setText("");
+            slogan.setVisible(false);
+            sloganChoiceBox.getSelectionModel().select(sloganChoiceBox.getItems().get(new Random().nextInt(sloganChoiceBox.getItems().size())));
+            sloganChoiceBox.setVisible(true);
+            customSlogan.setSelected(true);
         });
     }
 

@@ -55,7 +55,7 @@ public class CaptchaJFX implements MenuJFX {
     }
 
     private void setCaptchaPane() {
-        captchaPane.setBackground(Background.fill(Color.BLACK));
+        captchaPane.setBackground(Background.fill(Color.WHITE));
         anchorPane.getChildren().add(captchaPane);
         captchaPane.setLayoutX(anchorPane.getPrefWidth() / 2 - captchaPane.getPrefWidth() / 2);
         captchaPane.setLayoutY(anchorPane.getPrefHeight() / 2 - captchaPane.getPrefHeight() / 2);

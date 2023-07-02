@@ -56,6 +56,7 @@
       <TextField alignment="CENTER" layoutX="396.0" layoutY="444.0" prefHeight="50.0" prefWidth="300.0" promptText="slogan" />
       <ChoiceBox layoutX="396.0" layoutY="444.0" prefHeight="50.0" prefWidth="300.0" />
       <CheckBox alignment="CENTER" contentDisplay="CENTER" layoutX="704.0" layoutY="460.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" />
+      <Circle fill="#1f78ff00" layoutX="386.0" layoutY="469.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
       <Label alignment="CENTER" layoutX="96.0" layoutY="444.0" prefHeight="50.0" prefWidth="300.0">
          <font>
             <Font size="14.0" />
