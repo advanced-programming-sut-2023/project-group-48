@@ -85,4 +85,18 @@ public class Adjust {
         pane.setLayoutX(pane.getLayoutX() * ratioX);
         pane.setLayoutY(pane.getLayoutY() * ratioY);
     }
+
+    public static void adjustSeparator(Separator separator, double ratioX, double ratioY) {
+        separator.setPrefWidth(separator.getPrefWidth() * ratioX);
+        separator.setPrefHeight(separator.getPrefHeight() * ratioY);
+        separator.setLayoutX(separator.getLayoutX() * ratioX);
+        separator.setLayoutY(separator.getLayoutY() * ratioY);
+    }
+
+    public static void adjustScrollPane(ScrollPane avatarsPane, double ratioX, double ratioY) {
+        avatarsPane.setPrefWidth(avatarsPane.getPrefWidth() * ratioX);
+        avatarsPane.setPrefHeight(avatarsPane.getPrefHeight() * ratioY);
+        avatarsPane.setLayoutX(avatarsPane.getLayoutX() * ratioX);
+        avatarsPane.setLayoutY(avatarsPane.getLayoutY() * ratioY);
+    }
 }

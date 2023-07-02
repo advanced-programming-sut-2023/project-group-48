@@ -19,6 +19,7 @@ public class Controller {
     private final MainMenuJFX mainMenuJFX;
     private final MatchMenuJFX matchMenuJFX;
     private final ProfileMenuJFX profileMenuJFX;
+    private final ScoreBoardJFX scoreBoardJFX;
     private final Game game;
     private String captchaAnswer;
     private Stage stage;
@@ -43,6 +44,9 @@ public class Controller {
         this.profileMenuJFX = new ProfileMenuJFX();
         profileMenuJFX.setController(this);
         profileMenuJFX.setProfileMenuController(new ProfileMenuController(this));
+        this.scoreBoardJFX = new ScoreBoardJFX();
+        scoreBoardJFX.setController(this);
+        scoreBoardJFX.setProfileMenuController(profileMenuJFX.getProfileMenuController());
         this.game = new Game(mainMenuJFX, signUpMenuJFX);
     }
 
@@ -116,6 +120,14 @@ public class Controller {
         game.setCurrentMenuJFX(matchMenuJFX);
     }
 
+    public void enterProfileMenuJFX() {
+        game.setCurrentMenuJFX(profileMenuJFX);
+    }
+
+    public void enterScoreBoardJFX() {
+        game.setCurrentMenuJFX(scoreBoardJFX);
+    }
+
     public void logOutJFX() throws IOException {
         game.setCurrentMenuJFX(signUpMenuJFX);
         game.setCurrentUser(null);
@@ -141,6 +153,5 @@ public class Controller {
     }
 
     public void setMatch(Match match) {
-
     }
 }

@@ -11,6 +11,7 @@ import view.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
 public class Game {
@@ -159,5 +160,17 @@ public class Game {
 
     public void setSelectedCell(Cell selectedCell) {
         this.selectedCell = selectedCell;
+    }
+
+    public ArrayList<User> getScoreBoard() {
+        users.sort(new Comparator<User>() {
+            @Override
+            public int compare(User user1, User user2) {
+                if (user1.getHighScore() == user2.getHighScore())
+                    return user1.getUsername().compareTo(user2.getUsername());
+                return user1.getHighScore() > user2.getHighScore() ? 1 : -1;
+            }
+        });
+        return users;
     }
 }

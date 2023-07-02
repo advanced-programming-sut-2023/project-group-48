@@ -19,4 +19,9 @@ public class Avatar extends Circle {
     public ImagePattern getImagePattern() {
         return imagePattern;
     }
+
+    public void setImagePattern(ImagePattern imagePattern) {
+        this.setFill(imagePattern);
+        this.setFill(imagePattern);
+    }
 }

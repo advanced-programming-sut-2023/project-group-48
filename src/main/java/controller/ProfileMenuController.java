@@ -36,9 +36,8 @@ public class ProfileMenuController {
             controller.getGame().getCurrentUser().setNickname(info[0]);
             return "nickname changed successfully!";
         } else if (infoType == 'p') {
-            currentPassword = info[0];
-            step = 1;
-            return generateCaptcha();
+            controller.getGame().getCurrentUser().setPassword(info[0]);
+            return "password changed successfully!";
         } else if (infoType == 'e') {
             if (User.isEmailNotValid(info[0])) return "email is not valid!";
             controller.getGame().getCurrentUser().setEmail(info[0]);
@@ -114,5 +113,26 @@ public class ProfileMenuController {
 
     public void setAvatar(String avatarUrl) {
         controller.getGame().getCurrentUser().setAvatarUrl(avatarUrl);
+    }
+
+    public String checkOldPassword(String text) {
+        if (controller.getGame().getCurrentUser().isPasswordNotCorrect(text)) return "old password is incorrect!";
+        return "old password is correct!";
+    }
+
+    public String checkUsername(String username) {
+        if (User.isUsernameNotValid(username)) return "not a valid username!";
+        if (controller.getGame().getUserByUsername(username) != null)
+            return "username already exists!\n";
+        return "";
+    }
+
+    public String checkEmail(String email) {
+        if (User.isEmailNotValid(email)) return "not a valid email!";
+        return "";
+    }
+
+    public ArrayList<User> getScoreBoard() {
+        return controller.getGame().getScoreBoard();
     }
 }
