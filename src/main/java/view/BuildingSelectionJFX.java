@@ -91,4 +91,13 @@ public class BuildingSelectionJFX {
     private void setErrorLabel() {
         errorLabel = (Label) buildingSelectionPane.getChildren().get(4);
     }
+
+    public void adjust(double ratioX, double ratioY) {
+        Adjust.adjustPane(buildingSelectionPane, ratioX, ratioY);
+        Adjust.adjustTextField(unitTypeTextField, ratioX, ratioY);
+        Adjust.adjustChoiceBox(unitCountChoiceBox, ratioX, ratioY);
+        Adjust.adjustButton(createUnitButton, ratioX, ratioY);
+        Adjust.adjustButton(repairBuildingButton, ratioX, ratioY);
+        Adjust.adjustLabel(errorLabel, ratioX, ratioY);
+    }
 }
