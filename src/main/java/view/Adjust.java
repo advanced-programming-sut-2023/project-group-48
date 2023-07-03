@@ -2,6 +2,7 @@ package view;
 
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -84,5 +85,26 @@ public class Adjust {
         pane.setPrefHeight(pane.getPrefHeight() * ratioY);
         pane.setLayoutX(pane.getLayoutX() * ratioX);
         pane.setLayoutY(pane.getLayoutY() * ratioY);
+    }
+
+    public static void adjustSeparator(Separator separator, double ratioX, double ratioY) {
+        separator.setPrefWidth(separator.getPrefWidth() * ratioX);
+        separator.setPrefHeight(separator.getPrefHeight() * ratioY);
+        separator.setLayoutX(separator.getLayoutX() * ratioX);
+        separator.setLayoutY(separator.getLayoutY() * ratioY);
+    }
+
+    public static void adjustScrollPane(ScrollPane avatarsPane, double ratioX, double ratioY) {
+        avatarsPane.setPrefWidth(avatarsPane.getPrefWidth() * ratioX);
+        avatarsPane.setPrefHeight(avatarsPane.getPrefHeight() * ratioY);
+        avatarsPane.setLayoutX(avatarsPane.getLayoutX() * ratioX);
+        avatarsPane.setLayoutY(avatarsPane.getLayoutY() * ratioY);
+    }
+
+    public static void adjustImageView(ImageView imageView, double ratioX, double ratioY) {
+        imageView.setFitWidth(imageView.getFitWidth() * ratioX);
+        imageView.setFitHeight(imageView.getFitHeight() * ratioY);
+        imageView.setLayoutX(imageView.getLayoutX() * ratioX);
+        imageView.setLayoutY(imageView.getLayoutY() * ratioY);
     }
 }

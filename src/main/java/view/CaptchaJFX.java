@@ -51,6 +51,7 @@ public class CaptchaJFX implements MenuJFX {
 
         captchaAnswerButton = (Button) captchaPane.getChildren().get(4);
 
+        refreshCaptchaButton.toFront();
         refreshCaptcha();
     }
 
@@ -94,6 +95,9 @@ public class CaptchaJFX implements MenuJFX {
     }
 
     public void popOutCaptchaPane() throws MalformedURLException, URISyntaxException {
+        captchaPane.setLayoutX(anchorPane.getPrefWidth() / 2 - captchaPane.getPrefWidth() / 2);
+        captchaPane.setLayoutY(anchorPane.getPrefHeight() / 2 - captchaPane.getPrefHeight() / 2);
+        refreshCaptcha();
         captchaPane.setVisible(true);
         captchaPane.toFront();
     }

@@ -125,7 +125,13 @@ public class MainMenuJFX extends Application implements MenuJFX {
         EventHandler profileMenuHandler = new EventHandler() {
             @Override
             public void handle(Event event) {
-                // TODO
+                try {
+                    controller.enterProfileMenuJFX();
+                    stop();
+                    controller.getGame().getCurrentMenuJFX().start(stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         };
         profileMenu.hoverProperty().addListener((event) -> {

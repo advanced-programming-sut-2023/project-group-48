@@ -11,6 +11,7 @@ import view.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
 public class Game {
@@ -161,20 +162,15 @@ public class Game {
         this.selectedCell = selectedCell;
     }
 
-    public ArrayList<User> getUsers() {
+    public ArrayList<User> getScoreBoard() {
+        users.sort(new Comparator<User>() {
+            @Override
+            public int compare(User user1, User user2) {
+                if (user1.getHighScore() == user2.getHighScore())
+                    return user1.getUsername().compareTo(user2.getUsername());
+                return user1.getHighScore() > user2.getHighScore() ? 1 : -1;
+            }
+        });
         return users;
-    }
-
-    public void setUsers(ArrayList<User> users) {
-        this.users.clear();
-        this.users.addAll(users);
-        Gson gson = new Gson();
-        try {
-            FileWriter fileWriter = new FileWriter("Users.json");
-            fileWriter.write(gson.toJson(users));
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -13,7 +13,7 @@ public enum PeopleType {
     WORKER(new ArrayList<>(List.of("Engineer", "Baker", "Brewer", "Farmer", "Hunter", "Innkeeper", "Miller", "Iron Miner",
             "Quarry Worker", "Woodcutter", "Stone Miner", "Trader", "Armourer", "Blacksmith", "Fletcher", "Tanner")));
 
-    private static final int WALKIG_IMAGE_COUNT = 16;
+    public static final int WALKIG_IMAGE_COUNT = 16;
     private static final PeopleType[] peopleTypes = {TROOP, WORKER};
 
     private static final HashMap<String, Integer> peopleHp = new HashMap<>() {{
@@ -59,19 +59,19 @@ public enum PeopleType {
         put("Engineer", new ArrayList<>(Arrays.asList(LandType.ROCK, LandType.BIG_POND, LandType.SEA, LandType.RIVER)));
     }};
 
-    private static final HashMap<String, ArrayList<ArrayList<ImagePattern>>> movingImages = new HashMap<>();
+    private static final HashMap<String, ArrayList<ArrayList<ArrayList<ImagePattern>>>> movingImages = new HashMap<>();
     private static final HashMap<String, ArrayList<ImagePattern>> standingImages = new HashMap<>();
 
 
-    private final ArrayList<String> People;
+    private final ArrayList<String> people;
 
     PeopleType(ArrayList<String> people) {
-        People = people;
+        this.people = people;
     }
 
     public static PeopleType getPersonType(String type) {
         for (PeopleType peopleType : peopleTypes) {
-            if (peopleType.People.contains(type)) return peopleType;
+            if (peopleType.people.contains(type)) return peopleType;
         }
         return null;
     }
@@ -85,37 +85,37 @@ public enum PeopleType {
     }
 
     public static boolean isTroop(String type) {
-        return TROOP.People.contains(type);
+        return TROOP.people.contains(type);
     }
 
-    public static ArrayList<ImagePattern> getMovingImages(String type, int colorNumber) {
+    public static ArrayList<ImagePattern> getMovingImages(String type, int colorNumber, int directionNumber) {
         if (!movingImages.containsKey(type)) {
             movingImages.put(type, new ArrayList<>());
             for (int i = 0; i < 8; i++) {
                 movingImages.get(type).add(new ArrayList<>());
-                for (int j = 0; j < WALKIG_IMAGE_COUNT; j++) {
-                    movingImages.get(type).get(i).add(new ImagePattern(new Image("/people/Color" + (i + 1) + "/" + type + "/" + (j + 1) + ".png")));
+                for (int j = 0; j < 8; j++) {
+                    movingImages.get(type).get(i).add(new ArrayList<>());
+                    for (int k = 0; k < WALKIG_IMAGE_COUNT; k++) {
+                        movingImages.get(type).get(i).get(j).add(new ImagePattern(new Image(Objects.requireNonNull(
+                                PeopleType.class.getResource("/people/Color " + (i + 1) + "/" + type + "/" + (j + 1) + "/" + (k + 1) + ".png")).toString())));
+                    }
                 }
             }
         }
-        return movingImages.get(type).get(colorNumber);
+        return movingImages.get(type).get(colorNumber).get(directionNumber);
     }
 
     public static ImagePattern getStandingImage(String type, int colorNumber) {
         if (!standingImages.containsKey(type)) {
             standingImages.put(type, new ArrayList<>());
             for (int i = 0; i < 8; i++) {
-                standingImages.get(type).add(new ImagePattern(new Image("/people/Color" + (i + 1) + "/" + type + "/1" + ".png")));
+                standingImages.get(type).add(new ImagePattern(new Image(Objects.requireNonNull(PeopleType.class.getResource("/people/Color " + (i + 1) + "/" + type + "/4/1.png")).toExternalForm())));
             }
         }
         return standingImages.get(type).get(colorNumber);
     }
 
-    public static String getPeople(int index) {
-        if (TROOP.People.size() > index) {
-            return TROOP.People.get(index);
-        } else {
-            return WORKER.getPeople(index - TROOP.People.size());
-        }
+    public static String getTroopType(int index) {
+        return TROOP.people.get(index);
     }
 }

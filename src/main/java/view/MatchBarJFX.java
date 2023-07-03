@@ -20,7 +20,7 @@ public class MatchBarJFX {
     private final MatchMenuJFX matchMenuJFX;
     private final AnchorPane viewPane;
     private AnchorPane mainBarPane, normalBuildingsPane, gateHousePane, industrialCenterPane1, industrialCenterPane2,
-            industrialCenterPane3, recruitmentCenterPane, storagePane, trapPane, peoplePane1, peoplePane2, peoplePane3, peoplePane4;
+            industrialCenterPane3, recruitmentCenterPane, storagePane, trapPane, peoplePane1, peoplePane2, peoplePane3;
     private Rectangle normalButton, gateHouseButton, industrialButton, recruitmentButton, storageButton, trapButton;
     private ArrayList<AnchorPane> buildingAnchorPanes, peopleAnchorPanes;
     private double selectBarWidth, selectBarHeight, selectBarX, selectBarY;
@@ -43,7 +43,6 @@ public class MatchBarJFX {
         setTrapPane();
         setPeoplePanes();
         buildingAnchorPanes = new ArrayList<>(Arrays.asList(normalBuildingsPane, gateHousePane, industrialCenterPane1, recruitmentCenterPane, storagePane, trapPane));
-        peopleAnchorPanes = new ArrayList<>(Arrays.asList(peoplePane1, peoplePane2, peoplePane3, peoplePane4));
     }
 
     private void addClickableToRectangle(AnchorPane pane, ImagePattern... imagePatterns) {
@@ -83,7 +82,8 @@ public class MatchBarJFX {
             rectangles.get(i).setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    selectedBuildingImagePattern = imagePatterns[finalI];
+                    if (!peopleAnchorPanes.contains(currentPane)) selectedBuildingImagePattern = imagePatterns[finalI];
+                    else selectedPeopleImagePattern = imagePatterns[finalI];
                 }
             });
             rectangles.get(i).setFill(imagePatterns[i]);
@@ -113,7 +113,7 @@ public class MatchBarJFX {
         });
 
         selectBarY = 73.78958333333333 / 720.0 * viewPane.getPrefHeight();
-        selectBarX = 318.6666666666667 / 1452.0 * viewPane.getPrefWidth() ;
+        selectBarX = 318.6666666666667 / 1452.0 * viewPane.getPrefWidth();
         selectBarHeight = (203.12291666666658 - 73.78958333333333) / 720.0 * viewPane.getPrefHeight();
         selectBarWidth = (828.6666666666666 - 318.6666666666667) / 1452.0 * viewPane.getPrefWidth();
 
@@ -159,9 +159,10 @@ public class MatchBarJFX {
 
         ArrayList<ImagePattern> peopleImagePatterns = new ArrayList<>();
         ArrayList<Rectangle> peopleRectangles = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            peopleImagePatterns.add(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/menu/p" + (i + 1) + ".png")).toExternalForm())));
-            peopleRectangles.add(new Rectangle(10 + i * ((peopleImagePatterns.get(i).getWidth() + 10)), 10,
+        for (int i = 0; i < 3; i++) {
+            peopleImagePatterns.add(PeopleType.getStandingImage(PeopleType.getTroopType(i * 6), 1));
+            peopleRectangles.add(new Rectangle(5 + i * (peopleImagePatterns.get(i).getImage().getWidth() + 5),
+                    mainBarPane.getPrefHeight() - peopleImagePatterns.get(i).getImage().getHeight() - 10,
                     peopleImagePatterns.get(i).getImage().getWidth(), peopleImagePatterns.get(i).getImage().getHeight()));
             peopleRectangles.get(i).setFill(peopleImagePatterns.get(i));
             int finalI = i;
@@ -246,8 +247,8 @@ public class MatchBarJFX {
         ArrayList<Rectangle> industrialRectangles = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             industrialRectangles.add(new Rectangle(industrialCenterPane.getPrefWidth() -
-                    industrialImagePatterns.get(0).getImage().getWidth() - 5
-                    , 5 + i * (industrialImagePatterns.get(0).getImage().getHeight() + 5) ,
+                    industrialImagePatterns.get(0).getImage().getWidth(),
+                    5 + i * (industrialImagePatterns.get(0).getImage().getHeight() + 5),
                     industrialImagePatterns.get(0).getImage().getWidth(),
                     industrialImagePatterns.get(0).getImage().getHeight()));
             industrialRectangles.get(i).setFill(industrialImagePatterns.get(0));
@@ -256,22 +257,32 @@ public class MatchBarJFX {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                     if (t1) {
-                        industrialRectangles.get(finalI).setFill(industrialImagePatterns.get(2 * 3 + 1));
+                        industrialRectangles.get(finalI).setFill(industrialImagePatterns.get(1));
                     } else {
-                        industrialRectangles.get(finalI).setFill(industrialImagePatterns.get(2 * 3));
+                        industrialRectangles.get(finalI).setFill(industrialImagePatterns.get(0));
                     }
                 }
             });
             industrialRectangles.get(i).setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    industrialRectangles.get(finalI).setFill(industrialImagePatterns.get(2 * 3 + 2));
+                    industrialRectangles.get(finalI).setFill(industrialImagePatterns.get(2));
                     if (currentPane != null) currentPane.setVisible(false);
-                    currentPane = buildingAnchorPanes.get(finalI);
+                    switch (finalI) {
+                        case 0:
+                            currentPane = industrialCenterPane1;
+                            break;
+                        case 1:
+                            currentPane = industrialCenterPane2;
+                            break;
+                        case 2:
+                            currentPane = industrialCenterPane3;
+                            break;
+                    }
                     currentPane.setVisible(true);
                 }
             });
-            mainBarPane.getChildren().add(industrialRectangles.get(i));
+            industrialCenterPane.getChildren().add(industrialRectangles.get(i));
         }
     }
 
@@ -302,17 +313,16 @@ public class MatchBarJFX {
         peoplePane1 = getBarPane();
         peoplePane2 = getBarPane();
         peoplePane3 = getBarPane();
-        peoplePane4 = getBarPane();
+        peopleAnchorPanes = new ArrayList<>(Arrays.asList(peoplePane1, peoplePane2, peoplePane3));
         for (int i = 0; i < peopleAnchorPanes.size(); i++) {
-            ImagePattern[] peopleImages = new ImagePattern[8];
+            ImagePattern[] peopleImages = new ImagePattern[6];
             for (int j = 0; j < peopleImages.length; j++) {
-                peopleImages[j] = PeopleType.getStandingImage(PeopleType.getPeople(i * 8 + j), 1);
+                peopleImages[j] = PeopleType.getStandingImage(PeopleType.getTroopType(i * 6 + j), 1);
             }
             addClickableToRectangle(peopleAnchorPanes.get(i), peopleImages);
             mainBarPane.getChildren().add(peopleAnchorPanes.get(i));
             peopleAnchorPanes.get(i).setVisible(false);
         }
-        
     }
 
     public void deselect() {

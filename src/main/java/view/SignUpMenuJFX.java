@@ -155,6 +155,7 @@ public class SignUpMenuJFX extends Application implements MenuJFX {
         Adjust.adjustHyperlink(logInLink, ratioX, ratioY);
         Adjust.adjustRectangle(signUpButton, ratioX, ratioY);
         Adjust.adjustCircle(randomPassword, ratioX, ratioY);
+        Adjust.adjustCircle(randomSloganButton, ratioX, ratioY);
         captchaJFX.adjust(ratioX, ratioY);
     }
 
