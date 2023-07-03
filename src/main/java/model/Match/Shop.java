@@ -1,11 +1,32 @@
 package model.Match;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Shop {
     private final HashMap<Property, Integer> prices;
-
+    private final ArrayList<String> products;
     {
+        products = new ArrayList<>();
+        products.add("meat");
+        products.add("cheese");
+        products.add("apple");
+        products.add("hops");
+        products.add("wood");
+        products.add("stone");
+        products.add("spear");
+        products.add("bow");
+        products.add("mace");
+        products.add("leatherarmour");
+        products.add("beer");
+        products.add("barley");
+        products.add("bread");
+        products.add("iron");
+        products.add("pitch");
+        products.add("crossbow");
+        products.add("pike");
+        products.add("sword");
+        products.add("armour");
         prices = new HashMap<>();
         prices.put(Property.MEAT, 10);
         prices.put(Property.CHEESE, 10);
@@ -30,6 +51,10 @@ public class Shop {
 
     public HashMap<Property, Integer> getPrices() {
         return prices;
+    }
+
+    public ArrayList<String> getProducts() {
+        return products;
     }
 
     public void sellToGovernance(Governance governance, Property property, int amount) {
