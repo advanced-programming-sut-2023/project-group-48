@@ -30,7 +30,7 @@ public class Cell {
         }
     }
 
-    private Cell(int row, int column, LandType landType) {
+    public Cell(int row, int column, LandType landType) {
         this.row = row;
         this.column = column;
         this.landType = landType;

@@ -2,13 +2,12 @@ package server;
 
 import client.SessionTokenPacket;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import controller.Controller;
 import model.User;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -17,7 +16,7 @@ public class Connection extends Thread{
     final DataInputStream dataInputStream;
     final DataOutputStream dataOutputStream;
 
-    public static ArrayList<User> users = new ArrayList<>();
+    public static ArrayList<User> onlineUsers = new ArrayList<>();
     public static ArrayList<String> tokens = new ArrayList<>();
     private User user ;
     private SessionTokenPacket sessionTokenPacket;
@@ -38,13 +37,29 @@ public class Connection extends Thread{
         String intro = null;
         try {
             intro = dataInputStream.readUTF();
+
+            if(intro.equals("json")){
+                ArrayList<User> users =controller.getGame().getUsers();
+                ArrayList<User> newUsers = new ArrayList<>();
+                newUsers = new Gson().fromJson(dataInputStream.readUTF(), new TypeToken<ArrayList<User>>(){}.getType());
+                for (User newUser : newUsers) {
+                    if(controller.getGame().getUserByUsername(newUser.getUsername()) == null){
+                        users.add(newUser);
+                    }
+                }
+                dataOutputStream.writeUTF(new Gson().toJson(users));
+                controller.getGame().setUsers(users);
+                System.out.println("Users File Updated!");
+                return;
+            }
+
             sessionTokenPacket = new Gson().fromJson(intro, SessionTokenPacket.class);
             user = sessionTokenPacket.getUser();
             if(controller.getGame().getUserByUsername(user.getUsername()) != null){
                 user = controller.getGame().getUserByUsername(user.getUsername());
                 if(DigestUtils.sha256Hex(user.getUsername()+user.getEncryptedPassword()).equals(sessionTokenPacket.getToken())){
                     dataOutputStream.writeUTF("success");
-                    users.add(user);
+                    onlineUsers.add(user);
                     tokens.add(sessionTokenPacket.getToken());
                     successfullyIntroduced = true;
                 }else{
@@ -82,7 +97,7 @@ public class Connection extends Thread{
     public void logout() {
         try {
             socket.close();
-            users.remove(user);
+            onlineUsers.remove(user);
             tokens.remove(sessionTokenPacket.getToken());
         } catch (IOException e) {
             System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");

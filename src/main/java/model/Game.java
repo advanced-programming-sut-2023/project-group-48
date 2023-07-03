@@ -160,4 +160,21 @@ public class Game {
     public void setSelectedCell(Cell selectedCell) {
         this.selectedCell = selectedCell;
     }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(ArrayList<User> users) {
+        this.users.clear();
+        this.users.addAll(users);
+        Gson gson = new Gson();
+        try {
+            FileWriter fileWriter = new FileWriter("Users.json");
+            fileWriter.write(gson.toJson(users));
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

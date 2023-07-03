@@ -1,6 +1,10 @@
 package controller;
 
 import model.Game;
+import model.MapMethods;
+import model.Match.Cell;
+import model.Match.LandType;
+import model.SavableMap;
 import model.User;
 
 import java.io.IOException;
@@ -69,6 +73,8 @@ public class SignUpMenuController {
     }
 
     public ArrayList<String> getDefaultSlogans() {
+        //HHHH
+
         return User.getSlogans();
     }
 
