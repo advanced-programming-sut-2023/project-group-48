@@ -195,6 +195,8 @@ public class MapJFX {
             public void handle(MouseEvent mouseEvent) {
                 if (matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern() != null) {
                     placeBuilding(tile);
+                } else if (matchMenuJFX.getMatchBarJFX().getSelectedPeopleImagePattern() != null) {
+                    placePeople(tile);
                 } else if (!selectedPeople.isEmpty()) {
                     movePeople(tile);
                 } else {
@@ -290,7 +292,7 @@ public class MapJFX {
         }
     }
 
-    private void deSelect() {
+    public void deSelect() {
         if (selectedPeople.isEmpty()) {
             for (Tile selectedTile : selectedTiles) {
                 selectedTile.setOpacity(1);
@@ -347,6 +349,7 @@ public class MapJFX {
                 deSelect();
                 selectedSingleBuilding = rectangle;
                 selectedSingleBuilding.setOpacity(0.8);
+                // TODO
             }
         });
     }
@@ -357,9 +360,20 @@ public class MapJFX {
         rectangle.setLayoutY(map[i][j].getY() - rectangle.getHeight());
         rectangle.setFill(imagePattern);
         mapPane.getChildren().add(rectangle);
+        rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                deSelect();
+                int[] coordinates = getCoordinates(people.getRow(), people.getColumn());
+                for (People person : map[coordinates[0]][coordinates[1]].getCell().getPeople()) {
+                    selectedPeople.add(people);
+                    people.getRectangle().setOpacity(0.8);
+                }
+            }
+        });
     }
 
-    private void bringBuildingsToFront() {
+    public void bringBuildingsToFront() {
         for (int i = firstI; i <= lastI; i++) {
             for (int j = firstJ; j <= lastJ; j++) {
                 if (map[i][j].getRectangle() != null) {
@@ -369,7 +383,7 @@ public class MapJFX {
         }
     }
 
-    private void addNewCells(KeyEvent keyEvent) {
+    public void addNewCells(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.RIGHT) || keyEvent.getCode().equals(KeyCode.LEFT)) {
             boolean isRight = keyEvent.getCode().equals(KeyCode.RIGHT);
             for (int j = isRight ? lastJ : firstJ; j != (isRight ? 200 : -1); j += isRight ? 1 : -1) {
@@ -406,7 +420,7 @@ public class MapJFX {
         }
     }
 
-    private void removeOldCells(KeyEvent keyEvent) {
+    public void removeOldCells(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.RIGHT) || keyEvent.getCode().equals(KeyCode.LEFT)) {
             boolean isRight = keyEvent.getCode().equals(KeyCode.RIGHT);
             for (int j = isRight ? firstJ : lastJ; j != (isRight ? 200 : -1); j += isRight ? 1 : -1) {
@@ -462,5 +476,25 @@ public class MapJFX {
 
     public Tile getTile(int i, int j) {
         return map[i][j];
+    }
+
+    public SetTextureJFX getSetTextureJFX() {
+        return setTextureJFX;
+    }
+
+    public ArrayList<Tile> getSelectedTiles() {
+        return selectedTiles;
+    }
+
+    public Pane getTileStatusPane() {
+        return tileStatusPane;
+    }
+
+    public Label getTileStatus() {
+        return tileStatus;
+    }
+
+    public Rectangle getSelectionArea() {
+        return selectionArea;
     }
 }

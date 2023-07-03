@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MapJFX">
    <children>
       <TextField layoutX="25.0" layoutY="42.0" prefHeight="30.0" prefWidth="150.0" />
       <ChoiceBox layoutX="25.0" layoutY="72.0" prefHeight="30.0" prefWidth="150.0" />
-      <Button layoutX="25.0" layoutY="99.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Repair" />
+      <Button layoutX="25.0" layoutY="99.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Create Unit" />
+      <Button layoutX="25.0" layoutY="129.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Repair" />
       <Label alignment="CENTER" layoutX="25.0" layoutY="129.0" prefHeight="30.0" prefWidth="150.0">
          <font>
             <Font size="14.0" />

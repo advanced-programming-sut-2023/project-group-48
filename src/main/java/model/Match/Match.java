@@ -104,7 +104,6 @@ public class Match {
         players.remove(player);
     }
 
-
     public int getRounds() {
         return rounds;
     }
@@ -363,11 +362,8 @@ public class Match {
     public Governance getMatchWinner() {
         return matchWinner;
     }
+
     public Cell[][] getMap() {
         return map;
     }
-
-
-
-
 }
