@@ -26,7 +26,7 @@ public class WalkingAnimation extends Transition {
         this.match = match;
         this.people = people;
         this.mapJFX = mapJFX;
-        this.imagesCount = PeopleType.getMovingImages(people.getType(), 1).size();
+        this.imagesCount = PeopleType.WALKIG_IMAGE_COUNT;
         setCycleDuration(Duration.millis((double) 1000 / imagesCount));
         setCycleCount(people.getPath().size() * imagesCount);
     }
@@ -35,7 +35,7 @@ public class WalkingAnimation extends Transition {
     protected void interpolate(double v) {
         if (people.getPath().size() != lastPathSize) {
             targetTile = getTargetTile();
-            moves = PeopleType.getMovingImages(people.getType(), match.getGovernances().indexOf(people.getGovernance()) + 1);
+            moves = PeopleType.getMovingImages(people.getType(), match.getGovernances().indexOf(people.getGovernance()) + 1, getDirectionNumber());
             indexOfCurrentImage = 0;
             lastPathSize = people.getPath().size();
         }
@@ -51,25 +51,43 @@ public class WalkingAnimation extends Transition {
         if (people.getRectangle().getX() == targetTile.getX() - people.getRectangle().getWidth() / 2) {
             people.getPath().remove(0);
             people.setCurrentTile(targetTile);
+            // TODO set people row and column
+        }
+    }
+
+    private int getDirectionNumber() {
+        switch (people.getPath().get(0)) {
+            case UP:
+                return 1;
+            case RIGHT:
+                return 3;
+            case DOWN:
+                return 5;
+            case LEFT:
+                return 7;
+            default:
+                return 2;
         }
     }
 
     private Tile getTargetTile() {
         Direction direction = people.getPath().get(0);
-        int[] coordinates = mapJFX.getCoordinates(people.getRow(), people.getColumn());
+        int[] coordinates;
         switch (direction) {
             case UP:
+                coordinates = mapJFX.getCoordinates(people.getRow() + 1, people.getColumn());
                 return mapJFX.getTile(coordinates[0] + 1, coordinates[1]);
             case DOWN:
+                coordinates = mapJFX.getCoordinates(people.getRow() - 1, people.getColumn());
                 return mapJFX.getTile(coordinates[0] - 1, coordinates[1]);
             case LEFT:
+                coordinates = mapJFX.getCoordinates(people.getRow(), people.getColumn() - 1);
                 return mapJFX.getTile(coordinates[0], coordinates[1] - 1);
             case RIGHT:
+                coordinates = mapJFX.getCoordinates(people.getRow(), people.getColumn() + 1);
                 return mapJFX.getTile(coordinates[0], coordinates[1] + 1);
             default:
                 return null;
         }
     }
-
-
 }

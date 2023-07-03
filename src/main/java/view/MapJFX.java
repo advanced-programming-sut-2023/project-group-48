@@ -206,10 +206,10 @@ public class MapJFX {
     private void placeBuilding(Tile tile) {
         addBuildingToMap(tile.getI(), tile.getJ(), matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern());
         System.out.println(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern().getImage().getUrl());
-        String type = Pattern.compile(".+/(?<type>.+).png").
+        System.out.println();
+        String type = Pattern.compile(".+/(?<type>.+)\\.png").
                 matcher(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern().getImage().getUrl()).group("type");
         matchMenuController.dropBuilding(tile.getCell().getRow(), tile.getCell().getColumn(), type);
-
     }
 
     private void movePeople(Tile tile) {
