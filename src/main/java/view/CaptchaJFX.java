@@ -51,6 +51,7 @@ public class CaptchaJFX implements MenuJFX {
 
         captchaAnswerButton = (Button) captchaPane.getChildren().get(4);
 
+        refreshCaptchaButton.toFront();
         refreshCaptcha();
     }
 

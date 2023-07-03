@@ -2,6 +2,7 @@ package view;
 
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -98,5 +99,12 @@ public class Adjust {
         avatarsPane.setPrefHeight(avatarsPane.getPrefHeight() * ratioY);
         avatarsPane.setLayoutX(avatarsPane.getLayoutX() * ratioX);
         avatarsPane.setLayoutY(avatarsPane.getLayoutY() * ratioY);
+    }
+
+    public static void adjustImageView(ImageView imageView, double ratioX, double ratioY) {
+        imageView.setFitWidth(imageView.getFitWidth() * ratioX);
+        imageView.setFitHeight(imageView.getFitHeight() * ratioY);
+        imageView.setLayoutX(imageView.getLayoutX() * ratioX);
+        imageView.setLayoutY(imageView.getLayoutY() * ratioY);
     }
 }

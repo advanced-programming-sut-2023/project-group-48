@@ -30,11 +30,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
-import java.util.regex.Pattern;
 
 public class ProfileMenuJFX extends Application implements MenuJFX {
     private Controller controller;
@@ -66,14 +64,13 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         profileMenuPane = FXMLLoader.load(Objects.requireNonNull(Game.class.getResource("/fxml/ProfileMenu.fxml")));
-        profileMenuPane.setBackground(Background.fill(new ImagePattern(new Image(getClass().getResource("/backgrounds/5.png").toExternalForm()))));
+        profileMenuPane.setBackground(Background.fill(new ImagePattern(new Image(getClass().getResource("/backgrounds/8.jpg").toExternalForm()))));
 
         popup = new Popup();
 
         titleLabel = (Label) profileMenuPane.getChildren().get(0);
 
         infoLabel = (Label) profileMenuPane.getChildren().get(1);
-        setInfoProperties();
 
         usernameLabel = (Label) profileMenuPane.getChildren().get(3);
         usernameTextField = (TextField) profileMenuPane.getChildren().get(4);
@@ -105,14 +102,14 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
         emailErrorLabel = (Label) profileMenuPane.getChildren().get(26);
         setEmailProperties();
 
-        changePasswordButton = (Button) passwordPane.getChildren().get(28);
+        changePasswordButton = (Button) profileMenuPane.getChildren().get(28);
         passwordPane = (Pane) profileMenuPane.getChildren().get(29);
         passwordErrorLabel = (Label) passwordPane.getChildren().get(0);
         oldPasswordTextField = (TextField) passwordPane.getChildren().get(1);
         newPasswordTextField = (TextField) passwordPane.getChildren().get(2);
         oldPasswordPasswordField = (PasswordField) passwordPane.getChildren().get(3);
         newPasswordPasswordField = (PasswordField) passwordPane.getChildren().get(4);
-        showPasswordCheckBox = (CheckBox) passwordPane.getChildren().get(6);
+        showPasswordCheckBox = (CheckBox) passwordPane.getChildren().get(5);
         setPasswordProperties();
 
         avatarImageView = (ImageView) profileMenuPane.getChildren().get(31);
@@ -132,16 +129,11 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
         captchaJFX = new CaptchaJFX(controller, profileMenuPane);
         setCaptchaProperties();
 
-        profileMenuPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                captchaJFX.getCaptchaPane().setVisible(false);
-                passwordPane.setVisible(false);
-                popup.hide();
-            }
-        });
+        setInfoProperties();
 
+        System.out.println(1);
         adjustWithScene();
+        System.out.println(2);
         Scene scene = new Scene(profileMenuPane);
         stage.setScene(scene);
         scene.heightProperty().addListener((observable, oldValue, newValue) -> {
@@ -150,15 +142,16 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
         scene.widthProperty().addListener((observable, oldValue, newValue) -> {
             adjustWithScene();
         });
+        System.out.println(3);
         stage.show();
+        System.out.println(4);
     }
 
     private void setInfoProperties() {
-        String info = profileMenuController.profileDisplay();
-        infoLabel.setText(Pattern.compile("\\s(?<info>highscore.+)").matcher(info).group("info"));
-        usernameLabel.setText(Pattern.compile("\\s(?<username>username.+)\\s").matcher(info).group("username"));
-        emailLabel.setText(Pattern.compile("\\s(?<email>email.+)\\s").matcher(info).group("email"));
-        nicknameLabel.setText(Pattern.compile("\\s(?<nickname>nickname.+)\\s").matcher(info).group("nickname"));
+        infoLabel.setText(profileMenuController.getInfo());
+        usernameLabel.setText(profileMenuController.getUsername());
+        emailLabel.setText(profileMenuController.getEmail());
+        nicknameLabel.setText(profileMenuController.getNickname());
         sloganLabel.setText(profileMenuController.displaySlogan());
     }
 
@@ -313,12 +306,13 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
     }
 
     private void setAvatarProperties() {
-        File profileDirectory = new File(Objects.requireNonNull(Game.class.getResource("/avatars")).toExternalForm());
-        int defaultProfilesCount = Objects.requireNonNull(profileDirectory.listFiles()).length - 3;
-        addProfilePictures(avatarsPane, defaultProfilesCount);
+        avatarsPane.setBackground(Background.EMPTY);
+
+        addProfilePictures(avatarsPane, 46);
 
         currentProfilePane.getChildren().add(new Avatar(currentProfilePane.getPrefWidth() / 2,
                 currentProfilePane.getPrefHeight() / 2, profileMenuController.getAvatarImagePattern()));
+        currentProfilePicture = (Avatar) currentProfilePane.getChildren().get(0);
 
         avatarImageView.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
@@ -335,7 +329,7 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
                 try {
                     Image image = new Image(new FileInputStream(files.get(0)));
                     avatarImageView.setImage(image);
-                    selectedProfilePicture.setStrokeWidth(0);
+                    selectedProfilePicture.setStroke(Color.BLACK);
                     selectedProfilePicture = new Avatar(currentProfilePane.getPrefWidth() / 2,
                             currentProfilePane.getPrefHeight() / 2, new ImagePattern(image));
                 } catch (FileNotFoundException e) {
@@ -381,8 +375,6 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
 
     private void changeUsername() {
         String result = profileMenuController.changeUserInfo('u', usernameTextField.getText());
-        captchaJFX.popOffCaptchaPane();
-        passwordPane.setVisible(false);
         if (!result.endsWith("changed successfully!")) {
             usernameErrorLabel.setText(result);
         } else {
@@ -392,6 +384,7 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
             popup.getContent().removeAll(popup.getContent());
             popup.getContent().add(new Label(result));
             popup.show(stage);
+            captchaJFX.popOffCaptchaPane();
         }
     }
 
@@ -410,6 +403,7 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
             popup.getContent().removeAll(popup.getContent());
             popup.getContent().add(new Label(result));
             popup.show(stage);
+            captchaJFX.popOffCaptchaPane();
         }
     }
 
@@ -426,6 +420,7 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
             popup.getContent().removeAll(popup.getContent());
             popup.getContent().add(new Label(result));
             popup.show(stage);
+            captchaJFX.popOffCaptchaPane();
         }
     }
 
@@ -442,6 +437,7 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
             popup.getContent().removeAll(popup.getContent());
             popup.getContent().add(new Label(result));
             popup.show(stage);
+            captchaJFX.popOffCaptchaPane();
         }
     }
 
@@ -467,6 +463,8 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
             popup.getContent().removeAll(popup.getContent());
             popup.getContent().add(new Label(result));
             popup.show(stage);
+            captchaJFX.popOffCaptchaPane();
+            passwordPane.setVisible(false);
         }
     }
 
@@ -477,16 +475,15 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
             String result = profileMenuController.changeAvatar(selectedProfilePicture.getImagePattern());
             profilePictureErrorLabel.setText(result);
             profilePictureErrorLabel.setTextFill(Color.GREEN);
-            currentProfilePane.getChildren().clear();
-            currentProfilePicture = new Avatar(currentProfilePane.getPrefWidth() / 2,
-                    currentProfilePane.getPrefHeight() / 2, profileMenuController.getAvatarImagePattern());
-            currentProfilePane.getChildren().add(currentProfilePicture);
+            currentProfilePicture.setImagePattern(selectedProfilePicture.getImagePattern());
+            captchaJFX.popOffCaptchaPane();
         }
     }
 
     public void addProfilePictures(ScrollPane scrollPane, int profilesCount) {
         ArrayList<Avatar> profilePictures = new ArrayList<>();
         AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setBackground(Background.EMPTY);
         anchorPane.setPrefWidth(scrollPane.getPrefWidth());
         anchorPane.setPrefHeight(scrollPane.getPrefHeight());
         ImagePattern imagePattern;
@@ -494,27 +491,28 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
         final int[] profileY = {40};
         Avatar profile;
         for (int i = 0; i < profilesCount; i++) {
-            imagePattern = new ImagePattern(new Image(Objects.requireNonNull(Game.class.getResource("/avatars/" + (i + 1) + ".jpg").toExternalForm())));
+            imagePattern = new ImagePattern(new Image(Objects.requireNonNull(Game.class.getResource("/avatars/" + (i + 1) + ".png")).toExternalForm()));
+            System.out.println(imagePattern.getImage() == null);
             profile = createProfilePicture(scrollPane, profileX, profileY, imagePattern);
             makeSelectable(profile);
             profilePictures.add(profile);
             anchorPane.getChildren().add(profile);
         }
 
-        imagePattern = new ImagePattern(new Image(Objects.requireNonNull(Game.class.getResource("/avatars/Random.jpg").toExternalForm())));
+        imagePattern = new ImagePattern(new Image(Objects.requireNonNull(Game.class.getResource("/avatars/Random.png")).toExternalForm()));
         profile = createProfilePicture(scrollPane, profileX, profileY, imagePattern);
         profile.setOnMouseClicked(event -> {
             selectProfilePicture(profilePictures.get(new Random().nextInt(profilePictures.size())));
         });
         anchorPane.getChildren().add(profile);
 
-        imagePattern = new ImagePattern(new Image(Objects.requireNonNull(Game.class.getResource("/avatars/Custom.jpg").toExternalForm())));
+        imagePattern = new ImagePattern(new Image(Objects.requireNonNull(Game.class.getResource("/avatars/Custom.png")).toExternalForm()));
         profile = createProfilePicture(scrollPane, profileX, profileY, imagePattern);
         profile.setOnMouseClicked(event -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Choose Profile Picture");
             File file = fileChooser.showOpenDialog(stage);
-            if (file != null && file.getPath().endsWith(".jpg")) {
+            if (file != null && file.getPath().endsWith(".png")) {
                 Avatar newProfilePicture = createProfilePicture(scrollPane, profileX, profileY, new ImagePattern(new Image(file.toURI().toString())));
                 makeSelectable(newProfilePicture);
                 selectProfilePicture(newProfilePicture);
@@ -570,6 +568,10 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
         Adjust.adjustLabel(nicknameErrorLabel, ratioX, ratioY);
         Adjust.adjustLabel(emailErrorLabel, ratioX, ratioY);
         Adjust.adjustLabel(profilePictureErrorLabel, ratioX, ratioY);
+        Adjust.adjustTextField(usernameTextField, ratioX, ratioY);
+        Adjust.adjustTextField(sloganTextField, ratioX, ratioY);
+        Adjust.adjustTextField(nicknameTextField, ratioX, ratioY);
+        Adjust.adjustTextField(emailTextField, ratioX, ratioY);
         Adjust.adjustButton(changeUsernameButton, ratioX, ratioY);
         Adjust.adjustButton(changeSloganButton, ratioX, ratioY);
         Adjust.adjustButton(changeNicknameButton, ratioX, ratioY);
@@ -580,8 +582,9 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
         Adjust.adjustButton(scoreBoardButton, ratioX, ratioY);
         Adjust.adjustChoiceBox(sloganChoiceBox, ratioX, ratioY);
         Adjust.adjustCircle(deleteSloganButton, ratioX, ratioY);
-        Adjust.adjustPane(currentProfilePane, ratioX, ratioY);
+        Adjust.adjustImageView(avatarImageView, ratioX, ratioY);
         Adjust.adjustScrollPane(avatarsPane, ratioX, ratioY);
+        Adjust.adjustPane(currentProfilePane, ratioX, ratioY);
         Adjust.adjustCircle(currentProfilePicture, ratioX, ratioY);
         AnchorPane anchorPane = (AnchorPane) avatarsPane.getContent();
         for (Node node : anchorPane.getChildren()) {
@@ -592,6 +595,15 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
         for (Separator separator : separators) {
             Adjust.adjustSeparator(separator, ratioX, ratioY);
         }
+        Adjust.adjustPane(passwordPane, ratioX, ratioY);
+        Adjust.adjustLabel(passwordErrorLabel, ratioX, ratioY);
+        Adjust.adjustTextField(oldPasswordTextField, ratioX, ratioY);
+        Adjust.adjustTextField(newPasswordTextField, ratioX, ratioY);
+        Adjust.adjustPasswordField(oldPasswordPasswordField, ratioX, ratioY);
+        Adjust.adjustPasswordField(newPasswordPasswordField, ratioX, ratioY);
+        Adjust.adjustCheckBox(showPasswordCheckBox, ratioX, ratioY);
+        Adjust.adjustCheckBox(customSloganCheckBox, ratioX, ratioY);
+        captchaJFX.adjust(ratioX, ratioY);
     }
 
     @Override

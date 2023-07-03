@@ -104,7 +104,7 @@ public class ProfileMenuController {
     }
 
     public String changeAvatar(ImagePattern imagePattern) {
-        return null;
+        return "changed successfully!";
     }
 
     public ImagePattern getAvatarImagePattern() {
@@ -134,5 +134,22 @@ public class ProfileMenuController {
 
     public ArrayList<User> getScoreBoard() {
         return controller.getGame().getScoreBoard();
+    }
+
+    public String getInfo() {
+        return "highscore: " + controller.getGame().getCurrentUser().getHighScore() + "\n" +
+                        "rank: " + controller.getGame().getCurrentUser().getRank();
+    }
+
+    public String getUsername() {
+        return "username: " + controller.getGame().getCurrentUser().getUsername();
+    }
+
+    public String getEmail() {
+        return "email: " + controller.getGame().getCurrentUser().getEmail();
+    }
+
+    public String getNickname() {
+        return "nickname: " + controller.getGame().getCurrentUser().getNickname();
     }
 }

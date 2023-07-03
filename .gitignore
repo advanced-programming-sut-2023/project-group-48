@@ -9,3 +9,7 @@
 /dataSources.local.xml
 #ignoring specific files
 src/main/resources/people
+DataBase.json
+Users.json
+src/main/resources/tiles.zip
+src/main/resources/buildings & people.zip

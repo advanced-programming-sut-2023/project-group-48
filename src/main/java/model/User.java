@@ -47,7 +47,7 @@ public class User {
         this.rank = 0;
         this.governance = null;
         this.highScore = 0;
-        this.avatarUrl = Objects.requireNonNull(getClass().getResource("/avatars/0.jpg")).toString();
+        this.avatarUrl = Objects.requireNonNull(getClass().getResource("/avatars/0.png")).toString();
     }
 
     public static boolean isUsernameNotValid(String username) {
