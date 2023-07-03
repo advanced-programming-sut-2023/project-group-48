@@ -3,6 +3,7 @@ package client;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import controller.Controller;
+import model.SavableMap;
 import model.User;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -61,6 +62,10 @@ public class Client {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void sendMap(User user, SavableMap map){
+
     }
 
 
