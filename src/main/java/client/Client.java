@@ -3,6 +3,7 @@ package client;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import controller.Controller;
+import model.RequestOnline;
 import model.SavableMap;
 import model.User;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -26,8 +27,6 @@ public class Client {
         Socket socket = new Socket(host, port);
         dataInputStream = new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
-
-
     }
 
     public void startConnection(){
@@ -64,8 +63,21 @@ public class Client {
         }
     }
 
-    public void sendMap(User user, SavableMap map){
+    public void logout(){
+        RequestOnline requestOnline = new RequestOnline();
+        requestOnline.setLogout();
+    }
 
+
+    public void sendMap(String username, SavableMap map){
+        RequestOnline requestOnline = new RequestOnline();
+        requestOnline.setSendMap(username, map);
+        try {
+            dataOutputStream.writeUTF(new Gson().toJson(requestOnline));
+            System.out.println("Map sent!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

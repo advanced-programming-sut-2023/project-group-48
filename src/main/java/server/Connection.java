@@ -4,6 +4,8 @@ import client.SessionTokenPacket;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import controller.Controller;
+import model.RequestOnline;
+import model.SavableMap;
 import model.User;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -22,6 +24,8 @@ public class Connection extends Thread{
     private SessionTokenPacket sessionTokenPacket;
     Controller controller;
     boolean successfullyIntroduced = false;
+
+    RequestOnline request;
 
 
     public Connection(Socket socket) throws IOException {
@@ -81,21 +85,31 @@ public class Connection extends Thread{
         }
 
 
-        try {
-            String data = dataInputStream.readUTF();
+        while(true){
+            try {
+                String data = dataInputStream.readUTF();
+                request = new Gson().fromJson(data, RequestOnline.class);
+
+                if(request.logout){
+                    logout();
+                    return;
+                }
+                if(request.sendMap){
+                    deliverMap(user.getUsername(), request.username, request.map);
+                }
 
 
-
-        } catch (IOException e) {
-            System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
-            throw new RuntimeException(e);
+            } catch (IOException e) {
+                System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+                throw new RuntimeException(e);
+            }
         }
-
     }
 
 
     public void logout() {
         try {
+            Server.connections.remove(this);
             socket.close();
             onlineUsers.remove(user);
             tokens.remove(sessionTokenPacket.getToken());
@@ -106,7 +120,21 @@ public class Connection extends Thread{
     }
 
 
-
+    public void deliverMap(String sender, String receiver, SavableMap map){
+        RequestOnline request = new RequestOnline();
+        request.setReceiveMap(sender, map);
+        String json = new Gson().toJson(request);
+        for (Connection connection : Server.connections) {
+            if(connection.user.getUsername().equals(receiver)){
+                try {
+                    connection.dataOutputStream.writeUTF(json);
+                } catch (IOException e) {
+                    System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
 
 
 }

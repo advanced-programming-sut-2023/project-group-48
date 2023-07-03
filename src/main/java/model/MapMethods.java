@@ -10,13 +10,16 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class MapMethods {
-    public static void saveMap(SavableMap map){
+    public static boolean saveMap(SavableMap map){
         //TODO: cant save a map again!
         Gson gson = new Gson();
         String json = gson.toJson(map);
         try {
             FileReader fileReader = new FileReader("Maps.json");
             ArrayList<SavableMap> maps = gson.fromJson(fileReader, new TypeToken<ArrayList<SavableMap>>(){}.getType());
+            if(checkForClonedMaps(map)){
+                return false;
+            }
             maps.add(map);
             FileWriter fileWriter = new FileWriter("Maps.json");
             gson.toJson(maps, fileWriter);
@@ -24,6 +27,7 @@ public class MapMethods {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return true;
     }
     public static ArrayList<SavableMap> loadMaps(){
         Gson gson = new Gson();
@@ -59,4 +63,16 @@ public class MapMethods {
         }
         return map;
     }
+
+    public static boolean checkForClonedMaps(SavableMap map){
+        ArrayList<SavableMap> maps = loadMaps();
+        for (SavableMap savableMap : maps) {
+            if(savableMap.equals(map)){
+                return false;
+            }
+        }
+        return true;
+    }
 }
+
+
