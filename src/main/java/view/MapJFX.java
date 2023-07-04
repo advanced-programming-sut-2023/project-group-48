@@ -242,7 +242,7 @@ public class MapJFX {
             public void handle(MouseEvent mouseEvent) {
                 if (matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern() != null) {
                     placeBuilding(tile);
-                }else if (!selectedPeopleShapes.isEmpty()) {
+                } else if (!selectedPeopleShapes.isEmpty()) {
                     movePeople(tile);
                 } else {
                     deSelect();

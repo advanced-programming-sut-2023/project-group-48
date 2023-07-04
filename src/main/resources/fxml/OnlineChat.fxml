@@ -7,13 +7,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Online.OnlineChatMenuJFX">
    <children>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="600.0" prefWidth="300.0" vbarPolicy="ALWAYS" />
+      <ScrollPane hbarPolicy="NEVER" prefHeight="600.0" prefWidth="300.0" vbarPolicy="ALWAYS">
+         <content>
+            <AnchorPane prefHeight="600.0" prefWidth="300.0" />
+         </content></ScrollPane>
       <TextField layoutY="600.0" prefHeight="50.0" prefWidth="300.0" />
       <Button layoutY="650.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="New Chat" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="300.0" prefHeight="600.0" prefWidth="1100.0" vbarPolicy="ALWAYS" />
+      <ScrollPane hbarPolicy="NEVER" layoutX="300.0" prefHeight="600.0" prefWidth="1100.0" vbarPolicy="ALWAYS">
+         <content>
+            <AnchorPane prefHeight="600.0" prefWidth="1100.0" />
+         </content></ScrollPane>
       <TextField layoutX="300.0" layoutY="600.0" prefHeight="100.0" prefWidth="1000.0" />
       <Button layoutX="1300.0" layoutY="600.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="Send" />
       <Label alignment="CENTER" layoutX="300.0" prefHeight="50.0" prefWidth="1100.0">
@@ -21,5 +26,8 @@
             <Font size="36.0" />
          </font>
       </Label>
+      <TextField layoutX="300.0" layoutY="50.0" prefHeight="50.0" prefWidth="400.0" />
+      <Button layoutX="700.0" layoutY="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Add To Room" />
+      <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Back" />
    </children>
 </AnchorPane>

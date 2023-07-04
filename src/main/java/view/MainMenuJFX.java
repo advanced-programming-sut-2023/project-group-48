@@ -1,5 +1,6 @@
 package view;
 
+import client.Client;
 import controller.Controller;
 import controller.MainMenuController;
 import javafx.application.Application;
@@ -17,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import server.Server;
 
 import java.util.Objects;
 
@@ -24,8 +26,8 @@ public class MainMenuJFX extends Application implements MenuJFX {
     private Controller controller;
     private MainMenuController mainMenuController;
     private AnchorPane mainMenuPane;
-    private Rectangle startMatch, profileMenu, logOut, exit, online;
-    private Label startMatchLabel, profileMenuLabel, logOutLabel, exitLabel, onlineLabel;
+    private Rectangle startMatch, profileMenu, logOut, exit, online, asServer;
+    private Label startMatchLabel, profileMenuLabel, logOutLabel, exitLabel, onlineLabel, asServerLabel;
     private StartMatchJFX startMatchJFX;
     private Stage stage;
 
@@ -55,6 +57,9 @@ public class MainMenuJFX extends Application implements MenuJFX {
         onlineLabel = (Label) mainMenuPane.getChildren().get(9);
         setOnlineProperties();
 
+        asServer = (Rectangle) mainMenuPane.getChildren().get(10);
+        asServerLabel = (Label) mainMenuPane.getChildren().get(11);
+        setAsServerProperties();
         startMatchJFX = new StartMatchJFX(mainMenuPane, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -88,11 +93,29 @@ public class MainMenuJFX extends Application implements MenuJFX {
         stage.show();
     }
 
+    private void setAsServerProperties() {
+        EventHandler asServerHandler = new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                Server.setServer(Controller.Port);
+            }
+        };
+        asServer.hoverProperty().addListener((event) -> {
+            asServer.setOpacity(1.5 - asServer.getOpacity());
+        });
+        asServerLabel.hoverProperty().addListener((event) -> {
+            asServer.setOpacity(1.5 - asServer.getOpacity());
+        });
+        asServer.setOnMouseClicked(asServerHandler);
+        asServerLabel.setOnMouseClicked(asServerHandler);
+    }
+
     private void setOnlineProperties() {
         EventHandler onlineHandler = new EventHandler() {
             @Override
             public void handle(Event event) {
                 try {
+                    Client.controller = controller;
                     controller.enterOnlineMenuJFX();
                     stop();
                     controller.getGame().getCurrentMenuJFX().start(stage);
@@ -122,6 +145,8 @@ public class MainMenuJFX extends Application implements MenuJFX {
         Adjust.adjustLabel(logOutLabel, ratioX, ratioY);
         Adjust.adjustRectangle(exit, ratioX, ratioY);
         Adjust.adjustLabel(exitLabel, ratioX, ratioY);
+        Adjust.adjustRectangle(online, ratioX, ratioY);
+        Adjust.adjustLabel(onlineLabel, ratioX, ratioY);
         startMatchJFX.adjust(ratioX, ratioY);
     }
 

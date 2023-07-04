@@ -11,6 +11,8 @@ module Project.Repo {
     opens model.Match to com.google.gson;
     opens model.Buildings to com.google.gson;
     opens model.People to com.google.gson;
+    opens client to com.google.gson;
+    opens server to com.google.gson;
     opens model to com.google.gson, javafx.fxml;
     opens view to com.google.gson, javafx.fxml;
     exports view.Online;

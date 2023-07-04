@@ -1,5 +1,6 @@
 package controller;
 
+import client.Client;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -10,10 +11,12 @@ import javafx.stage.Stage;
 import model.Game;
 import model.Match.Match;
 import view.*;
+import view.Online.OnlineChatMenuJFX;
 
 import java.io.IOException;
 
 public class Controller {
+    public static final int Port = 8000;
     private final SignUpMenuJFX signUpMenuJFX;
     private final LogInMenuJFX logInMenuJFX;
     private final MainMenuJFX mainMenuJFX;
@@ -21,8 +24,10 @@ public class Controller {
     private final ProfileMenuJFX profileMenuJFX;
     private final ScoreBoardJFX scoreBoardJFX;
     private final ShopMenuJFX shopMenuJFX;
+    private final OnlineChatMenuJFX onlineChatMenuJFX;
     private final Game game;
     private String captchaAnswer;
+    private boolean firstOnline = true;
     private Stage stage;
     private double sceneWidth, sceneHeight;
 
@@ -51,6 +56,8 @@ public class Controller {
         this.shopMenuJFX = new ShopMenuJFX();
         shopMenuJFX.setController(this);
         shopMenuJFX.setShopMenuController(shopMenuJFX.getShopMenuController());
+        this.onlineChatMenuJFX = new OnlineChatMenuJFX();
+        onlineChatMenuJFX.setController(this);
         this.game = new Game(mainMenuJFX, signUpMenuJFX);
     }
 
@@ -139,6 +146,15 @@ public class Controller {
         game.setCurrentUser(null);
     }
 
+    public void enterOnlineMenuJFX() throws IOException {
+        if (firstOnline) {
+            Client.startClient("localhost", Port);
+            Client.startConnection();
+            firstOnline = false;
+        }
+        game.setCurrentMenuJFX(onlineChatMenuJFX);
+    }
+
     public void exitJFX() throws IOException {
         game.updateJsonFiles();
         game.setCurrentMenuJFX(null);
@@ -163,8 +179,5 @@ public class Controller {
 
     public MatchMenuController getMatchMenuController() {
         return matchMenuJFX.getMatchMenuController();
-    }
-
-    public void enterOnlineMenuJFX() {
     }
 }

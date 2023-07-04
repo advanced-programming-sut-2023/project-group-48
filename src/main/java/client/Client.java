@@ -17,7 +17,7 @@ public class Client {
     private static DataInputStream dataInputStream;
     private static DataOutputStream dataOutputStream;
 
-    private static Controller controller;
+    public static Controller controller;
     private static User user;
 
     public static ArrayList<Room> rooms = new ArrayList<>();
@@ -39,34 +39,36 @@ public class Client {
 
     }
 
-    public static void startConnection(){
+    public static void startConnection() {
         System.out.println("Connecting to server...");
         user = controller.getGame().getCurrentUser();
         String input;
-        while(true) {
+        while (true) {
             SessionTokenPacket sessionTokenPacket = new SessionTokenPacket(user);
-            sessionTokenPacket.setToken(DigestUtils.sha256Hex(user.getUsername()+user.getEncryptedPassword()));
+            sessionTokenPacket.setToken(DigestUtils.sha256Hex(user.getUsername() + user.getEncryptedPassword()));
             try {
                 dataOutputStream.writeUTF(new Gson().toJson(sessionTokenPacket));
                 input = dataInputStream.readUTF();
-                if(input.equals("success")){
+                if (input.equals("success")) {
                     break;
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            NotifHandler notifHandler = new NotifHandler(dataInputStream);
-            notifHandler.start();
+
         }
         System.out.println("Connected to server!");
+        NotifHandler notifHandler = new NotifHandler(dataInputStream);
+        notifHandler.start();
     }
 
-    public static void updateUsersFile(){
+    public static void updateUsersFile() {
         try {
             dataOutputStream.writeUTF("json");
             dataOutputStream.writeUTF(new Gson().toJson(controller.getGame().getUsers()));
-            ArrayList<User> users = new Gson().fromJson(dataInputStream.readUTF(), new TypeToken<ArrayList<User>>(){}.getType());
+            ArrayList<User> users = new Gson().fromJson(dataInputStream.readUTF(), new TypeToken<ArrayList<User>>() {
+            }.getType());
             controller.getGame().setUsers(users);
 
             System.out.println("Users File Updated!");
@@ -76,13 +78,13 @@ public class Client {
         }
     }
 
-    public static void logout(){
+    public static void logout() {
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setLogout();
     }
 
 
-    public static void sendMap(String username, SavableMap map){
+    public static void sendMap(String username, SavableMap map) {
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setSendMap(username, map);
         try {
@@ -93,9 +95,9 @@ public class Client {
         }
     }
 
-    public static void sendMessage(String roomId, String message){
+    public static void sendMessage(String roomId, String message) {
         RequestOnline requestOnline = new RequestOnline();
-        requestOnline.setSendMessage(user.getUsername(),message,roomId);
+        requestOnline.setSendMessage(user.getUsername(), message, roomId);
         try {
             dataOutputStream.writeUTF(new Gson().toJson(requestOnline));
             System.out.println("Message sent!");
@@ -104,7 +106,7 @@ public class Client {
         }
     }
 
-    public static void newRoom(String username){
+    public static void newRoom(String username) {
         String roomID = user.getUsername() + rooms.size();
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setMakeRoom(username, roomID);
@@ -116,7 +118,7 @@ public class Client {
         }
     }
 
-    public static void addToRoom(String roomId, String username){
+    public static void addToRoom(String roomId, String username) {
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setMakeRoom(username, roomId);
         try {
@@ -127,7 +129,7 @@ public class Client {
         }
     }
 
-    public static void editMessage(String roomId, TextMessage message, String editedMessage){
+    public static void editMessage(String roomId, TextMessage message, String editedMessage) {
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setEditMessage(message, editedMessage, roomId);
         try {
@@ -138,7 +140,7 @@ public class Client {
         }
     }
 
-    public static void deleteMessage(String roomID, TextMessage message){
+    public static void deleteMessage(String roomID, TextMessage message) {
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setDeleteMessage(message, roomID);
         try {
@@ -149,7 +151,7 @@ public class Client {
         }
     }
 
-    public static void seenMessage(String roomId){
+    public static void seenMessage(String roomId) {
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setSeenMessage(roomId);
         try {
@@ -160,7 +162,7 @@ public class Client {
         }
     }
 
-    public static void setReaction(String roomId, TextMessage message, int reaction){
+    public static void setReaction(String roomId, TextMessage message, int reaction) {
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setReaction(roomId, message, reaction);
         try {
@@ -171,7 +173,7 @@ public class Client {
         }
     }
 
-    public static void updateAllRooms(){
+    public static void updateAllRooms() {
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setGetAllRooms();
         try {
@@ -182,7 +184,7 @@ public class Client {
         }
     }
 
-    public static void updateMe(){
+    public static void updateMe() {
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setMe(user);
         try {
@@ -204,12 +206,12 @@ public class Client {
         }
     }
 
-    public static void answerFriendRequest(String username, boolean answer){
+    public static void answerFriendRequest(String username, boolean answer) {
         for (User friend : friends) {
-            if(friend.getUsername().equals(username)){
+            if (friend.getUsername().equals(username)) {
                 ArrayList<User> removerequests = new ArrayList<>();
                 for (User friendRequest : friendRequests) {
-                    if(friendRequest.getUsername().equals(username)){
+                    if (friendRequest.getUsername().equals(username)) {
                         removerequests.add(friendRequest);
                     }
                 }
@@ -219,7 +221,7 @@ public class Client {
         }
         ArrayList<User> removerequests = new ArrayList<>();
         for (User friendRequest : friendRequests) {
-            if(friendRequest.getUsername().equals(username)){
+            if (friendRequest.getUsername().equals(username)) {
                 removerequests.add(friendRequest);
             }
         }
@@ -227,7 +229,7 @@ public class Client {
         friendRequests.removeAll(removerequests);
     }
 
-    public static void updateFriendFiles(){
+    public static void updateFriendFiles() {
         try {
             FileWriter fileWriter = new FileWriter("Friends.json");
             fileWriter.write(new Gson().toJson(Client.friends));
@@ -237,10 +239,11 @@ public class Client {
         }
     }
 
-    public static void getFriendFiles(){
+    public static void getFriendFiles() {
         try {
             FileReader fileReader = new FileReader("Friends.json");
-            Client.friends = new Gson().fromJson(fileReader, new TypeToken<ArrayList<User>>(){}.getType());
+            Client.friends = new Gson().fromJson(fileReader, new TypeToken<ArrayList<User>>() {
+            }.getType());
             fileReader.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -279,6 +282,7 @@ public class Client {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
 
