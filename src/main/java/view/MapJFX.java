@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.Buildings.Building;
+import model.Buildings.BuildingType;
 import model.Match.LandType;
 import model.People.People;
 
@@ -255,10 +256,8 @@ public class MapJFX {
     }
 
     private void placeBuilding(Tile tile) {
-        System.out.println(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern().getImage().getUrl());
-        String type = Pattern.compile(".+\\/(?<type>.+)\\.png").
-                matcher(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern().getImage().getUrl()).group("type");
-        matchMenuController.dropBuilding(tile.getCell().getRow(), tile.getCell().getColumn(), type);
+        matchMenuController.dropBuilding(tile.getCell().getRow(), tile.getCell().getColumn(),
+                BuildingType.getTypeByImagePattern(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern()));
         Building building = tile.getCell().getBuilding();
         addBuildingToMap(tile.getI(), tile.getJ(), matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern(), building);
     }
