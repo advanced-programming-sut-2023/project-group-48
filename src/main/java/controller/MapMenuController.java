@@ -1,7 +1,9 @@
 package controller;
 
+import javafx.scene.paint.ImagePattern;
 import model.BackGroundColor;
 import model.Buildings.Building;
+import model.Buildings.BuildingType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
