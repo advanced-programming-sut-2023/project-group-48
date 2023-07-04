@@ -35,6 +35,7 @@ public class MatchMenuJFX extends Application {
         Scene scene = new Scene(viewPane);
         stage.setScene(scene);
         mapJFX.getMapPane().requestFocus();
+        mapJFX.refreshMiniMap();
         stage.show();
     }
 

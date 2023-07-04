@@ -39,7 +39,7 @@ public class MapJFX {
     private ArrayList<Tile> cells;
     private Rectangle selectionArea;
     private ArrayList<Tile> selectedTiles;
-    private ArrayList<People> selectedPeople;
+    private ArrayList<PeopleShape> selectedPeopleShapes;
     private Tile selectedSingleTile;
     private BuildingShape selectedSingleBuilding;
     private Rectangle miniMap;
@@ -80,15 +80,16 @@ public class MapJFX {
 
     private void setMiniMap() {
         miniMap = new Rectangle(140, 70);
-        miniMap.setLayoutX(viewPane.getPrefWidth() - miniMap.getWidth());
-        miniMap.setLayoutY(viewPane.getPrefHeight() - miniMap.getHeight());
+        mapPane.getChildren().add(miniMap);
         refreshMiniMap();
-        viewPane.getChildren().add(miniMap);
     }
 
-    private void refreshMiniMap() {
+    public void refreshMiniMap() {
         miniMap.setFill(new ImagePattern(matchMenuJFX.getScene().snapshot(new WritableImage((int) viewPane.getPrefWidth(),
-                (int) (viewPane.getPrefHeight() - matchMenuJFX.getMatchBarJFX().getMainBarPane().getPrefHeight())))));
+                                (int) (viewPane.getPrefHeight() - 200)))));
+        miniMap.setLayoutX(viewPane.getPrefWidth() - mapPane.getLayoutX() - miniMap.getWidth());
+        miniMap.setLayoutY(- mapPane.getLayoutY());
+        miniMap.toFront();
     }
 
     private void setTileStatusProperties() {
@@ -242,7 +243,7 @@ public class MapJFX {
                     placeBuilding(tile);
                 } else if (matchMenuJFX.getMatchBarJFX().getSelectedPeopleImagePattern() != null) {
                     placePeople(tile);
-                } else if (!selectedPeople.isEmpty()) {
+                } else if (!selectedPeopleShapes.isEmpty()) {
                     movePeople(tile);
                 } else {
                     deSelect();
@@ -254,7 +255,8 @@ public class MapJFX {
     }
 
     private void placeBuilding(Tile tile) {
-        String type = Pattern.compile(".+/(?<type>.+)\\.png").
+        System.out.println(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern().getImage().getUrl());
+        String type = Pattern.compile(".+\\/(?<type>.+)\\.png").
                 matcher(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern().getImage().getUrl()).group("type");
         matchMenuController.dropBuilding(tile.getCell().getRow(), tile.getCell().getColumn(), type);
         Building building = tile.getCell().getBuilding();
@@ -271,7 +273,7 @@ public class MapJFX {
 
     private void movePeople(Tile tile) {
         matchMenuController.moveUnit(tile.getCell().getRow(), tile.getCell().getColumn());
-        for (People selectedPerson : selectedPeople) {
+        for (PeopleShape selectedPerson : selectedPeopleShapes) {
             // Animations
         }
     }
@@ -282,7 +284,7 @@ public class MapJFX {
 
     private void setSelectionArea() {
         this.selectedTiles = new ArrayList<>();
-        this.selectedPeople = new ArrayList<>();
+        this.selectedPeopleShapes = new ArrayList<>();
         this.selectionArea = new Rectangle();
         selectionArea.setFill(Color.DARKGRAY);
         selectionArea.setOpacity(0.1);
@@ -321,39 +323,41 @@ public class MapJFX {
         for (Tile cellTile : cells) {
             if (selectionArea.getBoundsInParent().intersects(cellTile.getBoundsInParent())) {
                 selectedTiles.add(cellTile);
-                selectedPeople.addAll(cellTile.getCell().getPeople());
+                selectedPeopleShapes.addAll(cellTile.getPeopleShapes());
             }
         }
-        if (selectedPeople.isEmpty()) {
+        if (selectedPeopleShapes.isEmpty()) {
             for (Tile selectedTile : selectedTiles) {
                 selectedTile.setOpacity(0.8);
             }
         } else {
-            matchMenuController.selectUnit(selectedPeople);
-            for (People selectedPerson : selectedPeople) {
-                selectedPerson.getRectangle().setOpacity(0.8);
+            matchMenuController.selectUnit(selectedPeopleShapes);
+            for (PeopleShape selectedPersonShape : selectedPeopleShapes) {
+                selectedPersonShape.setOpacity(0.8);
             }
             selectedTiles.clear();
         }
     }
 
     public void deSelect() {
-        if (selectedPeople.isEmpty()) {
+        if (selectedPeopleShapes.isEmpty()) {
             for (Tile selectedTile : selectedTiles) {
                 selectedTile.setOpacity(1);
             }
             selectedTiles.clear();
         } else {
             matchMenuController.disbandUnit();
-            for (People selectedPerson : selectedPeople) {
-                selectedPerson.getRectangle().setOpacity(1);
+            for (PeopleShape selectedPersonShape : selectedPeopleShapes) {
+                selectedPersonShape.setOpacity(1);
             }
-            selectedPeople.clear();
+            selectedPeopleShapes.clear();
         }
-        selectedSingleBuilding.setOpacity(1);
+        if (selectedSingleBuilding != null) selectedSingleBuilding.setOpacity(1);
         selectedSingleBuilding = null;
-        selectedSingleTile.setOpacity(1);
-        selectedSingleTile.setStrokeWidth(0);
+        if (selectedSingleTile != null) {
+            selectedSingleTile.setOpacity(1);
+            selectedSingleTile.setStrokeWidth(0);
+        }
         selectedSingleTile = null;
         matchMenuJFX.getMatchBarJFX().deselect();
     }
@@ -424,9 +428,10 @@ public class MapJFX {
             public void handle(MouseEvent mouseEvent) {
                 deSelect();
                 int[] coordinates = getCoordinates(people.getRow(), people.getColumn());
-                for (People person : map[coordinates[0]][coordinates[1]].getCell().getPeople()) {
-                    selectedPeople.add(people);
-                    people.getRectangle().setOpacity(0.8);
+
+                for (PeopleShape personShape : map[coordinates[0]][coordinates[1]].getPeopleShapes()) {
+                    selectedPeopleShapes.add(personShape);
+                    personShape.setOpacity(0.8);
                 }
             }
         });

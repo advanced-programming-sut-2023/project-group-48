@@ -9,6 +9,7 @@ import model.People.PeopleType;
 import model.People.State;
 import model.People.Troop;
 import view.MatchMenuJFX;
+import view.PeopleShape;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -233,7 +234,11 @@ public class MatchMenuController {
         return "unit selected successfully!";
     }
 
-    public void selectUnit(ArrayList<People> people) {
+    public void selectUnit(ArrayList<PeopleShape> peopleShapes) {
+        ArrayList<People> people = new ArrayList<>();
+        for (PeopleShape peopleShape : peopleShapes) {
+            people.add(peopleShape.getPeople());
+        }
         match.setSelectedUnit(people);
     }
 

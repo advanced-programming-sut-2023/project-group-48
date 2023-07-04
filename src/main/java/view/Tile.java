@@ -4,6 +4,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import model.Match.Cell;
+import model.People.People;
+
+import java.util.ArrayList;
 
 public class Tile extends Polygon {
     public static final double WIDTH = 44.0 * 1.5;
@@ -12,12 +15,14 @@ public class Tile extends Polygon {
     private final int i, j;
     private Cell cell;
     private Rectangle rectangle;
+    private final ArrayList<PeopleShape> peopleShapes;
     public Tile(double x, double y) {
         this.x = x;
         this.y = y;
         this.i = 0;
         this.j = 0;
         this.getPoints().addAll(x - WIDTH / 2, y, x, y - HEIGHT / 2, x + WIDTH / 2, y, x, y + HEIGHT / 2);
+        this.peopleShapes = new ArrayList<>();
     }
     public Tile(double x, double y, int i, int j) {
         this.x = x;
@@ -25,6 +30,7 @@ public class Tile extends Polygon {
         this.i = i;
         this.j = j;
         this.getPoints().addAll(x - WIDTH / 2, y, x, y - HEIGHT / 2, x + WIDTH / 2, y, x, y + HEIGHT / 2);
+        this.peopleShapes = new ArrayList<>();
     }
 
     public Rectangle getRectangle() {
@@ -57,5 +63,17 @@ public class Tile extends Polygon {
 
     public void setCell(Cell cell) {
         this.cell = cell;
+    }
+
+    public void addPeopleShape(PeopleShape peopleShape) {
+        peopleShapes.add(peopleShape);
+    }
+
+    public void removePeopleShape(PeopleShape peopleShape) {
+        peopleShapes.remove(peopleShape);
+    }
+
+    public ArrayList<PeopleShape> getPeopleShapes() {
+        return peopleShapes;
     }
 }
