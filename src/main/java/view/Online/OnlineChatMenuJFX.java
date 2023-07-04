@@ -116,11 +116,7 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
                     currentRoom = Client.rooms.get(finalI);
                     setChatRoomProperties();
                     chatStatus.setText("Chatting in " + currentRoom.roomID);
-                    chatContent.getChildren().clear();
-                    for (TextMessage message : currentRoom.messages) {
-                        Label label = new Label(message.message);
-                        chatContent.getChildren().add(label);
-                    }
+                    Client.seenMessage(currentRoom.roomID);
                 }
             });
             roomsContent.getChildren().add(label);

@@ -152,20 +152,22 @@ public class Controller {
         scoreBoardJFX.setOffline(true);
     }
 
+    public void enterShopMenuJFX() {
+        game.setCurrentMenuJFX(shopMenuJFX);
+    }
+
     public void enterOnlineMenuJFX() throws IOException {
         if (firstOnline) {
             Client.startClient("localhost", Port);
             Client.startConnection();
             firstOnline = false;
         }
-        game.setCurrentMenuJFX(onlineChatMenuJFX);
+        game.setCurrentMenuJFX(onlineMenuJFX);
     }
 
     public void enterOnlineChatMenuJFX() throws IOException {
         game.setCurrentMenuJFX(onlineChatMenuJFX);
     }
-
-    public void enterShopMenuJFX() { game.setCurrentMenuJFX(shopMenuJFX);}
 
     public void enterOnlineScoreBoardJFX() throws IOException {
         game.setCurrentMenuJFX(scoreBoardJFX);
