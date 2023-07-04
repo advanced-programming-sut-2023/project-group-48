@@ -6,9 +6,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -27,7 +29,7 @@ public class OnlineMenuJFX extends Application implements MenuJFX {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         onlineMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/OnlineMenu.fxml")));
-        onlineMenuPane.setBackground(Background.fill(Paint.valueOf(getClass().getResource("/backgrounds/3.png").toExternalForm())));
+        onlineMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgroudns/3.png")).toExternalForm()))));
 
         chatButton = (Rectangle) onlineMenuPane.getChildren().get(0);
         chatLabel = (Label) onlineMenuPane.getChildren().get(1);

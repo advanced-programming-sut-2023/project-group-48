@@ -5,6 +5,7 @@ import controller.Controller;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,6 +19,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import model.Room;
 import model.TextMessage;
+import view.Adjust;
 import view.Avatar;
 import view.MenuJFX;
 
@@ -205,11 +207,35 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
 
     @Override
     public void adjust(double ratioX, double ratioY) {
-
+        Adjust.adjustPane(chatMenuPane, ratioX, ratioY);
+        Adjust.adjustButton(createRoomButton, ratioX, ratioY);
+        Adjust.adjustButton(sendMessageButton, ratioX, ratioY);
+        Adjust.adjustButton(addToRoomButton, ratioX, ratioY);
+        Adjust.adjustButton(backButton, ratioX, ratioY);
+        Adjust.adjustTextField(createRoomTextField, ratioX, ratioY);
+        Adjust.adjustTextField(sendMessageTextField, ratioX, ratioY);
+        Adjust.adjustTextField(addToRoomTextField, ratioX, ratioY);
+        Adjust.adjustLabel(chatStatus, ratioX, ratioY);
+        Adjust.adjustScrollPane(roomsPane, ratioX, ratioY);
+        Adjust.adjustScrollPane(chatPane, ratioX, ratioY);
+        Adjust.adjustPane(chatContent, ratioX, ratioY);
+        Adjust.adjustPane(roomsContent, ratioX, ratioY);
+        for (Node child : chatContent.getChildren()) {
+            if (child instanceof Avatar)
+                Adjust.adjustCircle((Avatar) child, ratioX, ratioY);
+            else if (child instanceof Label)
+                Adjust.adjustLabel((Label) child, ratioX, ratioY);
+        }
+        for (Node child : roomsContent.getChildren()) {
+            if (child instanceof Label)
+                Adjust.adjustLabel((Label) child, ratioX, ratioY);
+            else if (child instanceof Avatar)
+                Adjust.adjustCircle((Avatar) child, ratioX, ratioY);
+        }
     }
 
     @Override
     public void adjustWithScene() {
-
+        adjust(stage.getScene().getWidth() / chatMenuPane.getPrefWidth(), stage.getScene().getHeight() / chatMenuPane.getPrefHeight());
     }
 }
