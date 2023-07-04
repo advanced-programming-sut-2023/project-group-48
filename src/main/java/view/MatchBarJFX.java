@@ -95,6 +95,10 @@ public class MatchBarJFX {
         return selectedBuildingImagePattern;
     }
 
+    public ImagePattern getSelectedPeopleImagePattern() {
+        return selectedPeopleImagePattern;
+    }
+
     private void setMainBarPane() {
         ImageView mainBarImageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("/menu/menu.png")).toExternalForm()));
         mainBarPane = new AnchorPane();

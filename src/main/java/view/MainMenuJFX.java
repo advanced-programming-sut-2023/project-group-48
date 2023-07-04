@@ -32,7 +32,6 @@ public class MainMenuJFX extends Application implements MenuJFX {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        System.out.println(0);
         mainMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MainMenu.fxml")));
         mainMenuPane.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("/backgrounds/3.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 

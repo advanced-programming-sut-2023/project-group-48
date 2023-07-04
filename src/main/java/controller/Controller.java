@@ -20,6 +20,7 @@ public class Controller {
     private final MatchMenuJFX matchMenuJFX;
     private final ProfileMenuJFX profileMenuJFX;
     private final ScoreBoardJFX scoreBoardJFX;
+    private final ShopMenuJFX shopMenuJFX;
     private final Game game;
     private String captchaAnswer;
     private Stage stage;
@@ -47,6 +48,9 @@ public class Controller {
         this.scoreBoardJFX = new ScoreBoardJFX();
         scoreBoardJFX.setController(this);
         scoreBoardJFX.setProfileMenuController(profileMenuJFX.getProfileMenuController());
+        this.shopMenuJFX = new ShopMenuJFX();
+        shopMenuJFX.setController(this);
+        shopMenuJFX.setShopMenuController(shopMenuJFX.getShopMenuController());
         this.game = new Game(mainMenuJFX, signUpMenuJFX);
     }
 
@@ -127,6 +131,8 @@ public class Controller {
     public void enterScoreBoardJFX() {
         game.setCurrentMenuJFX(scoreBoardJFX);
     }
+
+    public void enterShopMenuJFX() { game.setCurrentMenuJFX(shopMenuJFX);}
 
     public void logOutJFX() throws IOException {
         game.setCurrentMenuJFX(signUpMenuJFX);

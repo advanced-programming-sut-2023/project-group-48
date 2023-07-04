@@ -120,6 +120,7 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
         setAvatarProperties();
 
         scoreBoardButton = (Button) profileMenuPane.getChildren().get(36);
+        setScoreBoardButtonProperties();
 
         separators = new Separator[]{(Separator) profileMenuPane.getChildren().get(2), (Separator) profileMenuPane.getChildren().get(7),
                 (Separator) profileMenuPane.getChildren().get(15), (Separator) profileMenuPane.getChildren().get(17),
@@ -145,6 +146,21 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
         System.out.println(3);
         stage.show();
         System.out.println(4);
+    }
+
+    private void setScoreBoardButtonProperties() {
+        scoreBoardButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    controller.enterScoreBoardJFX();
+                    stop();
+                    controller.getGame().getCurrentMenuJFX().start(stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     private void setInfoProperties() {
