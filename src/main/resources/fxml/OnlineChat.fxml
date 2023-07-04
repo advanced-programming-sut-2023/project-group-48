@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.OnlineChatMenuJFX">
-
+<AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Online.OnlineChatMenuJFX">
+   <children>
+      <ScrollPane hbarPolicy="NEVER" prefHeight="600.0" prefWidth="300.0" vbarPolicy="ALWAYS" />
+      <TextField layoutY="600.0" prefHeight="50.0" prefWidth="300.0" />
+      <Button layoutY="650.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="New Chat" />
+      <ScrollPane hbarPolicy="NEVER" layoutX="300.0" prefHeight="600.0" prefWidth="1100.0" vbarPolicy="ALWAYS" />
+      <TextField layoutX="300.0" layoutY="600.0" prefHeight="100.0" prefWidth="1000.0" />
+      <Button layoutX="1300.0" layoutY="600.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" text="Send" />
+      <Label alignment="CENTER" layoutX="300.0" prefHeight="50.0" prefWidth="1100.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>

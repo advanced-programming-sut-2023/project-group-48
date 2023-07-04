@@ -1,4 +1,4 @@
-package view;
+package view.Online;
 
 public class OnlineScoreBoardMenuJFX {
 }

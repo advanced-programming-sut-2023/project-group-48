@@ -13,4 +13,6 @@ module Project.Repo {
     opens model.People to com.google.gson;
     opens model to com.google.gson, javafx.fxml;
     opens view to com.google.gson, javafx.fxml;
+    exports view.Online;
+    opens view.Online to com.google.gson, javafx.fxml;
 }
