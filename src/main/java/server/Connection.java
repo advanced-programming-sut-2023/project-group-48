@@ -30,8 +30,6 @@ public class Connection extends Thread{
         this.socket = socket;
         this.dataInputStream = new DataInputStream(socket.getInputStream());
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
-
-
     }
 
     private void get_intro() {
@@ -68,6 +66,7 @@ public class Connection extends Thread{
                     }
                 }
             }
+            System.out.println("New User: " + user.getUsername());
             if(Server.getUserByUsername(user.getUsername()) != null){
                 user = Server.getUserByUsername(user.getUsername());
                 if(DigestUtils.sha256Hex(user.getUsername()+user.getEncryptedPassword()).equals(sessionTokenPacket.getToken())){
@@ -83,7 +82,8 @@ public class Connection extends Thread{
                 dataOutputStream.writeUTF("fail");
             }
         }catch (Exception e) {
-            System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+            throw new RuntimeException(e);
+//            System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost poker poker.");
         }
     }
 
@@ -157,10 +157,10 @@ public class Connection extends Thread{
 
     public void logout() {
         try {
-            Server.connections.remove(this);
-            socket.close();
             setLastSeenOffline();
             tokens.remove(sessionTokenPacket.getToken());
+            Server.connections.remove(this);
+            socket.close();
             setLastSeenOffline();
         } catch (IOException e) {
             System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");

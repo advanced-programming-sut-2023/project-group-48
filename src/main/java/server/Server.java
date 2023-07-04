@@ -9,9 +9,7 @@ import model.Room;
 import model.TextMessage;
 import model.User;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -23,8 +21,22 @@ public class Server {
     public static ArrayList<GameRoom> gameRooms = new ArrayList<>();
     public static ArrayList<User> onlineUsers = new ArrayList<>();
 
-    public static Controller controller;
+//    public static Controller controller;
 
+    public static ArrayList<User> savedUsers = new ArrayList<>();
+    static {
+        File usersFile = new File("Users.json");
+        try {
+            if (usersFile.exists()) {
+                BufferedReader fileReader = new BufferedReader(new FileReader(usersFile));
+                savedUsers = new Gson().fromJson(fileReader, new TypeToken<ArrayList<User>>() {
+                }.getType());
+                fileReader.close();
+            }
+        }catch(IOException e){
+            throw new RuntimeException(e);
+        }
+    }
     static {
         Room room = new Room();
         room.roomID = "0";
@@ -116,7 +128,7 @@ public class Server {
     }
 
     public static User getUserByUsername(String username) {
-        for (User user : controller.getGame().getUsers()) {
+        for (User user : savedUsers) {
             if (user.getUsername().equals(username)) {
                 return user;
             }

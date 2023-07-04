@@ -117,8 +117,9 @@ public class MainMenuJFX extends Application implements MenuJFX {
                 try {
                     Client.controller = controller;
                     controller.enterOnlineMenuJFX();
-                    stop();
                     controller.getGame().getCurrentMenuJFX().start(stage);
+                    stop();
+
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
