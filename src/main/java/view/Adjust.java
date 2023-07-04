@@ -26,6 +26,14 @@ public class Adjust {
         textField.setFont(Font.font(ratioX * textField.getFont().getSize()));
     }
 
+    public static void adjustTextArea(TextArea textArea, double ratioX, double ratioY) {
+        textArea.setPrefWidth(textArea.getPrefWidth() * ratioX);
+        textArea.setPrefHeight(textArea.getPrefHeight() * ratioY);
+        textArea.setLayoutX(textArea.getLayoutX() * ratioX);
+        textArea.setLayoutY(textArea.getLayoutY() * ratioY);
+        textArea.setFont(Font.font(ratioX * textArea.getFont().getSize()));
+    }
+
     public static void adjustPasswordField(PasswordField passwordField, double ratioX, double ratioY) {
         passwordField.setPrefWidth(passwordField.getPrefWidth() * ratioX);
         passwordField.setPrefHeight(passwordField.getPrefHeight() * ratioY);

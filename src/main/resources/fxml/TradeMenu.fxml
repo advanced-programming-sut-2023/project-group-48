@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.shape.Rectangle?>
+<AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TradeMenuJFX">
+
+    <children>
+
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="47.0" layoutX="14.0" layoutY="14.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="47.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="66.0" layoutX="580.0" layoutY="294.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="282.0" />
+        <Label alignment="CENTER" layoutX="624.0" layoutY="303.0" style="-fx-font-size: 32px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="Send Request" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="66.0" layoutX="580.0" layoutY="370.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="282.0" />
+        <Label alignment="CENTER" layoutX="614.0" layoutY="379.0" style="-fx-font-size: 32px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="Show Requests" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="80.0" layoutX="639.0" layoutY="60.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="166.0" />
+        <Label alignment="CENTER" layoutX="660.0" layoutY="63.0" style="-fx-font-size: 50px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="Trade" />
+
+    </children>
+
+</AnchorPane>

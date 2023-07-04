@@ -27,6 +27,9 @@ public class Controller {
     private final ProfileMenuJFX profileMenuJFX;
     private final ScoreBoardJFX scoreBoardJFX;
     private final ShopMenuJFX shopMenuJFX;
+    private final TradeMenuJFX tradeMenuJFX;
+    private final SendRequestJFX sendRequestJFX;
+    private final ShowRequestsJFX showRequestsJFX;
     private final OnlineMenuJFX onlineMenuJFX;
     private final OnlineChatMenuJFX onlineChatMenuJFX;
     private final OnlineFriendMenuJFX onlineFriendMenuJFX;
@@ -61,7 +64,16 @@ public class Controller {
         scoreBoardJFX.setProfileMenuController(profileMenuJFX.getProfileMenuController());
         this.shopMenuJFX = new ShopMenuJFX();
         shopMenuJFX.setController(this);
-        shopMenuJFX.setShopMenuController(shopMenuJFX.getShopMenuController());
+        shopMenuJFX.setShopMenuController(new ShopMenuController(this));
+        this.tradeMenuJFX = new TradeMenuJFX();
+        tradeMenuJFX.setController(this);
+        tradeMenuJFX.setTradeMenuController(new TradeMenuController(this));
+        this.sendRequestJFX = new SendRequestJFX();
+        sendRequestJFX.setController(this);
+        sendRequestJFX.setTradeMenuController(tradeMenuJFX.getTradeMenuController());
+        this.showRequestsJFX = new ShowRequestsJFX();
+        showRequestsJFX.setController(this);
+        showRequestsJFX.setTradeMenuController(tradeMenuJFX.getTradeMenuController());
         this.onlineMenuJFX = new OnlineMenuJFX();
         onlineMenuJFX.setController(this);
         this.onlineChatMenuJFX = new OnlineChatMenuJFX();
@@ -154,6 +166,18 @@ public class Controller {
 
     public void enterShopMenuJFX() {
         game.setCurrentMenuJFX(shopMenuJFX);
+    }
+
+    public void enterTradeMenuJFX() {
+        game.setCurrentMenuJFX(tradeMenuJFX);
+    }
+
+    public void enterSendRequestJFX() {
+        game.setCurrentMenuJFX(sendRequestJFX);
+    }
+
+    public void enterShowRequestsJFX() {
+        game.setCurrentMenuJFX(showRequestsJFX);
     }
 
     public void enterOnlineMenuJFX() throws IOException {

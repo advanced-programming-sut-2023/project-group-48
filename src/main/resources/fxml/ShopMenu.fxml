@@ -33,6 +33,8 @@
         <Label alignment="CENTER" layoutX="982.0" layoutY="208.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="35.0" layoutX="882.0" layoutY="210.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="34.0" />
         <Label alignment="CENTER" layoutX="1085.0" layoutY="208.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="00" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="56.0" layoutX="611.0" layoutY="452.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="228.0" />
+        <Label alignment="CENTER" layoutX="661.0" layoutY="462.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="Trade Menu" />
 
     </children>
 

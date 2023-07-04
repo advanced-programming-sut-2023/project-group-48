@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.shape.Circle?>
+<AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SendRequestJFX">
+
+    <children>
+
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="47.0" layoutX="14.0" layoutY="14.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="47.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="80.0" layoutX="535.0" layoutY="35.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="330.0" />
+        <Label alignment="CENTER" layoutX="549.0" layoutY="38.0" style="-fx-font-size: 50px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="Send Request" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="150.0" layoutX="312.0" layoutY="154.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="775.0" />
+        <Label alignment="CENTER" layoutX="328.0" layoutY="161.0" style="-fx-font-size: 22px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="property" />
+        <Label alignment="CENTER" layoutX="474.0" layoutY="161.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="user" />
+        <Label alignment="CENTER" layoutX="578.0" layoutY="161.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="amount" />
+        <Label alignment="CENTER" layoutX="800.0" layoutY="161.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="price" />
+        <Label alignment="CENTER" layoutX="901.0" layoutY="161.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="message" />
+        <ChoiceBox layoutX="328.0" layoutY="209.0" prefHeight="35.0" prefWidth="84.0" />
+        <ChoiceBox layoutX="455.0" layoutY="209.0" prefHeight="35.0" prefWidth="82.0" />
+        <Label alignment="CENTER" layoutX="606.0" layoutY="209.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="00" />
+        <Circle fill="WHITE" layoutX="700.0" layoutY="226.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+        <Circle fill="WHITE" layoutX="746.0" layoutY="226.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+        <TextField layoutX="793.0" layoutY="209.0" prefHeight="32.0" prefWidth="66.0" />
+        <TextArea layoutX="893.0" layoutY="209.0" prefHeight="74.0" prefWidth="174.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="49.0" layoutX="1227.0" layoutY="234.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="99.0" />
+        <Label alignment="CENTER" layoutX="1239.0" layoutY="241.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="donate" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="49.0" layoutX="1228.0" layoutY="173.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="99.0" />
+        <Label alignment="CENTER" layoutX="1238.0" layoutY="179.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="request" />
+
+    </children>
+
+</AnchorPane>

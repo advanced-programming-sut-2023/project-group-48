@@ -27,8 +27,8 @@ public class ShopMenuJFX extends Application implements MenuJFX {
     private AnchorPane shopMenuPane;
     private Controller controller;
     private ShopMenuController shopMenuController;
-    private Rectangle back, apply, buyButton, sellButton, reset, background;
-    private Label applyText, resetText, propertyTitle, stockTitle, buyTitle, sellTitle, priceTitle, shopTitle, stock, buyNumber, sellNumber, price;
+    private Rectangle back, apply, buyButton, sellButton, reset, background, tradeMenu;
+    private Label applyText, resetText, propertyTitle, stockTitle, buyTitle, sellTitle, priceTitle, shopTitle, stock, buyNumber, sellNumber, price, tradeMenuText;
     private ChoiceBox property;
     private Stage stage;
 
@@ -78,6 +78,10 @@ public class ShopMenuJFX extends Application implements MenuJFX {
         price = (Label) shopMenuPane.getChildren().get(18);
         setPrice();
 
+        tradeMenu = (Rectangle) shopMenuPane.getChildren().get(19);
+        tradeMenuText = (Label) shopMenuPane.getChildren().get(20);
+        setTradeMenuButton();
+
         adjustWithScene();
 
         Scene scene = new Scene(shopMenuPane);
@@ -90,6 +94,33 @@ public class ShopMenuJFX extends Application implements MenuJFX {
         });
         stage.show();
 
+    }
+
+    private void setTradeMenuButton() {
+        EventHandler clickHandler = new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                controller.enterTradeMenuJFX();
+                try {
+                    stop();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    controller.getGame().getCurrentMenuJFX().start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        tradeMenu.hoverProperty().addListener(event -> {
+            tradeMenu.setOpacity(1.5 - tradeMenu.getOpacity());
+        });
+        tradeMenuText.hoverProperty().addListener(event -> {
+            tradeMenu.setOpacity(1.5 - tradeMenu.getOpacity());
+        });
+        tradeMenu.setOnMouseClicked(clickHandler);
+        tradeMenuText.setOnMouseClicked(clickHandler);
     }
 
     private void setPrice() {

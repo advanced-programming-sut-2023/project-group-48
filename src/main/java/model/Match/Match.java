@@ -376,4 +376,8 @@ public class Match {
     public People getSultan(int index) {
         return sultans.get(index);
     }
+
+    public ArrayList<User> getPlayers(){
+        return players;
+    }
 }
