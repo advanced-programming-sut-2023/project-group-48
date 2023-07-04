@@ -21,10 +21,14 @@ public class Client {
     private static User user;
 
     public static ArrayList<Room> rooms = new ArrayList<>();
+
     public static ArrayList<GameRoom> gameRooms = new ArrayList<>();
+
+    public static ArrayList<GameRoom> gameRoomsAll = new ArrayList<>();
 
     public static ArrayList<User> friends = new ArrayList<>();
     public static ArrayList<User> friendRequests = new ArrayList<>();
+
 
     public static void startClient(String host, int port) throws IOException {
         System.out.println("Starting Client service...");
@@ -189,6 +193,17 @@ public class Client {
         }
     }
 
+    public void setFriendRequest(String username){
+        RequestOnline requestOnline = new RequestOnline();
+        requestOnline.setSendFriendRequest(user.getUsername(), username);
+        try {
+            dataOutputStream.writeUTF(new Gson().toJson(requestOnline));
+            System.out.println("Friend request sent!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void answerFriendRequest(String username, boolean answer){
         for (User friend : friends) {
             if(friend.getUsername().equals(username)){
@@ -232,9 +247,9 @@ public class Client {
         }
     }
 
-    public static void makeGameRoom(){
+    public static void makeGameRoom(int maxPlayers){
         RequestOnline requestOnline = new RequestOnline();
-        requestOnline.makeGameRoom(user.getUsername(), user.getUsername() + gameRooms.size());
+        requestOnline.makeGameRoom(user.getUsername(), user.getUsername() + gameRooms.size(), maxPlayers);
         try {
             dataOutputStream.writeUTF(new Gson().toJson(requestOnline));
             System.out.println("Game Room made!");
@@ -242,6 +257,28 @@ public class Client {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static void getAllGameRooms(){
+        RequestOnline requestOnline = new RequestOnline();
+        requestOnline.getAllGameRooms();
+        try {
+            dataOutputStream.writeUTF(new Gson().toJson(requestOnline));
+            System.out.println("Game Room made!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void joinGameRoom(String roomID){
+        RequestOnline requestOnline = new RequestOnline();
+        requestOnline.getJoinGameRoom(roomID);
+        try {
+            dataOutputStream.writeUTF(new Gson().toJson(requestOnline));
+            System.out.println("Game Room made!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

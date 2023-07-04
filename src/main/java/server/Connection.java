@@ -136,7 +136,13 @@ public class Connection extends Thread{
                     sendFriendRequest(request.username, request.username2);
                 }
                 if(request.makeGameRoom){
-                    startGame(request.username,request.roomId);
+                    startGame(request.username,request.roomId, request.maxPlayers);
+                }
+                if(request.getAllGameRooms){
+                    getAllGameRooms();
+                }
+                if(request.getJoinGameRoom){
+                    gameJoinRequest(request.roomId);
                 }
 
             } catch (IOException e) {
@@ -278,6 +284,36 @@ public class Connection extends Thread{
         Server.updateRoomsJsonFile();
     }
 
+    public void makeRoom2(String roomId, String username,int maxPlayers){
+        for (Room room : Server.rooms) {
+            if(room.roomID.equals(roomId)){
+                room.users.add(username);
+                return;
+            }
+        }
+        Room room = new Room();
+        room.roomID = roomId;
+        room.users.add(username);
+        room.isForGame = true;
+        room.maxPlayers = maxPlayers;
+        Server.rooms.add(room);
+
+        for (Connection connection : Server.connections) {
+            if(connection.user.getUsername().equals(username)){
+                RequestOnline request = new RequestOnline();
+                request.setJoinRoom(room);
+                String json = new Gson().toJson(request);
+                try {
+                    connection.dataOutputStream.writeUTF(json);
+                } catch (IOException e) {
+                    System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        Server.updateRoomsJsonFile();
+    }
+
 
 
     public void updateRoom(Room room){
@@ -298,6 +334,23 @@ public class Connection extends Thread{
         }
     }
 
+    public void updateGameRoom(GameRoom gameRoom){
+        for (Connection connection : Server.connections) {
+            for (String username : gameRoom.users) {
+                if(connection.user.getUsername().equals(username)){
+                    RequestOnline request = new RequestOnline();
+                    request.setUpdateGameRoom(gameRoom);
+                    String json = new Gson().toJson(request);
+                    try {
+                        connection.dataOutputStream.writeUTF(json);
+                    } catch (IOException e) {
+                        System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }
+    }
 
     public void editMessage(String roomId, TextMessage message, String editedMessage) {
         Room room = Server.getRoomByID(roomId);
@@ -388,11 +441,62 @@ public class Connection extends Thread{
         }
     }
 
-    public void startGame(String username, String roomId){
+    public void startGame(String username, String roomId, int maxPlayers){
+        makeRoom2(roomId, username, maxPlayers);
+        for (GameRoom gameRoom : Server.gameRooms) {
+            if(gameRoom.roomID.equals(roomId)) {
+                gameRoom.users.add(username);
+                updateGameRoom(gameRoom);
+                return;
+            }
+        }
         GameRoom gameRoom = new GameRoom();
         gameRoom.roomID = roomId;
-        gameRoom.users = Server.getRoomByID(roomId).users;
+        gameRoom.users.add(username);
         Server.gameRooms.add(gameRoom);
+
+        for (Connection connection : Server.connections) {
+            if(connection.user.getUsername().equals(username)){
+                RequestOnline request = new RequestOnline();
+                request.setJoinGameRoom(gameRoom);
+                String json = new Gson().toJson(request);
+                try {
+                    connection.dataOutputStream.writeUTF(json);
+                } catch (IOException e) {
+                    System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        Server.updateGameRoomsJsonFile();
+    }
+    public void getAllGameRooms(){
+        RequestOnline request = new RequestOnline();
+        request.setAllGameRooms(Server.gameRooms);
+        String json = new Gson().toJson(request);
+        try {
+            dataOutputStream.writeUTF(json);
+        } catch (IOException e) {
+            System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void gameJoinRequest(String roomId){
+        for (GameRoom gameRoom : Server.gameRooms) {
+            if(gameRoom.roomID.equals(roomId)) {
+                gameRoom.users.add(user.getUsername());
+                RequestOnline request = new RequestOnline();
+                request.setJoinGameRoom(gameRoom);
+                String json = new Gson().toJson(request);
+                try {
+                    dataOutputStream.writeUTF(json);
+                } catch (IOException e) {
+                    System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
 

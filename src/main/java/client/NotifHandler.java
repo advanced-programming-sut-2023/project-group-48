@@ -40,6 +40,9 @@ public class NotifHandler extends Thread{
                 if(request.joinRoom) {
                     Client.rooms.add(request.room);
                 }
+                if(request.joinGameRoom) {
+                    Client.gameRooms.add(request.gameRoom);
+                }
                 if(request.updateRoom){
                     for (Room room : Client.rooms) {
                         if(room.roomID.equals(request.room.roomID)) {
@@ -49,8 +52,20 @@ public class NotifHandler extends Thread{
                         }
                     }
                 }
+                if(request.updateGameRoom){
+                    for (GameRoom gameRoom : Client.gameRooms) {
+                        if(gameRoom.roomID.equals(request.gameRoom.roomID)) {
+                            gameRoom = request.gameRoom;
+                            gameRoom.shouldUpdate = true;
+                            break;
+                        }
+                    }
+                }
                 if(request.getAllRoomsAnswer){
                     Client.rooms = request.rooms;
+                }
+                if(request.setAllGameRooms){
+                    Client.gameRooms = request.gameRooms;
                 }
                 if(request.receiveFriendRequest){
                     Client.friendRequests.add(request.user);

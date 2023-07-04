@@ -11,6 +11,9 @@ public class Room {
 
     public boolean shouldUpdate = false;
 
+    public boolean isForGame = false;
+
+    public int maxPlayers = 0;
 
 
 

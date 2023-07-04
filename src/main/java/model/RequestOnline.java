@@ -14,8 +14,11 @@ public class RequestOnline {
     public boolean makeRoom = false;
 
     public boolean joinRoom = false;
+    public boolean joinGameRoom = false;
 
     public boolean updateRoom = false;
+
+    public boolean updateGameRoom = false;
 
     public boolean editMessage = false;
 
@@ -37,6 +40,12 @@ public class RequestOnline {
 
     public boolean makeGameRoom = false;
 
+    public boolean getAllGameRooms = false;
+
+    public boolean setAllGameRooms = false;
+
+    public boolean getJoinGameRoom = false;
+
     public String username = "";
     public String username2 = "";
 
@@ -46,9 +55,15 @@ public class RequestOnline {
     public String roomId = "";
     public Room room;
 
+    public int maxPlayers = 0;
+
+    public GameRoom gameRoom;
+
     public User user;
 
     public ArrayList<Room> rooms = new ArrayList<>();
+
+    public ArrayList<GameRoom> gameRooms = new ArrayList<>();
 
 
     public int reaction = 0;
@@ -102,6 +117,11 @@ public class RequestOnline {
         this.room = room;
     }
 
+    public void setUpdateGameRoom(GameRoom gameRoom){
+        updateRoom = true;
+        this.gameRoom = gameRoom;
+    }
+
     public void setEditMessage(TextMessage message, String editedMessage ,String roomId) {
     	this.message = message;
         this.editedMessage = editedMessage;
@@ -152,11 +172,31 @@ public class RequestOnline {
         receiveFriendRequest = true;
     }
 
-    public void makeGameRoom(String username, String roomId){
+    public void makeGameRoom(String username, String roomId, int maxPlayers){
     	makeGameRoom = true;
         this.username = username;
         this.roomId = roomId;
+        this.maxPlayers = maxPlayers;
     }
+
+    public void setJoinGameRoom(GameRoom gameRoom) {
+        joinGameRoom = true;
+        this.gameRoom = gameRoom;
+    }
+    public void getJoinGameRoom(String gameRoomName) {
+        getJoinGameRoom = true;
+        this.roomId = gameRoomName;
+    }
+
+    public void getAllGameRooms(){
+        getAllGameRooms = true;
+    }
+
+    public void setAllGameRooms(ArrayList<GameRoom> gameRooms){
+        setAllGameRooms = true;
+        this.gameRooms = gameRooms;
+    }
+
 
 
 }

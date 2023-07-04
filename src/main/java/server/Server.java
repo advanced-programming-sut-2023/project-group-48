@@ -26,7 +26,7 @@ public class Server {
         room.roomID = "0";
         rooms.add(room);
     }
-    public Server(int mainPort){
+    public static void setServer(int mainPort){
         try {
             ServerSocket serverSocket = new ServerSocket(mainPort);
             while (true){
@@ -63,6 +63,26 @@ public class Server {
         try {
             FileReader fileReader = new FileReader("AllRooms.json");
             Server.rooms = new Gson().fromJson(fileReader, new TypeToken<ArrayList<Room>>(){}.getType());
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateGameRoomsJsonFile(){
+        try {
+            FileWriter fileWriter = new FileWriter("AllGameRooms.json");
+            fileWriter.write(new Gson().toJson(Server.gameRooms));
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getGameRoomsJsonFile(){
+        try {
+            FileReader fileReader = new FileReader("AllGameRooms.json");
+            Server.gameRooms = new Gson().fromJson(fileReader, new TypeToken<ArrayList<GameRoom>>(){}.getType());
             fileReader.close();
         } catch (IOException e) {
             e.printStackTrace();
