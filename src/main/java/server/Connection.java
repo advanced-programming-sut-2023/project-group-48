@@ -3,10 +3,7 @@ package server;
 import client.SessionTokenPacket;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import controller.Controller;
-import model.RequestOnline;
-import model.SavableMap;
-import model.User;
+import model.*;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.*;
@@ -18,11 +15,11 @@ public class Connection extends Thread{
     final DataInputStream dataInputStream;
     final DataOutputStream dataOutputStream;
 
-    public static ArrayList<User> onlineUsers = new ArrayList<>();
+
     public static ArrayList<String> tokens = new ArrayList<>();
     private User user ;
     private SessionTokenPacket sessionTokenPacket;
-    Controller controller;
+
     boolean successfullyIntroduced = false;
 
     RequestOnline request;
@@ -43,27 +40,40 @@ public class Connection extends Thread{
             intro = dataInputStream.readUTF();
 
             if(intro.equals("json")){
-                ArrayList<User> users =controller.getGame().getUsers();
                 ArrayList<User> newUsers = new ArrayList<>();
                 newUsers = new Gson().fromJson(dataInputStream.readUTF(), new TypeToken<ArrayList<User>>(){}.getType());
                 for (User newUser : newUsers) {
-                    if(controller.getGame().getUserByUsername(newUser.getUsername()) == null){
-                        users.add(newUser);
+                    if(Server.getUserByUsername(newUser.getUsername()) == null){
+                        Server.onlineUsers.add(newUser);
                     }
                 }
-                dataOutputStream.writeUTF(new Gson().toJson(users));
-                controller.getGame().setUsers(users);
+                Server.updateAllUsersJsonFile();
+                dataOutputStream.writeUTF(new Gson().toJson(Server.onlineUsers));
                 System.out.println("Users File Updated!");
                 return;
             }
 
             sessionTokenPacket = new Gson().fromJson(intro, SessionTokenPacket.class);
             user = sessionTokenPacket.getUser();
-            if(controller.getGame().getUserByUsername(user.getUsername()) != null){
-                user = controller.getGame().getUserByUsername(user.getUsername());
+            for (User onlineUser : Server.onlineUsers) {
+                if(onlineUser.getUsername().equals(user.getUsername())){
+                    if(DigestUtils.sha256Hex(user.getUsername()+user.getEncryptedPassword()).equals(sessionTokenPacket.getToken())) {
+                        user = onlineUser;
+                        dataOutputStream.writeUTF("success");
+                        setLastSeenOnline();
+                        return;
+                    }else{
+                        dataOutputStream.writeUTF("fail");
+                        return;
+                    }
+                }
+            }
+            if(Server.getUserByUsername(user.getUsername()) != null){
+                user = Server.getUserByUsername(user.getUsername());
                 if(DigestUtils.sha256Hex(user.getUsername()+user.getEncryptedPassword()).equals(sessionTokenPacket.getToken())){
                     dataOutputStream.writeUTF("success");
-                    onlineUsers.add(user);
+                    Server.onlineUsers.add(user);
+                    setLastSeenOnline();
                     tokens.add(sessionTokenPacket.getToken());
                     successfullyIntroduced = true;
                 }else{
@@ -96,26 +106,84 @@ public class Connection extends Thread{
                 }
                 if(request.sendMap){
                     deliverMap(user.getUsername(), request.username, request.map);
+                    return;
                 }
+                if(request.sendMessage){
+                    deliverMessage(request.roomId, request.message);
+                }
+                if(request.makeRoom){
+                    makeRoom(request.roomId, request.username);
+                }
+                if(request.editMessage){
+                    editMessage(request.roomId, request.message, request.editedMessage);
+                }
+                if(request.deleteMessage){
+                    deleteMessage(request.roomId, request.message);
+                }
+                if(request.seenMessage){
+                    seenMessage(request.roomId);
+                }
+                if(request.reactedMessage){
+                    reactedMessage(request.roomId, request.message, request.reaction);
+                }
+                if(request.getAllRooms){
+                    getAllRooms();
+                }
+                if(request.updateUser){
+                    updateUser(request.user);
+                }
+                if(request.sendFriendRequest){
 
+                }
 
             } catch (IOException e) {
                 System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+                setLastSeenOffline();
                 throw new RuntimeException(e);
             }
         }
     }
 
 
+
     public void logout() {
         try {
             Server.connections.remove(this);
             socket.close();
-            onlineUsers.remove(user);
+            setLastSeenOffline();
             tokens.remove(sessionTokenPacket.getToken());
+            setLastSeenOffline();
         } catch (IOException e) {
             System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
             throw new RuntimeException(e);
+        }
+    }
+
+    public void setLastSeenOffline(){
+        for (User onlineUser : Server.onlineUsers) {
+            if(onlineUser.getUsername().equals(user.getUsername())){
+                onlineUser.lastSeen = java.time.LocalTime.now().toString().substring(0,5);
+                updateAllRooms();
+            }
+        }
+    }
+
+    public void setLastSeenOnline(){
+        for (User onlineUser : Server.onlineUsers) {
+            if(onlineUser.getUsername().equals(user.getUsername())){
+                onlineUser.lastSeen = "online";
+                updateAllRooms();
+            }
+        }
+    }
+
+    public void updateAllRooms(){
+        for (Room room : Server.rooms) {
+            for (String user : room.users) {
+                if(user.equals(this.user.getUsername())){
+                    updateRoom(room);
+                }
+            }
         }
     }
 
@@ -135,6 +203,172 @@ public class Connection extends Thread{
             }
         }
     }
+
+
+    public void deliverMessage(String roomId, TextMessage message){
+        Room room = Server.getRoomByID(roomId);
+        if(room == null){
+            return;
+        }
+        if(room.roomID.equals("0")){
+            room.messages.add(message);
+//            RequestOnline request = new RequestOnline();
+//            request.setReceiveMessage(message, roomId);
+//            String json = new Gson().toJson(request);
+//            for (Connection connection : Server.connections) {
+//                try {
+//                    connection.dataOutputStream.writeUTF(json);
+//                } catch (IOException e) {
+//                    System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+//                    throw new RuntimeException(e);
+//                }
+//            }
+            updateRoom(room);
+            return;
+        }else{
+            for (String username : room.users) {
+                for (Connection connection : Server.connections) {
+                    if(connection.user.getUsername().equals(username)){
+                        room.messages.add(message);
+//                        RequestOnline request = new RequestOnline();
+//                        request.setReceiveMessage(message, roomId);
+//                        String json = new Gson().toJson(request);
+//                        try {
+//                            connection.dataOutputStream.writeUTF(json);
+//                        } catch (IOException e) {
+//                            System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+//                            throw new RuntimeException(e);
+//                        }
+                        updateRoom(room);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    public void makeRoom(String roomId, String username){
+        for (Room room : Server.rooms) {
+            if(room.roomID.equals(roomId)){
+                room.users.add(username);
+                return;
+            }
+        }
+        Room room = new Room();
+        room.roomID = roomId;
+        room.users.add(username);
+        Server.rooms.add(room);
+
+        for (Connection connection : Server.connections) {
+            if(connection.user.getUsername().equals(username)){
+                RequestOnline request = new RequestOnline();
+                request.setJoinRoom(room);
+                String json = new Gson().toJson(request);
+                try {
+                    connection.dataOutputStream.writeUTF(json);
+                } catch (IOException e) {
+                    System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        Server.updateRoomsJsonFile();
+    }
+
+
+
+    public void updateRoom(Room room){
+        for (Connection connection : Server.connections) {
+            for (String username : room.users) {
+                if(connection.user.getUsername().equals(username)){
+                    RequestOnline request = new RequestOnline();
+                    request.setUpdateRoom(room);
+                    String json = new Gson().toJson(request);
+                    try {
+                        connection.dataOutputStream.writeUTF(json);
+                    } catch (IOException e) {
+                        System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void editMessage(String roomId, TextMessage message, String editedMessage) {
+        Room room = Server.getRoomByID(roomId);
+        if(room == null){
+            return;
+        }
+        for (TextMessage textMessage : room.messages) {
+            if(textMessage.message.equals(message.message) && textMessage.sentTime.equals(message.sentTime) && textMessage.username.equals(message.username)) {
+                textMessage.message = editedMessage;
+                updateRoom(room);
+                return;
+            }
+        }
+    }
+
+    public void deleteMessage(String roomId, TextMessage message) {
+        Room room = Server.getRoomByID(roomId);
+        if(room == null){
+            return;
+        }
+        for (TextMessage textMessage : room.messages) {
+            if(textMessage.message.equals(message.message) && textMessage.sentTime.equals(message.sentTime) && textMessage.username.equals(message.username)) {
+                room.messages.remove(textMessage);
+                updateRoom(room);
+                return;
+            }
+        }
+    }
+
+    public void seenMessage(String roomId){
+        Room room = Server.getRoomByID(roomId);
+        if(room == null){
+            return;
+        }
+        for (TextMessage message : room.messages) {
+            message.seen = true;
+        }
+        updateRoom(room);
+        return;
+    }
+
+
+    public void reactedMessage(String roomId, TextMessage message, int reaction) {
+        Room room = Server.getRoomByID(roomId);
+        if(room == null){
+            return;
+        }
+        for (TextMessage textMessage : room.messages) {
+            if(textMessage.message.equals(message.message) && textMessage.sentTime.equals(message.sentTime) && textMessage.username.equals(message.username)) {
+                textMessage.reaction = reaction;
+                updateRoom(room);
+                return;
+            }
+        }
+    }
+
+
+    public void getAllRooms(){
+        RequestOnline request = new RequestOnline();
+        request.getAllRoomsAnswer(Server.rooms);
+        String json = new Gson().toJson(request);
+        try {
+            dataOutputStream.writeUTF(json);
+        } catch (IOException e) {
+            System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateUser(User user){
+        this.user = user;
+        updateAllRooms();
+    }
+
 
 
 }

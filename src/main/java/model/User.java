@@ -22,6 +22,8 @@ public class User {
     private Governance governance;
     private String avatarUrl;
 
+    public String lastSeen = "";
+
     static {
         questions.add("What is your favorite food?");
         questions.add("What is your best friend's name?");
