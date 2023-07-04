@@ -3,10 +3,7 @@ package model;
 import model.Buildings.Building;
 import model.Buildings.BuildingType;
 import model.Buildings.IndustrialCenter;
-import model.Match.Direction;
-import model.Match.Governance;
-import model.Match.Match;
-import model.Match.Property;
+import model.Match.*;
 import model.People.People;
 import model.People.State;
 import model.People.Troop;
@@ -125,8 +122,21 @@ public class TurnManager {
             int column = troop.getColumn();
             for (Building target : match.getNearByEnemyBuildings(troop, row, column, troop.getFireRange())) {
                 troop.attackBuilding(target);
-                if (target.getHp() <= 0) {
+                if (target.getHp() <= 0 && !destroyedBuildings.contains(target))
                     destroyedBuildings.add(target);
+            }
+        }
+        for (Governance governance : match.getGovernances()) {
+            for (Building building : governance.getBuildings()) {
+                if (building.isOnFire() && building.getOnFireRounds() < 3) {
+                    building.setHp(building.getHp() - 5);
+                    if (building.getHp() <= 0 && !destroyedBuildings.contains(building))
+                        destroyedBuildings.add(building);
+                    building.setOnFireRounds(building.getOnFireRounds() + 1);
+                }
+                else if (building.getOnFireRounds() == 3) {
+                    building.setOnFireRounds(0);
+                    building.setOnFire(false);
                 }
             }
         }
@@ -144,6 +154,22 @@ public class TurnManager {
         for (Governance governance : match.getGovernances()) {
             governance.updatePopularity();
             governance.updatePopulation();
+        }
+        ArrayList<Governance> checkedGovernances = new ArrayList<>();
+        for (Governance governance : match.getGovernances()) {
+            People sultan = match.getSultan(match.getGovernances().indexOf(governance));
+            Cell cell = match.getCell(sultan.getRow(), sultan.getColumn());
+            for (People person : cell.getPeople()) {
+                person.setSick(false);
+                match.getMatchMenuController().isCured(person);
+            }
+        }
+        for (Troop troop : match.getAllTroops()) {
+            if (troop.isSick() && !checkedGovernances.contains(troop.getGovernance())) {
+                match.getMatchMenuController().isSick(troop);
+                troop.getGovernance().reducePopularityBySickness();
+                checkedGovernances.add(troop.getGovernance());
+            }
         }
     }
 

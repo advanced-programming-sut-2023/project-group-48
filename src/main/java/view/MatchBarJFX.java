@@ -3,6 +3,7 @@ package view;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -25,7 +26,9 @@ public class MatchBarJFX {
     private ArrayList<AnchorPane> buildingAnchorPanes, peopleAnchorPanes;
     private double selectBarWidth, selectBarHeight, selectBarX, selectBarY;
     private ImagePattern selectedBuildingImagePattern, selectedPeopleImagePattern;
-    private AnchorPane currentPane;
+    private AnchorPane currentPane, clipBoard;
+    private BuildingShape clipBoardBuildingShape;
+    private Label scribePanel;
 
     public MatchBarJFX(MatchMenuJFX matchMenuJFX, AnchorPane viewPane) {
         this.matchMenuJFX = matchMenuJFX;
@@ -42,7 +45,48 @@ public class MatchBarJFX {
         setStoragePane();
         setTrapPane();
         setPeoplePanes();
+        setClipBoard();
+        setScribePanel();
         buildingAnchorPanes = new ArrayList<>(Arrays.asList(normalBuildingsPane, gateHousePane, industrialCenterPane1, recruitmentCenterPane, storagePane, trapPane));
+    }
+
+    private void setScribePanel() {
+        scribePanel = new Label();
+        scribePanel.setLayoutX(500);
+        scribePanel.setLayoutY(20);
+        scribePanel.setPrefWidth(100);
+        scribePanel.setPrefHeight(50);
+        refreshScribePanel();
+    }
+
+    private void refreshScribePanel() {
+        scribePanel.setText(matchMenuJFX.getMatchMenuController().showMyInfo());
+    }
+
+    private void setClipBoard() {
+        clipBoard = new AnchorPane();
+        clipBoard.setPrefWidth(200);
+        clipBoard.setPrefHeight(200);
+        clipBoard.setLayoutX(mainBarPane.getPrefWidth() / 2 - clipBoard.getPrefWidth() / 2);
+        clipBoard.setLayoutY(mainBarPane.getPrefHeight() / 2 - clipBoard.getPrefHeight() / 2);
+        clipBoardBuildingShape = new BuildingShape(50, 50, null);
+        clipBoard.getChildren().add(clipBoardBuildingShape);
+        clipBoardBuildingShape.setLayoutX(mainBarPane.getPrefWidth() / 2 - clipBoardBuildingShape.getWidth() / 2);
+        clipBoardBuildingShape.setLayoutY(mainBarPane.getPrefHeight() / 2 - clipBoardBuildingShape.getHeight() / 2);
+    }
+
+    public void addToClipBoard(BuildingShape buildingShape) {
+        clipBoardBuildingShape.setFill(buildingShape.getFill());
+        clipBoardBuildingShape.setWidth(buildingShape.getWidth());
+        clipBoardBuildingShape.setHeight(buildingShape.getHeight());
+        clipBoardBuildingShape.setLayoutX(mainBarPane.getPrefWidth() / 2 - clipBoardBuildingShape.getWidth() / 2);
+        clipBoardBuildingShape.setLayoutY(mainBarPane.getPrefHeight() / 2 - clipBoardBuildingShape.getHeight() / 2);
+        clipBoardBuildingShape.setVisible(true);
+        selectedBuildingImagePattern = (ImagePattern) buildingShape.getFill();
+    }
+
+    private void removeFromClipBoar() {
+        clipBoardBuildingShape.setVisible(false);
     }
 
     private void addClickableToRectangle(AnchorPane pane, ImagePattern... imagePatterns) {
@@ -82,7 +126,10 @@ public class MatchBarJFX {
             rectangles.get(i).setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    if (!peopleAnchorPanes.contains(currentPane)) selectedBuildingImagePattern = imagePatterns[finalI];
+                    if (!peopleAnchorPanes.contains(currentPane)) {
+                        selectedBuildingImagePattern = imagePatterns[finalI];
+                        removeFromClipBoar();
+                    }
                     else selectedPeopleImagePattern = imagePatterns[finalI];
                 }
             });
@@ -332,5 +379,9 @@ public class MatchBarJFX {
     public void deselect() {
         selectedBuildingImagePattern = null;
         selectedPeopleImagePattern = null;
+    }
+
+    public AnchorPane getMainBarPane() {
+        return mainBarPane;
     }
 }

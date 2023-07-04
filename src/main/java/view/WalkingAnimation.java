@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class WalkingAnimation extends Transition {
     private static final double TILE_DISTANCE = Math.sqrt(Math.pow(Tile.WIDTH, 2) + Math.pow(Tile.HEIGHT, 2));
     private final Match match;
-    private final People people;
+    private final PeopleShape peopleShape;
     private final MapJFX mapJFX;
     private final int imagesCount;
     private ArrayList<ImagePattern> moves;
@@ -22,41 +22,41 @@ public class WalkingAnimation extends Transition {
     private int lastPathSize, indexOfCurrentImage;
     private Tile targetTile;
 
-    public WalkingAnimation(Match match, People people, MapJFX mapJFX) {
+    public WalkingAnimation(Match match, PeopleShape peopleShape, MapJFX mapJFX) {
         this.match = match;
-        this.people = people;
+        this.peopleShape = peopleShape;
         this.mapJFX = mapJFX;
         this.imagesCount = PeopleType.WALKIG_IMAGE_COUNT;
         setCycleDuration(Duration.millis((double) 1000 / imagesCount));
-        setCycleCount(people.getPath().size() * imagesCount);
+        setCycleCount(peopleShape.getPeople().getPath().size() * imagesCount);
     }
 
     @Override
     protected void interpolate(double v) {
-        if (people.getPath().size() != lastPathSize) {
+        if (peopleShape.getPeople().getPath().size() != lastPathSize) {
             targetTile = getTargetTile();
-            moves = PeopleType.getMovingImages(people.getType(), match.getGovernances().indexOf(people.getGovernance()) + 1, getDirectionNumber());
+            moves = PeopleType.getMovingImages(peopleShape.getPeople().getType(), match.getGovernances().indexOf(peopleShape.getPeople().getGovernance()) + 1, getDirectionNumber());
             indexOfCurrentImage = 0;
-            lastPathSize = people.getPath().size();
+            lastPathSize = peopleShape.getPeople().getPath().size();
         }
 
-        double x = people.getRectangle().getX() + (targetTile.getX() - people.getCurrentTile().getX()) / imagesCount;
-        double y = people.getRectangle().getY() + (targetTile.getY() - people.getCurrentTile().getY()) / imagesCount;
+        double x = peopleShape.getX() + (targetTile.getX() - peopleShape.getCurrentTile().getX()) / imagesCount;
+        double y = peopleShape.getY() + (targetTile.getY() - peopleShape.getCurrentTile().getY()) / imagesCount;
         currentImagePattern = moves.get(indexOfCurrentImage);
 
-        people.getRectangle().setX(x);
-        people.getRectangle().setY(y);
-        people.getRectangle().setFill(currentImagePattern);
+        peopleShape.setX(x);
+        peopleShape.setY(y);
+        peopleShape.setFill(currentImagePattern);
 
-        if (people.getRectangle().getX() == targetTile.getX() - people.getRectangle().getWidth() / 2) {
-            people.getPath().remove(0);
-            people.setCurrentTile(targetTile);
+        if (peopleShape.getX() == targetTile.getX() - peopleShape.getWidth() / 2) {
+            peopleShape.getPeople().getPath().remove(0);
+            peopleShape.setCurrentTile(targetTile);
             // TODO set people row and column
         }
     }
 
     private int getDirectionNumber() {
-        switch (people.getPath().get(0)) {
+        switch (peopleShape.getPeople().getPath().get(0)) {
             case UP:
                 return 1;
             case RIGHT:
@@ -71,20 +71,20 @@ public class WalkingAnimation extends Transition {
     }
 
     private Tile getTargetTile() {
-        Direction direction = people.getPath().get(0);
+        Direction direction = peopleShape.getPeople().getPath().get(0);
         int[] coordinates;
         switch (direction) {
             case UP:
-                coordinates = mapJFX.getCoordinates(people.getRow() + 1, people.getColumn());
+                coordinates = mapJFX.getCoordinates(peopleShape.getPeople().getRow() + 1, peopleShape.getPeople().getColumn());
                 return mapJFX.getTile(coordinates[0] + 1, coordinates[1]);
             case DOWN:
-                coordinates = mapJFX.getCoordinates(people.getRow() - 1, people.getColumn());
+                coordinates = mapJFX.getCoordinates(peopleShape.getPeople().getRow() - 1, peopleShape.getPeople().getColumn());
                 return mapJFX.getTile(coordinates[0] - 1, coordinates[1]);
             case LEFT:
-                coordinates = mapJFX.getCoordinates(people.getRow(), people.getColumn() - 1);
+                coordinates = mapJFX.getCoordinates(peopleShape.getPeople().getRow(), peopleShape.getPeople().getColumn() - 1);
                 return mapJFX.getTile(coordinates[0], coordinates[1] - 1);
             case RIGHT:
-                coordinates = mapJFX.getCoordinates(people.getRow(), people.getColumn() + 1);
+                coordinates = mapJFX.getCoordinates(peopleShape.getPeople().getRow(), peopleShape.getPeople().getColumn() + 1);
                 return mapJFX.getTile(coordinates[0], coordinates[1] + 1);
             default:
                 return null;

@@ -40,7 +40,7 @@ public class Controller {
         mainMenuJFX.setMainMenuController(new MainMenuController(this));
         this.matchMenuJFX = new MatchMenuJFX();
         matchMenuJFX.setController(this);
-        matchMenuJFX.setMatchMenuController(new MatchMenuController(this));
+        matchMenuJFX.setMatchMenuController(new MatchMenuController(this, matchMenuJFX));
         matchMenuJFX.setMapMenuController(new MapMenuController(this));
         this.profileMenuJFX = new ProfileMenuJFX();
         profileMenuJFX.setController(this);
@@ -159,5 +159,12 @@ public class Controller {
     }
 
     public void setMatch(Match match) {
+    }
+
+    public MatchMenuController getMatchMenuController() {
+        return matchMenuJFX.getMatchMenuController();
+    }
+
+    public void enterOnlineMenuJFX() {
     }
 }

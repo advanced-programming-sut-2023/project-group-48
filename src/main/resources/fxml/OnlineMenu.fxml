@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.OnlineMenuJFX">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" layoutX="500.0" layoutY="150.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" />
+      <Label alignment="CENTER" layoutX="600.0" layoutY="170.0" prefHeight="40.0" prefWidth="200.0" text="Chat" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" layoutX="500.0" layoutY="230.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" />
+      <Label alignment="CENTER" layoutX="600.0" layoutY="250.0" prefHeight="40.0" prefWidth="200.0" text="Map" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" layoutX="500.0" layoutY="310.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" />
+      <Label alignment="CENTER" layoutX="600.0" layoutY="330.0" prefHeight="40.0" prefWidth="200.0" text="Friend" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" layoutX="500.0" layoutY="390.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" />
+      <Label alignment="CENTER" layoutX="600.0" layoutY="410.0" prefHeight="40.0" prefWidth="200.0" text="ScoreBoard" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" layoutX="500.0" layoutY="470.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" />
+      <Label alignment="CENTER" layoutX="600.0" layoutY="490.0" prefHeight="40.0" prefWidth="200.0" text="Online Game" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

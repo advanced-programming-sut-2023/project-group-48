@@ -334,23 +334,18 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
             @Override
             public void handle(DragEvent dragEvent) {
                 if (dragEvent.getDragboard().hasFiles()) {
-                    dragEvent.acceptTransferModes(TransferMode.ANY);
+                    dragEvent.acceptTransferModes(TransferMode.COPY);
                 }
             }
         });
         avatarImageView.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
-                ArrayList<File> files = (ArrayList<File>) dragEvent.getDragboard().getFiles();
-                try {
-                    Image image = new Image(new FileInputStream(files.get(0)));
-                    avatarImageView.setImage(image);
-                    selectedProfilePicture.setStroke(Color.BLACK);
-                    selectedProfilePicture = new Avatar(currentProfilePane.getPrefWidth() / 2,
-                            currentProfilePane.getPrefHeight() / 2, new ImagePattern(image));
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                Image image = new Image(dragEvent.getDragboard().getFiles().get(0).getPath());
+                avatarImageView.setImage(image);
+                selectedProfilePicture.setStroke(Color.BLACK);
+                selectedProfilePicture = new Avatar(currentProfilePane.getPrefWidth() / 2,
+                        currentProfilePane.getPrefHeight() / 2, new ImagePattern(image));
             }
         });
         changeProfilePictureButton.setOnMouseClicked(event -> {

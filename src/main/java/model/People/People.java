@@ -4,7 +4,6 @@ import javafx.scene.shape.Rectangle;
 import model.Match.Direction;
 import model.Match.Governance;
 import model.Match.LandType;
-import view.Tile;
 
 import java.util.ArrayList;
 
@@ -16,9 +15,7 @@ public abstract class People {
     private final PeopleType peopleType;
     private int hp;
     private ArrayList<Direction> path;
-    private final Rectangle rectangle;
-    private Tile currentTile;
-
+    private boolean isSick;
     public People(Governance governance, int row, int column, String type, PeopleType peopleType) {
         this.governance = governance;
         this.row = row;
@@ -27,7 +24,6 @@ public abstract class People {
         this.peopleType = PeopleType.getPersonType(type);
         this.hp = PeopleType.getPeopleHp(type);
         this.path = null;
-        this.rectangle = new Rectangle();
     }
 
     public static People createPeopleByType(Governance governance, int row, int column, String type, PeopleType peopleType) {
@@ -94,15 +90,11 @@ public abstract class People {
         this.path = path;
     }
 
-    public Rectangle getRectangle() {
-        return rectangle;
+    public boolean isSick() {
+        return isSick;
     }
 
-    public Tile getCurrentTile() {
-        return currentTile;
-    }
-
-    public void setCurrentTile(Tile currentTile) {
-        this.currentTile = currentTile;
+    public void setSick(boolean sick) {
+        isSick = sick;
     }
 }

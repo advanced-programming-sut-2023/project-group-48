@@ -5,6 +5,7 @@ import model.People.People;
 
 public class PeopleShape extends Rectangle {
     private final People people;
+    private Tile currentTile;
 
     public PeopleShape(double width, double height, People people) {
         super(width, height);
@@ -13,5 +14,13 @@ public class PeopleShape extends Rectangle {
 
     public People getPeople() {
         return people;
+    }
+
+    public Tile getCurrentTile() {
+        return currentTile;
+    }
+
+    public void setCurrentTile(Tile currentTile) {
+        this.currentTile = currentTile;
     }
 }

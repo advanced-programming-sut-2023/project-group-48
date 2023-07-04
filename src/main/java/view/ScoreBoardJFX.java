@@ -15,6 +15,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.Game;
 import model.User;
@@ -44,6 +46,7 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
 
         backButton = (Button) scoreBoardPane.getChildren().get(1);
         setBackButton();
+
         adjustWithScene();
         Scene scene = new Scene(scoreBoardPane);
         stage.setScene(scene);
@@ -63,38 +66,40 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
         anchorPane.setPrefHeight(Avatar.PROFILE_RADIUS * (1.5 * scoreBoard.size() + 1));
         for (int i = 0; i < scoreBoard.size(); i++) {
             User user = scoreBoard.get(i);
-            Avatar avatar = new Avatar((double) Avatar.PROFILE_RADIUS / 2, Avatar.PROFILE_RADIUS * (i + 1),
+            Avatar avatar = new Avatar(Avatar.PROFILE_RADIUS * 2, Avatar.PROFILE_RADIUS * (i * 3 + 2),
                     new ImagePattern(new Image(user.getAvatarUrl())));
             avatars.add(avatar);
-            Label usernameLabel = getLabel(Avatar.PROFILE_RADIUS * 3, Avatar.PROFILE_RADIUS * (i + 1),
+            Label usernameLabel = getLabel(Avatar.PROFILE_RADIUS * 4, Avatar.PROFILE_RADIUS * (i * 3 + 2),
                     user.getUsername());
-            Label highScoreLabel = getLabel(usernameLabel.getLayoutX() + usernameLabel.getPrefWidth() + Avatar.PROFILE_RADIUS * 3,
-                    Avatar.PROFILE_RADIUS * (i + 1), String.valueOf(user.getHighScore()));
+            Label highScoreLabel = getLabel(usernameLabel.getLayoutX() + usernameLabel.getPrefWidth() + Avatar.PROFILE_RADIUS,
+                    Avatar.PROFILE_RADIUS * (i * 3 + 2), String.valueOf(user.getHighScore()));
             anchorPane.getChildren().add(avatar);
             anchorPane.getChildren().add(usernameLabel);
             anchorPane.getChildren().add(highScoreLabel);
         }
         for (Avatar avatar : avatars) {
-            makeAvatarClickable(avatar, scoreBoard.get(avatars.indexOf(avatar)));
+            makeAvatarClickable(avatar);
         }
     }
 
-    private void makeAvatarClickable(Avatar avatar, User user) {
+    private void makeAvatarClickable(Avatar avatar) {
         avatar.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 profileMenuController.changeAvatar(avatar.getImagePattern());
-                avatars.get(scoreBoard.indexOf(user)).setImagePattern(avatar.getImagePattern());
+                avatars.get(scoreBoard.indexOf(profileMenuController.getCurrentUser())).setImagePattern(avatar.getImagePattern());
             }
         });
     }
 
     private Label getLabel(double x, int y, String value) {
         Label label = new Label(value);
+        label.setPrefWidth((scoreBoardScrollPane.getPrefWidth() - Avatar.PROFILE_RADIUS * 4) / 2);
+        label.setPrefHeight(Avatar.PROFILE_RADIUS * 2);
         label.setLayoutX(x);
-        label.setLayoutY(y);
-        label.setPrefWidth((scoreBoardScrollPane.getPrefWidth() - Avatar.PROFILE_RADIUS * 6) / 2);
-        label.setPrefHeight(Avatar.PROFILE_RADIUS);
+        label.setLayoutY(y - label.getPrefHeight() / 2);
+        label.setTextAlignment(TextAlignment.CENTER);
+        label.setFont(Font.font(18));
         return label;
     }
 
@@ -103,7 +108,7 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
-                    controller.enterScoreBoardJFX();
+                    controller.enterProfileMenuJFX();
                     stop();
                     controller.getGame().getCurrentMenuJFX().start(stage);
                 } catch (Exception e) {
@@ -132,7 +137,6 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
             else if (child instanceof Label)
                 Adjust.adjustLabel((Label) child, ratioX, ratioY);
         }
-        Adjust.adjustButton(backButton, ratioX, ratioY);
     }
 
     @Override

@@ -1,26 +1,24 @@
 package model.Match;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import controller.MatchMenuController;
 import model.*;
 import model.Buildings.Building;
 import model.Buildings.BuildingType;
-import model.Buildings.Inn;
+
 import model.Buildings.Storage;
 import model.People.People;
 import model.People.PeopleType;
 import model.People.Troop;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class Match {
+    private final MatchMenuController matchMenuController;
     private final int rounds;
     private int currentRound;
     private ArrayList<User> players;
     private final ArrayList<Governance> governances;
+    private final ArrayList<Troop> sultans;
     private Governance matchWinner;
     private User currentPlayer;
     private final Cell[][] map;
@@ -60,7 +58,8 @@ public class Match {
 
     }
 
-    public Match(int rounds, ArrayList<User> players, int mapNumber) {
+    public Match(MatchMenuController matchMenuController, int rounds, ArrayList<User> players, int mapNumber) {
+        this.matchMenuController = matchMenuController;
         this.rounds = rounds;
         this.currentRound = 1;
         this.players = players;
@@ -78,6 +77,7 @@ public class Match {
         this.matchWinner = null;
 
         this.governances = new ArrayList<>();
+        this.sultans = new ArrayList<>();
         for (User player : players) {
             Governance governance = new Governance(player);
             governances.add(governance);
@@ -85,7 +85,9 @@ public class Match {
             int row, column;
             row = BaseLocationRows.get(players.indexOf(player));
             column = BaseLocationColumns.get(players.indexOf(player));
-            allTroops.add(new Troop(governance, row, column, "Sultan", PeopleType.TROOP));
+            Troop sultan = new Troop(governance, row, column, "Sultan", PeopleType.TROOP);
+            allTroops.add(sultan);
+            sultans.add(sultan);
             getCell(row, column).addPeople(allTroops.get(allTroops.size() - 1));
             getCell(row, column).setAGovernmentBase(true);
             Building building = new Building(governance, row, column, "Base", BuildingType.NORMAL, null);
@@ -365,5 +367,13 @@ public class Match {
 
     public Cell[][] getMap() {
         return map;
+    }
+
+    public MatchMenuController getMatchMenuController() {
+        return matchMenuController;
+    }
+
+    public People getSultan(int index) {
+        return sultans.get(index);
     }
 }

@@ -62,4 +62,12 @@ public class MatchMenuJFX extends Application {
     public void setMapMenuController(MapMenuController mapMenuController) {
         this.mapMenuController = mapMenuController;
     }
+
+    public Scene getScene() {
+        return stage.getScene();
+    }
+
+    public MatchMenuController getMatchMenuController() {
+        return matchMenuController;
+    }
 }

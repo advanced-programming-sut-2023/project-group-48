@@ -31,5 +31,11 @@
             <Font size="24.0" />
          </font>
       </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3664a0" height="80.0" layoutX="930.0" layoutY="310.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="400.0" />
+      <Label alignment="CENTER" layoutX="1030.0" layoutY="330.0" prefHeight="40.0" prefWidth="200.0" text="Online" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

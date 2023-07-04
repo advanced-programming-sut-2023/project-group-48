@@ -8,6 +8,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -31,8 +32,8 @@ public class MapJFX {
     private final MatchMenuController matchMenuController;
     private final MatchMenuJFX matchMenuJFX;
     private final SetTextureJFX setTextureJFX;
-    private final AnchorPane viewPane, tileStatusPane;
-    private Label tileStatus;
+    private AnchorPane viewPane, tileStatusPane, peopleStatusPane;
+    private Label tileStatus, peopleStatus;
     private final Pane mapPane;
     private Tile[][] map;
     private ArrayList<Tile> cells;
@@ -41,6 +42,7 @@ public class MapJFX {
     private ArrayList<People> selectedPeople;
     private Tile selectedSingleTile;
     private BuildingShape selectedSingleBuilding;
+    private Rectangle miniMap;
     private final int MAP_SIZE = 200;
     private int firstI = MAP_SIZE * 2 - 2, lastI = 0, firstJ = MAP_SIZE - 1, lastJ = 0;
 
@@ -52,16 +54,45 @@ public class MapJFX {
         this.matchMenuJFX = matchMenuJFX;
         this.viewPane = viewPane;
         this.mapPane = new Pane();
-        this.tileStatusPane = new AnchorPane();
         setTileStatusProperties();
+        setPeopleStatusProperties();
         setMapPane();
         setMap();
         setCells();
         setSelectionArea();
+        setMiniMap();
         this.setTextureJFX = new SetTextureJFX(matchMenuController, viewPane, mapPane);
     }
 
+    private void setPeopleStatusProperties() {
+        peopleStatusPane = new AnchorPane();
+        peopleStatusPane.setPrefWidth(200);
+        peopleStatusPane.setPrefHeight(200);
+        peopleStatusPane.setBackground(Background.fill(Color.PERU));
+        peopleStatus = new Label();
+        peopleStatus.setLayoutX(0);
+        peopleStatus.setLayoutY(0);
+        peopleStatus.setPrefWidth(200);
+        peopleStatus.setPrefHeight(200);
+        peopleStatus.setAlignment(Pos.CENTER);
+        peopleStatusPane.getChildren().add(peopleStatus);
+    }
+
+    private void setMiniMap() {
+        miniMap = new Rectangle(140, 70);
+        miniMap.setLayoutX(viewPane.getPrefWidth() - miniMap.getWidth());
+        miniMap.setLayoutY(viewPane.getPrefHeight() - miniMap.getHeight());
+        refreshMiniMap();
+        viewPane.getChildren().add(miniMap);
+    }
+
+    private void refreshMiniMap() {
+        miniMap.setFill(new ImagePattern(matchMenuJFX.getScene().snapshot(new WritableImage((int) viewPane.getPrefWidth(),
+                (int) (viewPane.getPrefHeight() - matchMenuJFX.getMatchBarJFX().getMainBarPane().getPrefHeight())))));
+    }
+
     private void setTileStatusProperties() {
+        tileStatusPane = new AnchorPane();
         tileStatusPane.setPrefWidth(200);
         tileStatusPane.setPrefHeight(200);
         tileStatusPane.setBackground(Background.fill(Color.PERU));
@@ -122,15 +153,29 @@ public class MapJFX {
                     case ESCAPE:
                         deSelect();
                         break;
+                    case C:
+                        if (selectedSingleBuilding != null)
+                            matchMenuJFX.getMatchBarJFX().addToClipBoard(selectedSingleBuilding);
+                        break;
+                    case V:
+                        paste();
+                        break;
                 }
                 if (keyEvent.getCode().equals(KeyCode.RIGHT) || keyEvent.getCode().equals(KeyCode.DOWN)
                         || keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.UP)) {
                     addNewCells(keyEvent);
                     removeOldCells(keyEvent);
                     bringBuildingsToFront();
+                    refreshMiniMap();
                 }
             }
         });
+    }
+
+    private void paste() {
+        if (selectedSingleTile != null) {
+            placeBuilding(selectedSingleTile);
+        }
     }
 
     private void setMap() {
@@ -184,7 +229,7 @@ public class MapJFX {
                     tile.setOpacity(1);
                 } else if (!mapPane.getChildren().contains(selectionArea) && tile.getCell() != null) {
                     tileStatus.setText(mapMenuController.showCellDetails(tile.getCell().getRow(), tile.getCell().getColumn()));
-                    locateTileStatusPane(tile);
+                    locatePane(tile.getX(), tile.getY());
                     mapPane.getChildren().add(tileStatusPane);
                     tile.setOpacity(0.8);
                 }
@@ -313,11 +358,11 @@ public class MapJFX {
         matchMenuJFX.getMatchBarJFX().deselect();
     }
 
-    private void locateTileStatusPane(Tile tile) {
-        double x = Math.max(tile.getX() - tileStatusPane.getPrefWidth(), mapPane.getLayoutX());
+    private void locatePane(double locationX, double locationY) {
+        double x = Math.max(locationX - tileStatusPane.getPrefWidth(), mapPane.getLayoutX());
         x = Math.min(x, mapPane.getPrefWidth() - tileStatusPane.getPrefWidth());
         tileStatusPane.setLayoutX(x);
-        double y = Math.max(tile.getY() - tileStatusPane.getPrefHeight(), mapPane.getLayoutY());
+        double y = Math.max(locationY - tileStatusPane.getPrefHeight(), mapPane.getLayoutY());
         y = Math.min(y, mapPane.getPrefHeight() - tileStatusPane.getPrefHeight());
         tileStatusPane.setLayoutY(y);
     }
@@ -360,6 +405,20 @@ public class MapJFX {
         rectangle.setLayoutY(map[i][j].getY() - rectangle.getHeight());
         rectangle.setFill(imagePattern);
         mapPane.getChildren().add(rectangle);
+        rectangle.hoverProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    mapPane.getChildren().remove(people);
+                    rectangle.setOpacity(1);
+                } else {
+                    peopleStatus.setText(matchMenuController.showPeopleDetails(rectangle.getPeople()));
+                    locatePane(rectangle.getLayoutX(), rectangle.getLayoutY());
+                    mapPane.getChildren().add(rectangle);
+                    rectangle.setOpacity(0.8);
+                }
+            }
+        });
         rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -478,23 +537,15 @@ public class MapJFX {
         return map[i][j];
     }
 
-    public SetTextureJFX getSetTextureJFX() {
-        return setTextureJFX;
+    public void setTileSicked(int row, int column) {
+        int[] coordinates = getCoordinates(row, column);
+        map[coordinates[0]][coordinates[1]].setStroke(Color.RED);
+        map[coordinates[0]][coordinates[1]].setStrokeWidth(2);
     }
 
-    public ArrayList<Tile> getSelectedTiles() {
-        return selectedTiles;
-    }
-
-    public Pane getTileStatusPane() {
-        return tileStatusPane;
-    }
-
-    public Label getTileStatus() {
-        return tileStatus;
-    }
-
-    public Rectangle getSelectionArea() {
-        return selectionArea;
+    public void setTileCured(int row, int column) {
+        int[] coordinates = getCoordinates(row, column);
+        map[coordinates[0]][coordinates[1]].setStroke(Color.BLACK);
+        map[coordinates[0]][coordinates[1]].setStrokeWidth(0);
     }
 }

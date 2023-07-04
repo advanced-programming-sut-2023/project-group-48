@@ -104,6 +104,7 @@ public class ProfileMenuController {
     }
 
     public String changeAvatar(ImagePattern imagePattern) {
+        controller.getGame().getCurrentUser().setAvatarUrl(imagePattern.getImage().getUrl());
         return "changed successfully!";
     }
 
@@ -151,5 +152,9 @@ public class ProfileMenuController {
 
     public String getNickname() {
         return "nickname: " + controller.getGame().getCurrentUser().getNickname();
+    }
+
+    public User getCurrentUser() {
+        return controller.getGame().getCurrentUser();
     }
 }

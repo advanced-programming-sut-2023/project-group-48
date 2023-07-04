@@ -83,6 +83,10 @@ public class Governance {
 //        System.out.println("Popularity: " + population);
     }
 
+    public void reducePopularityBySickness() {
+        popularity--;
+    }
+
     public void changeFoodPopularity() {
         int finalFoodFactor = 0;
 

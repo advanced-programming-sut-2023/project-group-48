@@ -8,16 +8,19 @@ import model.People.People;
 import model.People.PeopleType;
 import model.People.State;
 import model.People.Troop;
+import view.MatchMenuJFX;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class MatchMenuController {
     private final Controller controller;
+    private final MatchMenuJFX matchMenuJFX;
     private Match match;
 
-    public MatchMenuController(Controller controller) {
+    public MatchMenuController(Controller controller, MatchMenuJFX matchMenuJFX) {
         this.controller = controller;
+        this.matchMenuJFX = matchMenuJFX;
         this.match = null;
     }
 
@@ -29,6 +32,7 @@ public class MatchMenuController {
         String result = "username : " + match.getCurrentPlayer().getUsername() + "\n";
         result += "coins : " + match.getCurrentPlayer().getGovernance().getPropertyCount(Property.COIN) + "\n";
         result += "popularity : " + match.getCurrentPlayer().getGovernance().getPopularity() + "\n";
+        result += "population : " + match.getCurrentPlayer().getGovernance().getPopulation() + "\n";
 
         return result;
     }
@@ -371,5 +375,19 @@ public class MatchMenuController {
             }
         return (match.isRoundFinished() ? "round finished\n" : "") +
                 match.getCurrentPlayer().getUsername() + " is now playing!";
+    }
+
+    public void isSick(People people) {
+        matchMenuJFX.getMapJFX().setTileSicked(people.getRow(), people.getColumn());
+    }
+
+    public void isCured(People people) {
+        matchMenuJFX.getMapJFX().setTileCured(people.getRow(), people.getColumn());
+    }
+
+    public String showPeopleDetails(People people) {
+        return "type: " + people.getType() +
+                "\nhp: " + people.getHp() +
+                "\nhealth: " + people.isSick();
     }
 }

@@ -24,8 +24,8 @@ public class MainMenuJFX extends Application implements MenuJFX {
     private Controller controller;
     private MainMenuController mainMenuController;
     private AnchorPane mainMenuPane;
-    private Rectangle startMatch, profileMenu, logOut, exit;
-    private Label startMatchLabel, profileMenuLabel, logOutLabel, exitLabel;
+    private Rectangle startMatch, profileMenu, logOut, exit, online;
+    private Label startMatchLabel, profileMenuLabel, logOutLabel, exitLabel, onlineLabel;
     private StartMatchJFX startMatchJFX;
     private Stage stage;
 
@@ -50,6 +50,10 @@ public class MainMenuJFX extends Application implements MenuJFX {
         exit = (Rectangle) mainMenuPane.getChildren().get(6);
         exitLabel = (Label) mainMenuPane.getChildren().get(7);
         setExitProperties();
+
+        online = (Rectangle) mainMenuPane.getChildren().get(8);
+        onlineLabel = (Label) mainMenuPane.getChildren().get(9);
+        setOnlineProperties();
 
         startMatchJFX = new StartMatchJFX(mainMenuPane, new EventHandler<MouseEvent>() {
             @Override
@@ -82,6 +86,29 @@ public class MainMenuJFX extends Application implements MenuJFX {
             adjustWithScene();
         });
         stage.show();
+    }
+
+    private void setOnlineProperties() {
+        EventHandler onlineHandler = new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                try {
+                    controller.enterOnlineMenuJFX();
+                    stop();
+                    controller.getGame().getCurrentMenuJFX().start(stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        online.hoverProperty().addListener((event) -> {
+            online.setOpacity(1.5 - online.getOpacity());
+        });
+        onlineLabel.hoverProperty().addListener((event) -> {
+            online.setOpacity(1.5 - online.getOpacity());
+        });
+        online.setOnMouseClicked(onlineHandler);
+        onlineLabel.setOnMouseClicked(onlineHandler);
     }
 
     @Override

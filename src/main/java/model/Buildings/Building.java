@@ -1,6 +1,5 @@
 package model.Buildings;
 
-import javafx.scene.shape.Rectangle;
 import model.Match.Direction;
 import model.Match.Governance;
 import model.Match.LandType;
@@ -12,6 +11,8 @@ public class Building {
     private final String type;
     private final BuildingType buildingType;
     private int hp;
+    private boolean onFire;
+    private int onFireRounds = 0;
     private final Direction direction;
     public Building(Governance governance, int row, int column, String type, BuildingType buildingType, Direction direction) {
         this.governance = governance;
@@ -95,5 +96,21 @@ public class Building {
             return ((RecruitmentCenter) this).isRecruitTypeValid(type);
         }
         return false;
+    }
+
+    public boolean isOnFire() {
+        return onFire;
+    }
+
+    public void setOnFire(boolean onFire) {
+        this.onFire = onFire;
+    }
+
+    public int getOnFireRounds() {
+        return onFireRounds;
+    }
+
+    public void setOnFireRounds(int onFireRounds) {
+        this.onFireRounds = onFireRounds;
     }
 }

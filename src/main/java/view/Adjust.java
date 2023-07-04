@@ -10,8 +10,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Adjust {
-
-
     public static void adjustLabel(Label label, double ratioX, double ratioY) {
         label.setPrefWidth(label.getPrefWidth() * ratioX);
         label.setPrefHeight(label.getPrefHeight() * ratioY);
