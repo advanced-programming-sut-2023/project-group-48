@@ -1,6 +1,5 @@
 package model.People;
 
-import javafx.scene.shape.Rectangle;
 import model.Match.Direction;
 import model.Match.Governance;
 import model.Match.LandType;
