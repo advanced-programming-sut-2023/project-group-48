@@ -135,6 +135,9 @@ public class Connection extends Thread{
                 if(request.sendFriendRequest){
                     sendFriendRequest(request.username, request.username2);
                 }
+                if(request.startGame){
+                    startGame(request.username,request.roomId);
+                }
 
             } catch (IOException e) {
                 System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
@@ -383,6 +386,16 @@ public class Connection extends Thread{
                 }
             }
         }
+    }
+
+    public void startGame(String username, String roomId){
+        makeRoom(roomId, username);
+        GameRoom gameRoom = new GameRoom();
+        gameRoom.roomID = roomId;
+        gameRoom.users = Server.getRoomByID(roomId).users;
+
+
+
     }
 
 

@@ -2,6 +2,7 @@ package server;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import model.GameRoom;
 import model.Room;
 import model.TextMessage;
 import model.User;
@@ -17,6 +18,7 @@ public class Server {
     public static ArrayList<Connection> connections = new ArrayList<>();
     public static ArrayList<Room> rooms = new ArrayList<>();
 
+    public static ArrayList<GameRoom> gameRooms = new ArrayList<>();
     public static ArrayList<User> onlineUsers = new ArrayList<>();
 
     static{

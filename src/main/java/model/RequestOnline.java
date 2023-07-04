@@ -37,6 +37,8 @@ public class RequestOnline {
 
     public boolean receiveFriendRequest = false;
 
+    public boolean startGame = false;
+
     public String username = "";
     public String username2 = "";
 
@@ -150,6 +152,12 @@ public class RequestOnline {
     public void setReceiveFriendRequest(String username){
         this.username = username;
         receiveFriendRequest = true;
+    }
+
+    public void setStartGame() {
+    	startGame = true;
+        this.username = username;
+        this.roomId = roomId;
     }
 
 

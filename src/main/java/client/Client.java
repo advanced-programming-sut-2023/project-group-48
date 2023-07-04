@@ -50,6 +50,9 @@ public class Client {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            NotifHandler notifHandler = new NotifHandler(dataInputStream);
+            notifHandler.start();
         }
         System.out.println("Connected to server!");
     }
