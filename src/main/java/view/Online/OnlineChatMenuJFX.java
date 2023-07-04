@@ -5,6 +5,7 @@ import controller.Controller;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -18,11 +19,12 @@ import javafx.stage.Stage;
 import model.Room;
 import model.TextMessage;
 import view.Avatar;
+import view.MenuJFX;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class OnlineChatMenuJFX extends Application {
+public class OnlineChatMenuJFX extends Application implements MenuJFX {
     private Controller controller;
     private AnchorPane chatMenuPane, roomsContent, chatContent;
     private ScrollPane roomsPane, chatPane;
@@ -62,6 +64,17 @@ public class OnlineChatMenuJFX extends Application {
 
         backButton = (Button) chatMenuPane.getChildren().get(9);
         setBackButton();
+
+        adjustWithScene();
+        Scene scene = new Scene(chatMenuPane);
+        stage.setScene(scene);
+        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+            adjustWithScene();
+        });
+        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+            adjustWithScene();
+        });
+        this.stage = stage;
     }
 
     private void setChatMenuProperties() {
@@ -192,5 +205,15 @@ public class OnlineChatMenuJFX extends Application {
 
     public void setController(Controller controller) {
         this.controller = controller;
+    }
+
+    @Override
+    public void adjust(double ratioX, double ratioY) {
+
+    }
+
+    @Override
+    public void adjustWithScene() {
+
     }
 }

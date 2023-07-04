@@ -195,7 +195,7 @@ public class Client {
         }
     }
 
-    public void setFriendRequest(String username){
+    public static void setFriendRequest(String username){
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setSendFriendRequest(user.getUsername(), username);
         try {
@@ -284,14 +284,4 @@ public class Client {
         }
 
     }
-
-
-
-
-
-
-
-
-
-
 }

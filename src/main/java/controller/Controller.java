@@ -12,6 +12,9 @@ import model.Game;
 import model.Match.Match;
 import view.*;
 import view.Online.OnlineChatMenuJFX;
+import view.Online.OnlineFriendMenuJFX;
+import view.Online.OnlineMapMenuJFX;
+import view.Online.OnlineMenuJFX;
 
 import java.io.IOException;
 
@@ -24,7 +27,10 @@ public class Controller {
     private final ProfileMenuJFX profileMenuJFX;
     private final ScoreBoardJFX scoreBoardJFX;
     private final ShopMenuJFX shopMenuJFX;
+    private final OnlineMenuJFX onlineMenuJFX;
     private final OnlineChatMenuJFX onlineChatMenuJFX;
+    private final OnlineFriendMenuJFX onlineFriendMenuJFX;
+    private final OnlineMapMenuJFX onlineMapMenuJFX;
     private final Game game;
     private String captchaAnswer;
     private boolean firstOnline = true;
@@ -56,8 +62,14 @@ public class Controller {
         this.shopMenuJFX = new ShopMenuJFX();
         shopMenuJFX.setController(this);
         shopMenuJFX.setShopMenuController(shopMenuJFX.getShopMenuController());
+        this.onlineMenuJFX = new OnlineMenuJFX();
+        onlineMenuJFX.setController(this);
         this.onlineChatMenuJFX = new OnlineChatMenuJFX();
         onlineChatMenuJFX.setController(this);
+        this.onlineFriendMenuJFX = new OnlineFriendMenuJFX();
+        onlineFriendMenuJFX.setController(this);
+        this.onlineMapMenuJFX = new OnlineMapMenuJFX();
+        onlineMapMenuJFX.setController(this);
         this.game = new Game(mainMenuJFX, signUpMenuJFX);
     }
 
@@ -137,13 +149,7 @@ public class Controller {
 
     public void enterScoreBoardJFX() {
         game.setCurrentMenuJFX(scoreBoardJFX);
-    }
-
-    public void enterShopMenuJFX() { game.setCurrentMenuJFX(shopMenuJFX);}
-
-    public void logOutJFX() throws IOException {
-        game.setCurrentMenuJFX(signUpMenuJFX);
-        game.setCurrentUser(null);
+        scoreBoardJFX.setOffline(true);
     }
 
     public void enterOnlineMenuJFX() throws IOException {
@@ -153,6 +159,29 @@ public class Controller {
             firstOnline = false;
         }
         game.setCurrentMenuJFX(onlineChatMenuJFX);
+    }
+
+    public void enterOnlineChatMenuJFX() throws IOException {
+        game.setCurrentMenuJFX(onlineChatMenuJFX);
+    }
+
+    public void enterShopMenuJFX() { game.setCurrentMenuJFX(shopMenuJFX);}
+
+    public void enterOnlineScoreBoardJFX() throws IOException {
+        game.setCurrentMenuJFX(scoreBoardJFX);
+        scoreBoardJFX.setOffline(false);
+    }
+
+    public void enterOnlineFriendMenuJFX() throws IOException {
+        game.setCurrentMenuJFX(onlineFriendMenuJFX);
+    }
+
+    public void enterOnlineMapMenuJFX() {
+    }
+
+    public void logOutJFX() throws IOException {
+        game.setCurrentMenuJFX(signUpMenuJFX);
+        game.setCurrentUser(null);
     }
 
     public void exitJFX() throws IOException {
@@ -180,4 +209,5 @@ public class Controller {
     public MatchMenuController getMatchMenuController() {
         return matchMenuJFX.getMatchMenuController();
     }
+
 }

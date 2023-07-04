@@ -33,6 +33,7 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
     private Button backButton;
     private ArrayList<Avatar> avatars;
     private ArrayList<User> scoreBoard;
+    private boolean isOffline;
     private Stage stage;
 
     @Override
@@ -73,9 +74,16 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
                     user.getUsername());
             Label highScoreLabel = getLabel(usernameLabel.getLayoutX() + usernameLabel.getPrefWidth() + Avatar.PROFILE_RADIUS,
                     Avatar.PROFILE_RADIUS * (i * 3 + 2), String.valueOf(user.getHighScore()));
+            Label lastSeenLabel = null;
+            if (!isOffline) {
+                lastSeenLabel = getLabel(highScoreLabel.getLayoutX() + highScoreLabel.getPrefWidth() + Avatar.PROFILE_RADIUS,
+                        Avatar.PROFILE_RADIUS * (i * 3 + 2), String.valueOf(user.lastSeen));
+            }
             anchorPane.getChildren().add(avatar);
             anchorPane.getChildren().add(usernameLabel);
             anchorPane.getChildren().add(highScoreLabel);
+            if (!isOffline)
+                anchorPane.getChildren().add(lastSeenLabel);
         }
         for (Avatar avatar : avatars) {
             makeAvatarClickable(avatar);
@@ -94,7 +102,8 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
 
     private Label getLabel(double x, int y, String value) {
         Label label = new Label(value);
-        label.setPrefWidth((scoreBoardScrollPane.getPrefWidth() - Avatar.PROFILE_RADIUS * 4) / 2);
+        double width = (scoreBoardScrollPane.getPrefWidth() - Avatar.PROFILE_RADIUS * (isOffline ? 6 : 7)) / (isOffline ? 2 : 3);
+        label.setPrefWidth(width);
         label.setPrefHeight(Avatar.PROFILE_RADIUS * 2);
         label.setLayoutX(x);
         label.setLayoutY(y - label.getPrefHeight() / 2);
@@ -143,5 +152,13 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
     public void adjustWithScene() {
         adjust(stage.getScene().getWidth() / scoreBoardPane.getPrefWidth(),
                 stage.getScene().getHeight() / scoreBoardPane.getPrefHeight());
+    }
+
+    public boolean isOffline() {
+        return isOffline;
+    }
+
+    public void setOffline(boolean offline) {
+        isOffline = offline;
     }
 }

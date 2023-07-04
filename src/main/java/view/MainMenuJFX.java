@@ -148,6 +148,8 @@ public class MainMenuJFX extends Application implements MenuJFX {
         Adjust.adjustLabel(exitLabel, ratioX, ratioY);
         Adjust.adjustRectangle(online, ratioX, ratioY);
         Adjust.adjustLabel(onlineLabel, ratioX, ratioY);
+        Adjust.adjustRectangle(asServer, ratioX, ratioY);
+        Adjust.adjustLabel(asServerLabel, ratioX, ratioY);
         startMatchJFX.adjust(ratioX, ratioY);
     }
 
