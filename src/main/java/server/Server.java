@@ -1,7 +1,9 @@
 package server;
 
+import client.Client;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import controller.Controller;
 import model.GameRoom;
 import model.Room;
 import model.TextMessage;
@@ -21,15 +23,18 @@ public class Server {
     public static ArrayList<GameRoom> gameRooms = new ArrayList<>();
     public static ArrayList<User> onlineUsers = new ArrayList<>();
 
-    static{
+    public static Controller controller;
+
+    static {
         Room room = new Room();
         room.roomID = "0";
         rooms.add(room);
     }
-    public Server(int mainPort){
+
+    public static void setServer(int mainPort) {
         try {
             ServerSocket serverSocket = new ServerSocket(mainPort);
-            while (true){
+            while (true) {
                 Socket socket = serverSocket.accept();
                 Connection connection = new Connection(socket);
                 connections.add(connection);
@@ -40,16 +45,16 @@ public class Server {
         }
     }
 
-    public static Room getRoomByID(String roomID){
+    public static Room getRoomByID(String roomID) {
         for (Room room : Server.rooms) {
-            if (room.roomID.equals(roomID)){
+            if (room.roomID.equals(roomID)) {
                 return room;
             }
         }
         return null;
     }
 
-    public static void updateRoomsJsonFile(){
+    public static void updateRoomsJsonFile() {
         try {
             FileWriter fileWriter = new FileWriter("AllRooms.json");
             fileWriter.write(new Gson().toJson(Server.rooms));
@@ -59,17 +64,18 @@ public class Server {
         }
     }
 
-    public static void getRoomsJsonFile(){
+    public static void getRoomsJsonFile() {
         try {
             FileReader fileReader = new FileReader("AllRooms.json");
-            Server.rooms = new Gson().fromJson(fileReader, new TypeToken<ArrayList<Room>>(){}.getType());
+            Server.rooms = new Gson().fromJson(fileReader, new TypeToken<ArrayList<Room>>() {
+            }.getType());
             fileReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void updateAllUsersJsonFile(){
+    public static void updateAllUsersJsonFile() {
         try {
             FileWriter fileWriter = new FileWriter("AllUsersServer.json");
             fileWriter.write(new Gson().toJson(Server.onlineUsers));
@@ -79,19 +85,20 @@ public class Server {
         }
     }
 
-    public static void getAllUsersJsonFile(){
+    public static void getAllUsersJsonFile() {
         try {
             FileReader fileReader = new FileReader("AllUsersServer.json");
-            Server.onlineUsers = new Gson().fromJson(fileReader, new TypeToken<ArrayList<User>>(){}.getType());
+            Server.onlineUsers = new Gson().fromJson(fileReader, new TypeToken<ArrayList<User>>() {
+            }.getType());
             fileReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static User getUserByUsername(String username){
-        for (User user : Server.onlineUsers) {
-            if (user.getUsername().equals(username)){
+    public static User getUserByUsername(String username) {
+        for (User user : controller.getGame().getUsers()) {
+            if (user.getUsername().equals(username)) {
                 return user;
             }
         }

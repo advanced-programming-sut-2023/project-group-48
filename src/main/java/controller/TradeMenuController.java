@@ -13,7 +13,6 @@ public class TradeMenuController {
         this.controller = controller;
     }
 
-
     public String addTrade(String receiverUsername, String propertyType, int amount, int price, String message) {
         Property property = Property.getProperty(propertyType);
         User receiver = controller.getGame().getUserByUsername(receiverUsername);
