@@ -13,7 +13,6 @@ public class Building {
     private final BuildingType buildingType;
     private int hp;
     private final Direction direction;
-    private Rectangle rectangle;
     public Building(Governance governance, int row, int column, String type, BuildingType buildingType, Direction direction) {
         this.governance = governance;
         this.row = row;
