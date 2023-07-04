@@ -3,10 +3,13 @@ package model;
 import java.util.ArrayList;
 
 public class GameRoom {
+    public Room room;
     public ArrayList<String> users = new ArrayList<>();
     public String roomID;
 
     public boolean shouldUpdate = false;
+
+    public boolean isPublic = true;
 
 
 }

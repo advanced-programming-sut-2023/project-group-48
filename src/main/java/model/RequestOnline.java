@@ -1,7 +1,5 @@
 package model;
 
-import javafx.scene.text.Text;
-
 import java.util.ArrayList;
 
 public class RequestOnline {
@@ -37,7 +35,7 @@ public class RequestOnline {
 
     public boolean receiveFriendRequest = false;
 
-    public boolean startGame = false;
+    public boolean makeGameRoom = false;
 
     public String username = "";
     public String username2 = "";
@@ -154,8 +152,8 @@ public class RequestOnline {
         receiveFriendRequest = true;
     }
 
-    public void setStartGame() {
-    	startGame = true;
+    public void makeGameRoom(String username, String roomId){
+    	makeGameRoom = true;
         this.username = username;
         this.roomId = roomId;
     }

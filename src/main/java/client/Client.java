@@ -14,18 +14,19 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Client {
-    final DataInputStream dataInputStream;
-    final DataOutputStream dataOutputStream;
+    private static DataInputStream dataInputStream;
+    private static DataOutputStream dataOutputStream;
 
-    private Controller controller;
-    private User user;
+    private static Controller controller;
+    private static User user;
 
     public static ArrayList<Room> rooms = new ArrayList<>();
+    public static ArrayList<GameRoom> gameRooms = new ArrayList<>();
 
     public static ArrayList<User> friends = new ArrayList<>();
     public static ArrayList<User> friendRequests = new ArrayList<>();
 
-    public Client(String host, int port) throws IOException {
+    public static void startClient(String host, int port) throws IOException {
         System.out.println("Starting Client service...");
 
         Socket socket = new Socket(host, port);
@@ -34,7 +35,7 @@ public class Client {
 
     }
 
-    public void startConnection(){
+    public static void startConnection(){
         System.out.println("Connecting to server...");
         user = controller.getGame().getCurrentUser();
         String input;
@@ -57,7 +58,7 @@ public class Client {
         System.out.println("Connected to server!");
     }
 
-    public void updateUsersFile(){
+    public static void updateUsersFile(){
         try {
             dataOutputStream.writeUTF("json");
             dataOutputStream.writeUTF(new Gson().toJson(controller.getGame().getUsers()));
@@ -71,13 +72,13 @@ public class Client {
         }
     }
 
-    public void logout(){
+    public static void logout(){
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setLogout();
     }
 
 
-    public void sendMap(String username, SavableMap map){
+    public static void sendMap(String username, SavableMap map){
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setSendMap(username, map);
         try {
@@ -88,7 +89,7 @@ public class Client {
         }
     }
 
-    public void sendMessage(String roomId, String message){
+    public static void sendMessage(String roomId, String message){
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setSendMessage(user.getUsername(),message,roomId);
         try {
@@ -99,7 +100,7 @@ public class Client {
         }
     }
 
-    public void newRoom(String username){
+    public static void newRoom(String username){
         String roomID = user.getUsername() + rooms.size();
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setMakeRoom(username, roomID);
@@ -111,7 +112,7 @@ public class Client {
         }
     }
 
-    public void addToRoom(String roomId, String username){
+    public static void addToRoom(String roomId, String username){
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setMakeRoom(username, roomId);
         try {
@@ -122,7 +123,7 @@ public class Client {
         }
     }
 
-    public void editMessage(String roomId, TextMessage message, String editedMessage){
+    public static void editMessage(String roomId, TextMessage message, String editedMessage){
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setEditMessage(message, editedMessage, roomId);
         try {
@@ -133,7 +134,7 @@ public class Client {
         }
     }
 
-    public void deleteMessage(String roomID, TextMessage message){
+    public static void deleteMessage(String roomID, TextMessage message){
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setDeleteMessage(message, roomID);
         try {
@@ -144,7 +145,7 @@ public class Client {
         }
     }
 
-    public void seenMessage(String roomId){
+    public static void seenMessage(String roomId){
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setSeenMessage(roomId);
         try {
@@ -155,7 +156,7 @@ public class Client {
         }
     }
 
-    public void setReaction(String roomId, TextMessage message, int reaction){
+    public static void setReaction(String roomId, TextMessage message, int reaction){
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setReaction(roomId, message, reaction);
         try {
@@ -166,7 +167,7 @@ public class Client {
         }
     }
 
-    public void updateAllRooms(){
+    public static void updateAllRooms(){
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setGetAllRooms();
         try {
@@ -177,7 +178,7 @@ public class Client {
         }
     }
 
-    public void updateMe(){
+    public static void updateMe(){
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setMe(user);
         try {
@@ -188,7 +189,7 @@ public class Client {
         }
     }
 
-    public void answerFriendRequest(String username, boolean answer){
+    public static void answerFriendRequest(String username, boolean answer){
         for (User friend : friends) {
             if(friend.getUsername().equals(username)){
                 ArrayList<User> removerequests = new ArrayList<>();
@@ -230,6 +231,20 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+    public static void makeGameRoom(){
+        RequestOnline requestOnline = new RequestOnline();
+        requestOnline.makeGameRoom(user.getUsername(), user.getUsername() + gameRooms.size());
+        try {
+            dataOutputStream.writeUTF(new Gson().toJson(requestOnline));
+            System.out.println("Game Room made!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
 
 
 
