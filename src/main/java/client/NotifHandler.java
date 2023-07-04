@@ -52,6 +52,9 @@ public class NotifHandler extends Thread{
                 if(request.getAllRoomsAnswer){
                     Client.rooms = request.rooms;
                 }
+                if(request.receiveFriendRequest){
+                    Client.friendRequests.add(request.user);
+                }
 
             } catch (IOException e) {
                 throw new RuntimeException(e);

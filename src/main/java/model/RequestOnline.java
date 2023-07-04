@@ -35,6 +35,8 @@ public class RequestOnline {
 
     public boolean sendFriendRequest = false;
 
+    public boolean receiveFriendRequest = false;
+
     public String username = "";
     public String username2 = "";
 
@@ -144,4 +146,11 @@ public class RequestOnline {
         this.username2 = username2;
         sendFriendRequest = true;
     }
+
+    public void setReceiveFriendRequest(String username){
+        this.username = username;
+        receiveFriendRequest = true;
+    }
+
+
 }

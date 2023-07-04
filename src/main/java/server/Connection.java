@@ -133,7 +133,7 @@ public class Connection extends Thread{
                     updateUser(request.user);
                 }
                 if(request.sendFriendRequest){
-
+                    sendFriendRequest(request.username, request.username2);
                 }
 
             } catch (IOException e) {
@@ -367,6 +367,22 @@ public class Connection extends Thread{
     public void updateUser(User user){
         this.user = user;
         updateAllRooms();
+    }
+
+    public void sendFriendRequest(String username1, String username2){
+        for (Connection connection : Server.connections) {
+            if(connection.user.getUsername().equals(username2)){
+                RequestOnline request = new RequestOnline();
+                request.setReceiveFriendRequest(username1);
+                String json = new Gson().toJson(request);
+                try {
+                    connection.dataOutputStream.writeUTF(json);
+                } catch (IOException e) {
+                    System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
 

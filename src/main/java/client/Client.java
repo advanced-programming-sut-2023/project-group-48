@@ -6,10 +6,10 @@ import controller.Controller;
 import javafx.scene.text.Text;
 import model.*;
 import org.apache.commons.codec.digest.DigestUtils;
+import server.Server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -21,6 +21,9 @@ public class Client {
     private User user;
 
     public static ArrayList<Room> rooms = new ArrayList<>();
+
+    public static ArrayList<User> friends = new ArrayList<>();
+    public static ArrayList<User> friendRequests = new ArrayList<>();
 
     public Client(String host, int port) throws IOException {
         System.out.println("Starting Client service...");
@@ -179,6 +182,49 @@ public class Client {
             System.out.println("this user updated!");
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void answerFriendRequest(String username, boolean answer){
+        for (User friend : friends) {
+            if(friend.getUsername().equals(username)){
+                ArrayList<User> removerequests = new ArrayList<>();
+                for (User friendRequest : friendRequests) {
+                    if(friendRequest.getUsername().equals(username)){
+                        removerequests.add(friendRequest);
+                    }
+                }
+                friendRequests.removeAll(removerequests);
+                return;
+            }
+        }
+        ArrayList<User> removerequests = new ArrayList<>();
+        for (User friendRequest : friendRequests) {
+            if(friendRequest.getUsername().equals(username)){
+                removerequests.add(friendRequest);
+            }
+        }
+        friends.add(removerequests.get(0));
+        friendRequests.removeAll(removerequests);
+    }
+
+    public static void updateFriendFiles(){
+        try {
+            FileWriter fileWriter = new FileWriter("Friends.json");
+            fileWriter.write(new Gson().toJson(Client.friends));
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getFriendFiles(){
+        try {
+            FileReader fileReader = new FileReader("Friends.json");
+            Client.friends = new Gson().fromJson(fileReader, new TypeToken<ArrayList<User>>(){}.getType());
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
