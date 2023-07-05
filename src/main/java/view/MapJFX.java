@@ -164,7 +164,7 @@ public class MapJFX {
                         break;
                     case C:
                         if (selectedSingleBuilding != null)
-                            matchMenuJFX.getMatchBarJFX().addToClipBoard(selectedSingleBuilding);
+//                            matchMenuJFX.getMatchBarJFX().addToClipBoard(selectedSingleBuilding);
                         break;
                     case V:
                         paste();
@@ -186,7 +186,8 @@ public class MapJFX {
 
     private void paste() {
         if (selectedSingleTile != null) {
-            placeBuilding(selectedSingleTile);
+            selectedSingleBuilding = matchMenuJFX.getMatchBarJFX().getClipBoardBuildingShape();
+            placeBuilding(selectedSingleTile, (ImagePattern) selectedSingleBuilding.getFill());
         }
     }
 
@@ -233,6 +234,9 @@ public class MapJFX {
     }
 
     private void setCell(Tile tile) {
+        if (tile.getCell().getBuilding() != null) {
+            addBuildingToMap(tile.getI(), tile.getJ(), BuildingType.getImagePattern(tile.getCell().getBuilding().getType()), tile.getCell().getBuilding());
+        }
         tile.hoverProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
@@ -252,7 +256,7 @@ public class MapJFX {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern() != null) {
-                    placeBuilding(tile);
+                    placeBuilding(tile, matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern());
                 } else if (!selectedPeopleShapes.isEmpty()) {
                     movePeople(tile);
                 } else {
@@ -264,11 +268,11 @@ public class MapJFX {
         });
     }
 
-    private void placeBuilding(Tile tile) {
+    private void placeBuilding(Tile tile, ImagePattern imagePattern) {
         matchMenuController.dropBuilding(tile.getCell().getRow(), tile.getCell().getColumn(),
-                BuildingType.getTypeByImagePattern(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern()));
+                BuildingType.getTypeByImagePattern(imagePattern));
         Building building = tile.getCell().getBuilding();
-        addBuildingToMap(tile.getI(), tile.getJ(), matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern(), building);
+        addBuildingToMap(tile.getI(), tile.getJ(), imagePattern, building);
     }
 
     private void movePeople(Tile tile) {
@@ -420,6 +424,7 @@ public class MapJFX {
             public void handle(MouseEvent mouseEvent) {
                 deSelect();
                 selectedSingleBuilding = rectangle;
+                matchMenuJFX.getMatchBarJFX().addToClipBoard(selectedSingleBuilding);
                 matchMenuController.selectBuilding(rectangle.getBuilding().getRow(), rectangle.getBuilding().getColumn());
                 selectedSingleBuilding.setOpacity(0.8);
                 buildingSelectionJFX.popOut(rectangle.getLayoutX(), rectangle.getLayoutY(), selectedSingleBuilding);
