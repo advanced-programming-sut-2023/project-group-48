@@ -53,8 +53,8 @@ public class OnlineMapMenuJFX extends Application implements MenuJFX {
         useMap = (Button) mapMenuPane.getChildren().get(2);
         setUseMapButton();
 
-        sendButton = (Button) mapMenuPane.getChildren().get(3);
-        sendTextField = (TextField) mapMenuPane.getChildren().get(4);
+        sendButton = (Button) mapMenuPane.getChildren().get(4);
+        sendTextField = (TextField) mapMenuPane.getChildren().get(3);
         setSendButton();
 
         Scene scene = new Scene(mapMenuPane);
@@ -96,8 +96,16 @@ public class OnlineMapMenuJFX extends Application implements MenuJFX {
             rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    selectedMap = maps.get(mapsContent.getChildren().indexOf(rectangle) / 2);
+                    String name = label.getText();
+//                    selectedMap = maps.get(mapsContent.getChildren().indexOf(rectangle) / 2);
+                    for (SavableMap map : maps) {
+                        if (map.name.equals(name)) {
+                            selectedMap = map;
+                            break;
+                        }
+                    }
                 }
+
             });
             label.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override

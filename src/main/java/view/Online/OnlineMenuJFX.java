@@ -169,6 +169,9 @@ public class OnlineMenuJFX extends Application implements MenuJFX {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
+                    controller.enterOnlineChatMenuJFX();
+                    stop();
+                    controller.getGame().getCurrentMenuJFX().start(stage);
 
                 } catch (Exception e) {
                     throw new RuntimeException(e);

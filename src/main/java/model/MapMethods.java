@@ -10,24 +10,19 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class MapMethods {
-//    public static boolean b = true;
 //    static {
-//        if(b) {
 //            SavableMap mapp = new SavableMap();
-//            mapp.name = "map1";
+//            mapp.name = "map2";
 //            mapp.map = new String[5][5];
 //            for(int i = 0; i < 5; i++){
 //                for(int j = 0; j < 5; j++){
-//                    mapp.map[i][j] = "Land";
+//                    mapp.map[i][j] = "rock";
 //                }
 //            }
 //            saveMap(mapp);
-//            b = false;
-//        }
 //    }
     public static boolean saveMap(SavableMap map){
 
-        //TODO: cant save a map again!
         Gson gson = new Gson();
         String json = gson.toJson(map);
         try {
