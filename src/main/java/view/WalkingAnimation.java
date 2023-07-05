@@ -23,35 +23,43 @@ public class WalkingAnimation extends Transition {
     private Tile targetTile;
 
     public WalkingAnimation(Match match, PeopleShape peopleShape, MapJFX mapJFX) {
+        System.out.println("pathsize " + peopleShape.getPeople().getPath().size());
         this.match = match;
         this.peopleShape = peopleShape;
         this.mapJFX = mapJFX;
         this.imagesCount = PeopleType.WALKIG_IMAGE_COUNT;
-        setCycleDuration(Duration.millis((double) 1000 / imagesCount));
-        setCycleCount(peopleShape.getPeople().getPath().size() * imagesCount);
+        this.lastPathSize = 0;
+        setCycleDuration(Duration.millis(10000));
+        setCycleCount(INDEFINITE);
     }
 
     @Override
     protected void interpolate(double v) {
+        if (peopleShape.getPeople().getPath().size() == 0) {
+            this.stop();
+        }
         if (peopleShape.getPeople().getPath().size() != lastPathSize) {
             targetTile = getTargetTile();
-            moves = PeopleType.getMovingImages(peopleShape.getPeople().getType(), match.getGovernances().indexOf(peopleShape.getPeople().getGovernance()) + 1, getDirectionNumber());
+            moves = PeopleType.getMovingImages(peopleShape.getPeople().getType(),
+                    match.getGovernances().indexOf(peopleShape.getPeople().getGovernance()) + 1, getDirectionNumber());
             indexOfCurrentImage = 0;
             lastPathSize = peopleShape.getPeople().getPath().size();
         }
-
         double x = peopleShape.getX() + (targetTile.getX() - peopleShape.getCurrentTile().getX()) / imagesCount;
         double y = peopleShape.getY() + (targetTile.getY() - peopleShape.getCurrentTile().getY()) / imagesCount;
         currentImagePattern = moves.get(indexOfCurrentImage);
+        indexOfCurrentImage = (indexOfCurrentImage + 1) % imagesCount;
 
         peopleShape.setX(x);
         peopleShape.setY(y);
         peopleShape.setFill(currentImagePattern);
 
-        if (peopleShape.getX() == targetTile.getX() - peopleShape.getWidth() / 2) {
+        if (peopleShape.getX() - targetTile.getX() + peopleShape.getWidth() / 2 < 2) {
+            System.out.println(peopleShape.getPeople().getPath().get(0).toString());
             peopleShape.getPeople().getPath().remove(0);
             peopleShape.setCurrentTile(targetTile);
-            // TODO set people row and column
+            peopleShape.getPeople().setRow(targetTile.getCell().getRow());
+            peopleShape.getPeople().setColumn(targetTile.getCell().getColumn());
         }
     }
 

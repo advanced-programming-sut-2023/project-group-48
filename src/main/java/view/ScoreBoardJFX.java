@@ -49,6 +49,7 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
         backButton = (Button) scoreBoardPane.getChildren().get(1);
         setBackButton();
 
+
         adjustWithScene();
         Scene scene = new Scene(scoreBoardPane);
         stage.setScene(scene);
@@ -62,7 +63,7 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
     }
 
     private void setScoreBoard() {
-        scoreBoardPane.getChildren().clear();
+        scoreBoardContent.getChildren().clear();
         scoreBoard = profileMenuController.getScoreBoard();
         avatars = new ArrayList<>();
         scoreBoardContent.setPrefHeight(Avatar.PROFILE_RADIUS * (1.5 * scoreBoard.size() + 1));
