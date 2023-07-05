@@ -12,7 +12,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="700.0" />
         </content>
       </ScrollPane>
-      <Button layoutY="670.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Back" />
+      <Button layoutY="500.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Back" />
       <Button layoutX="1200.0" layoutY="670.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Use" />
       <TextField layoutX="4.0" layoutY="8.0" prefHeight="30.0" prefWidth="200.0" />
       <Button layoutX="4.0" layoutY="38.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Send" />
