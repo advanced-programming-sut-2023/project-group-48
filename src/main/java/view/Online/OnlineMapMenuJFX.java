@@ -130,6 +130,11 @@ public class OnlineMapMenuJFX extends Application implements MenuJFX {
 
     @Override
     public void adjustWithScene() {
+        adjust(stage.getScene().getWidth() / mapMenuPane.getPrefWidth(),
+                stage.getScene().getHeight() / mapMenuPane.getPrefHeight());
+    }
 
+    public void refresh() {
+        setMapsContent();
     }
 }

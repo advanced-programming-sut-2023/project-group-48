@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.Room;
 import model.TextMessage;
@@ -118,7 +119,7 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
                 label.setText("Public Room");
             }
             label.setLayoutX(0);
-            label.setLayoutY((i + 1) * 40);
+            label.setLayoutY(i * 40);
             int finalI = i;
             label.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -157,10 +158,12 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
             for (int i = 0; i < count; i++) {
                 Avatar avatar = new Avatar(Avatar.PROFILE_RADIUS, Avatar.PROFILE_RADIUS + i * (40 + Avatar.PROFILE_RADIUS * 2),
                         imagePatterns.get(currentRoom.users.indexOf(currentRoom.messages.get(i).username)));
-                Label label = getLabel(currentRoom.messages.get(i).username + "|" +
-                        currentRoom.messages.get(i).message + "|" +
-                        currentRoom.messages.get(i).sentTime + "|" +
+                Label label = getLabel(currentRoom.messages.get(i).username + " | " +
+                        currentRoom.messages.get(i).message + " | " +
+                        currentRoom.messages.get(i).sentTime + " | " +
                         (currentRoom.messages.get(i).seen ? "." : "#"));
+                label.setTextAlignment(TextAlignment.CENTER);
+                label.setPrefWidth(chatContent.getPrefWidth());
                 System.out.println("yoooo");
                 for (TextMessage message : currentRoom.messages) {
                     System.out.println(message.seen);
@@ -185,12 +188,12 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (!isEditing) Client.sendMessage(currentRoom.roomID, sendMessageTextField.getText());
-                else Client.editMessage(currentRoom.roomID,
-                        currentRoom.messages.get((chatContent.getChildren().indexOf(selectedChat) - 1) / 2),
-                        sendMessageTextField.getText());
-//                else Client.editMessage(currentRoom.roomID,
-//                        currentRoom.messages.get(0),
-//                        selectedChat.getText());
+                else {
+                    Client.editMessage(currentRoom.roomID,
+                            currentRoom.messages.get((chatContent.getChildren().indexOf(selectedChat) - 1) / 2),
+                            sendMessageTextField.getText());
+                    isEditing = false;
+                }
                 setChatRoomProperties();
             }
         });
@@ -256,5 +259,10 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
     @Override
     public void adjustWithScene() {
         adjust(stage.getScene().getWidth() / chatMenuPane.getPrefWidth(), stage.getScene().getHeight() / chatMenuPane.getPrefHeight());
+    }
+
+    public void refresh() {
+        setRoomsPaneProperties();
+        setChatRoomProperties();
     }
 }

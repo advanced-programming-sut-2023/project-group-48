@@ -119,4 +119,8 @@ public enum PeopleType {
     public static String getTroopType(int index) {
         return TROOP.people.get(index);
     }
+
+    public static ArrayList<String> getTroopsNames() {
+        return TROOP.people;
+    }
 }
