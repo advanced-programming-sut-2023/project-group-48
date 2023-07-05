@@ -6,5 +6,4 @@ public class SavableMap {
 
     public boolean sentFromOthers = false;
     public boolean accepted = true;
-
 }

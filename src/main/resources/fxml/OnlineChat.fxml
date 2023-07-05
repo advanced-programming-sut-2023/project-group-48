@@ -9,13 +9,13 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Online.OnlineChatMenuJFX">
    <children>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="600.0" prefWidth="300.0" vbarPolicy="ALWAYS">
+      <ScrollPane hbarPolicy="NEVER" layoutY="100.0" prefHeight="500.0" prefWidth="300.0" vbarPolicy="ALWAYS">
          <content>
             <AnchorPane prefHeight="600.0" prefWidth="300.0" />
          </content></ScrollPane>
       <TextField layoutY="600.0" prefHeight="50.0" prefWidth="300.0" />
       <Button layoutY="650.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="New Chat" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="300.0" prefHeight="600.0" prefWidth="1100.0" vbarPolicy="ALWAYS">
+      <ScrollPane hbarPolicy="NEVER" layoutX="300.0" layoutY="100.0" prefHeight="500.0" prefWidth="1100.0" vbarPolicy="ALWAYS">
          <content>
             <AnchorPane prefHeight="600.0" prefWidth="1100.0" />
          </content></ScrollPane>

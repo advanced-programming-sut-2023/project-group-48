@@ -6,11 +6,12 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Online.OnlineMapMenuJFX">
    <children>
-      <Button layoutY="670.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Back" />
       <ScrollPane hbarPolicy="NEVER" layoutX="350.0" prefHeight="700.0" prefWidth="700.0" vbarPolicy="ALWAYS">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="700.0" />
         </content>
       </ScrollPane>
+      <Button layoutY="670.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Back" />
+      <Button layoutX="1200.0" layoutY="670.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Use" />
    </children>
 </AnchorPane>

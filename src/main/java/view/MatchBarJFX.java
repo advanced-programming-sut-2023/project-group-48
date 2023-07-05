@@ -11,7 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.Buildings.BuildingType;
-import model.People.PeopleType;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ public class MatchBarJFX {
     private final AnchorPane viewPane;
     private AnchorPane mainBarPane, normalBuildingsPane, gateHousePane, industrialCenterPane1, industrialCenterPane2,
             industrialCenterPane3, recruitmentCenterPane, storagePane, trapPane;
-    private ArrayList<AnchorPane> buildingAnchorPanes, peopleAnchorPanes;
+    private ArrayList<AnchorPane> buildingAnchorPanes;
     private double selectBarWidth, selectBarHeight, selectBarX, selectBarY;
     private ImagePattern selectedBuildingImagePattern;
     private AnchorPane currentPane, clipBoard;
@@ -124,10 +124,8 @@ public class MatchBarJFX {
             rectangles.get(i).setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    if (!peopleAnchorPanes.contains(currentPane)) {
-                        selectedBuildingImagePattern = imagePatterns[finalI];
-                        removeFromClipBoar();
-                    }
+                    selectedBuildingImagePattern = imagePatterns[finalI];
+                    removeFromClipBoar();
                 }
             });
             rectangles.get(i).setFill(imagePatterns[i]);
