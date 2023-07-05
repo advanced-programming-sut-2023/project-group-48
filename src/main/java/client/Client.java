@@ -61,6 +61,7 @@ public class Client {
         System.out.println("Connected to server!");
         NotifHandler notifHandler = new NotifHandler(dataInputStream);
         notifHandler.start();
+        updateAllRooms();
     }
 
     public static void updateUsersFile() {
@@ -176,6 +177,7 @@ public class Client {
     public static void updateAllRooms() {
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setGetAllRooms();
+        System.out.println("gg");
         try {
             dataOutputStream.writeUTF(new Gson().toJson(requestOnline));
             System.out.println("All rooms updated!");

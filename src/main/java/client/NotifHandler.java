@@ -63,6 +63,8 @@ public class NotifHandler extends Thread{
                 }
                 if(request.getAllRoomsAnswer){
                     Client.rooms = request.rooms;
+                    System.out.println("rooms received");
+                    System.out.println(Client.rooms.get(0));
                 }
                 if(request.setAllGameRooms){
                     Client.gameRooms = request.gameRooms;

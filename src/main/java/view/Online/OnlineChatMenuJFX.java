@@ -40,6 +40,7 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         this.stage = stage;
         chatMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/OnlineChat.fxml")));
         setChatMenuProperties();
@@ -109,9 +110,11 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
         int count = Client.rooms.size();
         roomsContent.setPrefHeight(count * 40);
         for (int i = 0; i < count; i++) {
+            System.out.println(count);
+            System.out.println(Client.rooms.get(i).roomID);
             Label label = getLabel(Client.rooms.get(i).roomID);
             label.setLayoutX(0);
-            label.setLayoutY(i * 40);
+            label.setLayoutY((i + 1) * 40);
             int finalI = i;
             label.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
