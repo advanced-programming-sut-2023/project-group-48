@@ -40,6 +40,7 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
 
     @Override
     public void start(Stage stage) throws Exception {
+        this.stage = stage;
         chatMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/OnlineChat.fxml")));
         setChatMenuProperties();
 

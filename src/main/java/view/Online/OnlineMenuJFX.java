@@ -14,6 +14,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import view.Adjust;
 import view.MenuJFX;
 
 import java.util.Objects;
@@ -29,7 +30,7 @@ public class OnlineMenuJFX extends Application implements MenuJFX {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         onlineMenuPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/OnlineMenu.fxml")));
-        onlineMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgroudns/3.png")).toExternalForm()))));
+        onlineMenuPane.setBackground(Background.fill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/backgrounds/3.png")).toExternalForm()))));
 
         chatButton = (Rectangle) onlineMenuPane.getChildren().get(0);
         chatLabel = (Label) onlineMenuPane.getChildren().get(1);
@@ -209,12 +210,24 @@ public class OnlineMenuJFX extends Application implements MenuJFX {
 
     @Override
     public void adjust(double ratioX, double ratioY) {
-
+        Adjust.adjustPane(onlineMenuPane, ratioX, ratioY);
+        Adjust.adjustRectangle(chatButton, ratioX, ratioY);
+        Adjust.adjustRectangle(mapButton, ratioX, ratioY);
+        Adjust.adjustRectangle(friendButton, ratioX, ratioY);
+        Adjust.adjustRectangle(scoreboardButton, ratioX, ratioY);
+        Adjust.adjustRectangle(onlineGameButton, ratioX, ratioY);
+        Adjust.adjustRectangle(exitButton, ratioX, ratioY);
+        Adjust.adjustLabel(chatLabel, ratioX, ratioY);
+        Adjust.adjustLabel(mapLabel, ratioX, ratioY);
+        Adjust.adjustLabel(friendLabel, ratioX, ratioY);
+        Adjust.adjustLabel(scoreboardLabel, ratioX, ratioY);
+        Adjust.adjustLabel(onlineGameLabel, ratioX, ratioY);
+        Adjust.adjustLabel(exitLabel, ratioX, ratioY);
     }
 
 
     @Override
     public void adjustWithScene() {
-
+        adjust(stage.getScene().getWidth() / onlineMenuPane.getPrefWidth(), stage.getScene().getHeight() / onlineMenuPane.getPrefHeight());
     }
 }
