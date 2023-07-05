@@ -171,9 +171,12 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (!isEditing) Client.sendMessage(currentRoom.roomID, sendMessageTextField.getText());
-                else Client.editMessage(currentRoom.roomID,
-                        currentRoom.messages.get((chatContent.getChildren().indexOf(selectedChat) - 1) / 2),
-                        selectedChat.getText());
+                else {
+                    Client.editMessage(currentRoom.roomID,
+                            currentRoom.messages.get((chatContent.getChildren().indexOf(selectedChat) - 1) / 2),
+                            selectedChat.getText());
+                    isEditing = false;
+                }
                 setChatRoomProperties();
             }
         });

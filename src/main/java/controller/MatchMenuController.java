@@ -152,7 +152,7 @@ public class MatchMenuController {
         if (!match.getCurrentPlayer().getGovernance().isPopularityEnoughToCreateUnit(type))
             return "your popularity is not enough to create this unit!";
 
-        match.placePeople(building.getRow(), building.getColumn(), type, peopleType, count);
+        match.placePeople(building.getRow(), building.getColumn() + 1, type, peopleType, count);
         match.getSelectedBuilding().getGovernance().payForCreatingUnit(type, count);
         return "unit created successfully!";
     }
