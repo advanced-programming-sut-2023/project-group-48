@@ -15,7 +15,7 @@ public class Adjust {
         label.setPrefHeight(label.getPrefHeight() * ratioY);
         label.setLayoutX(label.getLayoutX() * ratioX);
         label.setLayoutY(label.getLayoutY() * ratioY);
-        label.setFont(Font.font(ratioX * label.getFont().getSize()));
+//        label.setFont(Font.font(ratioX * label.getFont().getSize()));
     }
 
     public static void adjustTextField(TextField textField, double ratioX, double ratioY) {

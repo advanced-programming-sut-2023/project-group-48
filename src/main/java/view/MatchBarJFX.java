@@ -87,14 +87,14 @@ public class MatchBarJFX {
 
     private void setClipBoard() {
         clipBoard = new AnchorPane();
-        clipBoard.setPrefWidth(200);
-        clipBoard.setPrefHeight(200);
-        clipBoard.setLayoutX(mainBarPane.getPrefWidth() / 2 - clipBoard.getPrefWidth() / 2);
-        clipBoard.setLayoutY(mainBarPane.getPrefHeight() / 2 - clipBoard.getPrefHeight() / 2);
-        clipBoardBuildingShape = new BuildingShape(50, 50, null);
+        clipBoard.setPrefWidth(100);
+        clipBoard.setPrefHeight(100);
+        clipBoard.setLayoutX(mainBarPane.getPrefWidth() - clipBoard.getPrefWidth() - 20);
+        clipBoard.setLayoutY(mainBarPane.getPrefHeight() - clipBoard.getPrefHeight() - 20);
+        clipBoardBuildingShape = new BuildingShape(10, 10, null);
         clipBoard.getChildren().add(clipBoardBuildingShape);
-        clipBoardBuildingShape.setLayoutX(mainBarPane.getPrefWidth() / 2 - clipBoardBuildingShape.getWidth() / 2);
-        clipBoardBuildingShape.setLayoutY(mainBarPane.getPrefHeight() / 2 - clipBoardBuildingShape.getHeight() / 2);
+        clipBoardBuildingShape.setLayoutX(clipBoard.getPrefWidth() / 2 - clipBoardBuildingShape.getWidth() / 2);
+        clipBoardBuildingShape.setLayoutY(clipBoard.getPrefHeight() / 2 - clipBoardBuildingShape.getHeight() / 2);
         mainBarPane.getChildren().add(clipBoardBuildingShape);
     }
 
