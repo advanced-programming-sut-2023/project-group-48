@@ -95,6 +95,9 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
                                 currentRoom.messages.get((chatContent.getChildren().indexOf(selectedChat) - 1) / 2));
                         setChatRoomProperties();
                         break;
+                    case R:
+                        refresh();
+                        break;
                 }
             }
         });
@@ -115,7 +118,9 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
             System.out.println(count);
             System.out.println(Client.rooms.get(i).roomID);
             Label label = getLabel(Client.rooms.get(i).roomID);
-            if(label.getText().equals("0")){
+            label.setPrefWidth(roomsPane.getPrefWidth());
+            label.setTextAlignment(TextAlignment.CENTER);
+            if (label.getText().equals("0")) {
                 label.setText("Public Room");
             }
             label.setLayoutX(0);

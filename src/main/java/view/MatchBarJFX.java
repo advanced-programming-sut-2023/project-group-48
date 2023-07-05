@@ -9,16 +9,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import model.Buildings.BuildingType;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
 public class MatchBarJFX {
     private final MatchMenuJFX matchMenuJFX;
+    private final PopularityJFX popularityJFX;
     private final AnchorPane viewPane;
     private AnchorPane mainBarPane, normalBuildingsPane, gateHousePane, industrialCenterPane1, industrialCenterPane2,
             industrialCenterPane3, recruitmentCenterPane, storagePane, trapPane;
@@ -27,10 +30,14 @@ public class MatchBarJFX {
     private ImagePattern selectedBuildingImagePattern;
     private AnchorPane currentPane, clipBoard;
     private BuildingShape clipBoardBuildingShape;
+    private Circle popularityCircle;
     private Label scribePanel;
 
-    public MatchBarJFX(MatchMenuJFX matchMenuJFX, AnchorPane viewPane) {
+    public MatchBarJFX(MatchMenuJFX matchMenuJFX, AnchorPane viewPane) throws IOException {
         this.matchMenuJFX = matchMenuJFX;
+        this.popularityJFX = new PopularityJFX(matchMenuJFX.getMatchMenuController());
+        popularityCircle = new Circle(mainBarPane.getPrefWidth() - 20, mainBarPane.getPrefHeight() - 30, 20);
+        popularityCircle.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/icons/popularity.png")).toExternalForm())));
         this.viewPane = viewPane;
         selectedBuildingImagePattern = null;
         currentPane = null;
