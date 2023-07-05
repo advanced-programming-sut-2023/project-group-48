@@ -117,7 +117,8 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
-                    controller.enterProfileMenuJFX();
+                    if (isOffline)controller.enterProfileMenuJFX();
+                    else controller.enterOnlineMenuJFX();
                     stop();
                     controller.getGame().getCurrentMenuJFX().start(stage);
                 } catch (Exception e) {
