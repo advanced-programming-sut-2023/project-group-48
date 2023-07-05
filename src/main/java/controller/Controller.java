@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Game;
 import model.Match.Match;
+import model.SavableMap;
 import view.*;
 import view.Online.OnlineChatMenuJFX;
 import view.Online.OnlineFriendMenuJFX;
@@ -39,6 +40,7 @@ public class Controller {
     private boolean firstOnline = true;
     private Stage stage;
     private double sceneWidth, sceneHeight;
+    private SavableMap usingMap;
 
     public Controller(Stage stage) throws IOException {
         this.stage = stage;
@@ -203,6 +205,7 @@ public class Controller {
     }
 
     public void enterOnlineMapMenuJFX() {
+        game.setCurrentMenuJFX(onlineMapMenuJFX);
     }
 
     public void logOutJFX() throws IOException {
@@ -236,4 +239,11 @@ public class Controller {
         return matchMenuJFX.getMatchMenuController();
     }
 
+    public void setUsingMap(SavableMap selectedMap) {
+        this.usingMap = selectedMap;
+    }
+
+    public SavableMap getUsingMap() {
+        return usingMap;
+    }
 }
