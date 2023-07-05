@@ -4,9 +4,11 @@ import controller.Controller;
 import controller.MapMenuController;
 import controller.MatchMenuController;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Buildings.BuildingType;
@@ -21,7 +23,6 @@ public class MatchMenuJFX extends Application {
     private MapJFX mapJFX;
     private MatchBarJFX matchBarJFX;
     private SetTextureJFX setTextureJFX;
-
     private Stage stage;
 
     @Override
@@ -32,11 +33,26 @@ public class MatchMenuJFX extends Application {
         setViewPane();
         mapJFX = new MapJFX(controller, mapMenuController, matchMenuController, this, viewPane);
         matchBarJFX = new MatchBarJFX(this, viewPane);
+        setBar();
         Scene scene = new Scene(viewPane);
         stage.setScene(scene);
         mapJFX.getMapPane().requestFocus();
         mapJFX.refreshMiniMap();
         stage.show();
+    }
+
+    private void setBar() {
+        matchBarJFX.getShopCircle().setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    controller.enterShopMenuJFX();
+                    controller.getGame().getCurrentMenuJFX().start(stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     private void setViewPane() {

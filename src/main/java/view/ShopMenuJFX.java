@@ -23,7 +23,6 @@ import model.Match.Property;
 import java.util.Objects;
 
 public class ShopMenuJFX extends Application implements MenuJFX {
-
     private AnchorPane shopMenuPane;
     private Controller controller;
     private ShopMenuController shopMenuController;
