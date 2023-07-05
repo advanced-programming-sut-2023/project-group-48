@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
-<AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SendRequestJFX">
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SendRequestJFX">
 
     <children>
 
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="47.0" layoutX="14.0" layoutY="14.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="47.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="80.0" layoutX="535.0" layoutY="35.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="330.0" />
-        <Label alignment="CENTER" layoutX="549.0" layoutY="38.0" style="-fx-font-size: 50px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="Send Request" />
+        <Label alignment="CENTER" layoutX="549.0" layoutY="38.0" prefHeight="80.0" prefWidth="330.0" style="-fx-font-size: 50px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="Send Request" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="150.0" layoutX="312.0" layoutY="154.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="775.0" />
-        <Label alignment="CENTER" layoutX="328.0" layoutY="161.0" style="-fx-font-size: 22px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="property" />
-        <Label alignment="CENTER" layoutX="474.0" layoutY="161.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="user" />
+        <Label alignment="CENTER" layoutX="328.0" layoutY="161.0" prefHeight="40.0" prefWidth="100.0" style="-fx-font-size: 22px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="property" />
+        <Label alignment="CENTER" layoutX="474.0" layoutY="161.0" prefHeight="20.0" prefWidth="70.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="user" />
         <Label alignment="CENTER" layoutX="578.0" layoutY="161.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="amount" />
         <Label alignment="CENTER" layoutX="800.0" layoutY="161.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="price" />
         <Label alignment="CENTER" layoutX="901.0" layoutY="161.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="message" />
