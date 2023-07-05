@@ -1,5 +1,6 @@
 package view.Online;
 
+import client.Client;
 import controller.Controller;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -31,7 +33,8 @@ public class OnlineMapMenuJFX extends Application implements MenuJFX {
     private Controller controller;
     private AnchorPane mapMenuPane, mapsContent;
     private ScrollPane mapsScrollPane;
-    private Button backButton, useMap;
+    private Button backButton, useMap, sendButton;
+    private TextField sendTextField;
     private SavableMap selectedMap;
     private Stage stage;
     @Override
@@ -50,9 +53,22 @@ public class OnlineMapMenuJFX extends Application implements MenuJFX {
         useMap = (Button) mapMenuPane.getChildren().get(2);
         setUseMapButton();
 
+        sendButton = (Button) mapMenuPane.getChildren().get(3);
+        sendTextField = (TextField) mapMenuPane.getChildren().get(4);
+        setSendButton();
+
         Scene scene = new Scene(mapMenuPane);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void setSendButton() {
+        sendButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Client.sendMap(sendTextField.getText(), selectedMap);
+            }
+        });
     }
 
     private void setUseMapButton() {

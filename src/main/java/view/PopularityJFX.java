@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -17,8 +18,9 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class PopularityJFX {
+    private final MatchMenuJFX matchMenuJFX;
     private final MatchMenuController matchMenuController;
-    private AnchorPane popularityPane;
+    private Pane popularityPane;
     private Label myInfoLabel, popularityFactorsLabel, foodRateLabel, foodRateErrorLabel, fearRateLabel, fearRateErrorLabel,
             taxRateLabel, taxRateErrorLabel;
     private TextField foodRateTextField, fearRateTextField, taxRateTextField;
@@ -28,7 +30,8 @@ public class PopularityJFX {
     private AnchorPane foodListContentPane;
     private Circle closeButton;
 
-    public PopularityJFX(MatchMenuController matchMenuController) throws IOException {
+    public PopularityJFX(MatchMenuJFX matchMenuJFX, MatchMenuController matchMenuController) throws IOException {
+        this.matchMenuJFX = matchMenuJFX;
         this.matchMenuController = matchMenuController;
         popularityPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Popularity.fxml")));
         setMyInfo();
@@ -185,9 +188,10 @@ public class PopularityJFX {
     }
 
     public void popOut() {
+        matchMenuJFX.getMapJFX().getMapPane().getChildren().add(popularityPane);
     }
 
     public void popOff() {
-        ;
+        matchMenuJFX.getMapJFX().getMapPane().getChildren().remove(popularityPane);
     }
 }

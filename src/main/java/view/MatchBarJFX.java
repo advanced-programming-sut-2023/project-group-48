@@ -30,14 +30,22 @@ public class MatchBarJFX {
     private ImagePattern selectedBuildingImagePattern;
     private AnchorPane currentPane, clipBoard;
     private BuildingShape clipBoardBuildingShape;
-    private Circle popularityCircle;
+    private final Circle popularityCircle, shopCircle;
     private Label scribePanel;
 
     public MatchBarJFX(MatchMenuJFX matchMenuJFX, AnchorPane viewPane) throws IOException {
         this.matchMenuJFX = matchMenuJFX;
-        this.popularityJFX = new PopularityJFX(matchMenuJFX.getMatchMenuController());
+        this.popularityJFX = new PopularityJFX(matchMenuJFX, matchMenuJFX.getMatchMenuController());
+
         popularityCircle = new Circle(mainBarPane.getPrefWidth() - 20, mainBarPane.getPrefHeight() - 30, 20);
         popularityCircle.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/icons/popularity.png")).toExternalForm())));
+        mainBarPane.getChildren().add(popularityCircle);
+        setPopularityCircle();
+
+        shopCircle = new Circle(mainBarPane.getPrefWidth() - 20, mainBarPane.getPrefHeight() - 80, 20);
+        shopCircle.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Shop.png")).toExternalForm())));
+        mainBarPane.getChildren().add(shopCircle);
+
         this.viewPane = viewPane;
         selectedBuildingImagePattern = null;
         currentPane = null;
@@ -53,6 +61,15 @@ public class MatchBarJFX {
         setClipBoard();
         setScribePanel();
         buildingAnchorPanes = new ArrayList<>(Arrays.asList(normalBuildingsPane, gateHousePane, industrialCenterPane1, recruitmentCenterPane, storagePane, trapPane));
+    }
+
+    private void setPopularityCircle() {
+        popularityCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                popularityJFX.popOut();
+            }
+        });
     }
 
     private void setScribePanel() {
@@ -338,5 +355,13 @@ public class MatchBarJFX {
 
     public AnchorPane getMainBarPane() {
         return mainBarPane;
+    }
+
+    public Circle getPopularityCircle() {
+        return popularityCircle;
+    }
+
+    public Circle getShopCircle() {
+        return shopCircle;
     }
 }
