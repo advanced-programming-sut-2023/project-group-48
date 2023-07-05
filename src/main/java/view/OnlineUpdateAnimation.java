@@ -15,7 +15,7 @@ public class OnlineUpdateAnimation extends Transition {
     public OnlineUpdateAnimation(Controller controller) {
         this.controller = controller;
         this.setCycleCount(INDEFINITE);
-        this.setCycleDuration(Duration.millis(1000));
+        this.setCycleDuration(Duration.millis(4000));
     }
 
     @Override

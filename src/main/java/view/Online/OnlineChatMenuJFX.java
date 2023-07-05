@@ -121,7 +121,8 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
             label.setLayoutX(0);
             label.setLayoutY(i * 40);
             int finalI = i;
-            label.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            roomsContent.getChildren().add(label);
+            roomsContent.getChildren().get(roomsContent.getChildren().size() - 1).setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     currentRoom = Client.rooms.get(finalI);
@@ -131,7 +132,6 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
                     Client.seenMessage(currentRoom.roomID);
                 }
             });
-            roomsContent.getChildren().add(label);
         }
     }
 
@@ -262,7 +262,7 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
     }
 
     public void refresh() {
-        setRoomsPaneProperties();
+//        setRoomsPaneProperties();
         setChatRoomProperties();
     }
 }
