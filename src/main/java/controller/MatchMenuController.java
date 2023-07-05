@@ -395,4 +395,8 @@ public class MatchMenuController {
                 "\nhp: " + people.getHp() +
                 "\nhealth: " + people.isSick();
     }
+
+    public void deselect() {
+        disbandUnit();
+    }
 }

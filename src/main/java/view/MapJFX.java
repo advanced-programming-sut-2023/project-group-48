@@ -89,9 +89,9 @@ public class MapJFX {
 
     public void refreshMiniMap() {
         miniMap.setFill(new ImagePattern(matchMenuJFX.getScene().snapshot(new WritableImage((int) viewPane.getPrefWidth(),
-                                (int) (viewPane.getPrefHeight() - 200)))));
+                (int) (viewPane.getPrefHeight() - 200)))));
         miniMap.setLayoutX(viewPane.getPrefWidth() - mapPane.getLayoutX() - miniMap.getWidth());
-        miniMap.setLayoutY(- mapPane.getLayoutY());
+        miniMap.setLayoutY(-mapPane.getLayoutY());
         miniMap.toFront();
     }
 
@@ -262,18 +262,11 @@ public class MapJFX {
         addBuildingToMap(tile.getI(), tile.getJ(), matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern(), building);
     }
 
-    private void placePeople(Tile tile) {
-        String type = Pattern.compile(".+Color \\d/(?<type>.+)/.+").
-                matcher(matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern().getImage().getUrl()).group("type");
-        matchMenuController.createUnit(type, 1);
-        People people = tile.getCell().getPeople().get(tile.getCell().getPeople().size() - 1);
-        addPeopleToMap(tile.getI(), tile.getJ(), matchMenuJFX.getMatchBarJFX().getSelectedBuildingImagePattern(), people);
-    }
-
     private void movePeople(Tile tile) {
         matchMenuController.moveUnit(tile.getCell().getRow(), tile.getCell().getColumn());
         for (PeopleShape selectedPerson : selectedPeopleShapes) {
-            // Animations
+            selectedPerson.setWalkingAnimation(new WalkingAnimation(controller.getGame().getCurrentMatch(), selectedPerson, this));
+            selectedPerson.getWalkingAnimation().play();
         }
     }
 
@@ -347,7 +340,7 @@ public class MapJFX {
         } else {
             matchMenuController.disbandUnit();
             for (PeopleShape selectedPersonShape : selectedPeopleShapes) {
-                selectedPersonShape.setOpacity(1);
+                selectedPersonShape.setStrokeWidth(0);
             }
             selectedPeopleShapes.clear();
         }
@@ -361,6 +354,7 @@ public class MapJFX {
         matchMenuJFX.getMatchBarJFX().deselect();
         buildingSelectionJFX.popOff();
         mapPane.requestFocus();
+        matchMenuController.deselect();
     }
 
     private void locatePane(Pane pane, double locationX, double locationY) {
@@ -412,7 +406,7 @@ public class MapJFX {
         rectangle.setFill(imagePattern);
         mapPane.getChildren().add(rectangle);
         map[i][j].addPeopleShape(rectangle);
-        rectangle.hoverProperty().addListener(new ChangeListener<Boolean>() {
+        map[i][j].getPeopleShapes().get(map[i][j].getPeopleShapes().size() - 1).hoverProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 if (!t1) {
@@ -426,16 +420,17 @@ public class MapJFX {
                 }
             }
         });
-        rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        map[i][j].getPeopleShapes().get(map[i][j].getPeopleShapes().size() - 1).setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxx" + map[i][j].getPeopleShapes().size());
                 deSelect();
 
                 for (PeopleShape personShape : map[i][j].getPeopleShapes()) {
-                    selectedPeopleShapes.add(personShape);
-                    personShape.setOpacity(0.8);
+                    if (!selectedPeopleShapes.contains(personShape)) selectedPeopleShapes.add(personShape);
+                    personShape.setStrokeWidth(1);
                 }
+                matchMenuController.selectUnit(selectedPeopleShapes);
             }
         });
     }
