@@ -37,15 +37,6 @@ public class MatchBarJFX {
         this.matchMenuJFX = matchMenuJFX;
         this.popularityJFX = new PopularityJFX(matchMenuJFX, matchMenuJFX.getMatchMenuController());
 
-        popularityCircle = new Circle(mainBarPane.getPrefWidth() - 20, mainBarPane.getPrefHeight() - 30, 20);
-        popularityCircle.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/icons/popularity.png")).toExternalForm())));
-        mainBarPane.getChildren().add(popularityCircle);
-        setPopularityCircle();
-
-        shopCircle = new Circle(mainBarPane.getPrefWidth() - 20, mainBarPane.getPrefHeight() - 80, 20);
-        shopCircle.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Shop.png")).toExternalForm())));
-        mainBarPane.getChildren().add(shopCircle);
-
         this.viewPane = viewPane;
         selectedBuildingImagePattern = null;
         currentPane = null;
@@ -60,6 +51,15 @@ public class MatchBarJFX {
         setTrapPane();
         setClipBoard();
         setScribePanel();
+
+        popularityCircle = new Circle(mainBarPane.getPrefWidth() - 20, mainBarPane.getPrefHeight() - 30, 20);
+        popularityCircle.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/icons/popularity.png")).toExternalForm())));
+        mainBarPane.getChildren().add(popularityCircle);
+        setPopularityCircle();
+
+        shopCircle = new Circle(mainBarPane.getPrefWidth() - 20, mainBarPane.getPrefHeight() - 80, 20);
+        shopCircle.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/buildings/Normal/Shop.png")).toExternalForm())));
+        mainBarPane.getChildren().add(shopCircle);
         buildingAnchorPanes = new ArrayList<>(Arrays.asList(normalBuildingsPane, gateHousePane, industrialCenterPane1, recruitmentCenterPane, storagePane, trapPane));
     }
 
@@ -95,9 +95,12 @@ public class MatchBarJFX {
         clipBoard.getChildren().add(clipBoardBuildingShape);
         clipBoardBuildingShape.setLayoutX(mainBarPane.getPrefWidth() / 2 - clipBoardBuildingShape.getWidth() / 2);
         clipBoardBuildingShape.setLayoutY(mainBarPane.getPrefHeight() / 2 - clipBoardBuildingShape.getHeight() / 2);
+        mainBarPane.getChildren().add(clipBoardBuildingShape);
     }
 
     public void addToClipBoard(BuildingShape buildingShape) {
+        System.out.println("added to clip board");
+        System.out.println(buildingShape.getBuilding().getType());
         clipBoardBuildingShape.setFill(buildingShape.getFill());
         clipBoardBuildingShape.setWidth(buildingShape.getWidth());
         clipBoardBuildingShape.setHeight(buildingShape.getHeight());
@@ -108,6 +111,7 @@ public class MatchBarJFX {
     }
 
     private void removeFromClipBoar() {
+        System.out.println("removed from clip board");
         clipBoardBuildingShape.setVisible(false);
     }
 
@@ -363,5 +367,9 @@ public class MatchBarJFX {
 
     public Circle getShopCircle() {
         return shopCircle;
+    }
+
+    public BuildingShape getClipBoardBuildingShape() {
+        return clipBoardBuildingShape;
     }
 }

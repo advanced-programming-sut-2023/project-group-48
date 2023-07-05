@@ -17,6 +17,7 @@ public class Match {
     private final int rounds;
     private int currentRound;
     private ArrayList<User> players;
+    private ArrayList<String> playersInString = new ArrayList<>();
     private final ArrayList<Governance> governances;
     private final ArrayList<Troop> sultans;
     private Governance matchWinner;
@@ -377,7 +378,10 @@ public class Match {
         return sultans.get(index);
     }
 
-    public ArrayList<User> getPlayers(){
-        return players;
+    public ArrayList<String> getPlayers(){
+        for (User user : players){
+            playersInString.add(user.toString());
+        }
+        return playersInString;
     }
 }

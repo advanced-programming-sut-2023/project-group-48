@@ -31,6 +31,8 @@ public class Controller {
     private final TradeMenuJFX tradeMenuJFX;
     private final SendRequestJFX sendRequestJFX;
     private final ShowRequestsJFX showRequestsJFX;
+    private final TradeListJFX tradeListJFX;
+    private final TradeHistoryJFX tradeHistoryJFX;
     private final OnlineMenuJFX onlineMenuJFX;
     private final OnlineChatMenuJFX onlineChatMenuJFX;
     private final OnlineFriendMenuJFX onlineFriendMenuJFX;
@@ -76,6 +78,12 @@ public class Controller {
         this.showRequestsJFX = new ShowRequestsJFX();
         showRequestsJFX.setController(this);
         showRequestsJFX.setTradeMenuController(tradeMenuJFX.getTradeMenuController());
+        this.tradeListJFX = new TradeListJFX();
+        tradeListJFX.setController(this);
+        tradeListJFX.setTradeMenuController(tradeMenuJFX.getTradeMenuController());
+        this.tradeHistoryJFX = new TradeHistoryJFX();
+        tradeHistoryJFX.setController(this);
+        tradeHistoryJFX.setTradeMenuController(tradeMenuJFX.getTradeMenuController());
         this.onlineMenuJFX = new OnlineMenuJFX();
         onlineMenuJFX.setController(this);
         this.onlineChatMenuJFX = new OnlineChatMenuJFX();
@@ -180,6 +188,14 @@ public class Controller {
 
     public void enterShowRequestsJFX() {
         game.setCurrentMenuJFX(showRequestsJFX);
+    }
+
+    public void enterTradeListJFX() {
+        game.setCurrentMenuJFX(tradeListJFX);
+    }
+
+    public void enterTradeHistoryJFX() {
+        game.setCurrentMenuJFX(tradeHistoryJFX);
     }
 
     public void enterOnlineMenuJFX() throws IOException {

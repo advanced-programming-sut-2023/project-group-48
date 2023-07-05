@@ -7,10 +7,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -101,7 +98,19 @@ public class SendRequestJFX extends Application implements MenuJFX {
         EventHandler clickHandlerRequest = new EventHandler() {
             @Override
             public void handle(Event event) {
-                // TODO : farnam
+                String result = tradeMenuController.addTrade(users.getSelectionModel().getSelectedItem().toString(), property.getSelectionModel().getSelectedItem().toString(), Integer.parseInt(amount.getText()), Integer.parseInt(price.getText()), message.getText());
+                if (!result.startsWith("Trade")){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("trade operation is failed!");
+                    alert.setContentText(result);
+                    alert.showAndWait();
+                }
+                else {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setHeaderText("trade operation is successful!");
+                    alert.setContentText(result);
+                    alert.showAndWait();
+                }
                 amount.setText("0");
             }
         };
@@ -116,7 +125,27 @@ public class SendRequestJFX extends Application implements MenuJFX {
         EventHandler clickHandlerDonate = new EventHandler() {
             @Override
             public void handle(Event event) {
-                // TODO : farnam
+                if (Integer.parseInt(price.getText()) != 0){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("trade operation is failed!");
+                    alert.setContentText("you should put 0 in price for donate!");
+                    alert.showAndWait();
+                }
+                else {
+                    String result = tradeMenuController.addTrade(users.getSelectionModel().getSelectedItem().toString(), property.getSelectionModel().getSelectedItem().toString(), Integer.parseInt(amount.getText()), 0, message.getText());
+                    if (!result.startsWith("Trade")){
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setHeaderText("trade operation is failed!");
+                        alert.setContentText(result);
+                        alert.showAndWait();
+                    }
+                    else {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setHeaderText("trade operation is successful!");
+                        alert.setContentText(result);
+                        alert.showAndWait();
+                    }
+                }
                 amount.setText("0");
             }
         };
@@ -151,13 +180,11 @@ public class SendRequestJFX extends Application implements MenuJFX {
 
     private void setUsers() {
         users.getItems().addAll(controller.getGame().getCurrentMatch().getPlayers());
-        // TODO : check for nonstring type in choicebox
         users.getSelectionModel().selectFirst();
     }
 
     private void setProperty() {
-        property.getItems().addAll(Property.getAllProperties());
-        // TODO : check for nonstring type in choicebox
+        property.getItems().addAll(Property.getAllPropertiesInString());
         property.getSelectionModel().selectFirst();
     }
 

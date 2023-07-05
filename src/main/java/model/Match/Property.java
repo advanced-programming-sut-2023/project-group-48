@@ -1,11 +1,15 @@
 package model.Match;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public enum Property {
     COIN("coin"), WOOD("wood"), GOLD("gold"), STONE("stone"), IRON("iron"), HORSE("horse"), OX("ox"), WHEAT("wheat"), FLOUR("flour"), BITUMEN("bitumen"), OIL("oil"), APPLE("apple"), HOPS("hops"), PITCH("pitch"), BARLEY("barley"), MEAT("meat"), CHEESE("cheese"), BREAD("bread"), BEER("beer"), ARMOUR("armour"), MACE("mace"), SWORD("sword"), BOW("bow"), SPEAR("spear"), PIKE("pike"), CROSSBOW("crossbow"), LEATHERARMOUR("leatherarmour");
     private static final Property[] properties = {COIN, WOOD, GOLD, STONE, IRON, HORSE, OX, WHEAT, FLOUR, BITUMEN, OIL, APPLE, HOPS, BARLEY, MEAT, CHEESE, BREAD, BEER, ARMOUR, MACE, SWORD, BOW, SPEAR, PIKE, CROSSBOW};
     private static final Property[] foods = {MEAT, APPLE, CHEESE, BREAD};
     private static final Property[] weapons = {ARMOUR, MACE, SWORD, BOW, SPEAR, PIKE, CROSSBOW, LEATHERARMOUR};
     private final String propertyInString;
+    private static ArrayList<String> propertiesInString = new ArrayList<>();
 
     private Property(String propertyInString) {
         this.propertyInString = propertyInString;
@@ -13,6 +17,13 @@ public enum Property {
 
     public static Property[] getAllProperties() {
         return properties;
+    }
+
+    public static ArrayList<String> getAllPropertiesInString() {
+        for (Property property : properties) {
+            propertiesInString.add(property.propertyInString);
+        }
+        return propertiesInString;
     }
 
     public static Property[] getAllFoods() {
