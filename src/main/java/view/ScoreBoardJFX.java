@@ -29,7 +29,7 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
     private ProfileMenuController profileMenuController;
     private AnchorPane scoreBoardPane;
     private ScrollPane scoreBoardScrollPane;
-    private AnchorPane anchorPane;
+    private AnchorPane scoreBoardContent;
     private Button backButton;
     private ArrayList<Avatar> avatars;
     private ArrayList<User> scoreBoard;
@@ -43,6 +43,7 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
         scoreBoardPane.setBackground(Background.fill(new ImagePattern(new Image(getClass().getResource("/backgrounds/7.png").toExternalForm()))));
 
         scoreBoardScrollPane = (ScrollPane) scoreBoardPane.getChildren().get(0);
+        scoreBoardContent = (AnchorPane) scoreBoardScrollPane.getContent();
         setScoreBoard();
 
         backButton = (Button) scoreBoardPane.getChildren().get(1);
@@ -61,10 +62,10 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
     }
 
     private void setScoreBoard() {
+        scoreBoardPane.getChildren().clear();
         scoreBoard = profileMenuController.getScoreBoard();
         avatars = new ArrayList<>();
-        anchorPane = (AnchorPane) scoreBoardScrollPane.getContent();
-        anchorPane.setPrefHeight(Avatar.PROFILE_RADIUS * (1.5 * scoreBoard.size() + 1));
+        scoreBoardContent.setPrefHeight(Avatar.PROFILE_RADIUS * (1.5 * scoreBoard.size() + 1));
         for (int i = 0; i < scoreBoard.size(); i++) {
             User user = scoreBoard.get(i);
             Avatar avatar = new Avatar(Avatar.PROFILE_RADIUS * 2, Avatar.PROFILE_RADIUS * (i * 3 + 2),
@@ -79,11 +80,11 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
                 lastSeenLabel = getLabel(highScoreLabel.getLayoutX() + highScoreLabel.getPrefWidth() + Avatar.PROFILE_RADIUS,
                         Avatar.PROFILE_RADIUS * (i * 3 + 2), String.valueOf(user.lastSeen));
             }
-            anchorPane.getChildren().add(avatar);
-            anchorPane.getChildren().add(usernameLabel);
-            anchorPane.getChildren().add(highScoreLabel);
+            scoreBoardContent.getChildren().add(avatar);
+            scoreBoardContent.getChildren().add(usernameLabel);
+            scoreBoardContent.getChildren().add(highScoreLabel);
             if (!isOffline)
-                anchorPane.getChildren().add(lastSeenLabel);
+                scoreBoardContent.getChildren().add(lastSeenLabel);
         }
         for (Avatar avatar : avatars) {
             makeAvatarClickable(avatar);
@@ -141,7 +142,7 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
         Adjust.adjustPane(scoreBoardPane, ratioX, ratioY);
         Adjust.adjustScrollPane(scoreBoardScrollPane, ratioX, ratioY);
         Adjust.adjustButton(backButton, ratioX, ratioY);
-        for (Node child : anchorPane.getChildren()) {
+        for (Node child : scoreBoardContent.getChildren()) {
             if (child instanceof Avatar)
                 Adjust.adjustCircle((Avatar) child, ratioX, ratioY);
             else if (child instanceof Label)
@@ -161,5 +162,9 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
 
     public void setOffline(boolean offline) {
         isOffline = offline;
+    }
+
+    public void refresh() {
+        setScoreBoard();
     }
 }
