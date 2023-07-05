@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ShowRequestsJFX">
+
+    <children>
+
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="47.0" layoutX="14.0" layoutY="14.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="47.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="66.0" layoutX="580.0" layoutY="284.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="282.0" />
+        <Label alignment="CENTER" layoutX="653.0" layoutY="293.0" style="-fx-font-size: 32px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="Trade List" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="66.0" layoutX="580.0" layoutY="370.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="282.0" />
+        <Label alignment="CENTER" layoutX="631.0" layoutY="378.0" style="-fx-font-size: 32px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="Trade History" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="80.0" layoutX="533.0" layoutY="63.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="376.0" />
+        <Label alignment="CENTER" layoutX="554.0" layoutY="66.0" style="-fx-font-size: 50px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="Show Requests" />
+
+    </children>
+
+</AnchorPane>

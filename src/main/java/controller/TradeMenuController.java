@@ -4,6 +4,7 @@ import model.Match.Property;
 import model.Match.Request;
 import model.User;
 
+import java.lang.reflect.AnnotatedArrayType;
 import java.util.ArrayList;
 
 public class TradeMenuController {
@@ -27,16 +28,17 @@ public class TradeMenuController {
         return "Trade request sent successfully!";
     }
 
-    public String tradeList() {
+    public ArrayList<Request> tradeList() {
         ArrayList<Request> requests = controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getReceivedRequests();
-        StringBuilder result = new StringBuilder("your trades:");
-        for (Request receivedRequest : requests) {
-            result.append("\n").append(receivedRequest.getId()).append(". Sender: ").append(receivedRequest.getSender().getOwner().getUsername()).
-                    append(", Property: ").append(receivedRequest.getProperty().getPropertyInString()).append(", Amount: ").
-                    append(receivedRequest.getAmount()).append(", Price: ").append(receivedRequest.getPrice()).
-                    append(", Sender's Message: ").append(receivedRequest.getSenderMessage());
-        }
-        return result.toString();
+//        StringBuilder result = new StringBuilder("your trades:");
+//        for (Request receivedRequest : requests) {
+//            result.append("\n").append(receivedRequest.getId()).append(". Sender: ").append(receivedRequest.getSender().getOwner().getUsername()).
+//                    append(", Property: ").append(receivedRequest.getProperty().getPropertyInString()).append(", Amount: ").
+//                    append(receivedRequest.getAmount()).append(", Price: ").append(receivedRequest.getPrice()).
+//                    append(", Sender's Message: ").append(receivedRequest.getSenderMessage());
+//        }
+//        return result.toString();
+        return requests;
     }
 
     public String answerRequest(int id, String message, String answer) {
@@ -66,16 +68,17 @@ public class TradeMenuController {
         return "Request answered successfully!";
     }
 
-    public String tradeHistory() {
+    public ArrayList<Request> tradeHistory() {
         ArrayList<Request> requests = controller.getGame().getCurrentMatch().getCurrentPlayer().getGovernance().getRequestsHistory();
-        StringBuilder result = new StringBuilder("your trade history:");
-        for (Request request : requests) {
-            result.append("\n").append(request.getId()).append(". Sender: ").append(request.getSender().getOwner().getUsername()).
-                    append(", Property: ").append(request.getProperty().getPropertyInString()).append(", Amount: ").
-                    append(request.getAmount()).append(", Price: ").append(request.getPrice()).append(", Sender's Message: ").
-                    append(request.getSenderMessage()).append(", Receiver's Message: ").append(request.getReceiverMessage()).
-                    append(", Answer: ").append(request.isAccepted() ? "Yes" : "No");
-        }
-        return result.toString();
+//        StringBuilder result = new StringBuilder("your trade history:");
+//        for (Request request : requests) {
+//            result.append("\n").append(request.getId()).append(". Sender: ").append(request.getSender().getOwner().getUsername()).
+//                    append(", Property: ").append(request.getProperty().getPropertyInString()).append(", Amount: ").
+//                    append(request.getAmount()).append(", Price: ").append(request.getPrice()).append(", Sender's Message: ").
+//                    append(request.getSenderMessage()).append(", Receiver's Message: ").append(request.getReceiverMessage()).
+//                    append(", Answer: ").append(request.isAccepted() ? "Yes" : "No");
+//        }
+//        return result.toString();
+        return requests;
     }
 }

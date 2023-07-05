@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TradeHistoryJFX">
+
+    <children>
+
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="47.0" layoutX="14.0" layoutY="14.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="47.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="80.0" layoutX="535.0" layoutY="60.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="330.0" />
+        <Label alignment="CENTER" layoutX="552.0" layoutY="63.0" style="-fx-font-size: 50px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="Trade History" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8bd3cc" height="80.0" layoutX="213.0" layoutY="183.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="1137.0" />
+        <Label alignment="CENTER" layoutX="246.0" layoutY="207.0" style="-fx-font-size: 22px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="id" />
+        <Label alignment="CENTER" layoutX="316.0" layoutY="207.0" style="-fx-font-size: 22px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="property" />
+        <Label alignment="CENTER" layoutX="446.0" layoutY="207.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="sender" />
+        <Label alignment="CENTER" layoutX="535.0" layoutY="207.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="amount" />
+        <Label alignment="CENTER" layoutX="657.0" layoutY="207.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="price" />
+        <Label alignment="CENTER" layoutX="740.0" layoutY="207.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="receiver's message" />
+        <Label alignment="CENTER" layoutX="1008.0" layoutY="207.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="sender's message" />
+        <Label alignment="CENTER" layoutX="1270.0" layoutY="207.0" style="-fx-font-size: 24px;             -fx-fill: #818181;             -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );" text="state" />
+
+    </children>
+
+</AnchorPane>
