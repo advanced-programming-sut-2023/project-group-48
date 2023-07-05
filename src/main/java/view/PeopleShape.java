@@ -8,9 +8,10 @@ public class PeopleShape extends Rectangle {
     private Tile currentTile;
     private WalkingAnimation walkingAnimation;
 
-    public PeopleShape(double width, double height, People people) {
+    public PeopleShape(double width, double height, People people, Tile currentTile) {
         super(width, height);
         this.people = people;
+        this.currentTile = currentTile;
     }
 
     public People getPeople() {

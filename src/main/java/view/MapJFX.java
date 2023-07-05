@@ -266,7 +266,7 @@ public class MapJFX {
         matchMenuController.moveUnit(tile.getCell().getRow(), tile.getCell().getColumn());
         for (PeopleShape selectedPerson : selectedPeopleShapes) {
             selectedPerson.setWalkingAnimation(new WalkingAnimation(controller.getGame().getCurrentMatch(), selectedPerson, this));
-            selectedPerson.getWalkingAnimation().play();
+//            selectedPerson.getWalkingAnimation().play();
         }
     }
 
@@ -400,7 +400,8 @@ public class MapJFX {
     }
 
     public void addPeopleToMap(int i, int j, ImagePattern imagePattern, People people) {
-        PeopleShape rectangle = new PeopleShape(Tile.WIDTH, imagePattern.getImage().getHeight() / imagePattern.getImage().getWidth() * Tile.WIDTH, people);
+        PeopleShape rectangle = new PeopleShape(Tile.WIDTH, imagePattern.getImage().getHeight() / imagePattern.getImage().getWidth() * Tile.WIDTH,
+                people, map[i][j]);
         rectangle.setLayoutX(map[i][j].getX() - rectangle.getWidth() / 2);
         rectangle.setLayoutY(map[i][j].getY() + Tile.HEIGHT / 2 - rectangle.getHeight());
         rectangle.setFill(imagePattern);

@@ -26,6 +26,9 @@ public class OnlineUpdateAnimation extends Transition {
             ((OnlineFriendMenuJFX) controller.getGame().getCurrentMenuJFX()).refresh();
         } else if (controller.getGame().getCurrentMenuJFX() instanceof OnlineMapMenuJFX) {
             ((OnlineMapMenuJFX) controller.getGame().getCurrentMenuJFX()).refresh();
+        } else if (controller.getGame().getCurrentMenuJFX() instanceof ScoreBoardJFX &&
+                !((ScoreBoardJFX) controller.getGame().getCurrentMenuJFX()).isOffline()) {
+            ((ScoreBoardJFX) controller.getGame().getCurrentMenuJFX()).refresh();
         }
     }
 }
