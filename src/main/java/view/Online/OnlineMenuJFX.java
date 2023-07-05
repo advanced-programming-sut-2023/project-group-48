@@ -169,6 +169,7 @@ public class OnlineMenuJFX extends Application implements MenuJFX {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
+
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

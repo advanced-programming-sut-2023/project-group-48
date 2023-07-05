@@ -262,7 +262,8 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
     }
 
     public void refresh() {
-//        setRoomsPaneProperties();
+        currentRoom = Client.getRoomByID(currentRoom.roomID);
+        setRoomsPaneProperties();
         setChatRoomProperties();
     }
 }

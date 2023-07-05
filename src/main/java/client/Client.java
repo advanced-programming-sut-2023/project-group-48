@@ -320,4 +320,13 @@ public class Client {
         }
         rooms.add(room);
     }
+
+    public static Room getRoomByID(String roomID) {
+        for (Room room : rooms) {
+            if (room.roomID.equals(roomID)) {
+                return room;
+            }
+        }
+        return null;
+    }
 }
