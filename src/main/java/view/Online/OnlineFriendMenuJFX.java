@@ -210,4 +210,9 @@ public class OnlineFriendMenuJFX extends Application implements MenuJFX {
         adjust(stage.getScene().getWidth() / friendMenuPane.getPrefWidth(),
                 stage.getScene().getHeight() / friendMenuPane.getPrefHeight());
     }
+
+    public void refresh() {
+        setRequestsProperties();
+        setFriendsProperties();
+    }
 }

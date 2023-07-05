@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import view.Adjust;
 import view.MenuJFX;
+import view.OnlineUpdateAnimation;
 
 import java.util.Objects;
 
@@ -24,6 +25,7 @@ public class OnlineMenuJFX extends Application implements MenuJFX {
     private AnchorPane onlineMenuPane;
     private Rectangle chatButton, mapButton, friendButton, scoreboardButton, onlineGameButton, exitButton;
     private Label chatLabel, mapLabel, friendLabel, scoreboardLabel, onlineGameLabel, exitLabel;
+    private OnlineUpdateAnimation onlineUpdateAnimation;
     private Stage stage;
 
     @Override
@@ -185,6 +187,7 @@ public class OnlineMenuJFX extends Application implements MenuJFX {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
+                    onlineUpdateAnimation.stop();
                     controller.exitJFX();
                     stop();
                     controller.getGame().getCurrentMenuJFX().start(stage);
@@ -208,6 +211,14 @@ public class OnlineMenuJFX extends Application implements MenuJFX {
         this.controller = controller;
     }
 
+    public OnlineUpdateAnimation getOnlineUpdateAnimation() {
+        return onlineUpdateAnimation;
+    }
+
+    public void setOnlineUpdateAnimation(OnlineUpdateAnimation onlineUpdateAnimation) {
+        this.onlineUpdateAnimation = onlineUpdateAnimation;
+    }
+
     @Override
     public void adjust(double ratioX, double ratioY) {
         Adjust.adjustPane(onlineMenuPane, ratioX, ratioY);
@@ -224,7 +235,6 @@ public class OnlineMenuJFX extends Application implements MenuJFX {
         Adjust.adjustLabel(onlineGameLabel, ratioX, ratioY);
         Adjust.adjustLabel(exitLabel, ratioX, ratioY);
     }
-
 
     @Override
     public void adjustWithScene() {

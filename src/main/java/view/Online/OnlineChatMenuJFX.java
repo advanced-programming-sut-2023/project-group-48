@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.Room;
 import model.TextMessage;
@@ -111,6 +112,8 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
         roomsContent.setPrefHeight(count * 40);
         for (int i = 0; i < count; i++) {
             Label label = getLabel(Client.rooms.get(i).roomID);
+            label.setPrefWidth(roomsContent.getPrefWidth());
+            label.setTextAlignment(TextAlignment.CENTER);
             label.setLayoutX(0);
             label.setLayoutY(i * 40);
             int finalI = i;
@@ -148,10 +151,12 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
             for (int i = 0; i < count; i++) {
                 Avatar avatar = new Avatar(Avatar.PROFILE_RADIUS, Avatar.PROFILE_RADIUS + i * (40 + Avatar.PROFILE_RADIUS * 2),
                         imagePatterns.get(currentRoom.users.indexOf(currentRoom.messages.get(i).username)));
-                Label label = getLabel(currentRoom.messages.get(i).username + "|" +
-                        currentRoom.messages.get(i).message + "|" +
-                        currentRoom.messages.get(i).sentTime + "|" +
+                Label label = getLabel(currentRoom.messages.get(i).username + " | " +
+                        currentRoom.messages.get(i).message + " | " +
+                        currentRoom.messages.get(i).sentTime + " | " +
                         (currentRoom.messages.get(i).seen ? "." : "#"));
+                label.setTextAlignment(TextAlignment.CENTER);
+                label.setPrefWidth(chatContent.getPrefWidth());
                 label.setLayoutX(0);
                 label.setLayoutY(i * (40 + Avatar.PROFILE_RADIUS * 2) + Avatar.PROFILE_RADIUS * 2);
                 label.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -242,5 +247,10 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
     @Override
     public void adjustWithScene() {
         adjust(stage.getScene().getWidth() / chatMenuPane.getPrefWidth(), stage.getScene().getHeight() / chatMenuPane.getPrefHeight());
+    }
+
+    public void refresh() {
+        setRoomsPaneProperties();
+        setChatRoomProperties();
     }
 }

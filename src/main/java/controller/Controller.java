@@ -184,6 +184,8 @@ public class Controller {
 
     public void enterOnlineMenuJFX() throws IOException {
         if (firstOnline) {
+            onlineMenuJFX.setOnlineUpdateAnimation(new OnlineUpdateAnimation(this));
+            onlineMenuJFX.getOnlineUpdateAnimation().play();
             Client.startClient("localhost", Port);
             Client.startConnection();
             firstOnline = false;
