@@ -92,6 +92,7 @@ public class RequestOnline {
         textMessage.message = message;
         textMessage.sentTime = java.time.LocalTime.now().toString().substring(0,5);
         this.roomId = roomId;
+        this.message = textMessage;
     	sendMessage = true;
     }
 

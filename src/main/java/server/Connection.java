@@ -57,8 +57,19 @@ public class Connection extends Thread{
                 if(onlineUser.getUsername().equals(user.getUsername())){
                     if(DigestUtils.sha256Hex(user.getUsername()+user.getEncryptedPassword()).equals(sessionTokenPacket.getToken())) {
                         user = onlineUser;
+                        boolean shouldAdd = true;
+                        for (String s : Server.rooms.get(0).users) {
+                            if(s.equals(user.getUsername())){
+                                shouldAdd = false;
+                                break;
+                            }
+                        }
+                        if(shouldAdd){
+                            Server.rooms.get(0).users.add(user.getUsername());
+                        }
                         dataOutputStream.writeUTF("success");
                         setLastSeenOnline();
+                        successfullyIntroduced = true;
                         return;
                     }else{
                         dataOutputStream.writeUTF("fail");
@@ -71,8 +82,10 @@ public class Connection extends Thread{
                 user = Server.getUserByUsername(user.getUsername());
                 if(DigestUtils.sha256Hex(user.getUsername()+user.getEncryptedPassword()).equals(sessionTokenPacket.getToken())){
                     dataOutputStream.writeUTF("success");
+                    Server.rooms.get(0).users.add(user.getUsername());
                     Server.onlineUsers.add(user);
                     setLastSeenOnline();
+
                     tokens.add(sessionTokenPacket.getToken());
                     successfullyIntroduced = true;
                 }else{
@@ -157,11 +170,13 @@ public class Connection extends Thread{
 
     public void logout() {
         try {
+            System.out.println("baba");
             setLastSeenOffline();
             tokens.remove(sessionTokenPacket.getToken());
             Server.connections.remove(this);
             socket.close();
             setLastSeenOffline();
+            System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " closed.");
         } catch (IOException e) {
             System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
             throw new RuntimeException(e);
@@ -220,6 +235,7 @@ public class Connection extends Thread{
             return;
         }
         if(room.roomID.equals("0")){
+            System.out.println("New Message: " + message.message);
             room.messages.add(message);
 //            RequestOnline request = new RequestOnline();
 //            request.setReceiveMessage(message, roomId);
@@ -317,10 +333,12 @@ public class Connection extends Thread{
 
 
     public void updateRoom(Room room){
+        System.out.println("debug: " + room.messages);
         for (Connection connection : Server.connections) {
             for (String username : room.users) {
                 if(connection.user.getUsername().equals(username)){
                     RequestOnline request = new RequestOnline();
+                    System.out.println("debug1: " + room.messages.size());
                     request.setUpdateRoom(room);
                     String json = new Gson().toJson(request);
                     try {
@@ -385,9 +403,7 @@ public class Connection extends Thread{
         if(room == null){
             return;
         }
-        for (TextMessage message : room.messages) {
-            message.seen = true;
-        }
+        room.seenAllMessages();
         updateRoom(room);
         return;
     }

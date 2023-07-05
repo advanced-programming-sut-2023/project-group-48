@@ -44,13 +44,27 @@ public class NotifHandler extends Thread{
                     Client.gameRooms.add(request.gameRoom);
                 }
                 if(request.updateRoom){
-                    for (Room room : Client.rooms) {
-                        if(room.roomID.equals(request.room.roomID)) {
-                            room = request.room;
-                            room.shouldUpdate = true;
-                            break;
-                        }
-                    }
+                    Client.setRoomByID(request.room.roomID, request.room);
+//                    System.out.println("room updated2");
+//                    for (Room room : Client.rooms) {
+//                        if(room.roomID.equals(request.room.roomID)) {
+//                            room = request.room;
+//                            room.shouldUpdate = true;
+//                            System.out.println("room updated3");
+//                            System.out.println(room);
+//                            System.out.println(room.messages);
+//                            System.out.println(Client.rooms.get(0).messages);
+//                            System.out.println(Client.rooms);
+//                            break;
+//                        }
+//                    }
+//                    if(Client.rooms.size() > 0) {
+//                        Client.rooms.remove(0);
+//                        Client.rooms.add(request.room);
+//                        if(Client.rooms.get(0).messages.size() > 0) {
+//                            System.out.println("room updated4: " + Client.rooms.get(0).messages.get(0).message);
+//                        }
+//                    }
                 }
                 if(request.updateGameRoom){
                     for (GameRoom gameRoom : Client.gameRooms) {

@@ -114,6 +114,9 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
             System.out.println(count);
             System.out.println(Client.rooms.get(i).roomID);
             Label label = getLabel(Client.rooms.get(i).roomID);
+            if(label.getText().equals("0")){
+                label.setText("Public Room");
+            }
             label.setLayoutX(0);
             label.setLayoutY((i + 1) * 40);
             int finalI = i;
@@ -121,6 +124,7 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     currentRoom = Client.rooms.get(finalI);
+                    System.out.println("cdrtgyhujkiojyhtgrf" + currentRoom.messages);
                     setChatRoomProperties();
                     chatStatus.setText("Chatting in " + currentRoom.roomID);
                     Client.seenMessage(currentRoom.roomID);
@@ -134,6 +138,7 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
         createRoomButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                Client.newRoom(controller.getGame().getCurrentUser().getUsername());
                 Client.newRoom(createRoomTextField.getText());
                 setRoomsPaneProperties();
             }
@@ -148,6 +153,7 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
                 imagePatterns.add(new ImagePattern(new Image(controller.getGame().getUserByUsername(user).getAvatarUrl())));
             }
             int count = currentRoom.messages.size();
+            System.out.println("mm" + currentRoom.messages.size() + " " + currentRoom.roomID);
             for (int i = 0; i < count; i++) {
                 Avatar avatar = new Avatar(Avatar.PROFILE_RADIUS, Avatar.PROFILE_RADIUS + i * (40 + Avatar.PROFILE_RADIUS * 2),
                         imagePatterns.get(currentRoom.users.indexOf(currentRoom.messages.get(i).username)));
@@ -155,6 +161,11 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
                         currentRoom.messages.get(i).message + "|" +
                         currentRoom.messages.get(i).sentTime + "|" +
                         (currentRoom.messages.get(i).seen ? "." : "#"));
+                System.out.println("yoooo");
+                for (TextMessage message : currentRoom.messages) {
+                    System.out.println(message.seen);
+                }
+                System.out.println("soooo");
                 label.setLayoutX(0);
                 label.setLayoutY(i * (40 + Avatar.PROFILE_RADIUS * 2) + Avatar.PROFILE_RADIUS * 2);
                 label.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -176,7 +187,10 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
                 if (!isEditing) Client.sendMessage(currentRoom.roomID, sendMessageTextField.getText());
                 else Client.editMessage(currentRoom.roomID,
                         currentRoom.messages.get((chatContent.getChildren().indexOf(selectedChat) - 1) / 2),
-                        selectedChat.getText());
+                        sendMessageTextField.getText());
+//                else Client.editMessage(currentRoom.roomID,
+//                        currentRoom.messages.get(0),
+//                        selectedChat.getText());
                 setChatRoomProperties();
             }
         });

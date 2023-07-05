@@ -1,5 +1,7 @@
 package view.Online;
 
+import client.Client;
+import client.NotifHandler;
 import controller.Controller;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -185,9 +187,10 @@ public class OnlineMenuJFX extends Application implements MenuJFX {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
+                    Client.logout();
                     controller.exitJFX();
                     stop();
-                    controller.getGame().getCurrentMenuJFX().start(stage);
+                    stage.close();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

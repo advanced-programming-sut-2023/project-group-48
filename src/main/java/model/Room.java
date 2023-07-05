@@ -16,7 +16,9 @@ public class Room {
     public int maxPlayers = 0;
 
 
-
-
-
+    public void seenAllMessages() {
+        for (TextMessage message : messages) {
+            message.seen = true;
+        }
+    }
 }

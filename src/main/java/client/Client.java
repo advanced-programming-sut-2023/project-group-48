@@ -29,6 +29,8 @@ public class Client {
     public static ArrayList<User> friends = new ArrayList<>();
     public static ArrayList<User> friendRequests = new ArrayList<>();
 
+    public static NotifHandler notifHandler;
+
 
     public static void startClient(String host, int port) throws IOException {
         System.out.println("Starting Client service...");
@@ -59,7 +61,7 @@ public class Client {
 
         }
         System.out.println("Connected to server!");
-        NotifHandler notifHandler = new NotifHandler(dataInputStream);
+        notifHandler = new NotifHandler(dataInputStream);
         notifHandler.start();
         updateAllRooms();
     }
@@ -79,9 +81,17 @@ public class Client {
         }
     }
 
-    public static void logout() {
+    public static synchronized void logout() {
+        notifHandler.stop();
+
         RequestOnline requestOnline = new RequestOnline();
         requestOnline.setLogout();
+        try {
+            dataOutputStream.writeUTF(new Gson().toJson(requestOnline));
+            System.out.println("Logged out!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -285,5 +295,16 @@ public class Client {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static void setRoomByID(String roomID, Room room) {
+        for (Room room1 : rooms) {
+            if (room1.roomID.equals(roomID)) {
+                rooms.remove(room1);
+                rooms.add(room);
+                return;
+            }
+        }
+        rooms.add(room);
     }
 }
