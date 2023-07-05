@@ -134,6 +134,8 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
                     System.out.println("cdrtgyhujkiojyhtgrf" + currentRoom.messages);
                     setChatRoomProperties();
                     chatStatus.setText("Chatting in " + currentRoom.roomID);
+                    if(currentRoom.roomID.equals("0"))
+                        chatStatus.setText("Chatting in Public Room");
                     Client.seenMessage(currentRoom.roomID);
                 }
             });
