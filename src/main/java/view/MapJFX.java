@@ -33,6 +33,7 @@ public class MapJFX {
     private final MatchMenuController matchMenuController;
     private final MatchMenuJFX matchMenuJFX;
     private final SetTextureJFX setTextureJFX;
+//    private final BuildingSelectionJFX buildingSelectionJFX;
     private AnchorPane viewPane, tileStatusPane, peopleStatusPane;
     private Label tileStatus, peopleStatus;
     private final Pane mapPane;
@@ -53,6 +54,7 @@ public class MapJFX {
         this.mapMenuController = mapMenuController;
         this.matchMenuController = matchMenuController;
         this.matchMenuJFX = matchMenuJFX;
+//        this.buildingSelectionJFX = new BuildingSelectionJFX(controller, matchMenuController, this);
         this.viewPane = viewPane;
         this.mapPane = new Pane();
         setTileStatusProperties();
@@ -357,6 +359,7 @@ public class MapJFX {
         }
         selectedSingleTile = null;
         matchMenuJFX.getMatchBarJFX().deselect();
+//        buildingSelectionJFX.popOff();
     }
 
     private void locatePane(double locationX, double locationY) {
@@ -395,7 +398,7 @@ public class MapJFX {
                 deSelect();
                 selectedSingleBuilding = rectangle;
                 selectedSingleBuilding.setOpacity(0.8);
-                // TODO
+//                buildingSelectionJFX.popOut(rectangle.getLayoutX(), rectangle.getLayoutY());
             }
         });
     }

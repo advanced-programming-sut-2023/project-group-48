@@ -34,6 +34,7 @@ public class BuildingSelectionJFX {
         this.controller = controller;
         this.matchMenuController = matchMenuController;
         this.mapJFX = mapJFX;
+        buildingSelectionPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/CaptchaPane.fxml")));
         setBuildingSelectionPane();
         setUnitNameTextField();
         setUnitCountChoiceBox();
@@ -43,7 +44,6 @@ public class BuildingSelectionJFX {
     }
 
     private void setBuildingSelectionPane() throws IOException {
-        buildingSelectionPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/MainMenu.fxml")));
         buildingSelectionPane.setBackground(Background.fill(Color.DARKGOLDENROD));
     }
 
@@ -99,5 +99,15 @@ public class BuildingSelectionJFX {
         Adjust.adjustButton(createUnitButton, ratioX, ratioY);
         Adjust.adjustButton(repairBuildingButton, ratioX, ratioY);
         Adjust.adjustLabel(errorLabel, ratioX, ratioY);
+    }
+
+    public void popOut(double x, double y) {
+        buildingSelectionPane.setLayoutX(x - buildingSelectionPane.getPrefWidth());
+        buildingSelectionPane.setLayoutY(y - buildingSelectionPane.getPrefHeight());
+        mapJFX.getMapPane().getChildren().add(buildingSelectionPane);
+    }
+
+    public void popOff() {
+        mapJFX.getMapPane().getChildren().remove(buildingSelectionPane);
     }
 }

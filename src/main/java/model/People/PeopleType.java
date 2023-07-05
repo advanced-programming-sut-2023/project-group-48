@@ -77,7 +77,8 @@ public enum PeopleType {
     }
 
     public static int getPeopleHp(String type) {
-        return peopleHp.get(type);
+        if (peopleHp.containsKey(type)) return peopleHp.get(type);
+        else return 100;
     }
 
     public static ArrayList<LandType> getNotValidLandTypes(String peopleType) {

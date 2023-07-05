@@ -99,7 +99,8 @@ public class OnlineChatMenuJFX extends Application implements MenuJFX {
     }
 
     private Label getLabel(String value) {
-        Label label = new Label(value);
+        Label label = new Label();
+        label.setText(value);
         label.setPrefHeight(40);
         return label;
     }

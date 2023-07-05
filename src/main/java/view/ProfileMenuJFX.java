@@ -67,6 +67,8 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
         profileMenuPane.setBackground(Background.fill(new ImagePattern(new Image(getClass().getResource("/backgrounds/8.jpg").toExternalForm()))));
 
         popup = new Popup();
+        popup.setHideOnEscape(true);
+
 
         titleLabel = (Label) profileMenuPane.getChildren().get(0);
 
@@ -392,7 +394,7 @@ public class ProfileMenuJFX extends Application implements MenuJFX {
             setInfoProperties();
             usernameErrorLabel.setText(result);
             usernameErrorLabel.setTextFill(Color.GREEN);
-            popup.getContent().removeAll(popup.getContent());
+            popup.getContent().clear();
             popup.getContent().add(new Label(result));
             popup.show(stage);
             captchaJFX.popOffCaptchaPane();
