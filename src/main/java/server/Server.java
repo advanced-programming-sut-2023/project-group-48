@@ -135,4 +135,15 @@ public class Server {
         }
         return null;
     }
+
+//    public static void mergeOnlineWithSavedUsers(){
+//        for (User user : onlineUsers) {
+//            for (User savedUser : savedUsers) {
+//                if (user.getUsername().equals(savedUser.getUsername())) {
+//
+//                }
+//
+//                }
+//        }
+//    }
 }

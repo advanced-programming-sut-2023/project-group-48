@@ -76,6 +76,7 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
                     Avatar.PROFILE_RADIUS * (i * 3 + 2), String.valueOf(user.getHighScore()));
             Label lastSeenLabel = null;
             if (!isOffline) {
+                System.out.println("last seen: " + user.lastSeen);
                 lastSeenLabel = getLabel(highScoreLabel.getLayoutX() + highScoreLabel.getPrefWidth() + Avatar.PROFILE_RADIUS,
                         Avatar.PROFILE_RADIUS * (i * 3 + 2), String.valueOf(user.lastSeen));
             }
@@ -101,7 +102,8 @@ public class ScoreBoardJFX extends Application implements MenuJFX {
     }
 
     private Label getLabel(double x, int y, String value) {
-        Label label = new Label(value);
+        Label label = new Label();
+        label.setText(value);
         double width = (scoreBoardScrollPane.getPrefWidth() - Avatar.PROFILE_RADIUS * (isOffline ? 6 : 7)) / (isOffline ? 2 : 3);
         label.setPrefWidth(width);
         label.setPrefHeight(Avatar.PROFILE_RADIUS * 2);

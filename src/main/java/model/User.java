@@ -22,7 +22,7 @@ public class User {
     private Governance governance;
     private String avatarUrl;
 
-    public String lastSeen = "";
+    public String lastSeen = " last seen: unknown";
 
     static {
         questions.add("What is your favorite food?");

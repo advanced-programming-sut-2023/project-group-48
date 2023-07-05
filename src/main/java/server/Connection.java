@@ -188,6 +188,7 @@ public class Connection extends Thread{
             if(onlineUser.getUsername().equals(user.getUsername())){
                 onlineUser.lastSeen = java.time.LocalTime.now().toString().substring(0,5);
                 updateAllRooms();
+                updateAllUsers();
             }
         }
     }
@@ -197,6 +198,7 @@ public class Connection extends Thread{
             if(onlineUser.getUsername().equals(user.getUsername())){
                 onlineUser.lastSeen = "online";
                 updateAllRooms();
+                updateAllUsers();
             }
         }
     }
@@ -206,6 +208,25 @@ public class Connection extends Thread{
             for (String user : room.users) {
                 if(user.equals(this.user.getUsername())){
                     updateRoom(room);
+                }
+            }
+        }
+    }
+
+    public void updateAllUsers(){
+//        Server.mergeOnlineWithSavedUsers();
+        for (User user : Server.onlineUsers) {
+            RequestOnline request = new RequestOnline();
+            request.updateUserFile(Server.savedUsers);
+            String json = new Gson().toJson(request);
+            for (Connection connection : Server.connections) {
+                if(connection.user.getUsername().equals(user.getUsername())){
+                    try {
+                        connection.dataOutputStream.writeUTF(json);
+                    } catch (IOException e) {
+                        System.out.println("Connection to " + socket.getInetAddress() + ":" + socket.getPort() + " lost.");
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
@@ -445,7 +466,7 @@ public class Connection extends Thread{
         for (Connection connection : Server.connections) {
             if(connection.user.getUsername().equals(username2)){
                 RequestOnline request = new RequestOnline();
-                request.setReceiveFriendRequest(username1);
+                request.setReceiveFriendRequest(Server.getUserByUsername(username1));
                 String json = new Gson().toJson(request);
                 try {
                     connection.dataOutputStream.writeUTF(json);

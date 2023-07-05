@@ -46,6 +46,8 @@ public class RequestOnline {
 
     public boolean getJoinGameRoom = false;
 
+    public boolean updateUserFile = false;
+
     public String username = "";
     public String username2 = "";
 
@@ -65,6 +67,7 @@ public class RequestOnline {
 
     public ArrayList<GameRoom> gameRooms = new ArrayList<>();
 
+    public ArrayList<User> users = new ArrayList<>();
 
     public int reaction = 0;
 
@@ -168,8 +171,8 @@ public class RequestOnline {
         sendFriendRequest = true;
     }
 
-    public void setReceiveFriendRequest(String username){
-        this.username = username;
+    public void setReceiveFriendRequest(User user){
+        this.user = user;
         receiveFriendRequest = true;
     }
 
@@ -199,5 +202,8 @@ public class RequestOnline {
     }
 
 
-
+    public void updateUserFile(ArrayList<User> users){
+        updateUserFile = true;
+        this.users = users;
+    }
 }

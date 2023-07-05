@@ -86,7 +86,9 @@ public class NotifHandler extends Thread{
                 if(request.receiveFriendRequest){
                     Client.friendRequests.add(request.user);
                 }
-
+                if(request.updateUserFile){
+                    Client.controller.getGame().setUsers(request.users);
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

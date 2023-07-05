@@ -119,22 +119,24 @@ public class OnlineFriendMenuJFX extends Application implements MenuJFX {
             friendRequestLabel.setLayoutY(Client.friendRequests.indexOf(friendRequest) * 40);
             friendRequestLabel.setLayoutX(0);
             requestsContent.getChildren().add(friendRequestLabel);
-            Circle rejectCircle = new Circle(friendRequestLabel.getPrefWidth() + friendRequestLabel.getLayoutX() + 25,
+            Circle rejectCircle = new Circle(friendRequestLabel.getPrefWidth() + friendRequestLabel.getLayoutX() -25,
                     Client.friendRequests.indexOf(friendRequest) * 40 + 20, 20, rejectImagePattern);
             int finalI = i;
             rejectCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
+                    System.out.println("reject");
                     Client.answerFriendRequest(Client.friendRequests.get(finalI).getUsername(), false);
                     setRequestsProperties();
                     setFriendsProperties();
                 }
             });
-            Circle acceptCircle = new Circle(friendRequestLabel.getPrefWidth() + friendRequestLabel.getLayoutX() + 75,
+            Circle acceptCircle = new Circle(friendRequestLabel.getPrefWidth() + friendRequestLabel.getLayoutX() + 25,
                     Client.friendRequests.indexOf(friendRequest) * 40 + 20, 20, acceptImagePattern);
             acceptCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
+                    System.out.println("accept");
                     Client.answerFriendRequest(Client.friendRequests.get(finalI).getUsername(), true);
                     setRequestsProperties();
                     setFriendsProperties();

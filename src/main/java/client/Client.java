@@ -228,6 +228,12 @@ public class Client {
                     }
                 }
                 friendRequests.removeAll(removerequests);
+                if(!answer){
+                    System.out.println("Friend request denied!");
+                    friends.remove(friend);
+                }else{
+                    System.out.println("Friend request accepted!");
+                }
                 return;
             }
         }
@@ -237,8 +243,15 @@ public class Client {
                 removerequests.add(friendRequest);
             }
         }
-        friends.add(removerequests.get(0));
+
         friendRequests.removeAll(removerequests);
+        if(answer){
+            System.out.println("Friend request accepted!");
+            friends.add(removerequests.get(0));
+        }else{
+            System.out.println("Friend request denied!");
+        }
+        return;
     }
 
     public static void updateFriendFiles() {
